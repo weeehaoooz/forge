@@ -1,0 +1,21 @@
+/* Essential CSS Root Variables */
+:root {
+  /* Colors */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #cbd5e1;
+  --border-hover: #64748b;
+  --border-focus: #2563eb;
+  --text-color: #0f172a;
+  --text-muted: #64748b;
+  --error-color: #ef4444;
+
+  /* Form Control Base */
+  --border-radius: 0.375rem;
+  --control-height: 2.25rem;
+  --control-padding-x: 0.625rem;
+  --control-font-size: 0.8125rem;
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}

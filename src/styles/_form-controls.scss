@@ -1,0 +1,90 @@
+/* Form Controls & Fields Base Styles */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.875rem;
+
+  .form-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.25rem;
+
+    .required-star {
+      color: var(--error-color);
+    }
+  }
+
+  .field-error {
+    font-size: 0.75rem;
+    color: var(--error-color);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  .field-help {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 var(--control-padding-x);
+  font-size: var(--control-font-size);
+  font-family: inherit;
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--border-hover);
+  }
+
+  &:focus {
+    border-color: var(--border-focus);
+    box-shadow: var(--focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    background-color: var(--bg-color);
+    color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &.is-invalid {
+    border-color: var(--error-color);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+/* Sizing Modifiers */
+.form-control-sm {
+  height: 2rem;
+  padding: 0 0.5rem;
+  font-size: 0.8125rem;
+  border-radius: 0.25rem;
+}
+
+.form-control-lg {
+  height: 2.625rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+}
