@@ -6,85 +6,151 @@
   margin-bottom: 0.875rem;
 
   .form-label {
-    font-size: var(--forge-font-size-sm, 0.8125rem);
-    font-weight: var(--forge-font-weight-semibold, 600);
-    color: var(--forge-text-color, #334155);
-    margin-bottom: 0.25rem;
+    font-size: var(--forge-control-font-size, 0.8125rem);
+    font-weight: 600;
+    color: var(--forge-text-color, #0f172a);
+    margin-bottom: 0.375rem;
 
     .required-star {
       color: var(--forge-error-color, #ef4444);
+      margin-left: 0.125rem;
     }
   }
 
   .field-error {
-    font-size: var(--forge-font-size-xs, 0.75rem);
+    font-size: 0.75rem;
     color: var(--forge-error-color, #ef4444);
     margin-top: 0.25rem;
     font-weight: 500;
   }
 
   .field-help {
-    font-size: var(--forge-font-size-xs, 0.75rem);
+    font-size: 0.75rem;
     color: var(--forge-text-muted, #64748b);
     margin-top: 0.25rem;
   }
 }
 
-.form-control {
+/* Base Input & Textarea Form Controls */
+.form-control,
+.forge-input {
+  --input-bg: var(--forge-card-bg, #ffffff);
+  --input-border: var(--forge-border-color, #cbd5e1);
+  --input-border-hover: var(--forge-border-hover, #64748b);
+  --input-border-focus: var(--forge-border-focus, #2563eb);
+  --input-shadow-focus: var(--forge-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+  --input-color: var(--forge-text-color, #0f172a);
+  --input-placeholder-color: #94a3b8;
+  --input-radius: var(--forge-border-radius, 0.375rem);
+  --input-height: var(--forge-control-height, 2.25rem);
+  --input-padding-x: var(--forge-control-padding-x, 0.625rem);
+  --input-font-size: var(--forge-control-font-size, 0.8125rem);
+
   display: block;
   width: 100%;
-  height: var(--forge-control-height, 2.25rem);
-  padding: 0 var(--forge-control-padding-x, 0.625rem);
-  font-size: var(--forge-control-font-size, 0.8125rem);
+  height: var(--input-height);
+  padding: 0 var(--input-padding-x);
+  font-size: var(--input-font-size);
   font-family: inherit;
-  color: var(--forge-text-color, #0f172a);
-  background-color: var(--forge-card-bg, #ffffff);
-  border: 1px solid var(--forge-border-color, #cbd5e1);
-  border-radius: var(--forge-border-radius, 0.375rem);
+  line-height: 1.25rem;
+  color: var(--input-color);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 
   &::placeholder {
-    color: #94a3b8;
+    color: var(--input-placeholder-color);
+    opacity: 1;
   }
 
-  &:hover:not(:disabled) {
-    border-color: var(--forge-border-hover, #64748b);
+  &:hover:not(:disabled):not([readonly]):not(.is-disabled) {
+    border-color: var(--input-border-hover);
   }
 
-  &:focus {
-    border-color: var(--forge-border-focus, #2563eb);
-    box-shadow: var(--forge-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+  &:focus,
+  &:focus-visible {
+    border-color: var(--input-border-focus);
+    box-shadow: var(--input-shadow-focus);
   }
 
   &:disabled,
-  &.is-disabled {
+  &.is-disabled,
+  &[disabled] {
     background-color: var(--forge-bg-color, #f8fafc);
+    border-color: #e2e8f0;
     color: #94a3b8;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
-  &.is-invalid {
+  &.is-invalid,
+  &:invalid.ng-touched {
     border-color: var(--forge-error-color, #ef4444);
 
-    &:focus {
+    &:focus,
+    &:focus-visible {
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
     }
   }
 }
 
-/* Sizing Modifiers */
-.form-control-sm {
-  height: 2rem;
-  padding: 0 0.5rem;
-  font-size: 0.8125rem;
-  border-radius: 0.25rem;
+/* Textarea Specific Styling Overrides */
+textarea.form-control,
+textarea.forge-input,
+textarea[forgeInput],
+textarea[forgeTextarea] {
+  height: auto;
+  min-height: 5rem;
+  padding: 0.5rem var(--input-padding-x);
+  line-height: 1.5;
+  resize: vertical;
 }
 
-.form-control-lg {
-  height: 2.625rem;
-  padding: 0 0.75rem;
-  font-size: 0.875rem;
+/* Sizing Variations for Inputs & Textareas */
+.form-control-sm,
+.input-sm {
+  --input-height: 2rem;
+  --input-padding-x: 0.5rem;
+  --input-font-size: 0.8125rem;
+  --input-radius: 0.25rem;
+}
+
+textarea.form-control-sm,
+textarea.input-sm,
+textarea[size="sm"] {
+  min-height: 4rem;
+  padding: 0.375rem 0.5rem;
+}
+
+.form-control-md,
+.input-md {
+  --input-height: 2.25rem;
+  --input-padding-x: 0.625rem;
+  --input-font-size: 0.8125rem;
+  --input-radius: 0.375rem;
+}
+
+textarea.form-control-md,
+textarea.input-md,
+textarea[size="md"] {
+  min-height: 5rem;
+  padding: 0.5rem 0.625rem;
+}
+
+.form-control-lg,
+.input-lg {
+  --input-height: 2.625rem;
+  --input-padding-x: 0.75rem;
+  --input-font-size: 0.875rem;
+  --input-radius: 0.375rem;
+}
+
+textarea.form-control-lg,
+textarea.input-lg,
+textarea[size="lg"] {
+  min-height: 6.25rem;
+  padding: 0.625rem 0.75rem;
 }

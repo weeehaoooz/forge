@@ -144,8 +144,8 @@
       <form [formGroup]="demoForm" (ngSubmit)="onSubmit()" class="card form-card">
         <div class="card-header">
           <div>
-            <h2>Select Input Component Showcase</h2>
-            <span class="card-subtitle">Compact & streamlined form layout</span>
+            <h2>Form Controls Showcase (Inputs, Textarea & Select)</h2>
+            <span class="card-subtitle">Standardized styling matching _variables.scss and SelectInputComponent</span>
           </div>
           <div class="actions">
             <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
@@ -170,10 +170,32 @@
         </div>
 
         <div class="form-fields">
-          <!-- Field 1: Standard Select -->
+          <!-- Field 1: Text Input -->
+          <div class="form-group">
+            <label class="form-label" for="project-name">
+              1. Project Name <span class="required-star">*</span>
+            </label>
+            <input id="project-name" type="text" forgeInput formControlName="projectName"
+              placeholder="e.g. NextGen Dashboard" [size]="inputSize()" />
+            @if (demoForm.controls.projectName.touched && demoForm.controls.projectName.hasError('required')) {
+            <span class="field-error">Project name is required.</span>
+            }
+          </div>
+
+          <!-- Field 2: Textarea -->
+          <div class="form-group">
+            <label class="form-label" for="project-desc">
+              2. Project Description
+            </label>
+            <textarea id="project-desc" forgeTextarea formControlName="projectDescription"
+              placeholder="Enter detailed project scope or comments..." [size]="inputSize()" rows="3"></textarea>
+            <span class="field-help">Optional. Supports multi-line input and resizing.</span>
+          </div>
+
+          <!-- Field 3: Standard Select -->
           <div class="form-group">
             <label class="form-label" for="fruit-select">
-              1. Standard Select <span class="required-star">*</span>
+              3. Standard Select <span class="required-star">*</span>
             </label>
             <forge-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
               [size]="inputSize()">
@@ -188,10 +210,10 @@
             }
           </div>
 
-          <!-- Field 2: Searchable Autocomplete Select -->
+          <!-- Field 4: Searchable Autocomplete Select -->
           <div class="form-group">
             <label class="form-label" for="tech-select">
-              2. Searchable Autocomplete Select <span class="required-star">*</span>
+              4. Searchable Autocomplete Select <span class="required-star">*</span>
             </label>
             <forge-select-input id="tech-select" formControlName="searchableFramework"
               placeholder="Search technology..." searchPlaceholder="Type to filter..." [searchable]="true"

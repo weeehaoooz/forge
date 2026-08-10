@@ -6,6 +6,7 @@ import {
   MainLayoutComponent,
   SideNavComponent,
   ForgeButtonDirective,
+  ForgeInputDirective,
   LayoutService
 } from '@forge/components';
 import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
@@ -26,6 +27,7 @@ interface FrameworkOption {
     MainLayoutComponent,
     SideNavComponent,
     ForgeButtonDirective,
+    ForgeInputDirective,
     LucideHexagon,
     LucideSparkles,
     LucidePlus,
@@ -41,10 +43,10 @@ export class App {
 
   // Demo Form
   readonly demoForm = new FormGroup({
+    projectName: new FormControl<string>('', Validators.required),
+    projectDescription: new FormControl<string>(''),
     singleFruit: new FormControl<string | null>(null, Validators.required),
-    searchableFramework: new FormControl<string | null>('angular', Validators.required),
-    groupedLocation: new FormControl<string | null>(null, Validators.required),
-    clearableOption: new FormControl<string | null>('coffee')
+    searchableFramework: new FormControl<string | null>('angular', Validators.required)
   });
 
   // Controls for interactive settings
@@ -184,10 +186,10 @@ export class App {
 
   onReset(): void {
     this.demoForm.reset({
+      projectName: '',
+      projectDescription: '',
       singleFruit: null,
-      searchableFramework: 'angular',
-      groupedLocation: null,
-      clearableOption: 'coffee'
+      searchableFramework: 'angular'
     });
     this.submittedData.set(null);
   }

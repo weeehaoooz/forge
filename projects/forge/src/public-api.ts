@@ -19,3 +19,7 @@ export * from './lib/form/select-input/select-input.module';
 // Button directive & types
 export * from './lib/button/button.directive';
 
+// Input & Textarea directive
+export * from './lib/form/input/input.directive';
+
+
