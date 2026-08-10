@@ -1,59 +1,112 @@
-# AngularSharedComponents
+# Forge Component Library (`@forge/components`)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+Forge is a modern, modular Angular shared component library built for Angular 20+. It provides layout managers, customizable navigation sidebars, drawer panels, and custom form controls designed with clean styling and developer ergonomics in mind.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📦 Installation & Setup
 
+### 1. Build the Library
+Before consuming the library locally or publishing:
 ```bash
-ng serve
+npm run build:lib
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2. Peer Dependencies
+Ensure your target application includes the required dependencies:
+- `@angular/core`: `^21.1.0`
+- `@angular/common`: `^21.1.0`
+- `@angular/forms`: `^21.1.0`
+- `@angular/router`: `^21.1.0`
+- `@lucide/angular`: `^1.31.0`
+- `rxjs`: `~7.8.0`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Exported Components & Features
 
-```bash
-ng generate component component-name
+### 1. Layout Management (`MainLayoutComponent`, `SidePanelComponent`, `LayoutService`)
+Provides a responsive app layout container with left sidebar slot, main content area, and optional right expandable slide-over drawer panel.
+
+**Usage:**
+```html
+<forge-main-layout>
+  <!-- Left Navigation Slot -->
+  <ng-container slot="nav">
+    <forge-side-nav [navSections]="sections" [user]="user" />
+  </ng-container>
+
+  <!-- Main View Area -->
+  <router-outlet />
+
+  <!-- Right Drawer Slot -->
+  <ng-container slot="side-panel">
+    <forge-side-panel title="Details">
+      <p>Drawer content goes here...</p>
+    </forge-side-panel>
+  </ng-container>
+</forge-main-layout>
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**Layout Control via Service:**
+```typescript
+import { inject } from '@angular/core';
+import { LayoutService } from '@forge/components';
 
-```bash
-ng generate --help
+export class MyComponent {
+  private layoutService = inject(LayoutService);
+
+  openPanel() {
+    this.layoutService.openSidePanel();
+  }
+}
 ```
 
-## Building
+---
 
-To build the project run:
+### 2. Navigation Sidebar (`SideNavComponent`)
+A collapsable sidebar with support for navigation sections, active state matching, badges, collapsible groups, and user profile summary footer.
 
-```bash
-ng build
+**Usage:**
+```html
+<forge-side-nav
+  [navSections]="navSections"
+  [user]="currentUser"
+  (collapsedChange)="onSidebarToggle($event)"
+/>
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+### 3. Custom Form Controls (`SelectInputComponent`, `OptionComponent`, `OptionGroupComponent`)
+Signal-friendly select inputs supporting single and multiple selections, search filtering, grouped options, and custom triggers.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+**Usage:**
+```html
+<forge-select-input [(value)]="selectedItem" placeholder="Select item...">
+  <forge-option-group label="Category 1">
+    <forge-option value="item1">Item 1</forge-option>
+    <forge-option value="item2">Item 2</forge-option>
+  </forge-option-group>
+</forge-select-input>
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🛠 Project Scripts
 
-```bash
-ng e2e
+| Script | Command | Description |
+|---|---|---|
+| Development Demo | `npm start` | Launches local Angular dev server with showcase app |
+| Build Library | `npm run build:lib` | Compiles `@forge/components` into `dist/forge` via `ng-packagr` |
+| Test | `npm test` | Runs unit tests via Vitest |
+
+---
+
+## 🎨 Global Styles & SCSS Variables
+
+Forge includes customizable SASS variables for themes and design system tokens. You can import variables into your app's global stylesheets:
+
+```scss
+@use '@forge/components/styles/variables' as *;
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
