@@ -1,7 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectInputModule } from './shared/components/select-input/select-input.module';
+import { MainLayoutComponent } from './shared/components/layout/main-layout.component';
+import { SideNavComponent } from './shared/components/nav/side-nav.component';
+import { LayoutService } from './shared/components/layout/layout.service';
+import { SampleDetailPanelComponent } from './shared/components/layout/demo/sample-detail-panel.component';
+
 
 interface FrameworkOption {
   id: string;
@@ -12,11 +17,18 @@ interface FrameworkOption {
 
 @Component({
   selector: 'app-root',
-  imports: [SelectInputModule, ReactiveFormsModule, JsonPipe],
+  imports: [
+    SelectInputModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    SideNavComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
+  protected readonly layoutService = inject(LayoutService);
+
   // Demo Form
   readonly demoForm = new FormGroup({
     singleFruit: new FormControl<string | null>(null, Validators.required),
@@ -49,6 +61,49 @@ export class App {
     { id: 'spring', name: 'Spring Boot (Java)', category: 'Backend' },
     { id: 'flutter', name: 'Flutter (Dart)', category: 'Mobile' }
   ]);
+
+  // Layout Demo Actions
+  openDetailWithBlur(title: string, id: string): void {
+    this.layoutService.openRightPanel(
+      SampleDetailPanelComponent,
+      {
+        subjectId: id,
+        subjectTitle: title,
+        subjectData: {
+          category: 'Frontend Framework',
+          status: 'Active',
+          lastInspected: new Date().toISOString(),
+          requestedBy: 'User Admin'
+        }
+      },
+      {
+        title: `Detail: ${title}`,
+        width: '420px',
+        blurBackdrop: true,
+        closeOnBackdropClick: true
+      }
+    );
+  }
+
+  openDetailNoBlur(title: string, id: string): void {
+    this.layoutService.openRightPanel(
+      SampleDetailPanelComponent,
+      {
+        subjectId: id,
+        subjectTitle: title,
+        subjectData: {
+          category: 'Backend Framework',
+          status: 'Stable',
+          lastInspected: new Date().toISOString()
+        }
+      },
+      {
+        title: `Detail: ${title}`,
+        width: '380px',
+        blurBackdrop: false
+      }
+    );
+  }
 
   toggleDisableForm(): void {
     const nextState = !this.isFormDisabled();

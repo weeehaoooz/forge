@@ -1,227 +1,115 @@
-<div class="page-layout">
-  <header class="app-header">
-    <div class="badge">Angular v21+ Component Suite</div>
-    <h1>Reusable Select Input Module</h1>
-    <p class="subtitle">
-      Streamlined, compact UI controls with `ControlValueAccessor`, keyboard navigation, and reactive form support.
-    </p>
-  </header>
+<app-main-layout>
+  <!-- Side Navigation Component Slot -->
+  <app-side-nav side-nav brandName="Shared Component">
+  </app-side-nav>
 
-  <main class="demo-grid">
-    <!-- Form Container -->
-    <form [formGroup]="demoForm" (ngSubmit)="onSubmit()" class="card form-card">
-      <div class="card-header">
-        <div>
-          <h2>Component Showcase</h2>
-          <span class="card-subtitle">Compact & streamlined form layout</span>
+  <!-- Main Content Area Slot -->
+  <div class="demo-page-content">
+    <header class="app-header">
+      <div class="badge">Angular v21+ Component Suite</div>
+      <h1>Shared Components & Reusable Layout System</h1>
+      <p class="subtitle">
+        Modular layout shell featuring standalone <code>SideNavComponent</code>, reactive <code>LayoutService</code>,
+        dynamic dynamic right-side panel injection, and customizable main content backdrop blur.
+      </p>
+    </header>
+
+    <main class="demo-grid">
+      <!-- Layout Controls Card -->
+      <div class="card layout-demo-card">
+        <div class="card-header">
+          <h2>Layout Service Controls</h2>
+          <span class="card-subtitle">Test side-nav, dynamic right panel, and backdrop blur</span>
         </div>
-        <div class="actions">
-          <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
-            <button
-              type="button"
-              class="size-btn"
-              [class.is-active]="inputSize() === 'sm'"
-              (click)="setInputSize('sm')"
-              title="Compact Size (32px)"
-            >
-              Compact
-            </button>
-            <button
-              type="button"
-              class="size-btn"
-              [class.is-active]="inputSize() === 'md'"
-              (click)="setInputSize('md')"
-              title="Medium Size (36px)"
-            >
-              Medium
-            </button>
-            <button
-              type="button"
-              class="size-btn"
-              [class.is-active]="inputSize() === 'lg'"
-              (click)="setInputSize('lg')"
-              title="Large Size (42px)"
-            >
-              Large
-            </button>
-          </div>
+        <div class="layout-controls-grid">
+          <button type="button" class="btn btn-outline" (click)="layoutService.toggleLeftNav()">
+            {{ layoutService.isLeftNavCollapsed() ? 'Expand Left Side-Nav' : 'Collapse Left Side-Nav' }}
+          </button>
 
-          <button
-            type="button"
-            class="btn btn-secondary btn-sm"
-            (click)="toggleDisableForm()"
-          >
-            {{ isFormDisabled() ? 'Enable Form' : 'Disable Form' }}
+          <button type="button" class="btn btn-primary"
+            (click)="openDetailWithBlur('Subject Details (Blurred)', 'SUBJ-101')">
+            Open Dynamic Panel (With Backdrop Blur)
+          </button>
+
+          <button type="button" class="btn btn-secondary"
+            (click)="openDetailNoBlur('Quick Inspection (Unblurred)', 'QUICK-902')">
+            Open Dynamic Panel (No Blur)
+          </button>
+
+          <button type="button" class="btn btn-outline" (click)="layoutService.toggleMainContentExpanded()">
+            {{ layoutService.isMainContentExpanded() ? 'Reset Container Padding' : 'Expand Container Area' }}
           </button>
         </div>
       </div>
 
-      <div class="form-fields">
-        <!-- Field 1: Standard Select -->
-        <div class="form-group">
-          <label class="form-label" for="fruit-select">
-            1. Standard Select <span class="required-star">*</span>
-          </label>
-          <app-select-input
-            id="fruit-select"
-            formControlName="singleFruit"
-            placeholder="Select a fruit..."
-            [size]="inputSize()"
-          >
-            <app-option value="apple">🍎 Apple</app-option>
-            <app-option value="banana">🍌 Banana</app-option>
-            <app-option value="cherry">🍒 Cherry</app-option>
-            <app-option value="dragonfruit">🐉 Dragon Fruit</app-option>
-            <app-option value="elderberry">🫐 Elderberry</app-option>
-          </app-select-input>
-          @if (demoForm.controls.singleFruit.touched && demoForm.controls.singleFruit.hasError('required')) {
-            <span class="field-error">Please select a fruit.</span>
-          }
+      <!-- Form Container -->
+      <form [formGroup]="demoForm" (ngSubmit)="onSubmit()" class="card form-card">
+        <div class="card-header">
+          <div>
+            <h2>Select Input Component Showcase</h2>
+            <span class="card-subtitle">Compact & streamlined form layout</span>
+          </div>
+          <div class="actions">
+            <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
+              <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
+                (click)="setInputSize('sm')" title="Compact Size (32px)">
+                Compact
+              </button>
+              <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
+                (click)="setInputSize('md')" title="Medium Size (36px)">
+                Medium
+              </button>
+              <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
+                (click)="setInputSize('lg')" title="Large Size (42px)">
+                Large
+              </button>
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-sm" (click)="toggleDisableForm()">
+              {{ isFormDisabled() ? 'Enable Form' : 'Disable Form' }}
+            </button>
+          </div>
         </div>
 
-        <!-- Field 2: Searchable Autocomplete Select -->
-        <div class="form-group">
-          <label class="form-label" for="tech-select">
-            2. Searchable Autocomplete Select <span class="required-star">*</span>
-          </label>
-          <app-select-input
-            id="tech-select"
-            formControlName="searchableFramework"
-            placeholder="Search technology..."
-            searchPlaceholder="Type to filter..."
-            [searchable]="true"
-            [size]="inputSize()"
-            (searchChange)="onSearchChange($event)"
-          >
-            @for (fw of frameworks(); track fw.id) {
+        <div class="form-fields">
+          <!-- Field 1: Standard Select -->
+          <div class="form-group">
+            <label class="form-label" for="fruit-select">
+              1. Standard Select <span class="required-star">*</span>
+            </label>
+            <app-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
+              [size]="inputSize()">
+              <app-option value="apple">🍎 Apple</app-option>
+              <app-option value="banana">🍌 Banana</app-option>
+              <app-option value="cherry">🍒 Cherry</app-option>
+              <app-option value="dragonfruit">🐉 Dragon Fruit</app-option>
+              <app-option value="elderberry">🫐 Elderberry</app-option>
+            </app-select-input>
+            @if (demoForm.controls.singleFruit.touched && demoForm.controls.singleFruit.hasError('required')) {
+            <span class="field-error">Please select a fruit.</span>
+            }
+          </div>
+
+          <!-- Field 2: Searchable Autocomplete Select -->
+          <div class="form-group">
+            <label class="form-label" for="tech-select">
+              2. Searchable Autocomplete Select <span class="required-star">*</span>
+            </label>
+            <app-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
+              searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
+              (searchChange)="onSearchChange($event)">
+              @for (fw of frameworks(); track fw.id) {
               <app-option [value]="fw.id" [label]="fw.name">
                 <div class="option-custom-content">
                   <span class="fw-name">{{ fw.name }}</span>
                   <span class="fw-badge">{{ fw.category }}</span>
                 </div>
               </app-option>
-            }
-          </app-select-input>
-          <div class="search-log-box">
-            <span class="log-title">Live Search Event Feed:</span>
-            @if (searchLog().length > 0) {
-              <ul>
-                @for (log of searchLog(); track $index) {
-                  <li>{{ log }}</li>
-                }
-              </ul>
-            } @else {
-              <span class="log-empty">Type in the input above to see search events triggered in real-time.</span>
-            }
+              }
+            </app-select-input>
           </div>
         </div>
-
-        <!-- Field 3: Grouped Options Select -->
-        <div class="form-group">
-          <label class="form-label" for="location-select">
-            3. Grouped Options Select <span class="required-star">*</span>
-          </label>
-          <app-select-input
-            id="location-select"
-            formControlName="groupedLocation"
-            placeholder="Select a continent & city..."
-            [searchable]="true"
-            [size]="inputSize()"
-          >
-            <app-option-group label="North America">
-              <app-option value="nyc">New York City, USA</app-option>
-              <app-option value="sfo">San Francisco, USA</app-option>
-              <app-option value="toronto">Toronto, Canada</app-option>
-            </app-option-group>
-
-            <app-option-group label="Europe">
-              <app-option value="london">London, UK</app-option>
-              <app-option value="paris">Paris, France</app-option>
-              <app-option value="berlin">Berlin, Germany</app-option>
-            </app-option-group>
-
-            <app-option-group label="Asia Pacific">
-              <app-option value="tokyo">Tokyo, Japan</app-option>
-              <app-option value="singapore">Singapore</app-option>
-              <app-option value="sydney">Sydney, Australia</app-option>
-            </app-option-group>
-          </app-select-input>
-          @if (demoForm.controls.groupedLocation.touched && demoForm.controls.groupedLocation.hasError('required')) {
-            <span class="field-error">Please select a location.</span>
-          }
-        </div>
-
-        <!-- Field 4: Clearable & Dynamic Options Select -->
-        <div class="form-group">
-          <label class="form-label" for="drink-select">
-            4. Clearable & Dynamic Signal Options
-          </label>
-          <app-select-input
-            id="drink-select"
-            formControlName="clearableOption"
-            placeholder="Choose beverage..."
-            [clearable]="true"
-            [size]="inputSize()"
-          >
-            <app-option value="coffee">☕ Espresso Coffee</app-option>
-            <app-option value="tea">🍵 Green Tea</app-option>
-            <app-option value="matcha">🍵 Matcha Latte</app-option>
-            <app-option value="smoothie">🥤 Berry Smoothie</app-option>
-            <app-option value="disabled-drink" [disabled]="true">🔒 Out of stock (Disabled)</app-option>
-          </app-select-input>
-          <div class="field-help">
-            Supports `[clearable]="true"` to instantly reset selection.
-          </div>
-        </div>
-      </div>
-
-      <!-- Form Actions -->
-      <div class="form-footer">
-        <button type="submit" class="btn btn-primary btn-sm">
-          Submit Form
-        </button>
-        <button type="button" class="btn btn-secondary btn-sm" (click)="onReset()">
-          Reset Form
-        </button>
-        <button type="button" class="btn btn-outline btn-sm" (click)="addCustomFramework()">
-          + Dynamically Add Option
-        </button>
-      </div>
-    </form>
-
-    <!-- Side Panel: Live Reactive Form Inspector -->
-    <div class="card inspector-card">
-      <h2>Reactive Form State Inspector</h2>
-      <p class="inspector-desc">
-        Demonstrates two-way synchronization between `ControlValueAccessor` and Angular Reactive Forms.
-      </p>
-
-      <div class="status-grid">
-        <div class="status-pill" [class.is-success]="demoForm.valid" [class.is-danger]="demoForm.invalid">
-          <span class="status-dot"></span>
-          Valid: {{ demoForm.valid }}
-        </div>
-        <div class="status-pill" [class.is-active]="demoForm.dirty">
-          <span class="status-dot"></span>
-          Dirty: {{ demoForm.dirty }}
-        </div>
-        <div class="status-pill" [class.is-active]="demoForm.touched">
-          <span class="status-dot"></span>
-          Touched: {{ demoForm.touched }}
-        </div>
-      </div>
-
-      <div class="code-block-container">
-        <div class="code-block-header">Form Values Output (JSON)</div>
-        <pre class="code-block"><code>{{ demoForm.value | json }}</code></pre>
-      </div>
-
-      @if (submittedData()) {
-        <div class="submission-banner">
-          <h3>✅ Form Submitted Successfully!</h3>
-          <pre class="code-block"><code>{{ submittedData() }}</code></pre>
-        </div>
-      }
-    </div>
-  </main>
-</div>
+      </form>
+    </main>
+  </div>
+</app-main-layout>

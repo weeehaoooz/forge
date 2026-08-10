@@ -1,0 +1,143 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+  --right-panel-default-width: 380px;
+  --main-padding: 24px;
+  --main-padding-expanded: 8px;
+
+  &.main-content-expanded {
+    --main-padding: var(--main-padding-expanded);
+  }
+}
+
+.top-nav-bar {
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: var(--header-bg, #ffffff);
+  border-bottom: 1px solid var(--header-border-color, #e2e8f0);
+  z-index: 20;
+}
+
+.layout-body-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.main-content-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content-container {
+  flex: 1;
+  padding: var(--main-padding);
+  transition: padding 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+/* Blur Backdrop Filter effect when right panel requests main content blur */
+:host.blur-backdrop {
+  .main-content-container {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.main-backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(2px);
+  z-index: 30;
+  cursor: pointer;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.right-side-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--right-panel-bg, #ffffff);
+  border-left: 1px solid var(--right-panel-border, #e2e8f0);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.right-panel-header {
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--right-panel-border, #e2e8f0);
+
+  .right-panel-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--panel-title-color, #0f172a);
+  }
+
+  .right-panel-close-btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+  }
+}
+
+.right-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

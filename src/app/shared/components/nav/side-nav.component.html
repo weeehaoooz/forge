@@ -1,0 +1,123 @@
+<div class="side-nav-inner">
+  <!-- Header -->
+  <div class="side-nav-header">
+    <ng-content select="[side-nav-header]">
+      <div class="default-nav-header">
+        <div class="brand-wrapper">
+          @if (showLogo()) {
+          <div class="brand-logo" title="Corelystic Logo">
+            <svg lucideHexagon class="logo-icon" [size]="20"></svg>
+          </div>
+          }
+          <div class="brand-info">
+            <span class="brand-title">{{ brandName() }}</span>
+          </div>
+        </div>
+
+        @if (showToggle()) {
+        <button type="button" class="hamburger-toggle-btn" (click)="layoutService.toggleLeftNav()"
+          [attr.aria-label]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+          [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'">
+          <svg lucidePanelLeft class="toggle-icon" [size]="18"></svg>
+        </button>
+        }
+      </div>
+    </ng-content>
+  </div>
+
+  <!-- Body Navigation Items -->
+  <div class="side-nav-body">
+    @if (navGroups().length > 0) {
+    <nav class="nav-groups-container" aria-label="Sidebar Navigation">
+      @for (group of navGroups(); track group.title || $index) {
+      <div class="nav-group">
+        @if (group.title) {
+        <div class="nav-group-title">{{ group.title }}</div>
+        }
+        <ul class="nav-item-list">
+          @for (item of group.items; track item.id || item.label) {
+          <li class="nav-item">
+            <button type="button" class="nav-link"
+              [class.active]="(item.id && activeItemId() === item.id) || item.active" (click)="selectItem(item)"
+              [attr.aria-current]="((item.id && activeItemId() === item.id) || item.active) ? 'page' : null"
+              [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
+              @if (item.icon) {
+              <span class="nav-icon">
+                <svg [lucideIcon]="item.icon" [size]="18"></svg>
+              </span>
+              }
+              <span class="nav-label">{{ item.label }}</span>
+              @if (item.badge) {
+              <span class="nav-badge">{{ item.badge }}</span>
+              }
+            </button>
+          </li>
+          }
+        </ul>
+      </div>
+      }
+    </nav>
+    }
+
+    <!-- Projected content slot for custom body content -->
+    <ng-content />
+  </div>
+
+  <!-- Footer -->
+  <div class="side-nav-footer">
+    <ng-content select="[side-nav-footer]">
+      <div class="default-nav-footer">
+        @if (footerItems().length > 0) {
+        <ul class="footer-nav-list">
+          @for (item of footerItems(); track item.id || item.label) {
+          <li class="footer-nav-item">
+            <button type="button" class="nav-link" [class.active]="item.id && activeItemId() === item.id"
+              (click)="selectItem(item)" [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
+              @if (item.icon) {
+              <span class="nav-icon">
+                <svg [lucideIcon]="item.icon" [size]="18"></svg>
+              </span>
+              }
+              <span class="nav-label">{{ item.label }}</span>
+            </button>
+          </li>
+          }
+        </ul>
+        }
+
+        @if (userProfile(); as profile) {
+        <div class="user-profile-card"
+          [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? (profile.name + ' (' + profile.email + ')') : null">
+          <div class="avatar-container">
+            @if (profile.avatarUrl) {
+            <img [src]="profile.avatarUrl" [alt]="profile.name" class="avatar-img" />
+            } @else {
+            <div class="avatar-placeholder">
+              {{ profile.name.charAt(0) }}
+            </div>
+            }
+          </div>
+          <div class="user-info">
+            <span class="user-name">{{ profile.name }}</span>
+            <span class="user-email">{{ profile.email }}</span>
+          </div>
+          <div class="profile-action">
+            <svg lucideChevronsUpDown class="profile-chevron" [size]="14"></svg>
+          </div>
+        </div>
+        }
+
+        <!-- Bottom Collapse/Expand Bar -->
+        <button type="button" class="footer-collapse-bar" (click)="layoutService.toggleLeftNav()"
+          [attr.aria-label]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+          [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'">
+          <span class="collapse-bar-icon">
+            <svg [lucideIcon]="layoutService.isLeftNavCollapsed() ? LucidePanelLeftOpen : LucidePanelLeftClose"
+              [size]="16"></svg>
+          </span>
+          <span class="collapse-bar-text">Collapse sidebar</span>
+        </button>
+      </div>
+    </ng-content>
+  </div>
+</div>

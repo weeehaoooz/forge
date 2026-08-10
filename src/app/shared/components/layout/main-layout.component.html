@@ -1,0 +1,40 @@
+<div class="layout-body-wrapper">
+  <!-- Side Nav Slot (Accepts app-side-nav or elements with [side-nav]) -->
+  <ng-content select="app-side-nav, [side-nav]" />
+
+  <!-- Main Content Container Area -->
+  <div class="main-content-wrapper">
+    <main class="main-content-container" role="main">
+      <ng-content />
+    </main>
+
+    <!-- Optional Blur Backdrop Overlay -->
+    @if (layoutService.shouldBlurMainContent()) {
+    <div class="main-backdrop-overlay" (click)="onBackdropClick()" aria-hidden="true"></div>
+    }
+  </div>
+
+  <!-- Dynamic Right Side Panel Drawer -->
+  @if (layoutService.isRightPanelOpen()) {
+  <aside class="right-side-panel" role="complementary"
+    [style.width]="layoutService.rightPanelOptions().width ?? '380px'"
+    [attr.aria-label]="layoutService.rightPanelOptions().title ?? 'Details Panel'">
+    <div class="right-panel-header">
+      <h3 class="right-panel-title">
+        {{ layoutService.rightPanelOptions().title ?? 'Details' }}
+      </h3>
+      <button type="button" class="right-panel-close-btn" (click)="layoutService.closeRightPanel()"
+        aria-label="Close details panel">
+        ✕
+      </button>
+    </div>
+
+    <div class="right-panel-body">
+      @if (layoutService.rightPanelComponent()) {
+      <ng-container
+        *ngComponentOutlet="layoutService.rightPanelComponent()!; inputs: layoutService.rightPanelInputs()" />
+      }
+    </div>
+  </aside>
+  }
+</div>
