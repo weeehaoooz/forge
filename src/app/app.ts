@@ -1,11 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectInputModule } from './shared/components/select-input/select-input.module';
-import { MainLayoutComponent } from './shared/components/layout/main-layout.component';
-import { SideNavComponent } from './shared/components/nav/side-nav.component';
-import { LayoutService } from './shared/components/layout/layout.service';
-import { SampleDetailPanelComponent } from './shared/components/layout/demo/sample-detail-panel.component';
+import {
+  SelectInputModule,
+  MainLayoutComponent,
+  SideNavComponent,
+  LayoutService
+} from '@forge/components';
+import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
 
 
 interface FrameworkOption {

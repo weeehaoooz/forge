@@ -3,12 +3,12 @@ import { LayoutService } from './layout.service';
 import { SidePanelComponent } from './side-panel/side-panel.component';
 
 @Component({
-  selector: 'app-main-layout',
+  selector: 'forge-main-layout',
   imports: [SidePanelComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
   host: {
-    'class': 'app-main-layout-host',
+    'class': 'forge-main-layout-host',
     '[class.left-nav-collapsed]': 'layoutService.isLeftNavCollapsed()',
     '[class.right-panel-open]': 'layoutService.isRightPanelOpen()',
     '[class.right-panel-inline]': 'layoutService.isRightPanelInline()',

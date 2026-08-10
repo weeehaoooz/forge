@@ -73,6 +73,29 @@
           "builder": "@angular/build:unit-test"
         }
       }
+    },
+    "forge": {
+      "projectType": "library",
+      "root": "projects/forge",
+      "sourceRoot": "projects/forge/src",
+      "prefix": "forge",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/forge/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/forge/tsconfig.lib.json"
+            },
+            "development": {
+              "tsConfig": "projects/forge/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   }
 }

@@ -18,7 +18,7 @@ import { OptionComponent } from './option/option.component';
 let uniqueIdCounter = 0;
 
 @Component({
-  selector: 'app-select-input',
+  selector: 'forge-select-input',
   templateUrl: './select-input.component.html',
   styleUrl: './select-input.component.scss',
   providers: [
@@ -29,7 +29,7 @@ let uniqueIdCounter = 0;
     }
   ],
   host: {
-    'class': 'app-select-host',
+    'class': 'forge-select-host',
     '[class.is-open]': 'isOpen()',
     '[class.is-disabled]': 'effectiveDisabled()',
     '[class.select-sm]': 'size() === "sm"',
@@ -66,7 +66,7 @@ export class SelectInputComponent implements ControlValueAccessor {
   @ViewChild('triggerEl') triggerEl?: ElementRef<HTMLDivElement>;
 
   // Component ID for ARIA attributes
-  readonly componentId = `app-select-${uniqueIdCounter++}`;
+  readonly componentId = `forge-select-${uniqueIdCounter++}`;
   readonly listboxId = `${this.componentId}-listbox`;
 
   // Internal Reactive State

@@ -1,6 +1,6 @@
 <div class="layout-body-wrapper">
-  <!-- Side Nav Slot (Accepts app-side-nav or elements with [side-nav]) -->
-  <ng-content select="app-side-nav, [side-nav]" />
+  <!-- Side Nav Slot (Accepts forge-side-nav, app-side-nav, or elements with [side-nav]) -->
+  <ng-content select="forge-side-nav, app-side-nav, [side-nav]" />
 
   <!-- Main Content Container Area -->
   <div class="main-content-wrapper">
@@ -15,7 +15,7 @@
   </div>
 
   <!-- Dynamic Right Side Panel Drawer Component -->
-  <app-side-panel [isOpen]="layoutService.isRightPanelOpen()"
+  <forge-side-panel [isOpen]="layoutService.isRightPanelOpen()"
     [title]="layoutService.rightPanelOptions().title ?? 'Details'"
     [width]="layoutService.rightPanelOptions().width ?? '380px'"
     [mode]="layoutService.rightPanelOptions().mode ?? 'overlay'" [component]="layoutService.rightPanelComponent()"

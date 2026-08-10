@@ -37,7 +37,7 @@ export interface SideNavUserProfile {
 }
 
 @Component({
-  selector: 'app-side-nav',
+  selector: 'forge-side-nav',
   imports: [
     LucidePanelLeft,
     LucideHexagon,
@@ -47,7 +47,7 @@ export interface SideNavUserProfile {
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
   host: {
-    'class': 'app-side-nav-host',
+    'class': 'forge-side-nav-host',
     '[class.is-collapsed]': 'layoutService.isLeftNavCollapsed()',
     '[attr.aria-hidden]': 'layoutService.isLeftNavCollapsed()',
     'role': 'navigation'

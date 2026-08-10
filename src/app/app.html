@@ -1,16 +1,16 @@
-<app-main-layout>
+<forge-main-layout>
   <!-- Side Navigation Component Slot -->
-  <app-side-nav side-nav brandName="Shared Component">
-  </app-side-nav>
+  <forge-side-nav side-nav brandName="Forge Components">
+  </forge-side-nav>
 
   <!-- Main Content Area Slot -->
   <div class="demo-page-content">
     <header class="app-header">
-      <div class="badge">Angular v22+ Component Suite</div>
-      <h1>Shared Components & Reusable Layout System</h1>
+      <div class="badge">Forge UI Component Library (&#64;forge/components)</div>
+      <h1>Forge Shared Components & Reusable Layout System</h1>
       <p class="subtitle">
         Modular layout shell featuring standalone <code>SideNavComponent</code>, reactive <code>LayoutService</code>,
-        dynamic dynamic right-side panel injection, and customizable main content backdrop blur.
+        dynamic right-side panel injection, and customizable main content backdrop blur.
       </p>
     </header>
 
@@ -82,14 +82,14 @@
             <label class="form-label" for="fruit-select">
               1. Standard Select <span class="required-star">*</span>
             </label>
-            <app-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
+            <forge-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
               [size]="inputSize()">
-              <app-option value="apple">🍎 Apple</app-option>
-              <app-option value="banana">🍌 Banana</app-option>
-              <app-option value="cherry">🍒 Cherry</app-option>
-              <app-option value="dragonfruit">🐉 Dragon Fruit</app-option>
-              <app-option value="elderberry">🫐 Elderberry</app-option>
-            </app-select-input>
+              <forge-option value="apple">🍎 Apple</forge-option>
+              <forge-option value="banana">🍌 Banana</forge-option>
+              <forge-option value="cherry">🍒 Cherry</forge-option>
+              <forge-option value="dragonfruit">🐉 Dragon Fruit</forge-option>
+              <forge-option value="elderberry">🫐 Elderberry</forge-option>
+            </forge-select-input>
             @if (demoForm.controls.singleFruit.touched && demoForm.controls.singleFruit.hasError('required')) {
             <span class="field-error">Please select a fruit.</span>
             }
@@ -100,21 +100,21 @@
             <label class="form-label" for="tech-select">
               2. Searchable Autocomplete Select <span class="required-star">*</span>
             </label>
-            <app-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
+            <forge-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
               searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
               (searchChange)="onSearchChange($event)">
               @for (fw of frameworks(); track fw.id) {
-              <app-option [value]="fw.id" [label]="fw.name">
+              <forge-option [value]="fw.id" [label]="fw.name">
                 <div class="option-custom-content">
                   <span class="fw-name">{{ fw.name }}</span>
                   <span class="fw-badge">{{ fw.category }}</span>
                 </div>
-              </app-option>
+              </forge-option>
               }
-            </app-select-input>
+            </forge-select-input>
           </div>
         </div>
       </form>
     </main>
   </div>
-</app-main-layout>
+</forge-main-layout>

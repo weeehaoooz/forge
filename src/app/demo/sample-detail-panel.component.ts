@@ -1,6 +1,6 @@
 import { Component, input, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { LayoutService } from '../layout.service';
+import { LayoutService } from '@forge/components';
 
 @Component({
   selector: 'app-sample-detail-panel',

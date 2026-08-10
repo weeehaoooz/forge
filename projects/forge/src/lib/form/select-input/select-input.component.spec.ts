@@ -9,20 +9,20 @@ import { OptionGroupComponent } from './option-group/option-group.component';
 @Component({
   imports: [SelectInputComponent, OptionComponent, OptionGroupComponent, ReactiveFormsModule],
   template: `
-    <app-select-input
+    <forge-select-input
       [formControl]="control"
       [placeholder]="placeholder()"
       [searchable]="searchable()"
       [clearable]="clearable()"
     >
-      <app-option value="apple">Apple</app-option>
-      <app-option value="banana">Banana</app-option>
-      <app-option value="cherry">Cherry</app-option>
-      <app-option-group label="Citrus">
-        <app-option value="lemon">Lemon</app-option>
-        <app-option value="orange">Orange</app-option>
-      </app-option-group>
-    </app-select-input>
+      <forge-option value="apple">Apple</forge-option>
+      <forge-option value="banana">Banana</forge-option>
+      <forge-option value="cherry">Cherry</forge-option>
+      <forge-option-group label="Citrus">
+        <forge-option value="lemon">Lemon</forge-option>
+        <forge-option value="orange">Orange</forge-option>
+      </forge-option-group>
+    </forge-select-input>
   `
 })
 class TestHostComponent {

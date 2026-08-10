@@ -1,6 +1,5 @@
 @use './styles/variables';
-@use './styles/typography';
-@use './styles/form-controls';
+@use '../projects/forge/styles/index';
 
 *,
 *::before,
@@ -11,6 +10,6 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-color, #f8fafc);
-  color: var(--text-color, #0f172a);
+  background-color: var(--forge-bg-color, var(--bg-color, #f8fafc));
+  color: var(--forge-text-color, var(--text-color, #0f172a));
 }

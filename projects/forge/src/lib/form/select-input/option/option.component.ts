@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-option',
+  selector: 'forge-option',
   templateUrl: './option.component.html',
   styleUrl: './option.component.scss',
   host: {
@@ -17,6 +17,7 @@ import {
     '[attr.aria-selected]': 'isSelected()',
     '[attr.aria-disabled]': 'disabled()',
     '[attr.tabindex]': '-1',
+    '[class.forge-option]': 'true',
     '[class.app-option]': 'true',
     '[class.is-selected]': 'isSelected()',
     '[class.is-active]': 'isActive()',

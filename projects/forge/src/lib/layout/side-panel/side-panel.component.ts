@@ -2,7 +2,7 @@ import { Component, Type, input, output } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 
 @Component({
-  selector: 'app-side-panel',
+  selector: 'forge-side-panel',
   imports: [NgComponentOutlet],
   templateUrl: './side-panel.component.html',
   styleUrl: './side-panel.component.scss',
