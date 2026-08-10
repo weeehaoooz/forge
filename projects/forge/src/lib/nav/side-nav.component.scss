@@ -19,6 +19,7 @@
     .default-nav-header {
       justify-content: center;
       padding: 0;
+      gap: 0;
     }
 
     .brand-wrapper {
@@ -192,41 +193,22 @@
     opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
     visibility 0.25s;
-}
 
-.brand-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--forge-primary-color, var(--primary-color, #2563eb)) 0%, var(--forge-primary-hover, var(--primary-hover, #1d4ed8)) 100%);
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-  flex-shrink: 0;
-
-  .logo-icon {
-    display: block;
+  >* {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
   }
-}
 
-.brand-info {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.brand-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--forge-text-color, var(--text-color, #0f172a));
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-
-.brand-chevron {
-  color: var(--forge-text-muted, var(--text-muted, #94a3b8));
+  img,
+  svg {
+    flex-shrink: 0;
+    max-height: 32px;
+    object-fit: contain;
+  }
 }
 
 .hamburger-toggle-btn {

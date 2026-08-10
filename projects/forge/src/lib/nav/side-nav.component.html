@@ -3,16 +3,19 @@
   <div class="side-nav-header">
     <ng-content select="[side-nav-header]">
       <div class="default-nav-header">
-        <div class="brand-wrapper">
+        <ng-content select="[side-nav-brand]">
           @if (showLogo()) {
-          <div class="brand-logo" title="Corelystic Logo">
-            <svg lucideHexagon class="logo-icon" [size]="20"></svg>
+          <div class="brand-wrapper" title="Logo">
+            @if (logoComponent(); as comp) {
+            <ng-container *ngComponentOutlet="comp; inputs: logoComponentInputs()" />
+            } @else if (logoTemplate(); as tmpl) {
+            <ng-container *ngTemplateOutlet="tmpl" />
+            } @else {
+            <ng-content select="[side-nav-logo]" />
+            }
           </div>
           }
-          <div class="brand-info">
-            <span class="brand-title">{{ brandName() }}</span>
-          </div>
-        </div>
+        </ng-content>
 
         @if (showToggle()) {
         <button type="button" class="hamburger-toggle-btn" (click)="layoutService.toggleLeftNav()"

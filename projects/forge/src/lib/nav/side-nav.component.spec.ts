@@ -1,6 +1,31 @@
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SideNavComponent } from './side-nav.component';
 import { LayoutService } from '../layout/layout.service';
+
+@Component({
+  template: `
+    <span class="my-custom-logo-component">Custom Logo Component</span>
+  `
+})
+class TestCustomLogoComponent { }
+
+@Component({
+  imports: [SideNavComponent],
+  template: `
+    <forge-side-nav>
+      <div side-nav-logo class="projected-logo-element">Custom Projected Logo</div>
+    </forge-side-nav>
+
+    <ng-template #tmpl>
+      <span class="template-logo-element">Template Logo</span>
+    </ng-template>
+  `
+})
+class TestHostComponent {
+  @ViewChild('tmpl') tmpl!: TemplateRef<unknown>;
+  logoComponentClass = TestCustomLogoComponent;
+}
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -9,7 +34,7 @@ describe('SideNavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SideNavComponent],
+      imports: [SideNavComponent, TestHostComponent],
       providers: [LayoutService]
     }).compileComponents();
 
@@ -23,17 +48,9 @@ describe('SideNavComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display default brand name Shared Components', () => {
+  it('should render hamburger toggle button', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const brandTitle = compiled.querySelector('.brand-title');
-    expect(brandTitle?.textContent?.trim()).toBe('Shared Components');
-  });
-
-  it('should render brand logo badge and hamburger toggle button', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const logo = compiled.querySelector('.brand-logo');
     const toggleBtn = compiled.querySelector('.hamburger-toggle-btn');
-    expect(logo).toBeTruthy();
     expect(toggleBtn).toBeTruthy();
   });
 
@@ -72,5 +89,39 @@ describe('SideNavComponent', () => {
 
     firstNavLink = compiled.querySelector('.nav-link');
     expect(firstNavLink?.getAttribute('data-tooltip')).toBe('Dashboards');
+  });
+
+  it('should support projected logo content via side-nav-logo slot', () => {
+    const hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture.detectChanges();
+
+    const compiled = hostFixture.nativeElement as HTMLElement;
+    const projectedLogo = compiled.querySelector('.projected-logo-element');
+    expect(projectedLogo).toBeTruthy();
+    expect(projectedLogo?.textContent).toBe('Custom Projected Logo');
+  });
+
+  it('should support logoComponent input to dynamically render a custom logo component', () => {
+    fixture.componentRef.setInput('logoComponent', TestCustomLogoComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const customLogoComp = compiled.querySelector('.my-custom-logo-component');
+    expect(customLogoComp).toBeTruthy();
+    expect(customLogoComp?.textContent).toBe('Custom Logo Component');
+  });
+
+  it('should support logoTemplate input to render a custom logo template', () => {
+    const hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture.detectChanges();
+
+    const sideNavFixture = TestBed.createComponent(SideNavComponent);
+    sideNavFixture.componentRef.setInput('logoTemplate', hostFixture.componentInstance.tmpl);
+    sideNavFixture.detectChanges();
+
+    const compiled = sideNavFixture.nativeElement as HTMLElement;
+    const tmplLogo = compiled.querySelector('.template-logo-element');
+    expect(tmplLogo).toBeTruthy();
+    expect(tmplLogo?.textContent).toBe('Template Logo');
   });
 });

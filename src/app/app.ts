@@ -8,6 +8,7 @@ import {
   LayoutService
 } from '@forge/components';
 import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
+import { LucideHexagon } from '@lucide/angular';
 
 
 interface FrameworkOption {
@@ -23,7 +24,8 @@ interface FrameworkOption {
     SelectInputModule,
     ReactiveFormsModule,
     MainLayoutComponent,
-    SideNavComponent
+    SideNavComponent,
+    LucideHexagon
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

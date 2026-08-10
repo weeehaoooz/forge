@@ -1,6 +1,12 @@
 <forge-main-layout>
   <!-- Side Navigation Component Slot -->
-  <forge-side-nav side-nav brandName="Forge Components">
+  <forge-side-nav side-nav>
+    <div side-nav-logo class="app-custom-logo">
+      <div class="logo-icon-badge">
+        <svg lucideHexagon [size]="20"></svg>
+      </div>
+      <span class="logo-text">The Forge</span>
+    </div>
   </forge-side-nav>
 
   <!-- Main Content Area Slot -->
@@ -36,8 +42,7 @@
             Open Floating Panel (Overlay)
           </button>
 
-          <button type="button" class="btn btn-primary"
-            (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
+          <button type="button" class="btn btn-primary" (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
             Open Inline Panel (Push Content)
           </button>
 
@@ -100,9 +105,9 @@
             <label class="form-label" for="tech-select">
               2. Searchable Autocomplete Select <span class="required-star">*</span>
             </label>
-            <forge-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
-              searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
-              (searchChange)="onSearchChange($event)">
+            <forge-select-input id="tech-select" formControlName="searchableFramework"
+              placeholder="Search technology..." searchPlaceholder="Type to filter..." [searchable]="true"
+              [size]="inputSize()" (searchChange)="onSearchChange($event)">
               @for (fw of frameworks(); track fw.id) {
               <forge-option [value]="fw.id" [label]="fw.name">
                 <div class="option-custom-content">

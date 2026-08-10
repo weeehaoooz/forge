@@ -1,4 +1,5 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, Type, TemplateRef, inject, input, output, signal } from '@angular/core';
+import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import {
   LucidePanelLeft,
   LucideLayoutDashboard,
@@ -8,7 +9,6 @@ import {
   LucideCircleHelp,
   LucideSettings,
   LucideChevronsUpDown,
-  LucideHexagon,
   LucideDynamicIcon,
   LucidePanelLeftOpen,
   LucidePanelLeftClose
@@ -39,8 +39,9 @@ export interface SideNavUserProfile {
 @Component({
   selector: 'forge-side-nav',
   imports: [
+    NgComponentOutlet,
+    NgTemplateOutlet,
     LucidePanelLeft,
-    LucideHexagon,
     LucideChevronsUpDown,
     LucideDynamicIcon
   ],
@@ -58,8 +59,14 @@ export class SideNavComponent {
   protected readonly LucidePanelLeftOpen = LucidePanelLeftOpen;
   protected readonly LucidePanelLeftClose = LucidePanelLeftClose;
 
-  /** Brand Title displayed in header */
-  readonly brandName = input<string>('Shared Components');
+  /** Custom logo component to render in header */
+  readonly logoComponent = input<Type<unknown> | null>(null);
+
+  /** Component inputs object to pass to logoComponent */
+  readonly logoComponentInputs = input<Record<string, unknown>>({});
+
+  /** Custom logo template to render in header */
+  readonly logoTemplate = input<TemplateRef<unknown> | null>(null);
 
   /** Whether to show the logo in header */
   readonly showLogo = input<boolean>(true);
