@@ -7,11 +7,11 @@
       (click)="onClose()" aria-label="Close details panel">
       <svg lucideX [size]="16"></svg>
     </button>
-
-    <div class="side-panel-body">
-      @if (component()) {
-      <ng-container *ngComponentOutlet="component()!; inputs: componentInputs()" />
-      }
-      <ng-content />
-    </div>
   </div>
+  <div class="side-panel-body">
+    @if (component()) {
+    <ng-container *ngComponentOutlet="component()!; inputs: componentInputs()" />
+    }
+    <ng-content />
+  </div>
+</div>
