@@ -81,7 +81,7 @@
       "prefix": "forge",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "projects/forge/ng-package.json"
           },
