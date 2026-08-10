@@ -24,4 +24,55 @@
   --forge-sidebar-collapsed-width: var(--sidebar-collapsed-width, 68px);
   --forge-nav-bg: var(--nav-bg, #ffffff);
   --forge-nav-border-color: var(--nav-border-color, #f1f5f9);
+
+  /* Button Specific Tokens */
+  --forge-btn-font-family: inherit;
+  --forge-btn-border-radius: var(--border-radius, 0.375rem);
+  --forge-btn-font-weight: 600;
+  --forge-btn-transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --forge-btn-ripple-color: rgba(255, 255, 255, 0.35);
+
+  --forge-btn-primary-bg: var(--btn-primary-bg, var(--forge-primary-color));
+  --forge-btn-primary-hover: var(--btn-primary-hover, var(--forge-primary-hover));
+  --forge-btn-primary-active: var(--btn-primary-active, #1e40af);
+  --forge-btn-primary-text: var(--btn-primary-text, #ffffff);
+
+  --forge-btn-secondary-bg: var(--btn-secondary-bg, #475569);
+  --forge-btn-secondary-hover: var(--btn-secondary-hover, #334155);
+  --forge-btn-secondary-active: var(--btn-secondary-active, #1e293b);
+  --forge-btn-secondary-text: var(--btn-secondary-text, #ffffff);
+
+  --forge-btn-outline-bg: var(--btn-outline-bg, var(--forge-card-bg));
+  --forge-btn-outline-border: var(--btn-outline-border, var(--forge-border-color));
+  --forge-btn-outline-hover-bg: var(--btn-outline-hover-bg, #f8fafc);
+  --forge-btn-outline-hover-border: var(--btn-outline-hover-border, var(--forge-border-hover));
+  --forge-btn-outline-text: var(--btn-outline-text, #334155);
+
+  --forge-btn-ghost-bg: var(--btn-ghost-bg, transparent);
+  --forge-btn-ghost-text: var(--btn-ghost-text, #64748b);
+  --forge-btn-ghost-hover-bg: var(--btn-ghost-hover-bg, #f1f5f9);
+  --forge-btn-ghost-hover-text: var(--btn-ghost-hover-text, #0f172a);
+  --forge-btn-ghost-active-bg: var(--btn-ghost-active-bg, #e2e8f0);
+
+  --forge-btn-danger-bg: var(--btn-danger-bg, var(--forge-error-color));
+  --forge-btn-danger-hover: var(--btn-danger-hover, #dc2626);
+  --forge-btn-danger-active: var(--btn-danger-active, #b91c1c);
+  --forge-btn-danger-text: var(--btn-danger-text, #ffffff);
+
+  --forge-btn-success-bg: var(--btn-success-bg, #16a34a);
+  --forge-btn-success-hover: var(--btn-success-hover, #15803d);
+  --forge-btn-success-active: var(--btn-success-active, #166534);
+  --forge-btn-success-text: var(--btn-success-text, #ffffff);
+
+  --forge-btn-height-sm: var(--btn-height-sm, 2rem);
+  --forge-btn-height-md: var(--btn-height-md, 2.25rem);
+  --forge-btn-height-lg: var(--btn-height-lg, 2.625rem);
+
+  --forge-btn-padding-x-sm: var(--btn-padding-x-sm, 0.625rem);
+  --forge-btn-padding-x-md: var(--btn-padding-x-md, 0.875rem);
+  --forge-btn-padding-x-lg: var(--btn-padding-x-lg, 1.125rem);
+
+  --forge-btn-font-size-sm: var(--btn-font-size-sm, 0.75rem);
+  --forge-btn-font-size-md: var(--btn-font-size-md, 0.8125rem);
+  --forge-btn-font-size-lg: var(--btn-font-size-lg, 0.875rem);
 }

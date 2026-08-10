@@ -1,9 +1,11 @@
 import { Component, Type, input, output } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
+import { ForgeButtonDirective } from '../../button/button.directive';
+import { LucideX } from '@lucide/angular';
 
 @Component({
   selector: 'forge-side-panel',
-  imports: [NgComponentOutlet],
+  imports: [NgComponentOutlet, ForgeButtonDirective, LucideX],
   templateUrl: './side-panel.component.html',
   styleUrl: './side-panel.component.scss',
   host: {

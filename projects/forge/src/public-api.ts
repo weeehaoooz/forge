@@ -15,3 +15,7 @@ export * from './lib/form/select-input/select-input.component';
 export * from './lib/form/select-input/option/option.component';
 export * from './lib/form/select-input/option-group/option-group.component';
 export * from './lib/form/select-input/select-input.module';
+
+// Button directive & types
+export * from './lib/button/button.directive';
+

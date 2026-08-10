@@ -1,10 +1,10 @@
 import { Component, input, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { LayoutService } from '@forge/components';
+import { LayoutService, ForgeButtonDirective } from '@forge/components';
 
 @Component({
   selector: 'app-sample-detail-panel',
-  imports: [JsonPipe],
+  imports: [JsonPipe, ForgeButtonDirective],
   template: `
     <div class="subject-detail-panel">
       <div class="badge">Subject ID: {{ subjectId() }}</div>
@@ -20,7 +20,7 @@ import { LayoutService } from '@forge/components';
       </div>
 
       <div class="actions">
-        <button type="button" class="btn btn-secondary" (click)="close()">
+        <button type="button" forgeButton variant="secondary" (click)="close()">
           Close Panel
         </button>
       </div>
@@ -73,18 +73,6 @@ import { LayoutService } from '@forge/components';
       margin-top: 12px;
       display: flex;
       justify-content: flex-end;
-    }
-    .btn {
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-      color: #334155;
-      &:hover {
-        background: #f1f5f9;
-      }
     }
   `]
 })

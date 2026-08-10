@@ -28,27 +28,115 @@
           <span class="card-subtitle">Test side-nav, dynamic right panel, and backdrop blur</span>
         </div>
         <div class="layout-controls-grid">
-          <button type="button" class="btn btn-outline" (click)="layoutService.toggleLeftNav()">
+          <button type="button" forgeButton variant="outline" (click)="layoutService.toggleLeftNav()">
             {{ layoutService.isLeftNavCollapsed() ? 'Expand Left Side-Nav' : 'Collapse Left Side-Nav' }}
           </button>
 
-          <button type="button" class="btn btn-primary"
+          <button type="button" forgeButton variant="primary"
             (click)="openDetailWithBlur('Subject Details (Blurred)', 'SUBJ-101')">
             Open Dynamic Panel (With Backdrop Blur)
           </button>
 
-          <button type="button" class="btn btn-secondary"
+          <button type="button" forgeButton variant="secondary"
             (click)="openDetailNoBlur('Quick Inspection (Unblurred)', 'QUICK-902')">
             Open Floating Panel (Overlay)
           </button>
 
-          <button type="button" class="btn btn-primary" (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
+          <button type="button" forgeButton variant="primary"
+            (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
             Open Inline Panel (Push Content)
           </button>
 
-          <button type="button" class="btn btn-outline" (click)="layoutService.toggleMainContentExpanded()">
+          <button type="button" forgeButton variant="outline" (click)="layoutService.toggleMainContentExpanded()">
             {{ layoutService.isMainContentExpanded() ? 'Reset Container Padding' : 'Expand Container Area' }}
           </button>
+        </div>
+      </div>
+
+      <!-- Button Design System Showcase Card -->
+      <div class="card button-demo-card">
+        <div class="card-header">
+          <div>
+            <h2>Button Component & Directive Showcase</h2>
+            <span class="card-subtitle">Standardized design system buttons with CSS ripple effect & multiple
+              variations</span>
+          </div>
+          <button type="button" forgeButton variant="secondary" size="sm" (click)="toggleButtonLoading()">
+            Simulate 2s Async Load
+          </button>
+        </div>
+
+        <div class="button-showcase-sections">
+          <!-- Variants Section -->
+          <div class="showcase-group">
+            <span class="group-label">Button Variants:</span>
+            <div class="button-row">
+              <button type="button" forgeButton variant="primary">
+                Primary
+              </button>
+              <button type="button" forgeButton variant="secondary">
+                Secondary
+              </button>
+              <button type="button" forgeButton variant="outline">
+                Outline
+              </button>
+              <button type="button" forgeButton variant="ghost">
+                Ghost
+              </button>
+              <button type="button" forgeButton variant="danger">
+                <svg lucideTrash2 [size]="16"></svg>
+                Danger
+              </button>
+              <button type="button" forgeButton variant="success">
+                <svg lucideCheck [size]="16"></svg>
+                Success
+              </button>
+              <button type="button" forgeButton variant="link">
+                Link Style
+              </button>
+            </div>
+          </div>
+
+          <!-- Sizes Section -->
+          <div class="showcase-group">
+            <span class="group-label">Sizing Variations:</span>
+            <div class="button-row">
+              <button type="button" forgeButton variant="primary" size="sm">
+                Small (32px)
+              </button>
+              <button type="button" forgeButton variant="primary" size="md">
+                Medium (36px)
+              </button>
+              <button type="button" forgeButton variant="primary" size="lg">
+                Large (42px)
+              </button>
+              <button type="button" forgeButton variant="ghost" size="sm" [iconOnly]="true" title="Ghost Icon Small">
+                <svg lucidePlus [size]="14"></svg>
+              </button>
+              <button type="button" forgeButton variant="outline" size="md" [iconOnly]="true" title="Ghost Icon Medium">
+                <svg lucideSparkles [size]="16"></svg>
+              </button>
+              <button type="button" forgeButton variant="primary" size="lg" [iconOnly]="true" title="Ghost Icon Large">
+                <svg lucideSend [size]="18"></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- States & Options Section -->
+          <div class="showcase-group">
+            <span class="group-label">Shapes, Loading & Disabled States:</span>
+            <div class="button-row">
+              <button type="button" forgeButton variant="primary" [pill]="true">
+                Pill Shaped Button
+              </button>
+              <button type="button" forgeButton variant="primary" [loading]="isBtnLoading()">
+                {{ isBtnLoading() ? 'Saving Data...' : 'Click to Load' }}
+              </button>
+              <button type="button" forgeButton variant="outline" [disabled]="true">
+                Disabled State
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -5,11 +5,11 @@ import {
   SelectInputModule,
   MainLayoutComponent,
   SideNavComponent,
+  ForgeButtonDirective,
   LayoutService
 } from '@forge/components';
 import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
-import { LucideHexagon } from '@lucide/angular';
-
+import { LucideHexagon, LucideSparkles, LucidePlus, LucideTrash2, LucideCheck, LucideSend } from '@lucide/angular';
 
 interface FrameworkOption {
   id: string;
@@ -25,7 +25,13 @@ interface FrameworkOption {
     ReactiveFormsModule,
     MainLayoutComponent,
     SideNavComponent,
-    LucideHexagon
+    ForgeButtonDirective,
+    LucideHexagon,
+    LucideSparkles,
+    LucidePlus,
+    LucideTrash2,
+    LucideCheck,
+    LucideSend
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -45,8 +51,16 @@ export class App {
   readonly isFormDisabled = signal<boolean>(false);
   readonly isClearableEnabled = signal<boolean>(true);
   readonly inputSize = signal<'sm' | 'md' | 'lg'>('sm');
+  readonly isBtnLoading = signal<boolean>(false);
   readonly searchLog = signal<string[]>([]);
   readonly submittedData = signal<string | null>(null);
+
+  toggleButtonLoading(): void {
+    this.isBtnLoading.set(true);
+    setTimeout(() => {
+      this.isBtnLoading.set(false);
+    }, 2000);
+  }
 
   setInputSize(size: 'sm' | 'md' | 'lg'): void {
     this.inputSize.set(size);

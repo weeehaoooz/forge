@@ -129,44 +129,31 @@
   gap: 10px;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  border-radius: var(--border-radius);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.15s ease;
-
-  &-primary {
-    background: var(--primary-color);
-    color: #ffffff;
-
-    &:hover {
-      background: var(--primary-hover);
-    }
+.button-demo-card {
+  .button-showcase-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
-  &-secondary {
-    background: var(--text-muted);
-    color: #ffffff;
+  .showcase-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
-    &:hover {
-      background: #334155;
+    .group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--forge-text-muted, #64748b);
     }
-  }
 
-  &-outline {
-    background: var(--card-bg);
-    border-color: var(--border-color);
-    color: #334155;
-
-    &:hover {
-      background: var(--bg-color);
-      border-color: var(--border-hover);
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.625rem;
     }
   }
 }
