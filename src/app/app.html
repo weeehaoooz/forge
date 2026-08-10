@@ -6,7 +6,7 @@
   <!-- Main Content Area Slot -->
   <div class="demo-page-content">
     <header class="app-header">
-      <div class="badge">Angular v21+ Component Suite</div>
+      <div class="badge">Angular v22+ Component Suite</div>
       <h1>Shared Components & Reusable Layout System</h1>
       <p class="subtitle">
         Modular layout shell featuring standalone <code>SideNavComponent</code>, reactive <code>LayoutService</code>,
@@ -33,7 +33,12 @@
 
           <button type="button" class="btn btn-secondary"
             (click)="openDetailNoBlur('Quick Inspection (Unblurred)', 'QUICK-902')">
-            Open Dynamic Panel (No Blur)
+            Open Floating Panel (Overlay)
+          </button>
+
+          <button type="button" class="btn btn-primary"
+            (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
+            Open Inline Panel (Push Content)
           </button>
 
           <button type="button" class="btn btn-outline" (click)="layoutService.toggleMainContentExpanded()">

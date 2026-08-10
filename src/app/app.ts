@@ -50,7 +50,7 @@ export class App {
 
   // Dynamic Options Demo Data
   readonly frameworks = signal<FrameworkOption[]>([
-    { id: 'angular', name: 'Angular (v21+ Signals)', category: 'Frontend' },
+    { id: 'angular', name: 'Angular (v22+ Signals)', category: 'Frontend' },
     { id: 'react', name: 'React (v19)', category: 'Frontend' },
     { id: 'vue', name: 'Vue.js (v3.5)', category: 'Frontend' },
     { id: 'svelte', name: 'Svelte 5 (Runes)', category: 'Frontend' },
@@ -100,7 +100,28 @@ export class App {
       {
         title: `Detail: ${title}`,
         width: '380px',
+        mode: 'overlay',
         blurBackdrop: false
+      }
+    );
+  }
+
+  openDetailInline(title: string, id: string): void {
+    this.layoutService.openRightPanel(
+      SampleDetailPanelComponent,
+      {
+        subjectId: id,
+        subjectTitle: title,
+        subjectData: {
+          category: 'Inline Data Panel',
+          status: 'Pushing Content',
+          lastInspected: new Date().toISOString()
+        }
+      },
+      {
+        title: `Inline: ${title}`,
+        width: '400px',
+        mode: 'inline'
       }
     );
   }

@@ -14,27 +14,10 @@
     }
   </div>
 
-  <!-- Dynamic Right Side Panel Drawer -->
-  @if (layoutService.isRightPanelOpen()) {
-  <aside class="right-side-panel" role="complementary"
-    [style.width]="layoutService.rightPanelOptions().width ?? '380px'"
-    [attr.aria-label]="layoutService.rightPanelOptions().title ?? 'Details Panel'">
-    <div class="right-panel-header">
-      <h3 class="right-panel-title">
-        {{ layoutService.rightPanelOptions().title ?? 'Details' }}
-      </h3>
-      <button type="button" class="right-panel-close-btn" (click)="layoutService.closeRightPanel()"
-        aria-label="Close details panel">
-        ✕
-      </button>
-    </div>
-
-    <div class="right-panel-body">
-      @if (layoutService.rightPanelComponent()) {
-      <ng-container
-        *ngComponentOutlet="layoutService.rightPanelComponent()!; inputs: layoutService.rightPanelInputs()" />
-      }
-    </div>
-  </aside>
-  }
+  <!-- Dynamic Right Side Panel Drawer Component -->
+  <app-side-panel [isOpen]="layoutService.isRightPanelOpen()"
+    [title]="layoutService.rightPanelOptions().title ?? 'Details'"
+    [width]="layoutService.rightPanelOptions().width ?? '380px'"
+    [mode]="layoutService.rightPanelOptions().mode ?? 'overlay'" [component]="layoutService.rightPanelComponent()"
+    [componentInputs]="layoutService.rightPanelInputs()" (close)="layoutService.closeRightPanel()" />
 </div>

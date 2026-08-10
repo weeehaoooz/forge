@@ -5,6 +5,8 @@ export interface RightPanelOptions {
   title?: string;
   /** Custom width for the panel (e.g. '400px', '500px') */
   width?: string;
+  /** Panel rendering mode: 'overlay' (floating over content) or 'inline' (pushes content) */
+  mode?: 'overlay' | 'inline';
   /** Whether to blur and lock background interactions on main content area */
   blurBackdrop?: boolean;
   /** Whether clicking backdrop closes panel (defaults to true if blurBackdrop is enabled) */
@@ -27,7 +29,16 @@ export class LayoutService {
 
   // Computed state for backdrop blur
   readonly shouldBlurMainContent = computed(() => {
-    return this.isRightPanelOpen() && !!this.rightPanelOptions().blurBackdrop;
+    return (
+      this.isRightPanelOpen() &&
+      (this.rightPanelOptions().mode ?? 'overlay') === 'overlay' &&
+      !!this.rightPanelOptions().blurBackdrop
+    );
+  });
+
+  // Computed state for inline panel mode
+  readonly isRightPanelInline = computed(() => {
+    return this.isRightPanelOpen() && this.rightPanelOptions().mode === 'inline';
   });
 
   // Action methods
@@ -47,6 +58,8 @@ export class LayoutService {
     this.isMainContentExpanded.set(expanded);
   }
 
+  private closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
   /**
    * Dynamically open the right side panel with a specified component and inputs.
    */
@@ -55,9 +68,15 @@ export class LayoutService {
     inputs: Record<string, unknown> = {},
     options: RightPanelOptions = {}
   ): void {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+
     this.rightPanelComponent.set(component as Type<unknown>);
     this.rightPanelInputs.set(inputs);
     this.rightPanelOptions.set({
+      mode: 'overlay',
       closeOnBackdropClick: true,
       ...options
     });
@@ -65,12 +84,20 @@ export class LayoutService {
   }
 
   /**
-   * Close the right side panel and clear injected component state.
+   * Close the right side panel and clear injected component state after animation completes.
    */
   closeRightPanel(): void {
     this.isRightPanelOpen.set(false);
-    this.rightPanelComponent.set(null);
-    this.rightPanelInputs.set({});
-    this.rightPanelOptions.set({});
+
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+    }
+
+    this.closeTimeout = setTimeout(() => {
+      this.rightPanelComponent.set(null);
+      this.rightPanelInputs.set({});
+      this.rightPanelOptions.set({});
+      this.closeTimeout = null;
+    }, 300);
   }
 }
