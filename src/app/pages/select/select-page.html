@@ -1,0 +1,94 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · SelectInputModule</div>
+    <h1>Select &amp; Autocomplete Showcase</h1>
+    <p class="subtitle">
+      Standard and searchable autocomplete selects with dynamic options,
+      custom option templates, and reactive form integration.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <form [formGroup]="selectForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Select Controls</h2>
+          <span class="card-subtitle">Standard Select and Searchable Autocomplete with ForgeSelectInput</span>
+        </div>
+        <div class="actions">
+          <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
+              (click)="setInputSize('sm')">Compact</button>
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
+              (click)="setInputSize('md')">Medium</button>
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
+              (click)="setInputSize('lg')">Large</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- Standard Select -->
+        <div class="form-group">
+          <label class="form-label" for="fruit-select">
+            Standard Select <span class="required-star">*</span>
+          </label>
+          <forge-select-input id="fruit-select" formControlName="singleFruit"
+            placeholder="Select a fruit..." [size]="inputSize()">
+            <forge-option value="apple">🍎 Apple</forge-option>
+            <forge-option value="banana">🍌 Banana</forge-option>
+            <forge-option value="cherry">🍒 Cherry</forge-option>
+            <forge-option value="dragonfruit">🐉 Dragon Fruit</forge-option>
+            <forge-option value="elderberry">🫐 Elderberry</forge-option>
+          </forge-select-input>
+          @if (selectForm.controls.singleFruit.touched && selectForm.controls.singleFruit.hasError('required')) {
+            <span class="field-error">Please select a fruit.</span>
+          }
+        </div>
+
+        <!-- Searchable Autocomplete Select -->
+        <div class="form-group">
+          <label class="form-label" for="tech-select">
+            Searchable Autocomplete Select <span class="required-star">*</span>
+          </label>
+          <forge-select-input id="tech-select" formControlName="searchableFramework"
+            placeholder="Search technology..." searchPlaceholder="Type to filter..."
+            [searchable]="true" [size]="inputSize()" (searchChange)="onSearchChange($event)">
+            @for (fw of frameworks(); track fw.id) {
+              <forge-option [value]="fw.id" [label]="fw.name">
+                <div class="option-custom-content">
+                  <span class="fw-name">{{ fw.name }}</span>
+                  <span class="fw-badge">{{ fw.category }}</span>
+                </div>
+              </forge-option>
+            }
+          </forge-select-input>
+        </div>
+      </div>
+    </form>
+
+    <!-- Actions & Search Log -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Dynamic Options &amp; Search Log</h2>
+        <span class="card-subtitle">Add options at runtime and observe typeahead search events</span>
+      </div>
+      <div class="actions-row">
+        <button type="button" forgeButton variant="outline" size="sm" (click)="addCustomFramework()">
+          + Add Custom Framework
+        </button>
+        <span class="options-count">{{ frameworks().length }} options loaded</span>
+      </div>
+      @if (searchLog().length > 0) {
+        <div class="search-log">
+          <span class="log-label">Search Event Log:</span>
+          <ul class="log-list">
+            @for (entry of searchLog(); track entry) {
+              <li>{{ entry }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </main>
+</div>

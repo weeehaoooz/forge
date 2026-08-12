@@ -154,3 +154,134 @@ textarea[size="lg"] {
   min-height: 6.25rem;
   padding: 0.625rem 0.75rem;
 }
+
+/* Forge Checkbox Directive Styling */
+.forge-checkbox {
+  --checkbox-size: 1.125rem;
+  --checkbox-bg: var(--forge-card-bg, #ffffff);
+  --checkbox-border: var(--forge-border-color, #cbd5e1);
+  --checkbox-border-hover: var(--forge-border-hover, #64748b);
+  --checkbox-color: var(--forge-primary-color, #2563eb);
+  --checkbox-color-hover: var(--forge-primary-hover, #1d4ed8);
+  --checkbox-mark-color: #ffffff;
+  --checkbox-radius: 0.25rem;
+  --checkbox-focus-ring: var(--forge-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin: 0;
+  padding: 0;
+  background-color: var(--checkbox-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid var(--checkbox-border);
+  border-radius: var(--checkbox-radius);
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: var(--checkbox-border-hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--checkbox-focus-ring);
+    border-color: var(--checkbox-color);
+  }
+
+  &:checked {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      background-color: var(--checkbox-color-hover);
+      border-color: var(--checkbox-color-hover);
+    }
+  }
+
+  &:indeterminate,
+  &.is-indeterminate {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M4 8a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 014 8z' clip-rule='evenodd'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      background-color: var(--checkbox-color-hover);
+      border-color: var(--checkbox-color-hover);
+    }
+  }
+
+  /* Sizing Variations */
+  &.checkbox-sm {
+    --checkbox-size: 0.9375rem;
+    --checkbox-radius: 0.1875rem;
+  }
+
+  &.checkbox-md {
+    --checkbox-size: 1.125rem;
+    --checkbox-radius: 0.25rem;
+  }
+
+  &.checkbox-lg {
+    --checkbox-size: 1.375rem;
+    --checkbox-radius: 0.3125rem;
+  }
+
+  /* Color Variants */
+  &.forge-checkbox-primary {
+    --checkbox-color: var(--forge-primary-color, #2563eb);
+    --checkbox-color-hover: var(--forge-primary-hover, #1d4ed8);
+    --checkbox-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  &.forge-checkbox-secondary {
+    --checkbox-color: #475569;
+    --checkbox-color-hover: #334155;
+    --checkbox-focus-ring: 0 0 0 3px rgba(71, 85, 105, 0.15);
+  }
+
+  &.forge-checkbox-success {
+    --checkbox-color: #16a34a;
+    --checkbox-color-hover: #15803d;
+    --checkbox-focus-ring: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  }
+
+  &.forge-checkbox-danger {
+    --checkbox-color: var(--forge-error-color, #ef4444);
+    --checkbox-color-hover: #dc2626;
+    --checkbox-focus-ring: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
+
+  /* Disabled State */
+  &:disabled,
+  &[disabled] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    &:checked,
+    &:indeterminate,
+    &.is-indeterminate {
+      background-color: #94a3b8;
+      border-color: #94a3b8;
+    }
+  }
+
+  /* Invalid / Error State */
+  &.is-invalid {
+    border-color: var(--forge-error-color, #ef4444);
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}

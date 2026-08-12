@@ -70,7 +70,13 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "include": [
+              "src/**/*.spec.ts",
+              "projects/forge/src/**/*.spec.ts"
+            ]
+          }
         }
       }
     },

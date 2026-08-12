@@ -1,0 +1,30 @@
+@use '../../../styles/variables' as *;
+
+.button-demo-card {
+  .button-showcase-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .showcase-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--forge-text-muted, #64748b);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.625rem;
+    }
+  }
+}

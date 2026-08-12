@@ -1,223 +1,87 @@
 import { Component, inject, signal } from '@angular/core';
-import { JsonPipe } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
+import { MainLayoutComponent, SideNavComponent, LayoutService } from '@forge/components';
+import type { SideNavGroup, SideNavItem } from '@forge/components';
 import {
-  SelectInputModule,
-  MainLayoutComponent,
-  SideNavComponent,
-  ForgeButtonDirective,
-  ForgeInputDirective,
-  DatePickerComponent,
-  DateTimePickerComponent,
-  DateRangePickerComponent,
-  DateTimeRangePickerComponent,
-  DateRangeValue,
-  LayoutService
-} from '@forge/components';
-import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
-import { LucideHexagon, LucideSparkles, LucidePlus, LucideTrash2, LucideCheck, LucideSend } from '@lucide/angular';
-
-interface FrameworkOption {
-  id: string;
-  name: string;
-  category: string;
-  icon?: string;
-}
+  LucideHexagon,
+  LucideMousePointerClick,
+  LucideTextCursorInput,
+  LucideChevronDown,
+  LucideCalendarDays,
+  LucideSquareCheck,
+  LucideLayout
+} from '@lucide/angular';
 
 @Component({
   selector: 'app-root',
   imports: [
-    SelectInputModule,
-    ReactiveFormsModule,
+    RouterOutlet,
     MainLayoutComponent,
     SideNavComponent,
-    ForgeButtonDirective,
-    ForgeInputDirective,
-    DatePickerComponent,
-    DateTimePickerComponent,
-    DateRangePickerComponent,
-    DateTimeRangePickerComponent,
-    LucideHexagon,
-    LucideSparkles,
-    LucidePlus,
-    LucideTrash2,
-    LucideCheck,
-    LucideSend
+    LucideHexagon
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected readonly layoutService = inject(LayoutService);
+  private readonly router = inject(Router);
 
-  // Demo Form
-  readonly demoForm = new FormGroup({
-    projectName: new FormControl<string>('', Validators.required),
-    projectDescription: new FormControl<string>(''),
-    singleFruit: new FormControl<string | null>(null, Validators.required),
-    searchableFramework: new FormControl<string | null>('angular', Validators.required),
-    startDate: new FormControl<string | null>('2026-08-15', Validators.required),
-    appointmentDateTime: new FormControl<string | null>('2026-08-20 14:30', Validators.required),
-    dateRange: new FormControl<DateRangeValue | null>({
-      startDate: '2026-08-08',
-      endDate: '2026-08-14'
-    }),
-    dateTimeRange: new FormControl<DateRangeValue | null>({
-      startDate: '2026-08-08 09:00',
-      endDate: '2026-08-14 18:00'
-    })
-  });
-
-  // Controls for interactive settings
-  readonly isFormDisabled = signal<boolean>(false);
-  readonly isClearableEnabled = signal<boolean>(true);
-  readonly inputSize = signal<'sm' | 'md' | 'lg'>('sm');
-  readonly isBtnLoading = signal<boolean>(false);
-  readonly searchLog = signal<string[]>([]);
-  readonly submittedData = signal<string | null>(null);
-
-  // Min & Max date/time demo bounds
-  readonly minDateDemo = '2026-08-05';
-  readonly maxDateDemo = '2026-08-25';
-  readonly minDateTimeDemo = '2026-08-05 09:00';
-  readonly maxDateTimeDemo = '2026-08-25 18:00';
-
-  toggleButtonLoading(): void {
-    this.isBtnLoading.set(true);
-    setTimeout(() => {
-      this.isBtnLoading.set(false);
-    }, 2000);
-  }
-
-  setInputSize(size: 'sm' | 'md' | 'lg'): void {
-    this.inputSize.set(size);
-  }
-
-  // Dynamic Options Demo Data
-  readonly frameworks = signal<FrameworkOption[]>([
-    { id: 'angular', name: 'Angular (v22+ Signals)', category: 'Frontend' },
-    { id: 'react', name: 'React (v19)', category: 'Frontend' },
-    { id: 'vue', name: 'Vue.js (v3.5)', category: 'Frontend' },
-    { id: 'svelte', name: 'Svelte 5 (Runes)', category: 'Frontend' },
-    { id: 'nest', name: 'NestJS Framework', category: 'Backend' },
-    { id: 'express', name: 'Express.js', category: 'Backend' },
-    { id: 'fastify', name: 'Fastify Node Server', category: 'Backend' },
-    { id: 'django', name: 'Django Python Framework', category: 'Backend' },
-    { id: 'spring', name: 'Spring Boot (Java)', category: 'Backend' },
-    { id: 'flutter', name: 'Flutter (Dart)', category: 'Mobile' }
+  protected readonly navGroups = signal<SideNavGroup[]>([
+    {
+      title: 'BUTTONS',
+      items: [
+        { id: 'buttons', label: 'Buttons', icon: LucideMousePointerClick, route: '/buttons' }
+      ]
+    },
+    {
+      title: 'FIELDS',
+      items: [
+        { id: 'inputs', label: 'Inputs', icon: LucideTextCursorInput, route: '/inputs' },
+        { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
+        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
+        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' }
+      ]
+    },
+    {
+      title: 'LAYOUT',
+      items: [
+        { id: 'layout', label: 'Layout', icon: LucideLayout, route: '/layout' }
+      ]
+    }
   ]);
 
-  // Layout Demo Actions
-  openDetailWithBlur(title: string, id: string): void {
-    this.layoutService.openRightPanel(
-      SampleDetailPanelComponent,
-      {
-        subjectId: id,
-        subjectTitle: title,
-        subjectData: {
-          category: 'Frontend Framework',
-          status: 'Active',
-          lastInspected: new Date().toISOString(),
-          requestedBy: 'User Admin'
-        }
-      },
-      {
-        title: `Detail: ${title}`,
-        width: '420px',
-        blurBackdrop: true,
-        closeOnBackdropClick: true
-      }
+  constructor() {
+    // Sync active nav item with current route
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e) => {
+        const url = (e as NavigationEnd).urlAfterRedirects;
+        const segment = url.split('/')[1];
+        this._setActiveItem(segment);
+      });
+
+    // Set initial active item from current URL
+    const initialSegment = this.router.url.split('/')[1];
+    this._setActiveItem(initialSegment);
+  }
+
+  private _setActiveItem(segment: string): void {
+    this.navGroups.update(groups =>
+      groups.map(group => ({
+        ...group,
+        items: group.items.map(item => ({
+          ...item,
+          active: item.id === segment
+        }))
+      }))
     );
   }
 
-  openDetailNoBlur(title: string, id: string): void {
-    this.layoutService.openRightPanel(
-      SampleDetailPanelComponent,
-      {
-        subjectId: id,
-        subjectTitle: title,
-        subjectData: {
-          category: 'Backend Framework',
-          status: 'Stable',
-          lastInspected: new Date().toISOString()
-        }
-      },
-      {
-        title: `Detail: ${title}`,
-        width: '380px',
-        mode: 'overlay',
-        blurBackdrop: false
-      }
-    );
-  }
-
-  openDetailInline(title: string, id: string): void {
-    this.layoutService.openRightPanel(
-      SampleDetailPanelComponent,
-      {
-        subjectId: id,
-        subjectTitle: title,
-        subjectData: {
-          category: 'Inline Data Panel',
-          status: 'Pushing Content',
-          lastInspected: new Date().toISOString()
-        }
-      },
-      {
-        title: `Inline: ${title}`,
-        width: '400px',
-        mode: 'inline'
-      }
-    );
-  }
-
-  toggleDisableForm(): void {
-    const nextState = !this.isFormDisabled();
-    this.isFormDisabled.set(nextState);
-    if (nextState) {
-      this.demoForm.disable();
-    } else {
-      this.demoForm.enable();
+  onNavItemClick(item: SideNavItem): void {
+    if (item.route) {
+      this.router.navigateByUrl(item.route);
     }
-  }
-
-  onSearchChange(term: string): void {
-    if (term) {
-      this.searchLog.update((logs) => [
-        `Searched for "${term}" at ${new Date().toLocaleTimeString()}`,
-        ...logs.slice(0, 4)
-      ]);
-    }
-  }
-
-  addCustomFramework(): void {
-    const count = this.frameworks().length + 1;
-    const newFw: FrameworkOption = {
-      id: `custom-${count}`,
-      name: `Custom Tech Stack #${count}`,
-      category: 'Custom'
-    };
-    this.frameworks.update((list) => [...list, newFw]);
-  }
-
-  onSubmit(): void {
-    if (this.demoForm.valid) {
-      this.submittedData.set(JSON.stringify(this.demoForm.value, null, 2));
-    } else {
-      this.demoForm.markAllAsTouched();
-      this.submittedData.set(null);
-    }
-  }
-
-  onReset(): void {
-    this.demoForm.reset({
-      projectName: '',
-      projectDescription: '',
-      singleFruit: null,
-      searchableFramework: 'angular',
-      startDate: '2026-08-15',
-      appointmentDateTime: '2026-08-20 14:30'
-    });
-    this.submittedData.set(null);
   }
 }

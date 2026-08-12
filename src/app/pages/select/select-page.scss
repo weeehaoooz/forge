@@ -1,0 +1,54 @@
+.actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  .options-count {
+    font-size: 0.75rem;
+    color: var(--forge-text-muted, #64748b);
+  }
+}
+
+.search-log {
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+
+  .log-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .log-list {
+    margin: 0.375rem 0 0 0;
+    padding: 0 0 0 1rem;
+    font-size: 0.75rem;
+    color: #334155;
+
+    li {
+      margin-bottom: 0.25rem;
+    }
+  }
+}
+
+.option-custom-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .fw-name {
+    font-weight: 500;
+  }
+
+  .fw-badge {
+    font-size: 0.6875rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    background: #f1f5f9;
+    color: var(--forge-text-muted, #64748b);
+  }
+}

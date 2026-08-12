@@ -1,0 +1,63 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · ForgeInputDirective</div>
+    <h1>Inputs Showcase</h1>
+    <p class="subtitle">
+      Styled text input and textarea components matching design system variables,
+      with size variants and reactive form integration.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <form [formGroup]="inputsForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Form Controls (Inputs &amp; Textarea)</h2>
+          <span class="card-subtitle">Standardized styling matching _variables.scss</span>
+        </div>
+        <div class="actions">
+          <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
+              (click)="setInputSize('sm')" title="Compact Size (32px)">
+              Compact
+            </button>
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
+              (click)="setInputSize('md')" title="Medium Size (36px)">
+              Medium
+            </button>
+            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
+              (click)="setInputSize('lg')" title="Large Size (42px)">
+              Large
+            </button>
+          </div>
+
+          <button type="button" forgeButton variant="outline" size="sm" (click)="toggleDisableForm()">
+            {{ isFormDisabled() ? 'Enable Form' : 'Disable Form' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- Text Input -->
+        <div class="form-group">
+          <label class="form-label" for="project-name">
+            Project Name <span class="required-star">*</span>
+          </label>
+          <input id="project-name" type="text" forgeInput formControlName="projectName"
+            placeholder="e.g. NextGen Dashboard" [size]="inputSize()" />
+          @if (inputsForm.controls.projectName.touched && inputsForm.controls.projectName.hasError('required')) {
+            <span class="field-error">Project name is required.</span>
+          }
+        </div>
+
+        <!-- Textarea -->
+        <div class="form-group">
+          <label class="form-label" for="project-desc">Project Description</label>
+          <textarea id="project-desc" forgeTextarea formControlName="projectDescription"
+            placeholder="Enter detailed project scope or comments..." [size]="inputSize()" rows="3"></textarea>
+          <span class="field-help">Optional. Supports multi-line input and resizing.</span>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

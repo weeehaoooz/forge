@@ -1,0 +1,90 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · ForgeCheckboxDirective</div>
+    <h1>Checkbox Showcase</h1>
+    <p class="subtitle">
+      Reactive form-bound checkboxes alongside standalone variant, size,
+      indeterminate, and disabled state demonstrations.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <form [formGroup]="checkboxForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Checkbox Directive (forgeCheckbox)</h2>
+          <span class="card-subtitle">Accessible checkboxes with ControlValueAccessor and SCSS theme support</span>
+        </div>
+        <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
+            (click)="setInputSize('sm')">Compact</button>
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
+            (click)="setInputSize('md')">Medium</button>
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
+            (click)="setInputSize('lg')">Large</button>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- Form-bound checkboxes -->
+        <div class="form-group">
+          <label class="form-label">Form-Bound Checkboxes</label>
+          <div class="checkbox-group">
+            <div class="checkbox-row">
+              <input id="accept-terms-check" type="checkbox" forgeCheckbox
+                formControlName="acceptTerms" [size]="inputSize()" />
+              <label for="accept-terms-check" class="checkbox-label">
+                I agree to the Terms of Service &amp; Privacy Policy
+                <span class="required-star">*</span>
+              </label>
+            </div>
+
+            <div class="checkbox-row">
+              <input id="notifications-check" type="checkbox" forgeCheckbox
+                formControlName="notificationsEnabled" [size]="inputSize()" variant="success" />
+              <label for="notifications-check" class="checkbox-label">
+                Subscribe to email notifications &amp; product updates
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Variants & States -->
+        <div class="form-group">
+          <label class="form-label">Variants &amp; States</label>
+          <div class="variants-showcase">
+            <label class="variant-item">
+              <input type="checkbox" forgeCheckbox [checked]="true" variant="primary" size="sm" />
+              <span>Primary (sm)</span>
+            </label>
+
+            <label class="variant-item">
+              <input type="checkbox" forgeCheckbox [checked]="true" variant="secondary" size="md" />
+              <span>Secondary (md)</span>
+            </label>
+
+            <label class="variant-item">
+              <input type="checkbox" forgeCheckbox [checked]="true" variant="success" size="lg" />
+              <span>Success (lg)</span>
+            </label>
+
+            <label class="variant-item">
+              <input type="checkbox" forgeCheckbox [checked]="true" variant="danger" size="md" />
+              <span>Danger</span>
+            </label>
+
+            <label class="variant-item">
+              <input type="checkbox" forgeCheckbox [indeterminate]="true" variant="primary" size="md" />
+              <span>Indeterminate</span>
+            </label>
+
+            <label class="variant-item variant-item--disabled">
+              <input type="checkbox" forgeCheckbox [checked]="true" [disabled]="true" size="md" />
+              <span>Disabled</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

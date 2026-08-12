@@ -22,6 +22,9 @@ export * from './lib/button/button.directive';
 // Input & Textarea directive
 export * from './lib/form/input/input.directive';
 
+// Checkbox directive & types
+export * from './lib/form/checkbox/checkbox.directive';
+
 // DatePicker, DateTimePicker & Range Picker components
 export * from './lib/form/date-picker/date-picker.component';
 export * from './lib/form/date-time-picker/date-time-picker.component';

@@ -1,0 +1,84 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · Date Pickers</div>
+    <h1>Date Pickers Showcase</h1>
+    <p class="subtitle">
+      DatePicker, DateTimePicker, DateRangePicker, and DateTimeRangePicker
+      with min/max bounds, presets, and reactive form integration.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <form [formGroup]="dateForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Date &amp; Time Picker Controls</h2>
+          <span class="card-subtitle">Min: Aug 5 · Max: Aug 25 (for bounded pickers)</span>
+        </div>
+        <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
+            (click)="setInputSize('sm')">Compact</button>
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
+            (click)="setInputSize('md')">Medium</button>
+          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
+            (click)="setInputSize('lg')">Large</button>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- DatePicker -->
+        <div class="form-group">
+          <label class="form-label" for="start-date-picker">
+            DatePicker (Min: Aug 5, Max: Aug 25) <span class="required-star">*</span>
+          </label>
+          <forge-date-picker id="start-date-picker" formControlName="startDate"
+            placeholder="Select start date..." displayFormat="YYYY-MM-DD"
+            valueFormat="YYYY-MM-DD" [minDate]="minDateDemo" [maxDate]="maxDateDemo"
+            [size]="inputSize()" [clearable]="true">
+          </forge-date-picker>
+          @if (dateForm.controls.startDate.touched && dateForm.controls.startDate.hasError('required')) {
+            <span class="field-error">Start date is required.</span>
+          }
+        </div>
+
+        <!-- DateTimePicker -->
+        <div class="form-group">
+          <label class="form-label" for="appointment-datetime-picker">
+            DateTimePicker (Min: Aug 5 09:00, Max: Aug 25 18:00) <span class="required-star">*</span>
+          </label>
+          <forge-date-time-picker id="appointment-datetime-picker" formControlName="appointmentDateTime"
+            placeholder="Select appointment time..." displayFormat="YYYY-MM-DD HH:mm"
+            valueFormat="YYYY-MM-DD HH:mm" [minDate]="minDateTimeDemo" [maxDate]="maxDateTimeDemo"
+            [use24Hour]="true" [size]="inputSize()" [clearable]="true">
+          </forge-date-time-picker>
+          @if (dateForm.controls.appointmentDateTime.touched && dateForm.controls.appointmentDateTime.hasError('required')) {
+            <span class="field-error">Appointment date and time is required.</span>
+          }
+        </div>
+
+        <!-- DateRangePicker -->
+        <div class="form-group">
+          <label class="form-label" for="date-range-picker">
+            DateRangePicker (Dual Calendar &amp; Duration Presets)
+          </label>
+          <forge-date-range-picker id="date-range-picker" formControlName="dateRange"
+            placeholder="Select start and end dates..." displayFormat="YYYY-MM-DD"
+            presetType="calendar" valueFormat="YYYY-MM-DD" [size]="inputSize()" [clearable]="true">
+          </forge-date-range-picker>
+        </div>
+
+        <!-- DateTimeRangePicker -->
+        <div class="form-group">
+          <label class="form-label" for="datetime-range-picker">
+            DateTimeRangePicker (Date &amp; Time Range with Presets)
+          </label>
+          <forge-date-time-range-picker id="datetime-range-picker" formControlName="dateTimeRange"
+            placeholder="Select start &amp; end date/time..." displayFormat="YYYY-MM-DD HH:mm"
+            presetType="duration" valueFormat="YYYY-MM-DD HH:mm" [use24Hour]="true"
+            [size]="inputSize()" [clearable]="true">
+          </forge-date-time-range-picker>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>
