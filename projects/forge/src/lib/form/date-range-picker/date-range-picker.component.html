@@ -1,0 +1,200 @@
+<!-- DateRangePicker Input Trigger -->
+<div #triggerEl cdkOverlayOrigin #origin="cdkOverlayOrigin" class="datepicker-trigger daterangepicker-trigger"
+  role="combobox" [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'dialog'" [attr.aria-controls]="dialogId"
+  [attr.aria-disabled]="effectiveDisabled()" (click)="toggleOpen()">
+  <div class="datepicker-value-container">
+    <svg class="datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
+    <span class="daterangepicker-value-text" [class.is-placeholder]="!formattedTriggerValue()">
+      {{ formattedTriggerValue() || placeholder() }}
+    </span>
+  </div>
+
+  <div class="datepicker-actions">
+    @if (clearable() && formattedTriggerValue() && !effectiveDisabled()) {
+    <button type="button" class="datepicker-clear-btn" aria-label="Clear range" title="Clear range"
+      (click)="onClear($event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    }
+  </div>
+</div>
+
+<!-- Dual Calendar Dropdown Overlay Dialog -->
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin" [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayPositions]="positions" [cdkConnectedOverlayHasBackdrop]="false"
+  [cdkConnectedOverlayLockPosition]="false" [cdkConnectedOverlayFlexibleDimensions]="true"
+  [cdkConnectedOverlayPush]="true" (detach)="close()">
+  <div class="datepicker-dropdown-panel daterangepicker-dropdown-panel" [id]="dialogId" role="dialog"
+    aria-label="Date Range Picker Calendar">
+    <div class="daterangepicker-content">
+
+      <!-- Presets Sidebar -->
+      @if (effectivePresets().length > 0) {
+      <aside class="daterangepicker-sidebar">
+        <div class="preset-list">
+          @for (preset of effectivePresets(); track preset.label) {
+          <button type="button" class="preset-item" [class.is-active]="activePresetLabel() === preset.label"
+            (click)="applyPreset(preset)">
+            {{ preset.label }}
+          </button>
+          }
+        </div>
+      </aside>
+      }
+
+      <!-- Main Dual Calendars Container -->
+      <main class="daterangepicker-calendars-container">
+        <div class="dual-calendars-grid">
+
+          <!-- Left Calendar Month -->
+          <div class="calendar-month-panel left-month">
+            <div class="datepicker-header">
+              <button type="button" class="datepicker-nav-btn" aria-label="Previous month" title="Previous month"
+                [disabled]="isPrevDisabled()" (click)="prevMonth()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="month-header-title">{{ leftHeaderLabel() }}</span>
+              <div class="header-nav-placeholder"></div>
+            </div>
+
+            <div class="datepicker-body">
+              <div class="datepicker-weekdays">
+                @for (dayName of weekDayNames(); track dayName) {
+                <span class="weekday-cell">{{ dayName }}</span>
+                }
+              </div>
+
+              <div class="datepicker-days-grid">
+                @for (day of leftCalendarDays(); track day.date.valueOf()) {
+                <button type="button" class="day-cell range-day-cell" [class.is-other-month]="!day.isCurrentMonth"
+                  [class.is-today]="day.isToday" [class.is-selected-start]="day.isSelectedStart"
+                  [class.is-selected-end]="day.isSelectedEnd" [class.is-in-range]="day.isInRange"
+                  [class.is-hovered-range]="day.isHoveredRange" [class.is-disabled]="day.isDisabled"
+                  [disabled]="day.isDisabled" (click)="selectDay(day)" (mouseenter)="onDayHover(day)">
+                  {{ day.dayNumber }}
+                </button>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Vertical Separator Divider -->
+          <div class="calendars-divider"></div>
+
+          <!-- Right Calendar Month -->
+          <div class="calendar-month-panel right-month">
+            <div class="datepicker-header">
+              <div class="header-nav-placeholder"></div>
+              <span class="month-header-title">{{ rightHeaderLabel() }}</span>
+              <button type="button" class="datepicker-nav-btn" aria-label="Next month" title="Next month"
+                [disabled]="isNextDisabled()" (click)="nextMonth()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <div class="datepicker-body">
+              <div class="datepicker-weekdays">
+                @for (dayName of weekDayNames(); track dayName) {
+                <span class="weekday-cell">{{ dayName }}</span>
+                }
+              </div>
+
+              <div class="datepicker-days-grid">
+                @for (day of rightCalendarDays(); track day.date.valueOf()) {
+                <button type="button" class="day-cell range-day-cell" [class.is-other-month]="!day.isCurrentMonth"
+                  [class.is-today]="day.isToday" [class.is-selected-start]="day.isSelectedStart"
+                  [class.is-selected-end]="day.isSelectedEnd" [class.is-in-range]="day.isInRange"
+                  [class.is-hovered-range]="day.isHoveredRange" [class.is-disabled]="day.isDisabled"
+                  [disabled]="day.isDisabled" (click)="selectDay(day)" (mouseenter)="onDayHover(day)">
+                  {{ day.dayNumber }}
+                </button>
+                }
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Optional Time Pickers Row (When showTime is true) -->
+        @if (showTime()) {
+        <div class="daterangepicker-time-row">
+          <div class="time-picker-block">
+            <span class="time-label">Start Time:</span>
+            <div class="time-controls">
+              <button type="button" class="time-adjust-btn" (click)="adjustStartHour(1)">▲</button>
+              <span class="time-val">{{ draftStartHour().toString().padStart(2, '0') }}</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustStartHour(-1)">▼</button>
+              <span class="time-sep">:</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustStartMinute(1)">▲</button>
+              <span class="time-val">{{ draftStartMinute().toString().padStart(2, '0') }}</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustStartMinute(-1)">▼</button>
+              @if (!use24Hour()) {
+              <button type="button" class="meridiem-toggle" (click)="toggleStartMeridiem()">
+                {{ draftStartHour() >= 12 ? 'PM' : 'AM' }}
+              </button>
+              }
+            </div>
+          </div>
+
+          <div class="time-picker-block">
+            <span class="time-label">End Time:</span>
+            <div class="time-controls">
+              <button type="button" class="time-adjust-btn" (click)="adjustEndHour(1)">▲</button>
+              <span class="time-val">{{ draftEndHour().toString().padStart(2, '0') }}</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustEndHour(-1)">▼</button>
+              <span class="time-sep">:</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustEndMinute(1)">▲</button>
+              <span class="time-val">{{ draftEndMinute().toString().padStart(2, '0') }}</span>
+              <button type="button" class="time-adjust-btn" (click)="adjustEndMinute(-1)">▼</button>
+              @if (!use24Hour()) {
+              <button type="button" class="meridiem-toggle" (click)="toggleEndMeridiem()">
+                {{ draftEndHour() >= 12 ? 'PM' : 'AM' }}
+              </button>
+              }
+            </div>
+          </div>
+        </div>
+        }
+
+        <!-- Bottom Action & Inputs Footer Bar -->
+        <footer class="daterangepicker-footer">
+          <div class="range-display-inputs">
+            <input #startInputEl type="text" class="date-preview-input" [value]="startInputText()"
+              [placeholder]="showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD'" (input)="onStartInputChange($event)"
+              (blur)="onStartInputBlur($event)" (keydown)="onFooterInputKeyDown($event)"
+              aria-label="Start date input" />
+            <span class="range-sep">—</span>
+            <input #endInputEl type="text" class="date-preview-input" [value]="endInputText()"
+              [placeholder]="showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD'" (input)="onEndInputChange($event)"
+              (blur)="onEndInputBlur($event)" (keydown)="onFooterInputKeyDown($event)" aria-label="End date input" />
+          </div>
+
+          <div class="action-buttons">
+            <button type="button" class="btn-range-cancel" (click)="cancelSelection()">
+              Cancel
+            </button>
+            <button type="button" class="btn-range-apply" (click)="applySelection()">
+              Apply
+            </button>
+          </div>
+        </footer>
+
+
+      </main>
+
+    </div>
+  </div>
+</ng-template>

@@ -3,11 +3,16 @@
   [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'dialog'" [attr.aria-controls]="dialogId"
   [attr.aria-disabled]="effectiveDisabled()">
   <div class="datepicker-value-container">
-    <svg class="datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" (click)="toggleOpen()">
+    <svg class="datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      aria-hidden="true" (click)="toggleOpen()">
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
       <line x1="16" y1="2" x2="16" y2="6"></line>
       <line x1="8" y1="2" x2="8" y2="6"></line>
       <line x1="3" y1="10" x2="21" y2="10"></line>
+      @if (showTime()) {
+      <circle cx="12" cy="15" r="2.5"></circle>
+      <path d="M12 14v1.5l1 0.5"></path>
+      }
     </svg>
     <input #inputEl type="text" class="datepicker-input" [value]="inputText()" [placeholder]="placeholder()"
       [disabled]="effectiveDisabled()" (input)="onInputChange($event)" (blur)="onInputBlur($event)"
@@ -27,12 +32,13 @@
   </div>
 </div>
 
-<!-- Calendar Dropdown Dialog (Connected Overlay Adapting to Available Viewport Space) -->
+<!-- Calendar Dropdown Dialog -->
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin" [cdkConnectedOverlayOpen]="isOpen()"
   [cdkConnectedOverlayPositions]="positions" [cdkConnectedOverlayHasBackdrop]="false"
   [cdkConnectedOverlayLockPosition]="false" [cdkConnectedOverlayFlexibleDimensions]="true"
   [cdkConnectedOverlayPush]="true" (detach)="close()">
-  <div class="datepicker-dropdown-panel" [id]="dialogId" role="dialog" aria-label="Date Picker Calendar">
+  <div class="datepicker-dropdown-panel" [class.datetime-dropdown]="showTime()" [id]="dialogId" role="dialog"
+    aria-label="Date Picker Calendar">
     <!-- Calendar Header Navigation -->
     <div class="datepicker-header">
       <button type="button" class="datepicker-nav-btn" aria-label="Previous period" title="Previous period"
@@ -66,9 +72,8 @@
       <div class="datepicker-days-grid">
         @for (day of calendarDays(); track day.date.valueOf()) {
         <button type="button" class="day-cell" [class.is-other-month]="!day.isCurrentMonth"
-          [class.is-today]="day.isToday" [class.is-selected]="day.isSelected"
-          [class.is-disabled]="day.isDisabled" [class.is-focused]="day.isFocused"
-          [disabled]="day.isDisabled" (click)="selectDay(day)">
+          [class.is-today]="day.isToday" [class.is-selected]="day.isSelected" [class.is-disabled]="day.isDisabled"
+          [class.is-focused]="day.isFocused" [disabled]="day.isDisabled" (click)="selectDay(day)">
           {{ day.dayNumber }}
         </button>
         }
@@ -81,8 +86,8 @@
     <div class="datepicker-months-grid">
       @for (month of monthList(); track month.monthIndex) {
       <button type="button" class="month-cell" [class.is-selected]="month.isSelected"
-        [class.is-current]="month.isCurrentMonth" [class.is-disabled]="month.isDisabled"
-        [disabled]="month.isDisabled" (click)="selectMonth(month.monthIndex)">
+        [class.is-current]="month.isCurrentMonth" [class.is-disabled]="month.isDisabled" [disabled]="month.isDisabled"
+        (click)="selectMonth(month.monthIndex)">
         {{ month.name }}
       </button>
       }
@@ -93,20 +98,81 @@
     @if (viewMode() === 'year') {
     <div class="datepicker-years-grid">
       @for (yr of yearList(); track yr.year) {
-      <button type="button" class="year-cell" [class.is-selected]="yr.isSelected"
-        [class.is-current]="yr.isCurrentYear" [class.is-disabled]="yr.isDisabled"
-        [disabled]="yr.isDisabled" (click)="selectYear(yr.year)">
+      <button type="button" class="year-cell" [class.is-selected]="yr.isSelected" [class.is-current]="yr.isCurrentYear"
+        [class.is-disabled]="yr.isDisabled" [disabled]="yr.isDisabled" (click)="selectYear(yr.year)">
         {{ yr.year }}
       </button>
       }
     </div>
     }
 
+    <!-- Optional Time Picker Controls Bar -->
+    @if (showTime()) {
+    <div class="time-picker-section">
+      <div class="time-picker-label">Time</div>
+      <div class="time-picker-controls">
+        <!-- Hour Spinner -->
+        <div class="time-spinner">
+          <button type="button" class="spinner-btn" aria-label="Increase hour" (click)="adjustHour(1)"
+            tabindex="-1">▲</button>
+          <input type="text" inputmode="numeric" class="spinner-input" [value]="displayHour()"
+            (input)="onHourInput($event)" (blur)="onHourBlur($event)" (keydown)="onTimeInputKeydown($event, 'hour')"
+            aria-label="Hour input" />
+          <button type="button" class="spinner-btn" aria-label="Decrease hour" (click)="adjustHour(-1)"
+            tabindex="-1">▼</button>
+        </div>
+
+        <span class="time-separator">:</span>
+
+        <!-- Minute Spinner -->
+        <div class="time-spinner">
+          <button type="button" class="spinner-btn" aria-label="Increase minute" (click)="adjustMinute(1)"
+            tabindex="-1">▲</button>
+          <input type="text" inputmode="numeric" class="spinner-input" [value]="displayMinute()"
+            (input)="onMinuteInput($event)" (blur)="onMinuteBlur($event)"
+            (keydown)="onTimeInputKeydown($event, 'minute')" aria-label="Minute input" />
+          <button type="button" class="spinner-btn" aria-label="Decrease minute" (click)="adjustMinute(-1)"
+            tabindex="-1">▼</button>
+        </div>
+
+        <!-- Second Spinner (Optional) -->
+        @if (showSeconds()) {
+        <span class="time-separator">:</span>
+        <div class="time-spinner">
+          <button type="button" class="spinner-btn" aria-label="Increase second" (click)="adjustSecond(1)"
+            tabindex="-1">▲</button>
+          <input type="text" inputmode="numeric" class="spinner-input" [value]="displaySecond()"
+            (input)="onSecondInput($event)" (blur)="onSecondBlur($event)"
+            (keydown)="onTimeInputKeydown($event, 'second')" aria-label="Second input" />
+          <button type="button" class="spinner-btn" aria-label="Decrease second" (click)="adjustSecond(-1)"
+            tabindex="-1">▼</button>
+        </div>
+        }
+
+        <!-- Meridiem Toggle (12h format) -->
+        @if (!use24Hour()) {
+        <button type="button" class="meridiem-toggle-btn" (click)="toggleMeridiem()">
+          {{ meridiem() }}
+        </button>
+        }
+      </div>
+    </div>
+    }
+
     <!-- Footer Actions -->
-    <div class="datepicker-footer">
+    <div class="datepicker-footer" [class.datetime-footer]="showTime()">
+      @if (showTime()) {
+      <button type="button" class="datepicker-now-btn" [disabled]="isNowDisabled()" (click)="selectNow()">
+        Now
+      </button>
+      <button type="button" class="datepicker-apply-btn" (click)="applySelection()">
+        Apply
+      </button>
+      } @else {
       <button type="button" class="datepicker-today-btn" [disabled]="isTodayDisabled()" (click)="selectToday()">
         Today
       </button>
+      }
     </div>
   </div>
 </ng-template>

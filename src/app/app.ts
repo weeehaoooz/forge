@@ -9,6 +9,9 @@ import {
   ForgeInputDirective,
   DatePickerComponent,
   DateTimePickerComponent,
+  DateRangePickerComponent,
+  DateTimeRangePickerComponent,
+  DateRangeValue,
   LayoutService
 } from '@forge/components';
 import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
@@ -32,6 +35,8 @@ interface FrameworkOption {
     ForgeInputDirective,
     DatePickerComponent,
     DateTimePickerComponent,
+    DateRangePickerComponent,
+    DateTimeRangePickerComponent,
     LucideHexagon,
     LucideSparkles,
     LucidePlus,
@@ -52,7 +57,15 @@ export class App {
     singleFruit: new FormControl<string | null>(null, Validators.required),
     searchableFramework: new FormControl<string | null>('angular', Validators.required),
     startDate: new FormControl<string | null>('2026-08-15', Validators.required),
-    appointmentDateTime: new FormControl<string | null>('2026-08-20 14:30', Validators.required)
+    appointmentDateTime: new FormControl<string | null>('2026-08-20 14:30', Validators.required),
+    dateRange: new FormControl<DateRangeValue | null>({
+      startDate: '2026-08-08',
+      endDate: '2026-08-14'
+    }),
+    dateTimeRange: new FormControl<DateRangeValue | null>({
+      startDate: '2026-08-08 09:00',
+      endDate: '2026-08-14 18:00'
+    })
   });
 
   // Controls for interactive settings

@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   ViewChild,
   forwardRef,
   input,
@@ -10,29 +11,30 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import moment from 'moment';
 import type { Moment } from 'moment';
 
-import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
+import { DateRangePreset, DateRangeValue } from '../date-range-picker/date-range-types';
 
-let uniqueDateTimePickerId = 0;
+let uniqueDateTimeRangePickerId = 0;
 
 @Component({
-  selector: 'forge-date-time-picker',
-  imports: [DatePickerComponent],
-  templateUrl: './date-time-picker.component.html',
-  styleUrl: './date-time-picker.component.scss',
+  selector: 'forge-date-time-range-picker',
+  imports: [DateRangePickerComponent],
+  templateUrl: './date-time-range-picker.component.html',
+  styleUrl: './date-time-range-picker.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateTimePickerComponent),
+      useExisting: forwardRef(() => DateTimeRangePickerComponent),
       multi: true
     }
   ],
   host: {
-    'class': 'forge-datetimepicker-host'
+    'class': 'forge-datetimerangepicker-host'
   }
 })
-export class DateTimePickerComponent implements ControlValueAccessor {
+export class DateTimeRangePickerComponent implements ControlValueAccessor {
   // Signal Inputs
-  readonly placeholder = input<string>('Select date & time');
+  readonly placeholder = input<string>('Select date & time range');
   readonly disabled = input<boolean>(false);
   readonly clearable = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg'>('md');
@@ -43,25 +45,33 @@ export class DateTimePickerComponent implements ControlValueAccessor {
   readonly minuteStep = input<number>(1);
   readonly minDate = input<string | Date | Moment | null>(null);
   readonly maxDate = input<string | Date | Moment | null>(null);
+  readonly minSpan = input<number | null>(null);
+  readonly maxSpan = input<number | null>(null);
   readonly firstDayOfWeek = input<number>(0);
+  readonly presets = input<DateRangePreset[] | null>(null);
+  readonly presetType = input<'all' | 'calendar' | 'duration'>('all');
   readonly filterDate = input<((date: Moment) => boolean) | null>(null);
 
   // Signal Outputs
-  readonly dateTimeChange = output<unknown>();
+  readonly dateTimeRangeChange = output<DateRangeValue | null>();
   readonly opened = output<void>();
   readonly closed = output<void>();
 
-  @ViewChild(DatePickerComponent) corePicker?: DatePickerComponent;
+  @ViewChild(DateRangePickerComponent) corePicker?: DateRangePickerComponent;
 
   // Component unique IDs
-  readonly componentId = `forge-datetimepicker-${uniqueDateTimePickerId++}`;
+  readonly componentId = `forge-datetimerangepicker-${uniqueDateTimeRangePickerId++}`;
 
-  readonly currentValue = signal<unknown>(null);
+  readonly currentValue = signal<DateRangeValue | null>(null);
   private onChange: (val: unknown) => void = () => { };
   private onTouched: () => void = () => { };
 
   writeValue(val: unknown): void {
-    this.currentValue.set(val);
+    if (!val || typeof val !== 'object') {
+      this.currentValue.set(null);
+    } else {
+      this.currentValue.set(val as DateRangeValue);
+    }
   }
 
   registerOnChange(fn: (val: unknown) => void): void {
@@ -73,13 +83,13 @@ export class DateTimePickerComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    // Delegated to inner date-picker via disabled input
+    // Delegated to inner date-range-picker component via input
   }
 
-  onDateChange(val: unknown): void {
+  onRangeChange(val: DateRangeValue | null): void {
     this.currentValue.set(val);
     this.onChange(val);
-    this.dateTimeChange.emit(val);
+    this.dateTimeRangeChange.emit(val);
   }
 
   onOpened(): void {

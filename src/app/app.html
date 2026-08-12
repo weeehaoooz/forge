@@ -234,9 +234,9 @@
             <label class="form-label" for="start-date-picker">
               5. Moment DatePicker (Min: Aug 5, Max: Aug 25) <span class="required-star">*</span>
             </label>
-            <forge-date-picker id="start-date-picker" formControlName="startDate"
-              placeholder="Select start date..." displayFormat="YYYY-MM-DD" valueFormat="YYYY-MM-DD"
-              [minDate]="minDateDemo" [maxDate]="maxDateDemo" [size]="inputSize()" [clearable]="true">
+            <forge-date-picker id="start-date-picker" formControlName="startDate" placeholder="Select start date..."
+              displayFormat="YYYY-MM-DD" valueFormat="YYYY-MM-DD" [minDate]="minDateDemo" [maxDate]="maxDateDemo"
+              [size]="inputSize()" [clearable]="true">
             </forge-date-picker>
             @if (demoForm.controls.startDate.touched && demoForm.controls.startDate.hasError('required')) {
             <span class="field-error">Start date is required.</span>
@@ -250,12 +250,37 @@
             </label>
             <forge-date-time-picker id="appointment-datetime-picker" formControlName="appointmentDateTime"
               placeholder="Select appointment time..." displayFormat="YYYY-MM-DD HH:mm" valueFormat="YYYY-MM-DD HH:mm"
-              [minDate]="minDateTimeDemo" [maxDate]="maxDateTimeDemo" [use24Hour]="true" [size]="inputSize()" [clearable]="true">
+              [minDate]="minDateTimeDemo" [maxDate]="maxDateTimeDemo" [use24Hour]="true" [size]="inputSize()"
+              [clearable]="true">
             </forge-date-time-picker>
-            @if (demoForm.controls.appointmentDateTime.touched && demoForm.controls.appointmentDateTime.hasError('required')) {
+            @if (demoForm.controls.appointmentDateTime.touched &&
+            demoForm.controls.appointmentDateTime.hasError('required')) {
             <span class="field-error">Appointment date and time is required.</span>
             }
           </div>
+
+          <!-- Field 7: DateRangePicker -->
+          <div class="form-group">
+            <label class="form-label" for="date-range-picker">
+              7. DateRangePicker (Dual Calendar & Duration Presets)
+            </label>
+            <forge-date-range-picker id="date-range-picker" formControlName="dateRange"
+              placeholder="Select start and end dates..." displayFormat="YYYY-MM-DD" presetType="calendar"
+              valueFormat="YYYY-MM-DD" [size]="inputSize()" [clearable]="true">
+            </forge-date-range-picker>
+          </div>
+
+          <!-- Field 8: DateTimeRangePicker -->
+          <div class="form-group">
+            <label class="form-label" for="datetime-range-picker">
+              8. DateTimeRangePicker (Date & Time Range with Presets)
+            </label>
+            <forge-date-time-range-picker id="datetime-range-picker" formControlName="dateTimeRange"
+              placeholder="Select start & end date/time..." displayFormat="YYYY-MM-DD HH:mm" presetType="duration"
+              valueFormat="YYYY-MM-DD HH:mm" [use24Hour]="true" [size]="inputSize()" [clearable]="true">
+            </forge-date-time-range-picker>
+          </div>
+
         </div>
 
         <div class="form-footer" style="display: flex; gap: 0.75rem; margin-top: 1rem;">
@@ -268,7 +293,8 @@
         </div>
 
         @if (submittedData()) {
-        <div class="submitted-result" style="margin-top: 1rem; padding: 0.75rem; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 0.375rem;">
+        <div class="submitted-result"
+          style="margin-top: 1rem; padding: 0.75rem; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 0.375rem;">
           <h4 style="margin: 0 0 0.5rem 0; font-size: 0.875rem;">Form Submission Output (JSON):</h4>
           <pre style="margin: 0; font-size: 0.75rem; color: #0f172a;">{{ submittedData() }}</pre>
         </div>
