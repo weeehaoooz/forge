@@ -10,6 +10,7 @@ import {
   LucideChevronDown,
   LucideCalendarDays,
   LucideSquareCheck,
+  LucideCircleDot,
   LucideLayout
 } from '@lucide/angular';
 
@@ -41,7 +42,8 @@ export class App {
         { id: 'inputs', label: 'Inputs', icon: LucideTextCursorInput, route: '/inputs' },
         { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
         { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
-        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' }
+        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' },
+        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' }
       ]
     },
     {

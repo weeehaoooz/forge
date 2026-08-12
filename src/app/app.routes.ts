@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/checkboxes/checkboxes-page').then(m => m.CheckboxesPage)
   },
   {
+    path: 'radio',
+    loadComponent: () => import('./pages/radio/radio-page').then(m => m.RadioPage)
+  },
+  {
     path: 'layout',
     loadComponent: () => import('./pages/layout/layout-page').then(m => m.LayoutPage)
   }

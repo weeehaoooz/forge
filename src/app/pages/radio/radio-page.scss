@@ -1,0 +1,93 @@
+.controls-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ctrl-btn {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #e2e8f0;
+  }
+
+  &.is-active {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+  }
+}
+
+.form-output {
+  margin-top: 1rem;
+  padding: 0.625rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+
+  .output-label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #475569;
+  }
+
+  code {
+    color: #0284c7;
+    font-family: monospace;
+  }
+}
+
+.variant-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+}
+
+.variant-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .variant-label {
+    width: 5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+  }
+}
+
+.native-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+}
+
+.native-radio-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}

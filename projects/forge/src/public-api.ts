@@ -32,3 +32,10 @@ export * from './lib/form/date-range-picker/date-range-picker.component';
 export * from './lib/form/date-range-picker/date-range-types';
 export * from './lib/form/date-time-range-picker/date-time-range-picker.component';
 
+// Radio directive, group, component & module
+export * from './lib/form/radio/radio.directive';
+export * from './lib/form/radio/radio-group.component';
+export * from './lib/form/radio/radio.component';
+export * from './lib/form/radio/radio.module';
+
+

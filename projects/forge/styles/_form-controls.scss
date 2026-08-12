@@ -285,3 +285,167 @@ textarea[size="lg"] {
     }
   }
 }
+
+/* Forge Radio Directive & Radio Component Styling */
+.forge-radio {
+  --radio-size: 1.125rem;
+  --radio-bg: var(--forge-card-bg, #ffffff);
+  --radio-border: var(--forge-border-color, #cbd5e1);
+  --radio-border-hover: var(--forge-border-hover, #64748b);
+  --radio-color: var(--forge-primary-color, #2563eb);
+  --radio-color-hover: var(--forge-primary-hover, #1d4ed8);
+  --radio-focus-ring: var(--forge-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  margin: 0;
+  padding: 0;
+  background-color: var(--radio-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid var(--radio-border);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: var(--radio-border-hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--radio-focus-ring);
+    border-color: var(--radio-color);
+  }
+
+  &:checked {
+    background-color: var(--radio-bg);
+    border-color: var(--radio-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      border-color: var(--radio-color-hover);
+    }
+  }
+
+  /* Sizing Variations */
+  &.radio-sm {
+    --radio-size: 0.9375rem;
+  }
+
+  &.radio-md {
+    --radio-size: 1.125rem;
+  }
+
+  &.radio-lg {
+    --radio-size: 1.375rem;
+  }
+
+  /* Color Variants */
+  &.forge-radio-primary {
+    --radio-color: var(--forge-primary-color, #2563eb);
+    --radio-color-hover: var(--forge-primary-hover, #1d4ed8);
+    --radio-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.forge-radio-secondary {
+    --radio-color: #475569;
+    --radio-color-hover: #334155;
+    --radio-focus-ring: 0 0 0 3px rgba(71, 85, 105, 0.15);
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23475569'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.forge-radio-success {
+    --radio-color: #16a34a;
+    --radio-color-hover: #15803d;
+    --radio-focus-ring: 0 0 0 3px rgba(22, 163, 74, 0.15);
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2316a34a'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.forge-radio-danger {
+    --radio-color: var(--forge-error-color, #ef4444);
+    --radio-color-hover: #dc2626;
+    --radio-focus-ring: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ef4444'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  /* Disabled State */
+  &:disabled,
+  &[disabled] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2394a3b8'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+      border-color: #94a3b8;
+    }
+  }
+
+  /* Invalid / Error State */
+  &.is-invalid {
+    border-color: var(--forge-error-color, #ef4444);
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+/* Radio Group & Wrapper Layout Styling */
+.forge-radio-group {
+  display: flex;
+
+  &.direction-vertical {
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  &.direction-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+  }
+}
+
+.forge-radio-host {
+  display: inline-block;
+}
+
+.forge-radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--forge-control-font-size, 0.875rem);
+  color: var(--forge-text-color, #0f172a);
+  line-height: 1.25;
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    .forge-radio-label {
+      color: var(--forge-text-muted, #64748b);
+    }
+  }
+}

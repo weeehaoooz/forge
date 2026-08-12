@@ -1,0 +1,153 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · ForgeRadioModule</div>
+    <h1>Radio Group &amp; Radio Buttons</h1>
+    <p class="subtitle">
+      Form-bound radio groups and standalone radio directives featuring keyboard navigation, custom sizing, color variants, and accessible layout modes.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- Card 1: Interactive Reactive Form Radio Group -->
+    <form [formGroup]="radioForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Radio Group Component (&lt;forge-radio-group&gt;)</h2>
+          <span class="card-subtitle">Reactive form integration with ControlValueAccessor &amp; keyboard arrow navigation</span>
+        </div>
+        <div class="size-segmented-control" role="group" aria-label="Radio Size Selector">
+          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'sm'" (click)="setRadioSize('sm')">Small</button>
+          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'md'" (click)="setRadioSize('md')">Medium</button>
+          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'lg'" (click)="setRadioSize('lg')">Large</button>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- Billing Plan Selection -->
+        <div class="form-group">
+          <label class="form-label">Subscription Billing Plan <span class="required-star">*</span></label>
+          <forge-radio-group formControlName="billingPlan" [size]="radioSize()" [variant]="radioVariant()" [direction]="radioDirection()">
+            <forge-radio value="starter">Starter Plan ($9/mo)</forge-radio>
+            <forge-radio value="pro">Pro Professional ($29/mo)</forge-radio>
+            <forge-radio value="enterprise">Enterprise Custom ($99/mo)</forge-radio>
+          </forge-radio-group>
+        </div>
+
+        <!-- Direction & Layout Controls -->
+        <div class="form-group">
+          <label class="form-label">Layout Direction</label>
+          <div class="controls-row">
+            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'vertical'" (click)="setRadioDirection('vertical')">Vertical</button>
+            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'horizontal'" (click)="setRadioDirection('horizontal')">Horizontal</button>
+          </div>
+        </div>
+
+        <!-- Selected Form State Output -->
+        <div class="form-group form-output">
+          <span class="output-label">Form Values:</span>
+          <code>{{ radioForm.value | json }}</code>
+        </div>
+      </div>
+    </form>
+
+    <!-- Card 2: Color Variants & Layout Styles -->
+    <div class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Color Variants &amp; Layout Modes</h2>
+          <span class="card-subtitle">Primary, Secondary, Success, Danger variants in horizontal layout</span>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <div class="form-group">
+          <label class="form-label">Color Variants</label>
+          <div class="variant-groups">
+            <div class="variant-item">
+              <span class="variant-label">Primary:</span>
+              <forge-radio-group variant="primary" direction="horizontal">
+                <forge-radio value="p1" [disabled]="false">Option A</forge-radio>
+                <forge-radio value="p2">Option B</forge-radio>
+              </forge-radio-group>
+            </div>
+
+            <div class="variant-item">
+              <span class="variant-label">Secondary:</span>
+              <forge-radio-group variant="secondary" direction="horizontal">
+                <forge-radio value="s1">Option A</forge-radio>
+                <forge-radio value="s2">Option B</forge-radio>
+              </forge-radio-group>
+            </div>
+
+            <div class="variant-item">
+              <span class="variant-label">Success:</span>
+              <forge-radio-group variant="success" direction="horizontal">
+                <forge-radio value="g1">Option A</forge-radio>
+                <forge-radio value="g2">Option B</forge-radio>
+              </forge-radio-group>
+            </div>
+
+            <div class="variant-item">
+              <span class="variant-label">Danger:</span>
+              <forge-radio-group variant="danger" direction="horizontal">
+                <forge-radio value="d1">Option A</forge-radio>
+                <forge-radio value="d2">Option B</forge-radio>
+              </forge-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disabled States -->
+        <div class="form-group">
+          <label class="form-label">Disabled Group &amp; Item States</label>
+          <forge-radio-group [disabled]="true" direction="horizontal">
+            <forge-radio value="disabled1">Disabled Option 1</forge-radio>
+            <forge-radio value="disabled2">Disabled Option 2</forge-radio>
+          </forge-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Standalone Radio Directive (forgeRadio) -->
+    <div class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Native Radio Directive (forgeRadio)</h2>
+          <span class="card-subtitle">Using [forgeRadio] attribute directly on native HTML &lt;input type="radio"&gt;</span>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <div class="form-group">
+          <label class="form-label">Native &lt;input type="radio" forgeRadio&gt;</label>
+          <div class="native-radio-list">
+            <label class="native-radio-item">
+              <input type="radio" forgeRadio name="nativeDemo" value="optA" size="sm" variant="primary" />
+              <span>Compact Native Radio (sm)</span>
+            </label>
+
+            <label class="native-radio-item">
+              <input type="radio" forgeRadio name="nativeDemo" value="optB" size="md" variant="success" checked />
+              <span>Medium Success Native Radio (md)</span>
+            </label>
+
+            <label class="native-radio-item">
+              <input type="radio" forgeRadio name="nativeDemo" value="optC" size="lg" variant="danger" />
+              <span>Large Danger Native Radio (lg)</span>
+            </label>
+
+            <label class="native-radio-item">
+              <input type="radio" forgeRadio name="nativeDemo" value="optD" size="md" [invalid]="true" />
+              <span>Invalid Error State (.is-invalid)</span>
+            </label>
+
+            <label class="native-radio-item native-radio-item--disabled">
+              <input type="radio" forgeRadio name="nativeDemo" value="optE" size="md" disabled />
+              <span>Disabled Native Radio</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
