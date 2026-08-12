@@ -22,4 +22,6 @@ export * from './lib/button/button.directive';
 // Input & Textarea directive
 export * from './lib/form/input/input.directive';
 
-
+// DatePicker & DateTimePicker components
+export * from './lib/form/date-picker/date-picker.component';
+export * from './lib/form/date-time-picker/date-time-picker.component';

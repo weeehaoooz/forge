@@ -7,6 +7,8 @@ import {
   SideNavComponent,
   ForgeButtonDirective,
   ForgeInputDirective,
+  DatePickerComponent,
+  DateTimePickerComponent,
   LayoutService
 } from '@forge/components';
 import { SampleDetailPanelComponent } from './demo/sample-detail-panel.component';
@@ -28,6 +30,8 @@ interface FrameworkOption {
     SideNavComponent,
     ForgeButtonDirective,
     ForgeInputDirective,
+    DatePickerComponent,
+    DateTimePickerComponent,
     LucideHexagon,
     LucideSparkles,
     LucidePlus,
@@ -46,7 +50,9 @@ export class App {
     projectName: new FormControl<string>('', Validators.required),
     projectDescription: new FormControl<string>(''),
     singleFruit: new FormControl<string | null>(null, Validators.required),
-    searchableFramework: new FormControl<string | null>('angular', Validators.required)
+    searchableFramework: new FormControl<string | null>('angular', Validators.required),
+    startDate: new FormControl<string | null>('2026-08-15', Validators.required),
+    appointmentDateTime: new FormControl<string | null>('2026-08-20 14:30', Validators.required)
   });
 
   // Controls for interactive settings
@@ -56,6 +62,12 @@ export class App {
   readonly isBtnLoading = signal<boolean>(false);
   readonly searchLog = signal<string[]>([]);
   readonly submittedData = signal<string | null>(null);
+
+  // Min & Max date/time demo bounds
+  readonly minDateDemo = '2026-08-05';
+  readonly maxDateDemo = '2026-08-25';
+  readonly minDateTimeDemo = '2026-08-05 09:00';
+  readonly maxDateTimeDemo = '2026-08-25 18:00';
 
   toggleButtonLoading(): void {
     this.isBtnLoading.set(true);
@@ -189,7 +201,9 @@ export class App {
       projectName: '',
       projectDescription: '',
       singleFruit: null,
-      searchableFramework: 'angular'
+      searchableFramework: 'angular',
+      startDate: '2026-08-15',
+      appointmentDateTime: '2026-08-20 14:30'
     });
     this.submittedData.set(null);
   }
