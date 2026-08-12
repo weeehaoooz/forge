@@ -3,6 +3,8 @@
   /* Core & Brand Colors (Reads user-defined --primary-color etc. with defaults) */
   --forge-primary-color: var(--primary-color, #2563eb);
   --forge-primary-hover: var(--primary-hover, #1d4ed8);
+  --forge-primary-light: var(--primary-light, #eff6ff);
+  --forge-primary-light-hover: var(--primary-light-hover, #dbeafe);
   --forge-bg-color: var(--bg-color, #f8fafc);
   --forge-card-bg: var(--card-bg, #ffffff);
   --forge-border-color: var(--border-color, #cbd5e1);

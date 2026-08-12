@@ -25,7 +25,8 @@
 
   --datepicker-primary: #2563eb;
   --datepicker-primary-hover: #1d4ed8;
-  --datepicker-primary-light: #eff6ff;
+  --datepicker-primary-light: var(--forge-primary-light, var(--primary-light, #eff6ff));
+  --datepicker-primary-light-hover: var(--forge-primary-light-hover, var(--primary-light-hover, #dbeafe));
 
   &.datepicker-sm {
     --datepicker-height: 2rem;
@@ -175,7 +176,8 @@
   --datepicker-color: var(--forge-text-color, var(--text-color, #0f172a));
   --datepicker-primary: var(--forge-primary-color, var(--primary-color, #2563eb));
   --datepicker-primary-hover: var(--forge-primary-hover, var(--primary-hover, #1d4ed8));
-  --datepicker-primary-light: #eff6ff;
+  --datepicker-primary-light: var(--forge-primary-light, var(--primary-light, #eff6ff));
+  --datepicker-primary-light-hover: var(--forge-primary-light-hover, var(--primary-light-hover, #dbeafe));
 
   z-index: 1000;
   width: 18.5rem;

@@ -99,8 +99,8 @@
     }
 
     &.is-active {
-      background-color: #e0e7ff;
-      color: var(--datepicker-primary, #4f46e5);
+      background-color: var(--datepicker-primary-light, var(--forge-primary-light, #eff6ff));
+      color: var(--datepicker-primary, var(--forge-primary-color, #2563eb));
       font-weight: 600;
     }
 
@@ -161,29 +161,43 @@
   border-radius: 0;
 
   &.is-selected-start {
-    background-color: var(--datepicker-primary, #4f46e5) !important;
-    color: #ffffff !important;
+    background-color: var(--datepicker-primary, var(--forge-primary-color, #2563eb)) !important;
+    color: var(--forge-card-bg, #ffffff) !important;
     font-weight: 600;
-    border-top-left-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
+    border-top-left-radius: var(--datepicker-radius, var(--forge-border-radius, 0.375rem));
+    border-bottom-left-radius: var(--datepicker-radius, var(--forge-border-radius, 0.375rem));
   }
 
   &.is-selected-end {
-    background-color: var(--datepicker-primary, #4f46e5) !important;
-    color: #ffffff !important;
+    background-color: var(--datepicker-primary, var(--forge-primary-color, #2563eb)) !important;
+    color: var(--forge-card-bg, #ffffff) !important;
     font-weight: 600;
-    border-top-right-radius: 0.375rem;
-    border-bottom-right-radius: 0.375rem;
+    border-top-right-radius: var(--datepicker-radius, var(--forge-border-radius, 0.375rem));
+    border-bottom-right-radius: var(--datepicker-radius, var(--forge-border-radius, 0.375rem));
   }
 
   &.is-selected-start.is-selected-end {
-    border-radius: 0.375rem !important;
+    border-radius: var(--datepicker-radius, var(--forge-border-radius, 0.375rem)) !important;
   }
 
   &.is-in-range,
   &.is-hovered-range {
-    background-color: #e0e7ff !important;
-    color: #3730a3 !important;
+    background-color: var(--datepicker-primary-light, var(--forge-primary-light, #eff6ff)) !important;
+    color: var(--datepicker-primary, var(--forge-primary-color, #2563eb)) !important;
+
+    &:hover:not(:disabled) {
+      background-color: var(--datepicker-primary-light-hover, var(--forge-primary-light-hover, #dbeafe)) !important;
+      color: var(--datepicker-primary, var(--forge-primary-color, #2563eb)) !important;
+    }
+
+    &.is-other-month {
+      opacity: 0.6;
+    }
+
+    &.is-today {
+      font-weight: 700;
+      border-color: var(--datepicker-primary, var(--forge-primary-color, #2563eb));
+    }
   }
 }
 
@@ -299,8 +313,8 @@
     }
 
     &:focus {
-      border-color: var(--datepicker-primary, #4f46e5);
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+      border-color: var(--datepicker-primary, var(--forge-primary-color, var(--primary-color, #2563eb)));
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
     }
   }
 
@@ -345,15 +359,15 @@
     font-size: 0.8125rem;
     font-weight: 600;
     color: #ffffff;
-    background-color: var(--datepicker-primary, #4f46e5);
-    border: 1px solid var(--datepicker-primary, #4f46e5);
+    background-color: var(--datepicker-primary, var(--forge-primary-color, var(--primary-color, #2563eb)));
+    border: 1px solid var(--datepicker-primary, var(--forge-primary-color, var(--primary-color, #2563eb)));
     border-radius: 0.375rem;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover {
-      background-color: var(--datepicker-primary-hover, #4338ca);
-      border-color: var(--datepicker-primary-hover, #4338ca);
+      background-color: var(--datepicker-primary-hover, var(--forge-primary-hover, #1d4ed8));
+      border-color: var(--datepicker-primary-hover, var(--forge-primary-hover, #1d4ed8));
     }
   }
 }
