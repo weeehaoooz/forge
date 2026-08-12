@@ -22,8 +22,13 @@ export * from './lib/button/button.directive';
 // Input & Textarea directive
 export * from './lib/form/input/input.directive';
 
-// Checkbox directive & types
+// Checkbox directive, group, parent directive, component & module
 export * from './lib/form/checkbox/checkbox.directive';
+export * from './lib/form/checkbox/checkbox-group.directive';
+export * from './lib/form/checkbox/checkbox-group.component';
+export * from './lib/form/checkbox/checkbox-parent.directive';
+export * from './lib/form/checkbox/checkbox.component';
+export * from './lib/form/checkbox/checkbox.module';
 
 // DatePicker, DateTimePicker & Range Picker components
 export * from './lib/form/date-picker/date-picker.component';

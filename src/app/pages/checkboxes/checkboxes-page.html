@@ -1,10 +1,10 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · ForgeCheckboxDirective</div>
-    <h1>Checkbox Showcase</h1>
+    <div class="badge">forge/components · ForgeCheckboxModule</div>
+    <h1>Checkbox &amp; Group Showcase</h1>
     <p class="subtitle">
-      Reactive form-bound checkboxes alongside standalone variant, size,
-      indeterminate, and disabled state demonstrations.
+      Directives for parent/child select-all &amp; indeterminate states, group-based array controls, and reusable
+      component wrappers.
     </p>
   </header>
 
@@ -12,8 +12,9 @@
     <form [formGroup]="checkboxForm" class="card form-card">
       <div class="card-header">
         <div>
-          <h2>Checkbox Directive (forgeCheckbox)</h2>
-          <span class="card-subtitle">Accessible checkboxes with ControlValueAccessor and SCSS theme support</span>
+          <h2>Form-Bound Checkbox Directive (forgeCheckbox)</h2>
+          <span class="card-subtitle">Accessible standalone &amp; reactive form checkboxes with SCSS theme
+            support</span>
         </div>
         <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
           <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
@@ -31,8 +32,8 @@
           <label class="form-label">Form-Bound Checkboxes</label>
           <div class="checkbox-group">
             <div class="checkbox-row">
-              <input id="accept-terms-check" type="checkbox" forgeCheckbox
-                formControlName="acceptTerms" [size]="inputSize()" />
+              <input id="accept-terms-check" type="checkbox" forgeCheckbox formControlName="acceptTerms"
+                [size]="inputSize()" />
               <label for="accept-terms-check" class="checkbox-label">
                 I agree to the Terms of Service &amp; Privacy Policy
                 <span class="required-star">*</span>
@@ -40,13 +41,51 @@
             </div>
 
             <div class="checkbox-row">
-              <input id="notifications-check" type="checkbox" forgeCheckbox
-                formControlName="notificationsEnabled" [size]="inputSize()" variant="success" />
+              <input id="notifications-check" type="checkbox" forgeCheckbox formControlName="notificationsEnabled"
+                [size]="inputSize()" variant="success" />
               <label for="notifications-check" class="checkbox-label">
                 Subscribe to email notifications &amp; product updates
               </label>
             </div>
           </div>
+        </div>
+
+        <!-- Parent / Child Directives Section (Select All & Indeterminate State) -->
+        <div class="form-group">
+          <label class="form-label">Parent-Child Group Directives (Select All &amp; Indeterminate)</label>
+          <div forgeCheckboxGroup formControlName="permissions" #permGroup="forgeCheckboxGroup" [size]="inputSize()"
+            class="parent-child-demo">
+            <div class="checkbox-row select-all-row" style="margin-bottom: 0.5rem; font-weight: 600;">
+              <input id="select-all-perms" type="checkbox" forgeCheckbox forgeCheckboxParent [group]="permGroup"
+                [values]="['read', 'write', 'execute', 'delete']" variant="primary" />
+              <label for="select-all-perms" class="checkbox-label">
+                Select All Permissions
+              </label>
+            </div>
+
+            <div style="padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.375rem;">
+              <div class="checkbox-row">
+                <input id="perm-read" type="checkbox" forgeCheckbox value="read" />
+                <label for="perm-read" class="checkbox-label">Read Permission</label>
+              </div>
+              <div class="checkbox-row">
+                <input id="perm-write" type="checkbox" forgeCheckbox value="write" />
+                <label for="perm-write" class="checkbox-label">Write Permission</label>
+              </div>
+              <div class="checkbox-row">
+                <input id="perm-execute" type="checkbox" forgeCheckbox value="execute" />
+                <label for="perm-execute" class="checkbox-label">Execute Permission</label>
+              </div>
+              <div class="checkbox-row">
+                <input id="perm-delete" type="checkbox" forgeCheckbox value="delete" />
+                <label for="perm-delete" class="checkbox-label">Delete Permission</label>
+              </div>
+            </div>
+          </div>
+
+          <span class="field-help" style="margin-top: 0.5rem;">
+            Selected permissions: <code>{{ checkboxForm.value.permissions | json }}</code>
+          </span>
         </div>
 
         <!-- Variants & States -->
