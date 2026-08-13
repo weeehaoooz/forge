@@ -19,6 +19,14 @@ export * from './lib/form/select-input/select-input.module';
 // Button directive & types
 export * from './lib/button/button.directive';
 
+// Button group component, directive & module
+export * from './lib/button-group/button-group.component';
+export * from './lib/button-group/button-group-item.directive';
+export * from './lib/button-group/button-group.module';
+
+// Tooltip directive
+export * from './lib/tooltip/tooltip.directive';
+
 // Input & Textarea directive
 export * from './lib/form/input/input.directive';
 
