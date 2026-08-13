@@ -1,0 +1,147 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · ForgeSlideToggleModule</div>
+    <h1>Sliding Toggle &amp; Switch Showcase</h1>
+    <p class="subtitle">
+      Smooth, accessible sliding switch controls supporting standalone signal inputs, ControlValueAccessor reactive forms, color variants, sizing, and customizable label positioning.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <form [formGroup]="toggleForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Form-Bound Slide Toggle Component (forge-slide-toggle / forge-switch)</h2>
+          <span class="card-subtitle">Reactive form integration with SCSS design tokens</span>
+        </div>
+        <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="toggleSize()"
+          (valueChange)="setToggleSize($event)">
+          <button type="button" forgeButton forgeButtonGroupItem value="sm" tooltip="Small Toggle (32px)">Small</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium Toggle (40px)">Medium</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Toggle (48px)">Large</button>
+        </forge-button-group>
+      </div>
+
+      <div class="form-fields">
+        <!-- Form-bound slide toggles -->
+        <div class="form-group">
+          <label class="form-label">Account &amp; Security Settings</label>
+          <div class="toggle-list">
+            <forge-slide-toggle
+              formControlName="darkMode"
+              variant="primary"
+              [size]="toggleSize()"
+            >
+              Dark Mode Preference
+            </forge-slide-toggle>
+
+            <forge-slide-toggle
+              formControlName="twoFactorAuth"
+              variant="success"
+              [size]="toggleSize()"
+            >
+              Two-Factor Authentication (2FA)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle
+              formControlName="emailAlerts"
+              variant="secondary"
+              [size]="toggleSize()"
+            >
+              Security Alert Emails
+            </forge-slide-toggle>
+
+            <forge-slide-toggle
+              formControlName="marketingEmails"
+              variant="danger"
+              [size]="toggleSize()"
+            >
+              Unsubscribe Promotional Emails
+            </forge-slide-toggle>
+          </div>
+          <span class="field-help">
+            Form state: <code>{{ toggleForm.value | json }}</code>
+          </span>
+        </div>
+
+        <!-- Label Position Section -->
+        <div class="form-group">
+          <label class="form-label">Label Positioning (before vs after)</label>
+          <div class="toggle-row-group">
+            <forge-slide-toggle
+              [checked]="true"
+              labelPosition="after"
+              [size]="toggleSize()"
+              variant="primary"
+            >
+              Label Position: After (Default)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle
+              [checked]="true"
+              labelPosition="before"
+              [size]="toggleSize()"
+              variant="primary"
+            >
+              Label Position: Before
+            </forge-slide-toggle>
+          </div>
+        </div>
+
+        <!-- Color Variants & Sizes -->
+        <div class="form-group">
+          <label class="form-label">Color Variants &amp; Sizes</label>
+          <div class="variants-showcase">
+            <forge-slide-toggle [checked]="true" variant="primary" size="sm">
+              Primary (sm)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle [checked]="true" variant="secondary" size="md">
+              Secondary (md)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle [checked]="true" variant="success" size="lg">
+              Success (lg)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle [checked]="true" variant="danger" size="md">
+              Danger (md)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle [checked]="true" [disabled]="true" size="md">
+              Disabled (On)
+            </forge-slide-toggle>
+
+            <forge-slide-toggle [checked]="false" [disabled]="true" size="md">
+              Disabled (Off)
+            </forge-slide-toggle>
+          </div>
+        </div>
+
+        <!-- Native Input Directive (forgeSlideToggle) -->
+        <div class="form-group">
+          <label class="form-label">Native Input Directive (forgeSlideToggle)</label>
+          <div class="native-directive-demo">
+            <label class="forge-slide-toggle-wrapper">
+              <span class="forge-slide-toggle-switch">
+                <input
+                  id="native-toggle-demo"
+                  type="checkbox"
+                  forgeSlideToggle
+                  [checked]="standaloneValue()"
+                  (checkedChange)="toggleStandalone()"
+                  variant="primary"
+                  [size]="toggleSize()"
+                />
+                <span class="forge-slide-toggle-track">
+                  <span class="forge-slide-toggle-thumb"></span>
+                </span>
+              </span>
+              <span>Direct native checkbox directive usage (State: {{ standaloneValue() }})</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

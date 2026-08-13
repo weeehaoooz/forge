@@ -11,6 +11,7 @@ import {
   LucideCalendarDays,
   LucideSquareCheck,
   LucideCircleDot,
+  LucideToggleRight,
   LucideLayout,
   LucideBell
 } from '@lucide/angular';
@@ -44,7 +45,8 @@ export class App {
         { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
         { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
         { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' },
-        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' }
+        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' },
+        { id: 'slide-toggle', label: 'Slide Toggle', icon: LucideToggleRight, route: '/slide-toggle' }
       ]
     },
     {

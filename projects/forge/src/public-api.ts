@@ -57,3 +57,9 @@ export * from './lib/snackbar/snackbar.service';
 export * from './lib/snackbar/snackbar.component';
 export * from './lib/snackbar/snackbar-container.component';
 export * from './lib/snackbar/snackbar.module';
+
+// Slide toggle directive, component & module
+export * from './lib/form/slide-toggle/slide-toggle.directive';
+export * from './lib/form/slide-toggle/slide-toggle.component';
+export * from './lib/form/slide-toggle/slide-toggle.module';
+

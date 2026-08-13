@@ -27,6 +27,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/radio/radio-page').then(m => m.RadioPage)
   },
   {
+    path: 'slide-toggle',
+    loadComponent: () => import('./pages/slide-toggle/slide-toggle-page').then(m => m.SlideTogglePage)
+  },
+  {
     path: 'layout',
     loadComponent: () => import('./pages/layout/layout-page').then(m => m.LayoutPage)
   },
