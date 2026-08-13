@@ -29,5 +29,10 @@ export const routes: Routes = [
   {
     path: 'layout',
     loadComponent: () => import('./pages/layout/layout-page').then(m => m.LayoutPage)
+  },
+  {
+    path: 'snackbar',
+    loadComponent: () => import('./pages/snackbar/snackbar-page').then(m => m.SnackbarPage)
   }
 ];
+

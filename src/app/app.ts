@@ -11,7 +11,8 @@ import {
   LucideCalendarDays,
   LucideSquareCheck,
   LucideCircleDot,
-  LucideLayout
+  LucideLayout,
+  LucideBell
 } from '@lucide/angular';
 
 @Component({
@@ -47,12 +48,19 @@ export class App {
       ]
     },
     {
+      title: 'NOTIFICATIONS',
+      items: [
+        { id: 'snackbar', label: 'Snackbar / Toast', icon: LucideBell, route: '/snackbar' }
+      ]
+    },
+    {
       title: 'LAYOUT',
       items: [
         { id: 'layout', label: 'Layout', icon: LucideLayout, route: '/layout' }
       ]
     }
   ]);
+
 
   constructor() {
     // Sync active nav item with current route

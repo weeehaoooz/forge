@@ -43,4 +43,9 @@ export * from './lib/form/radio/radio-group.component';
 export * from './lib/form/radio/radio.component';
 export * from './lib/form/radio/radio.module';
 
-
+// Snackbar service, components & module
+export * from './lib/snackbar/snackbar.types';
+export * from './lib/snackbar/snackbar.service';
+export * from './lib/snackbar/snackbar.component';
+export * from './lib/snackbar/snackbar-container.component';
+export * from './lib/snackbar/snackbar.module';

@@ -1,0 +1,89 @@
+<div
+  class="forge-snackbar"
+  [class.variant-default]="instance().variant === 'default'"
+  [class.variant-info]="instance().variant === 'info'"
+  [class.variant-success]="instance().variant === 'success'"
+  [class.variant-warning]="instance().variant === 'warning'"
+  [class.variant-error]="instance().variant === 'error'"
+  [class.pos-top]="isTopPosition()"
+  [class.pos-bottom]="!isTopPosition()"
+  [class.is-dismissing]="isDismissing()"
+
+  [class]="instance().customClass || ''"
+  [attr.role]="ariaRole()"
+  [attr.aria-live]="ariaLive()"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  @if (instance().icon !== false) {
+    <div class="forge-snackbar-icon">
+      @if (instance().icon && instance().icon !== true) {
+        <ng-container *ngComponentOutlet="customIconComponent()"></ng-container>
+      } @else {
+        @switch (instance().variant) {
+          @case ('success') {
+            <svg lucideCheckCircle2 [size]="20"></svg>
+          }
+          @case ('warning') {
+            <svg lucideAlertTriangle [size]="20"></svg>
+          }
+          @case ('error') {
+            <svg lucideCircleAlert [size]="20"></svg>
+          }
+          @default {
+            <svg lucideInfo [size]="20"></svg>
+          }
+        }
+      }
+    </div>
+  }
+
+  <div class="forge-snackbar-content">
+    @if (instance().title) {
+      <div class="forge-snackbar-title">{{ instance().title }}</div>
+    }
+
+    <div class="forge-snackbar-message">
+      @if (isTemplateMessage()) {
+        <ng-container
+          *ngTemplateOutlet="templateMessage(); context: { $implicit: instance().data, instance: instance() }"
+        ></ng-container>
+      } @else {
+        {{ instance().message }}
+      }
+    </div>
+  </div>
+
+  <div class="forge-snackbar-actions">
+    @if (instance().actionLabel) {
+      <button
+        type="button"
+        class="forge-snackbar-action-btn"
+        (click)="onActionClick()"
+      >
+        {{ instance().actionLabel }}
+      </button>
+    }
+
+    @if (instance().dismissible) {
+      <button
+        type="button"
+        class="forge-snackbar-close-btn"
+        aria-label="Close notification"
+        (click)="onCloseClick()"
+      >
+        <svg lucideX [size]="16"></svg>
+      </button>
+    }
+  </div>
+
+  @if (instance().showProgressBar && instance().duration > 0 && instance().duration !== Infinity) {
+    <div
+      class="forge-snackbar-progress"
+      [class.variant-success]="instance().variant === 'success'"
+      [class.variant-warning]="instance().variant === 'warning'"
+      [class.variant-error]="instance().variant === 'error'"
+      [style.width.%]="progressPercent()"
+    ></div>
+  }
+</div>
