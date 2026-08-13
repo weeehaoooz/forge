@@ -6,6 +6,7 @@ import {
   ForgeRadioGroupComponent,
   ForgeRadioComponent,
   ForgeRadioModule,
+  ForgeButtonGroupModule,
   RadioSize,
   RadioVariant,
   RadioDirection
@@ -13,7 +14,7 @@ import {
 
 @Component({
   selector: 'app-radio-page',
-  imports: [ReactiveFormsModule, ForgeRadioModule, JsonPipe],
+  imports: [ReactiveFormsModule, ForgeRadioModule, ForgeButtonGroupModule, JsonPipe],
   templateUrl: './radio-page.html',
   styleUrl: './radio-page.scss'
 })

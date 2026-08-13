@@ -192,6 +192,48 @@
           </div>
         </div>
 
+        <!-- 3.5 Button Group Sizing Controls -->
+        <div class="showcase-group">
+          <span class="group-label">Button Group Sizing Controls (size="sm" | "md" | "lg"):</span>
+          <div class="button-row-wrap">
+            <!-- Small Group -->
+            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="'grid'">
+              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Small Grid View">
+                <svg lucideLayoutGrid [size]="14"></svg>
+                Small (32px)
+              </button>
+              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Small List View">
+                <svg lucideList [size]="14"></svg>
+                List
+              </button>
+            </forge-button-group>
+
+            <!-- Medium Group -->
+            <forge-button-group variant="segmented" size="md" selectionMode="single" [value]="'grid'">
+              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Medium Grid View">
+                <svg lucideLayoutGrid [size]="16"></svg>
+                Medium (36px)
+              </button>
+              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Medium List View">
+                <svg lucideList [size]="16"></svg>
+                List
+              </button>
+            </forge-button-group>
+
+            <!-- Large Group -->
+            <forge-button-group variant="segmented" size="lg" selectionMode="single" [value]="'grid'">
+              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Large Grid View">
+                <svg lucideLayoutGrid [size]="18"></svg>
+                Large (42px)
+              </button>
+              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Large List View">
+                <svg lucideList [size]="18"></svg>
+                List
+              </button>
+            </forge-button-group>
+          </div>
+        </div>
+
         <!-- 4. Vertical Orientations Showcase -->
         <div class="showcase-group">
           <span class="group-label">Vertical Button Groups (Icon-Only &amp; Rating):</span>

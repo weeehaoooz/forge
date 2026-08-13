@@ -16,14 +16,14 @@
           <span class="card-subtitle">Standard Select and Searchable Autocomplete with ForgeSelectInput</span>
         </div>
         <div class="actions">
-          <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
-              (click)="setInputSize('sm')">Compact</button>
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
-              (click)="setInputSize('md')">Medium</button>
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
-              (click)="setInputSize('lg')">Large</button>
-          </div>
+          <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+            (valueChange)="setInputSize($event)">
+            <button type="button" forgeButton forgeButtonGroupItem value="sm"
+              tooltip="Compact Size (32px)">Compact</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="md"
+              tooltip="Medium Size (36px)">Medium</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+          </forge-button-group>
         </div>
       </div>
 
@@ -33,8 +33,8 @@
           <label class="form-label" for="fruit-select">
             Standard Select <span class="required-star">*</span>
           </label>
-          <forge-select-input id="fruit-select" formControlName="singleFruit"
-            placeholder="Select a fruit..." [size]="inputSize()">
+          <forge-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
+            [size]="inputSize()">
             <forge-option value="apple">🍎 Apple</forge-option>
             <forge-option value="banana">🍌 Banana</forge-option>
             <forge-option value="cherry">🍒 Cherry</forge-option>
@@ -42,7 +42,7 @@
             <forge-option value="elderberry">🫐 Elderberry</forge-option>
           </forge-select-input>
           @if (selectForm.controls.singleFruit.touched && selectForm.controls.singleFruit.hasError('required')) {
-            <span class="field-error">Please select a fruit.</span>
+          <span class="field-error">Please select a fruit.</span>
           }
         </div>
 
@@ -51,16 +51,16 @@
           <label class="form-label" for="tech-select">
             Searchable Autocomplete Select <span class="required-star">*</span>
           </label>
-          <forge-select-input id="tech-select" formControlName="searchableFramework"
-            placeholder="Search technology..." searchPlaceholder="Type to filter..."
-            [searchable]="true" [size]="inputSize()" (searchChange)="onSearchChange($event)">
+          <forge-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
+            searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
+            (searchChange)="onSearchChange($event)">
             @for (fw of frameworks(); track fw.id) {
-              <forge-option [value]="fw.id" [label]="fw.name">
-                <div class="option-custom-content">
-                  <span class="fw-name">{{ fw.name }}</span>
-                  <span class="fw-badge">{{ fw.category }}</span>
-                </div>
-              </forge-option>
+            <forge-option [value]="fw.id" [label]="fw.name">
+              <div class="option-custom-content">
+                <span class="fw-name">{{ fw.name }}</span>
+                <span class="fw-badge">{{ fw.category }}</span>
+              </div>
+            </forge-option>
             }
           </forge-select-input>
         </div>
@@ -80,14 +80,14 @@
         <span class="options-count">{{ frameworks().length }} options loaded</span>
       </div>
       @if (searchLog().length > 0) {
-        <div class="search-log">
-          <span class="log-label">Search Event Log:</span>
-          <ul class="log-list">
-            @for (entry of searchLog(); track entry) {
-              <li>{{ entry }}</li>
-            }
-          </ul>
-        </div>
+      <div class="search-log">
+        <span class="log-label">Search Event Log:</span>
+        <ul class="log-list">
+          @for (entry of searchLog(); track entry) {
+          <li>{{ entry }}</li>
+          }
+        </ul>
+      </div>
       }
     </div>
   </main>

@@ -5,6 +5,58 @@
   position: relative;
   vertical-align: middle;
 
+  /* Sizing Controls for Group Items */
+  &.forge-button-group-sm {
+
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
+      height: var(--forge-btn-height-sm, 2rem);
+      padding: 0 var(--forge-btn-padding-x-sm, 0.625rem);
+      font-size: var(--forge-btn-font-size-sm, 0.75rem);
+
+      &.forge-btn-icon {
+        width: var(--forge-btn-height-sm, 2rem);
+        padding: 0;
+      }
+    }
+  }
+
+  &.forge-button-group-md {
+
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
+      height: var(--forge-btn-height-md, 2.25rem);
+      padding: 0 var(--forge-btn-padding-x-md, 0.875rem);
+      font-size: var(--forge-btn-font-size-md, 0.8125rem);
+
+      &.forge-btn-icon {
+        width: var(--forge-btn-height-md, 2.25rem);
+        padding: 0;
+      }
+    }
+  }
+
+  &.forge-button-group-lg {
+
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
+      height: var(--forge-btn-height-lg, 2.625rem);
+      padding: 0 var(--forge-btn-padding-x-lg, 1.125rem);
+      font-size: var(--forge-btn-font-size-lg, 0.875rem);
+
+      &.forge-btn-icon {
+        width: var(--forge-btn-height-lg, 2.625rem);
+        padding: 0;
+      }
+    }
+  }
+
   /* Horizontal orientation (Default) */
   &.forge-button-group-horizontal {
     flex-direction: row;
@@ -13,10 +65,11 @@
     /* Attached Border Overlaps & Radius rules */
     &.forge-button-group-attached,
     &.forge-button-group-outline {
-      > .forge-btn,
-      > button,
-      > a,
-      > .forge-button-group-item {
+
+      >.forge-btn,
+      >button,
+      >a,
+      >.forge-button-group-item {
         border-radius: 0;
 
         &:not(:first-child) {
@@ -35,10 +88,11 @@
       }
 
       &.forge-button-group-pill {
-        > .forge-btn,
-        > button,
-        > a,
-        > .forge-button-group-item {
+
+        >.forge-btn,
+        >button,
+        >a,
+        >.forge-button-group-item {
           &:first-child {
             border-top-left-radius: 9999px;
             border-bottom-left-radius: 9999px;
@@ -60,10 +114,10 @@
     flex-direction: column;
     align-items: stretch;
 
-    > .forge-btn,
-    > button,
-    > a,
-    > .forge-button-group-item {
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
       width: 100%;
       padding-left: var(--forge-btn-padding-x-md, 0.875rem);
       padding-right: var(--forge-btn-padding-x-md, 0.875rem);
@@ -95,10 +149,11 @@
 
     &.forge-button-group-attached,
     &.forge-button-group-outline {
-      > .forge-btn,
-      > button,
-      > a,
-      > .forge-button-group-item {
+
+      >.forge-btn,
+      >button,
+      >a,
+      >.forge-button-group-item {
         border-radius: 0;
 
         &:not(:first-child) {
@@ -124,10 +179,11 @@
 
       /* Pill vertical styling - capsule caps with balanced top & bottom inset */
       &.forge-button-group-pill {
-        > .forge-btn,
-        > button,
-        > a,
-        > .forge-button-group-item {
+
+        >.forge-btn,
+        >button,
+        >a,
+        >.forge-button-group-item {
           &:first-child {
             border-top-left-radius: 9999px;
             border-top-right-radius: 9999px;
@@ -156,10 +212,10 @@
   }
 
   /* Z-Index elevation & alignment layering on interaction */
-  > .forge-btn,
-  > button,
-  > a,
-  > .forge-button-group-item {
+  >.forge-btn,
+  >button,
+  >a,
+  >.forge-button-group-item {
     position: relative;
 
     &:hover:not(:disabled):not(.is-disabled) {
@@ -187,25 +243,25 @@
       border-radius: 9999px;
       padding: 0.25rem 0.375rem;
 
-      > .forge-btn,
-      > button,
-      > a,
-      > .forge-button-group-item {
+      >.forge-btn,
+      >button,
+      >a,
+      >.forge-button-group-item {
         border-radius: 9999px;
       }
     }
 
-    > .forge-btn,
-    > button,
-    > a,
-    > .forge-button-group-item {
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
       border: 1px solid transparent;
       background: transparent;
       color: var(--forge-text-muted, #64748b);
       font-weight: 500;
       box-shadow: none;
       border-radius: 0.375rem;
-      transition: all 0.18s ease-in-out;
+      transition: background-color 0.18s ease-in-out, border-color 0.18s ease-in-out, color 0.18s ease-in-out, box-shadow 0.18s ease-in-out;
 
       &:hover:not(:disabled):not(.is-disabled):not(.is-active):not(.is-selected) {
         color: var(--forge-text-color, #0f172a);
@@ -240,10 +296,12 @@
 
     /* Subtle Segmented Active Variant */
     &.forge-button-group-subtle {
-      > .forge-btn,
-      > button,
-      > a,
-      > .forge-button-group-item {
+
+      >.forge-btn,
+      >button,
+      >a,
+      >.forge-button-group-item {
+
         &.is-active,
         &.is-selected {
           background-color: var(--forge-card-bg, #ffffff);
@@ -268,10 +326,11 @@
   /* Active & Hover Selection Styling for Attached/Outline Button Groups */
   &.forge-button-group-attached,
   &.forge-button-group-outline {
-    > .forge-btn,
-    > button,
-    > a,
-    > .forge-button-group-item {
+
+    >.forge-btn,
+    >button,
+    >a,
+    >.forge-button-group-item {
       &:hover:not(:disabled):not(.is-disabled):not(.is-active):not(.is-selected) {
         background-color: var(--forge-btn-outline-hover-bg, #f8fafc);
         color: var(--forge-text-color, #0f172a);

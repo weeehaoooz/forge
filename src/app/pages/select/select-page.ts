@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectInputModule, ForgeButtonDirective } from '@forge/components';
+import { SelectInputModule, ForgeButtonDirective, ForgeButtonGroupModule } from '@forge/components';
 
 interface FrameworkOption {
   id: string;
@@ -10,7 +10,7 @@ interface FrameworkOption {
 
 @Component({
   selector: 'app-select-page',
-  imports: [ReactiveFormsModule, SelectInputModule, ForgeButtonDirective],
+  imports: [ReactiveFormsModule, SelectInputModule, ForgeButtonDirective, ForgeButtonGroupModule],
   templateUrl: './select-page.html',
   styleUrl: './select-page.scss'
 })

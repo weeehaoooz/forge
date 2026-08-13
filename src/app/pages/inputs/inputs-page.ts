@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ForgeInputDirective, ForgeButtonDirective } from '@forge/components';
+import { ForgeInputDirective, ForgeButtonDirective, ForgeButtonGroupModule } from '@forge/components';
 
 @Component({
   selector: 'app-inputs-page',
-  imports: [ReactiveFormsModule, ForgeInputDirective, ForgeButtonDirective],
+  imports: [ReactiveFormsModule, ForgeInputDirective, ForgeButtonDirective, ForgeButtonGroupModule],
   templateUrl: './inputs-page.html',
   styleUrl: './inputs-page.scss'
 })

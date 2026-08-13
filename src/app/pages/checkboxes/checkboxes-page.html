@@ -16,14 +16,13 @@
           <span class="card-subtitle">Accessible standalone &amp; reactive form checkboxes with SCSS theme
             support</span>
         </div>
-        <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
-          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
-            (click)="setInputSize('sm')">Compact</button>
-          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
-            (click)="setInputSize('md')">Medium</button>
-          <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
-            (click)="setInputSize('lg')">Large</button>
-        </div>
+        <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+          (valueChange)="setInputSize($event)">
+          <button type="button" forgeButton forgeButtonGroupItem value="sm"
+            tooltip="Compact Size (32px)">Compact</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+        </forge-button-group>
       </div>
 
       <div class="form-fields">

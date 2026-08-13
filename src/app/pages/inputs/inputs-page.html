@@ -16,20 +16,14 @@
           <span class="card-subtitle">Standardized styling matching _variables.scss</span>
         </div>
         <div class="actions">
-          <div class="size-segmented-control" role="group" aria-label="Input Size Selector">
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'sm'"
-              (click)="setInputSize('sm')" title="Compact Size (32px)">
-              Compact
-            </button>
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'md'"
-              (click)="setInputSize('md')" title="Medium Size (36px)">
-              Medium
-            </button>
-            <button type="button" class="size-btn" [class.is-active]="inputSize() === 'lg'"
-              (click)="setInputSize('lg')" title="Large Size (42px)">
-              Large
-            </button>
-          </div>
+          <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+            (valueChange)="setInputSize($event)">
+            <button type="button" forgeButton forgeButtonGroupItem value="sm"
+              tooltip="Compact Size (32px)">Compact</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="md"
+              tooltip="Medium Size (36px)">Medium</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+          </forge-button-group>
 
           <button type="button" forgeButton variant="outline" size="sm" (click)="toggleDisableForm()">
             {{ isFormDisabled() ? 'Enable Form' : 'Disable Form' }}
@@ -46,7 +40,7 @@
           <input id="project-name" type="text" forgeInput formControlName="projectName"
             placeholder="e.g. NextGen Dashboard" [size]="inputSize()" />
           @if (inputsForm.controls.projectName.touched && inputsForm.controls.projectName.hasError('required')) {
-            <span class="field-error">Project name is required.</span>
+          <span class="field-error">Project name is required.</span>
           }
         </div>
 

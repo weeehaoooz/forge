@@ -5,6 +5,7 @@ import {
   DateTimePickerComponent,
   DateRangePickerComponent,
   DateTimeRangePickerComponent,
+  ForgeButtonGroupModule,
   DateRangeValue
 } from '@forge/components';
 
@@ -15,7 +16,8 @@ import {
     DatePickerComponent,
     DateTimePickerComponent,
     DateRangePickerComponent,
-    DateTimeRangePickerComponent
+    DateTimeRangePickerComponent,
+    ForgeButtonGroupModule
   ],
   templateUrl: './date-pickers-page.html',
   styleUrl: './date-pickers-page.scss'

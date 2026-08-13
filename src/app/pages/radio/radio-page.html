@@ -3,7 +3,8 @@
     <div class="badge">forge/components · ForgeRadioModule</div>
     <h1>Radio Group &amp; Radio Buttons</h1>
     <p class="subtitle">
-      Form-bound radio groups and standalone radio directives featuring keyboard navigation, custom sizing, color variants, and accessible layout modes.
+      Form-bound radio groups and standalone radio directives featuring keyboard navigation, custom sizing, color
+      variants, and accessible layout modes.
     </p>
   </header>
 
@@ -13,20 +14,23 @@
       <div class="card-header">
         <div>
           <h2>Radio Group Component (&lt;forge-radio-group&gt;)</h2>
-          <span class="card-subtitle">Reactive form integration with ControlValueAccessor &amp; keyboard arrow navigation</span>
+          <span class="card-subtitle">Reactive form integration with ControlValueAccessor &amp; keyboard arrow
+            navigation</span>
         </div>
-        <div class="size-segmented-control" role="group" aria-label="Radio Size Selector">
-          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'sm'" (click)="setRadioSize('sm')">Small</button>
-          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'md'" (click)="setRadioSize('md')">Medium</button>
-          <button type="button" class="size-btn" [class.is-active]="radioSize() === 'lg'" (click)="setRadioSize('lg')">Large</button>
-        </div>
+        <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="radioSize()"
+          (valueChange)="setRadioSize($event)">
+          <button type="button" forgeButton forgeButtonGroupItem value="sm" tooltip="Small Size (32px)">Small</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
+          <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+        </forge-button-group>
       </div>
 
       <div class="form-fields">
         <!-- Billing Plan Selection -->
         <div class="form-group">
           <label class="form-label">Subscription Billing Plan <span class="required-star">*</span></label>
-          <forge-radio-group formControlName="billingPlan" [size]="radioSize()" [variant]="radioVariant()" [direction]="radioDirection()">
+          <forge-radio-group formControlName="billingPlan" [size]="radioSize()" [variant]="radioVariant()"
+            [direction]="radioDirection()">
             <forge-radio value="starter">Starter Plan ($9/mo)</forge-radio>
             <forge-radio value="pro">Pro Professional ($29/mo)</forge-radio>
             <forge-radio value="enterprise">Enterprise Custom ($99/mo)</forge-radio>
@@ -37,8 +41,10 @@
         <div class="form-group">
           <label class="form-label">Layout Direction</label>
           <div class="controls-row">
-            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'vertical'" (click)="setRadioDirection('vertical')">Vertical</button>
-            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'horizontal'" (click)="setRadioDirection('horizontal')">Horizontal</button>
+            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'vertical'"
+              (click)="setRadioDirection('vertical')">Vertical</button>
+            <button type="button" class="ctrl-btn" [class.is-active]="radioDirection() === 'horizontal'"
+              (click)="setRadioDirection('horizontal')">Horizontal</button>
           </div>
         </div>
 
@@ -113,7 +119,8 @@
       <div class="card-header">
         <div>
           <h2>Native Radio Directive (forgeRadio)</h2>
-          <span class="card-subtitle">Using [forgeRadio] attribute directly on native HTML &lt;input type="radio"&gt;</span>
+          <span class="card-subtitle">Using [forgeRadio] attribute directly on native HTML &lt;input
+            type="radio"&gt;</span>
         </div>
       </div>
 
