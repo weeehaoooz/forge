@@ -9,7 +9,6 @@ import {
   output,
   signal
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   LucideRefreshCw,
@@ -120,7 +119,6 @@ const PALETTE_CONFIG: Record<
 @Component({
   selector: 'forge-heatmap',
   imports: [
-    CommonModule,
     FormsModule,
     DateRangePickerComponent,
     LucideRefreshCw,
