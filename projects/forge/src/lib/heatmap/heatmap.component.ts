@@ -23,8 +23,19 @@ import {
   LucideCalendar,
   LucideClock
 } from '@lucide/angular';
-import moment from 'moment';
-import type { Moment } from 'moment';
+import {
+  addDays,
+  addWeeks,
+  endOfDay,
+  endOfISOWeek,
+  isBefore,
+  isSameDay,
+  isValid,
+  startOfDay,
+  startOfISOWeek,
+  subWeeks
+} from 'date-fns';
+import { formatDate } from '@forge/components/core';
 import { DateRangePickerComponent } from '@forge/components/form/date-range-picker';
 import type { DateRangePreset, DateRangeValue } from '@forge/components/form/date-range-picker';
 import {
@@ -230,44 +241,44 @@ export class ForgeHeatmapComponent {
     return result;
   });
 
-  // Resolved Date Range (Moment bounds)
-  readonly parsedDateRange = computed<{ start: Moment | null; end: Moment | null }>(() => {
+  // Resolved Date Range bounds
+  readonly parsedDateRange = computed<{ start: Date | null; end: Date | null }>(() => {
     const dr = this.dateRange();
     if (!dr || (!dr.startDate && !dr.endDate)) {
       return { start: null, end: null };
     }
-    const s = dr.startDate ? moment(dr.startDate).startOf('day') : null;
-    const e = dr.endDate ? moment(dr.endDate).endOf('day') : (s ? s.clone().endOf('day') : null);
+    const s = dr.startDate ? startOfDay(new Date(dr.startDate as any)) : null;
+    const e = dr.endDate ? endOfDay(new Date(dr.endDate as any)) : (s ? endOfDay(s) : null);
     return { start: s, end: e };
   });
 
   // Day list for Day-by-Day mode (weeks grouping)
-  readonly dayModeWeeks = computed<{ label: string; start: Moment; end: Moment; days: Moment[] }[]>(() => {
+  readonly dayModeWeeks = computed<{ label: string; start: Date; end: Date; days: Date[] }[]>(() => {
     const { start, end } = this.parsedDateRange();
-    const effectiveStart = start || moment().subtract(3, 'weeks').startOf('isoWeek');
-    const effectiveEnd = end || moment().endOf('isoWeek');
+    const effectiveStart = start || startOfISOWeek(subWeeks(new Date(), 3));
+    const effectiveEnd = end || endOfISOWeek(new Date());
 
-    const weeks: { label: string; start: Moment; end: Moment; days: Moment[] }[] = [];
-    const currentWeekStart = effectiveStart.clone().startOf('isoWeek');
-    const lastWeekEnd = effectiveEnd.clone().endOf('isoWeek');
+    const weeks: { label: string; start: Date; end: Date; days: Date[] }[] = [];
+    let currentWeekStart = startOfISOWeek(effectiveStart);
+    const lastWeekEnd = endOfISOWeek(effectiveEnd);
 
-    while (currentWeekStart.isSameOrBefore(lastWeekEnd, 'day')) {
-      const currentWeekEnd = currentWeekStart.clone().add(6, 'days');
-      const daysInWeek: Moment[] = [];
+    while (isSameDay(currentWeekStart, lastWeekEnd) || isBefore(currentWeekStart, lastWeekEnd)) {
+      const currentWeekEnd = addDays(currentWeekStart, 6);
+      const daysInWeek: Date[] = [];
 
       for (let i = 0; i < 7; i++) {
-        daysInWeek.push(currentWeekStart.clone().add(i, 'days'));
+        daysInWeek.push(addDays(currentWeekStart, i));
       }
 
-      const label = `${currentWeekStart.format('MMM D')} - ${currentWeekEnd.format('MMM D')}`;
+      const label = `${formatDate(currentWeekStart, 'MMM d')} - ${formatDate(currentWeekEnd, 'MMM d')}`;
       weeks.push({
         label,
-        start: currentWeekStart.clone(),
-        end: currentWeekEnd.clone(),
+        start: currentWeekStart,
+        end: currentWeekEnd,
         days: daysInWeek
       });
 
-      currentWeekStart.add(1, 'week');
+      currentWeekStart = addWeeks(currentWeekStart, 1);
     }
 
     return weeks;
@@ -275,7 +286,7 @@ export class ForgeHeatmapComponent {
 
   // Normalized Value Map:
   // For 'hour': Map<`${colKey}_${hour}`, { value, meta }>
-  // For 'day': Map<`${YYYY-MM-DD}`, { value, meta }> AND Map<`${colKey}`, { value, meta }>
+  // For 'day': Map<`${yyyy-MM-dd}`, { value, meta }> AND Map<`${colKey}`, { value, meta }>
   readonly normalizedValueMap = computed<Map<string, { value: number; meta?: Record<string, unknown> }>>(() => {
     const map = new Map<string, { value: number; meta?: Record<string, unknown> }>();
     const rawInput = this.activeDataInput();
@@ -297,10 +308,9 @@ export class ForgeHeatmapComponent {
         // Raw Timestamp list
         (rawInput as HeatmapTimestampData).forEach((ts) => {
           const date = new Date(ts);
-          if (!isNaN(date.getTime())) {
-            const m = moment(date);
+          if (isValid(date)) {
             if (currentInterval === 'day') {
-              const dayKey = m.format('YYYY-MM-DD');
+              const dayKey = formatDate(date, 'yyyy-MM-dd');
               const existing = map.get(dayKey);
               if (existing) existing.value += 1;
               else map.set(dayKey, { value: 1 });
@@ -322,9 +332,11 @@ export class ForgeHeatmapComponent {
           if (currentInterval === 'day') {
             let dayKey = '';
             if (point.date) {
-              dayKey = moment(point.date).format('YYYY-MM-DD');
+              dayKey = typeof point.date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(point.date)
+                ? point.date.substring(0, 10)
+                : formatDate(new Date(point.date), 'yyyy-MM-dd');
             } else if (point.day instanceof Date) {
-              dayKey = moment(point.day).format('YYYY-MM-DD');
+              dayKey = formatDate(point.day, 'yyyy-MM-dd');
             } else if (typeof point.day === 'string' && /^\d{4}-\d{2}-\d{2}/.test(point.day)) {
               dayKey = point.day.substring(0, 10);
             } else {
@@ -435,7 +447,7 @@ export class ForgeHeatmapComponent {
 
       return weeks.map((week, weekIdx) => {
         const cells: HeatmapCell[] = week.days.map((d, dayIdx) => {
-          const dateStr = d.format('YYYY-MM-DD');
+          const dateStr = formatDate(d, 'yyyy-MM-dd');
           const dayName = dayLabels[dayIdx];
           const entry = map.get(dateStr) || map.get(`${dayName}_${weekIdx}`);
           const val = entry?.value ?? 0;
@@ -456,12 +468,12 @@ export class ForgeHeatmapComponent {
             textColor = intensity >= 0.55 ? '#ffffff' : palette.zero.text;
           }
 
-          const tooltip = `${d.format('dddd, MMMM D, YYYY')}: ${val}${unitSuffix}`;
+          const tooltip = `${formatDate(d, 'EEEE, MMMM d, yyyy')}: ${val}${unitSuffix}`;
 
           return {
             id: dateStr,
             colKey: dayName,
-            colLabel: `${dayName} (${d.format('D')})`,
+            colLabel: `${dayName} (${formatDate(d, 'd')})`,
             rowKey: week.label,
             rowLabel: week.label,
             value: val,
@@ -470,7 +482,7 @@ export class ForgeHeatmapComponent {
             textColor,
             formattedValue: String(val),
             tooltipText: tooltip,
-            date: d.toDate(),
+            date: d,
             meta: entry?.meta
           };
         });

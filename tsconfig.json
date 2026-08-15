@@ -18,6 +18,7 @@
       "@forge/components": [
         "./projects/forge/src/public-api.ts"
       ],
+      "@forge/components/core": ["./projects/forge/src/lib/core/index.ts"],
       "@forge/components/button": ["./projects/forge/src/lib/button/index.ts"],
       "@forge/components/tooltip": ["./projects/forge/src/lib/tooltip/index.ts"],
       "@forge/components/button-group": ["./projects/forge/src/lib/button-group/index.ts"],

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import moment from 'moment';
 import { DateTimePickerComponent } from './date-time-picker.component';
 
 describe('DateTimePickerComponent', () => {
@@ -37,4 +36,3 @@ describe('DateTimePickerComponent', () => {
     expect(emitted).toBe('2026-08-15 12:15');
   });
 });
-

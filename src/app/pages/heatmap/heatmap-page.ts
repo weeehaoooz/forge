@@ -1,7 +1,20 @@
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import moment from 'moment';
+import {
+  addDays,
+  endOfDay,
+  endOfISOWeek,
+  endOfMonth,
+  format,
+  isBefore,
+  isSameDay,
+  startOfDay,
+  startOfISOWeek,
+  startOfMonth,
+  subDays,
+  subWeeks
+} from 'date-fns';
 import {
   ForgeHeatmapComponent,
   ForgeHeatmapModule,
@@ -160,37 +173,37 @@ export class HeatmapPage {
   // -------------------------------------------------------------
   readonly activeInterval = signal<HeatmapInterval>('hour');
   readonly selectedDateRange = signal<DateRangeValue>({
-    startDate: moment().subtract(20, 'days').format('YYYY-MM-DD'),
-    endDate: moment().format('YYYY-MM-DD')
+    startDate: format(subDays(new Date(), 20), 'yyyy-MM-dd'),
+    endDate: format(new Date(), 'yyyy-MM-dd')
   });
 
   readonly rangePresets: DateRangePreset[] = [
     {
       label: 'This Week',
       getValue: () => ({
-        startDate: moment().startOf('isoWeek'),
-        endDate: moment().endOf('isoWeek')
+        startDate: startOfISOWeek(new Date()),
+        endDate: endOfISOWeek(new Date())
       })
     },
     {
       label: 'Last 14 Days',
       getValue: () => ({
-        startDate: moment().subtract(13, 'days').startOf('day'),
-        endDate: moment().endOf('day')
+        startDate: startOfDay(subDays(new Date(), 13)),
+        endDate: endOfDay(new Date())
       })
     },
     {
       label: 'This Month',
       getValue: () => ({
-        startDate: moment().startOf('month'),
-        endDate: moment().endOf('month')
+        startDate: startOfMonth(new Date()),
+        endDate: endOfMonth(new Date())
       })
     },
     {
       label: 'Last 30 Days',
       getValue: () => ({
-        startDate: moment().subtract(29, 'days').startOf('day'),
-        endDate: moment().endOf('day')
+        startDate: startOfDay(subDays(new Date(), 29)),
+        endDate: endOfDay(new Date())
       })
     }
   ];
@@ -274,16 +287,16 @@ export class HeatmapPage {
     if (dr) {
       this.selectedDateRange.set(dr);
       this.generateFlexibleData();
-      const s = dr.startDate ? moment(dr.startDate).format('YYYY-MM-DD') : 'null';
-      const e = dr.endDate ? moment(dr.endDate).format('YYYY-MM-DD') : 'null';
+      const s = dr.startDate ? format(new Date(dr.startDate as any), 'yyyy-MM-dd') : 'null';
+      const e = dr.endDate ? format(new Date(dr.endDate as any), 'yyyy-MM-dd') : 'null';
       this.logEvent(`Date range selected: ${s} to ${e}`);
     }
   }
 
   onTimeRangeChange(range: HeatmapTimeRange): void {
     this.lastEmittedRange.set(range);
-    const startStr = range.startDate ? moment(range.startDate).format('YYYY-MM-DD') : 'N/A';
-    const endStr = range.endDate ? moment(range.endDate).format('YYYY-MM-DD') : 'N/A';
+    const startStr = range.startDate ? format(new Date(range.startDate as any), 'yyyy-MM-dd') : 'N/A';
+    const endStr = range.endDate ? format(new Date(range.endDate as any), 'yyyy-MM-dd') : 'N/A';
     this.logEvent(`Time range emitted: interval=${range.interval}, dates=[${startStr} - ${endStr}]`);
   }
 
@@ -361,18 +374,18 @@ export class HeatmapPage {
     const dr = this.selectedDateRange();
     const points: HeatmapDataPoint[] = [];
 
-    const start = dr.startDate ? moment(dr.startDate) : moment().subtract(3, 'weeks');
-    const end = dr.endDate ? moment(dr.endDate) : moment();
+    const start = dr.startDate ? new Date(dr.startDate as any) : subWeeks(new Date(), 3);
+    const end = dr.endDate ? new Date(dr.endDate as any) : new Date();
 
     if (inter === 'day') {
-      const curr = start.clone();
-      while (curr.isSameOrBefore(end, 'day')) {
+      let curr = start;
+      while (isSameDay(curr, end) || isBefore(curr, end)) {
         const val = Math.floor(Math.random() * 30);
         points.push({
-          date: curr.format('YYYY-MM-DD'),
+          date: format(curr, 'yyyy-MM-dd'),
           value: val
         });
-        curr.add(1, 'day');
+        curr = addDays(curr, 1);
       }
     } else {
       const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import moment from 'moment';
+import { format } from 'date-fns';
 import { DatePickerComponent } from './date-picker.component';
 
 describe('DatePickerComponent', () => {
@@ -25,7 +25,7 @@ describe('DatePickerComponent', () => {
     component.writeValue('2026-08-15');
     fixture.detectChanges();
     expect(component.formattedValue()).toBe('2026-08-15');
-    expect(component.selectedDate()?.format('YYYY-MM-DD')).toBe('2026-08-15');
+    expect(component.selectedDate() ? format(component.selectedDate()!, 'yyyy-MM-dd') : null).toBe('2026-08-15');
   });
 
   it('should toggle dropdown state on trigger click', () => {

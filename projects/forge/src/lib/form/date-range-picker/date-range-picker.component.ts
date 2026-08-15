@@ -12,8 +12,35 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
-import moment from 'moment';
-import type { Moment } from 'moment';
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  addYears,
+  differenceInCalendarDays,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  getDate,
+  getHours,
+  getMinutes,
+  getSeconds,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isSameMonth,
+  isValid,
+  set,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+  subDays,
+  subMonths,
+  subWeeks,
+  subYears
+} from 'date-fns';
 
 import {
   DateRangePreset,
@@ -21,8 +48,7 @@ import {
   InternalDateRange,
   RangeCalendarDay
 } from './date-range-types';
-import { CalendarMonth, CalendarYear } from '@forge/components/form/date-picker';
-
+import { formatDate, parseFlexibleDate } from '@forge/components/core';
 
 let uniqueDateRangePickerId = 0;
 
@@ -63,14 +89,14 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly use24Hour = input<boolean>(true);
   readonly showSeconds = input<boolean>(false);
   readonly minuteStep = input<number>(1);
-  readonly minDate = input<string | Date | Moment | null>(null);
-  readonly maxDate = input<string | Date | Moment | null>(null);
+  readonly minDate = input<string | Date | number | null>(null);
+  readonly maxDate = input<string | Date | number | null>(null);
   readonly minSpan = input<number | null>(null); // in days
   readonly maxSpan = input<number | null>(null); // in days
   readonly firstDayOfWeek = input<number>(0); // 0 = Sun, 1 = Mon
   readonly presets = input<DateRangePreset[] | null>(null);
   readonly presetType = input<'all' | 'calendar' | 'duration'>('all');
-  readonly filterDate = input<((date: Moment) => boolean) | null>(null);
+  readonly filterDate = input<((date: Date) => boolean) | null>(null);
 
   // Signal Outputs
   readonly rangeChange = output<DateRangeValue | null>();
@@ -119,13 +145,13 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly dialogId = `${this.componentId}-dialog`;
 
   // Internal Committed Selection Signals
-  readonly selectedStartDate = signal<Moment | null>(null);
-  readonly selectedEndDate = signal<Moment | null>(null);
+  readonly selectedStartDate = signal<Date | null>(null);
+  readonly selectedEndDate = signal<Date | null>(null);
 
   // Draft Selection Signals (Active while picking in overlay)
-  readonly draftStartDate = signal<Moment | null>(null);
-  readonly draftEndDate = signal<Moment | null>(null);
-  readonly hoverDate = signal<Moment | null>(null);
+  readonly draftStartDate = signal<Date | null>(null);
+  readonly draftEndDate = signal<Date | null>(null);
+  readonly hoverDate = signal<Date | null>(null);
 
   // Draft Time Signals
   readonly draftStartHour = signal<number>(0);
@@ -137,7 +163,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly draftEndSecond = signal<number>(59);
 
   // View state signals
-  readonly viewDate = signal<Moment>(moment().startOf('month'));
+  readonly viewDate = signal<Date>(startOfMonth(new Date()));
   readonly isOpen = signal<boolean>(false);
   readonly isDisabledSignal = signal<boolean>(false);
   readonly isTouched = signal<boolean>(false);
@@ -153,31 +179,31 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly effectiveDisplayFormat = computed(() => {
     const fmt = this.displayFormat();
     if (fmt) return fmt;
-    return this.showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    return this.showTime() ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd';
   });
 
   readonly effectiveValueFormat = computed(() => {
     const fmt = this.valueFormat();
     if (fmt) return fmt;
-    return this.showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    return this.showTime() ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd';
   });
 
   readonly viewDateRight = computed(() => {
-    return this.viewDate().clone().add(1, 'month');
+    return addMonths(this.viewDate(), 1);
   });
 
   readonly parsedMinDate = computed(() => {
     const min = this.minDate();
     if (!min) return null;
-    const m = moment(min);
-    return m.isValid() ? (this.showTime() ? m : m.startOf('day')) : null;
+    const d = parseFlexibleDate(min);
+    return d && isValid(d) ? (this.showTime() ? d : startOfDay(d)) : null;
   });
 
   readonly parsedMaxDate = computed(() => {
     const max = this.maxDate();
     if (!max) return null;
-    const m = moment(max);
-    return m.isValid() ? (this.showTime() ? m : m.endOf('day')) : null;
+    const d = parseFlexibleDate(max);
+    return d && isValid(d) ? (this.showTime() ? d : endOfDay(d)) : null;
   });
 
   readonly formattedTriggerValue = computed(() => {
@@ -185,21 +211,20 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     const end = this.selectedEndDate();
     const fmt = this.effectiveDisplayFormat();
 
-    if (start && start.isValid() && end && end.isValid()) {
-      return `${start.format(fmt)}  —  ${end.format(fmt)}`;
-    } else if (start && start.isValid()) {
-      return `${start.format(fmt)}  —  ...`;
+    if (start && isValid(start) && end && isValid(end)) {
+      return `${formatDate(start, fmt)}  —  ${formatDate(end, fmt)}`;
+    } else if (start && isValid(start)) {
+      return `${formatDate(start, fmt)}  —  ...`;
     }
     return '';
   });
 
   readonly weekDayNames = computed(() => {
     const names: string[] = [];
-    const firstDay = this.firstDayOfWeek();
-    const temp = moment().day(firstDay);
+    const firstDay = (this.firstDayOfWeek() % 7) as 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    const base = startOfWeek(new Date(), { weekStartsOn: firstDay });
     for (let i = 0; i < 7; i++) {
-      names.push(temp.format('dd'));
-      temp.add(1, 'day');
+      names.push(formatDate(addDays(base, i), 'EEEEEE'));
     }
     return names;
   });
@@ -210,69 +235,71 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     if (custom && custom.length > 0) return custom;
 
     const type = this.presetType();
+    const firstDay = (this.firstDayOfWeek() % 7) as 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
     const calendarPresets: DateRangePreset[] = [
       {
         label: 'Today',
         key: 'today',
         getValue: () => ({
-          startDate: moment().startOf('day'),
-          endDate: moment().endOf('day')
+          startDate: startOfDay(new Date()),
+          endDate: endOfDay(new Date())
         })
       },
       {
         label: 'Yesterday',
         key: 'yesterday',
         getValue: () => ({
-          startDate: moment().subtract(1, 'day').startOf('day'),
-          endDate: moment().subtract(1, 'day').endOf('day')
+          startDate: startOfDay(subDays(new Date(), 1)),
+          endDate: endOfDay(subDays(new Date(), 1))
         })
       },
       {
         label: 'This week',
         key: 'this_week',
         getValue: () => ({
-          startDate: moment().startOf('week'),
-          endDate: moment().endOf('week')
+          startDate: startOfWeek(new Date(), { weekStartsOn: firstDay }),
+          endDate: endOfWeek(new Date(), { weekStartsOn: firstDay })
         })
       },
       {
         label: 'Last week',
         key: 'last_week',
         getValue: () => ({
-          startDate: moment().subtract(1, 'week').startOf('week'),
-          endDate: moment().subtract(1, 'week').endOf('week')
+          startDate: startOfWeek(subWeeks(new Date(), 1), { weekStartsOn: firstDay }),
+          endDate: endOfWeek(subWeeks(new Date(), 1), { weekStartsOn: firstDay })
         })
       },
       {
         label: 'This month',
         key: 'this_month',
         getValue: () => ({
-          startDate: moment().startOf('month'),
-          endDate: moment().endOf('month')
+          startDate: startOfMonth(new Date()),
+          endDate: endOfMonth(new Date())
         })
       },
       {
         label: 'Last month',
         key: 'last_month',
         getValue: () => ({
-          startDate: moment().subtract(1, 'month').startOf('month'),
-          endDate: moment().subtract(1, 'month').endOf('month')
+          startDate: startOfMonth(subMonths(new Date(), 1)),
+          endDate: endOfMonth(subMonths(new Date(), 1))
         })
       },
       {
         label: 'This year',
         key: 'this_year',
         getValue: () => ({
-          startDate: moment().startOf('year'),
-          endDate: moment().endOf('year')
+          startDate: startOfYear(new Date()),
+          endDate: endOfYear(new Date())
         })
       },
       {
         label: 'Last year',
         key: 'last_year',
         getValue: () => ({
-          startDate: moment().subtract(1, 'year').startOf('year'),
-          endDate: moment().subtract(1, 'year').endOf('year')
+          startDate: startOfYear(subYears(new Date(), 1)),
+          endDate: endOfYear(subYears(new Date(), 1))
         })
       }
     ];
@@ -305,21 +332,21 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly isPrevDisabled = computed(() => {
     const min = this.parsedMinDate();
     if (!min) return false;
-    return this.viewDate().clone().startOf('month').isSameOrBefore(min.clone().startOf('month'));
+    return !isAfter(startOfMonth(this.viewDate()), startOfMonth(min));
   });
 
   readonly isNextDisabled = computed(() => {
     const max = this.parsedMaxDate();
     if (!max) return false;
-    return this.viewDateRight().clone().endOf('month').isSameOrAfter(max.clone().endOf('month'));
+    return !isBefore(endOfMonth(this.viewDateRight()), endOfMonth(max));
   });
 
   readonly leftHeaderLabel = computed(() => {
-    return this.viewDate().format('MMMM YYYY');
+    return formatDate(this.viewDate(), 'MMMM yyyy');
   });
 
   readonly rightHeaderLabel = computed(() => {
-    return this.viewDateRight().format('MMMM YYYY');
+    return formatDate(this.viewDateRight(), 'MMMM yyyy');
   });
 
   // ControlValueAccessor Callbacks
@@ -333,16 +360,24 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       const end = this.draftEndDate();
       const fmt = this.effectiveDisplayFormat();
 
-      if (start && start.isValid()) {
-        const fullStart = start.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
-        this.startInputText.set(fullStart.format(fmt));
+      if (start && isValid(start)) {
+        const fullStart = set(start, {
+          hours: this.draftStartHour(),
+          minutes: this.draftStartMinute(),
+          seconds: this.draftStartSecond()
+        });
+        this.startInputText.set(formatDate(fullStart, fmt));
       } else {
         this.startInputText.set('');
       }
 
-      if (end && end.isValid()) {
-        const fullEnd = end.clone().hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
-        this.endInputText.set(fullEnd.format(fmt));
+      if (end && isValid(end)) {
+        const fullEnd = set(end, {
+          hours: this.draftEndHour(),
+          minutes: this.draftEndMinute(),
+          seconds: this.draftEndSecond()
+        });
+        this.endInputText.set(formatDate(fullEnd, fmt));
       } else {
         this.endInputText.set('');
       }
@@ -369,17 +404,17 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       endRaw = rangeVal.endDate;
     }
 
-    const parsedStart = this.parseDateValue(startRaw);
-    const parsedEnd = this.parseDateValue(endRaw);
+    const parsedStart = parseFlexibleDate(startRaw, [this.effectiveValueFormat(), this.effectiveDisplayFormat()]);
+    const parsedEnd = parseFlexibleDate(endRaw, [this.effectiveValueFormat(), this.effectiveDisplayFormat()]);
 
-    if (parsedStart && parsedStart.isValid()) {
+    if (parsedStart && isValid(parsedStart)) {
       this.selectedStartDate.set(parsedStart);
-      this.viewDate.set(parsedStart.clone().startOf('month'));
+      this.viewDate.set(startOfMonth(parsedStart));
     } else {
       this.selectedStartDate.set(null);
     }
 
-    if (parsedEnd && parsedEnd.isValid()) {
+    if (parsedEnd && isValid(parsedEnd)) {
       this.selectedEndDate.set(parsedEnd);
     } else {
       this.selectedEndDate.set(null);
@@ -415,25 +450,25 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     const selStart = this.selectedStartDate();
     const selEnd = this.selectedEndDate();
 
-    if (selStart && selStart.isValid()) {
-      this.draftStartDate.set(selStart.clone());
-      this.viewDate.set(selStart.clone().startOf('month'));
-      this.draftStartHour.set(selStart.hour());
-      this.draftStartMinute.set(selStart.minute());
-      this.draftStartSecond.set(selStart.second());
+    if (selStart && isValid(selStart)) {
+      this.draftStartDate.set(selStart);
+      this.viewDate.set(startOfMonth(selStart));
+      this.draftStartHour.set(getHours(selStart));
+      this.draftStartMinute.set(getMinutes(selStart));
+      this.draftStartSecond.set(getSeconds(selStart));
     } else {
       this.draftStartDate.set(null);
-      this.viewDate.set(moment().startOf('month'));
+      this.viewDate.set(startOfMonth(new Date()));
       this.draftStartHour.set(0);
       this.draftStartMinute.set(0);
       this.draftStartSecond.set(0);
     }
 
-    if (selEnd && selEnd.isValid()) {
-      this.draftEndDate.set(selEnd.clone());
-      this.draftEndHour.set(selEnd.hour());
-      this.draftEndMinute.set(selEnd.minute());
-      this.draftEndSecond.set(selEnd.second());
+    if (selEnd && isValid(selEnd)) {
+      this.draftEndDate.set(selEnd);
+      this.draftEndHour.set(getHours(selEnd));
+      this.draftEndMinute.set(getMinutes(selEnd));
+      this.draftEndSecond.set(getSeconds(selEnd));
     } else {
       this.draftEndDate.set(null);
       this.draftEndHour.set(23);
@@ -455,12 +490,12 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   // Dual Calendar Month Navigation
   prevMonth(): void {
     if (this.isPrevDisabled()) return;
-    this.viewDate.update((d) => d.clone().subtract(1, 'month'));
+    this.viewDate.update((d) => subMonths(d, 1));
   }
 
   nextMonth(): void {
     if (this.isNextDisabled()) return;
-    this.viewDate.update((d) => d.clone().add(1, 'month'));
+    this.viewDate.update((d) => addMonths(d, 1));
   }
 
   // Day Selection Logic
@@ -473,20 +508,36 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
     if (!start || (start && end)) {
       // Step 1: Set new Start Date & clear End Date
-      const newStart = day.date.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
+      const newStart = set(day.date, {
+        hours: this.draftStartHour(),
+        minutes: this.draftStartMinute(),
+        seconds: this.draftStartSecond()
+      });
       this.draftStartDate.set(newStart);
       this.draftEndDate.set(null);
     } else {
       // Step 2: Set End Date
-      let targetDate = day.date.clone();
-      if (targetDate.isBefore(start, 'day')) {
+      const targetDate = day.date;
+      if (isBefore(startOfDay(targetDate), startOfDay(start))) {
         // If clicked date is before start date, swap them
-        const newStart = targetDate.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
-        const newEnd = start.clone().hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
+        const newStart = set(targetDate, {
+          hours: this.draftStartHour(),
+          minutes: this.draftStartMinute(),
+          seconds: this.draftStartSecond()
+        });
+        const newEnd = set(start, {
+          hours: this.draftEndHour(),
+          minutes: this.draftEndMinute(),
+          seconds: this.draftEndSecond()
+        });
         this.draftStartDate.set(newStart);
         this.draftEndDate.set(newEnd);
       } else {
-        const newEnd = targetDate.clone().hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
+        const newEnd = set(targetDate, {
+          hours: this.draftEndHour(),
+          minutes: this.draftEndMinute(),
+          seconds: this.draftEndSecond()
+        });
         this.draftEndDate.set(newEnd);
       }
     }
@@ -504,31 +555,39 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   applyPreset(preset: DateRangePreset): void {
     this.activePresetLabel.set(preset.label);
 
-    let newStart: Moment | null = null;
-    let newEnd: Moment | null = null;
+    let newStart: Date | null = null;
+    let newEnd: Date | null = null;
 
     if (preset.isDuration || preset.duration) {
-      const baseStart = this.draftStartDate() || moment().startOf('day');
-      newStart = baseStart.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
-      newEnd = baseStart.clone();
+      const baseStart = this.draftStartDate() || startOfDay(new Date());
+      newStart = set(baseStart, {
+        hours: this.draftStartHour(),
+        minutes: this.draftStartMinute(),
+        seconds: this.draftStartSecond()
+      });
+      let calculatedEnd = baseStart;
 
-      if (preset.duration?.days) newEnd.add(preset.duration.days, 'days');
-      if (preset.duration?.weeks) newEnd.add(preset.duration.weeks, 'weeks');
-      if (preset.duration?.months) newEnd.add(preset.duration.months, 'months');
-      if (preset.duration?.years) newEnd.add(preset.duration.years, 'years');
+      if (preset.duration?.days) calculatedEnd = addDays(calculatedEnd, preset.duration.days);
+      if (preset.duration?.weeks) calculatedEnd = addWeeks(calculatedEnd, preset.duration.weeks);
+      if (preset.duration?.months) calculatedEnd = addMonths(calculatedEnd, preset.duration.months);
+      if (preset.duration?.years) calculatedEnd = addYears(calculatedEnd, preset.duration.years);
 
-      newEnd.hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
+      newEnd = set(calculatedEnd, {
+        hours: this.draftEndHour(),
+        minutes: this.draftEndMinute(),
+        seconds: this.draftEndSecond()
+      });
     } else if (preset.getValue) {
       const range = preset.getValue(this.draftStartDate());
       newStart = range.startDate;
       newEnd = range.endDate;
     }
 
-    if (newStart && newStart.isValid()) {
+    if (newStart && isValid(newStart)) {
       this.draftStartDate.set(newStart);
-      this.viewDate.set(newStart.clone().startOf('month'));
+      this.viewDate.set(startOfMonth(newStart));
     }
-    if (newEnd && newEnd.isValid()) {
+    if (newEnd && isValid(newEnd)) {
       this.draftEndDate.set(newEnd);
     }
   }
@@ -546,11 +605,19 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       return;
     }
 
-    const finalStart = start.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
-    const finalEnd = (end || start).clone().hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
+    const finalStart = set(start, {
+      hours: this.draftStartHour(),
+      minutes: this.draftStartMinute(),
+      seconds: this.draftStartSecond()
+    });
+    const finalEnd = set(end || start, {
+      hours: this.draftEndHour(),
+      minutes: this.draftEndMinute(),
+      seconds: this.draftEndSecond()
+    });
 
     // Ensure start is before or equal to end
-    if (finalEnd.isBefore(finalStart)) {
+    if (isBefore(finalEnd, finalStart)) {
       this.selectedStartDate.set(finalEnd);
       this.selectedEndDate.set(finalStart);
       this.emitValue({ startDate: finalEnd, endDate: finalStart });
@@ -614,34 +681,26 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       return;
     }
 
-    const formats = [
-      this.effectiveDisplayFormat(),
-      this.effectiveValueFormat(),
-      'YYYY-MM-DD HH:mm:ss',
-      'YYYY-MM-DD HH:mm',
-      'YYYY-MM-DD hh:mm A',
-      'YYYY-MM-DD',
-      'MM/DD/YYYY HH:mm',
-      'MM/DD/YYYY',
-      'DD/MM/YYYY',
-      'YYYY/MM/DD'
-    ];
-    const parsed = moment(val, formats, false);
-    if (parsed.isValid()) {
+    const parsed = parseFlexibleDate(val, [this.effectiveDisplayFormat(), this.effectiveValueFormat()]);
+    if (parsed && isValid(parsed)) {
       this.draftStartDate.set(parsed);
-      this.draftStartHour.set(parsed.hour());
-      this.draftStartMinute.set(parsed.minute());
-      this.draftStartSecond.set(parsed.second());
-      this.viewDate.set(parsed.clone().startOf('month'));
+      this.draftStartHour.set(getHours(parsed));
+      this.draftStartMinute.set(getMinutes(parsed));
+      this.draftStartSecond.set(getSeconds(parsed));
+      this.viewDate.set(startOfMonth(parsed));
     }
   }
 
   onStartInputBlur(event: FocusEvent): void {
     const start = this.draftStartDate();
     const fmt = this.effectiveDisplayFormat();
-    if (start && start.isValid()) {
-      const fullStart = start.clone().hour(this.draftStartHour()).minute(this.draftStartMinute()).second(this.draftStartSecond());
-      this.startInputText.set(fullStart.format(fmt));
+    if (start && isValid(start)) {
+      const fullStart = set(start, {
+        hours: this.draftStartHour(),
+        minutes: this.draftStartMinute(),
+        seconds: this.draftStartSecond()
+      });
+      this.startInputText.set(formatDate(fullStart, fmt));
     } else {
       this.startInputText.set('');
     }
@@ -656,33 +715,25 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       return;
     }
 
-    const formats = [
-      this.effectiveDisplayFormat(),
-      this.effectiveValueFormat(),
-      'YYYY-MM-DD HH:mm:ss',
-      'YYYY-MM-DD HH:mm',
-      'YYYY-MM-DD hh:mm A',
-      'YYYY-MM-DD',
-      'MM/DD/YYYY HH:mm',
-      'MM/DD/YYYY',
-      'DD/MM/YYYY',
-      'YYYY/MM/DD'
-    ];
-    const parsed = moment(val, formats, false);
-    if (parsed.isValid()) {
+    const parsed = parseFlexibleDate(val, [this.effectiveDisplayFormat(), this.effectiveValueFormat()]);
+    if (parsed && isValid(parsed)) {
       this.draftEndDate.set(parsed);
-      this.draftEndHour.set(parsed.hour());
-      this.draftEndMinute.set(parsed.minute());
-      this.draftEndSecond.set(parsed.second());
+      this.draftEndHour.set(getHours(parsed));
+      this.draftEndMinute.set(getMinutes(parsed));
+      this.draftEndSecond.set(getSeconds(parsed));
     }
   }
 
   onEndInputBlur(event: FocusEvent): void {
     const end = this.draftEndDate();
     const fmt = this.effectiveDisplayFormat();
-    if (end && end.isValid()) {
-      const fullEnd = end.clone().hour(this.draftEndHour()).minute(this.draftEndMinute()).second(this.draftEndSecond());
-      this.endInputText.set(fullEnd.format(fmt));
+    if (end && isValid(end)) {
+      const fullEnd = set(end, {
+        hours: this.draftEndHour(),
+        minutes: this.draftEndMinute(),
+        seconds: this.draftEndSecond()
+      });
+      this.endInputText.set(formatDate(fullEnd, fmt));
     } else {
       this.endInputText.set('');
     }
@@ -695,66 +746,61 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     }
   }
 
-
   // Helper Calendar Builder
-  private buildCalendarDays(viewMonth: Moment): RangeCalendarDay[] {
+  private buildCalendarDays(viewMonth: Date): RangeCalendarDay[] {
     const start = this.draftStartDate();
     const end = this.draftEndDate();
     const hover = this.hoverDate();
     const min = this.parsedMinDate();
     const max = this.parsedMaxDate();
     const filter = this.filterDate();
-    const firstDay = this.firstDayOfWeek();
+    const firstDay = (this.firstDayOfWeek() % 7) as 0 | 1 | 2 | 3 | 4 | 5 | 6;
     const minS = this.minSpan();
     const maxS = this.maxSpan();
 
     const days: RangeCalendarDay[] = [];
-    const startOfMonth = viewMonth.clone().startOf('month');
-
-    let gridStart = startOfMonth.clone().day(firstDay);
-    if (gridStart.isAfter(startOfMonth)) {
-      gridStart.subtract(7, 'days');
-    }
-
-    const today = moment().startOf('day');
+    const monthStart = startOfMonth(viewMonth);
+    const gridStart = startOfWeek(monthStart, { weekStartsOn: firstDay });
+    const today = startOfDay(new Date());
 
     for (let i = 0; i < 42; i++) {
-      const current = gridStart.clone().add(i, 'days');
-      const isCurrentMonth = current.isSame(viewMonth, 'month');
-      const isToday = current.isSame(today, 'day');
+      const current = addDays(gridStart, i);
+      const isCurrentMonth = isSameMonth(current, viewMonth);
+      const isToday = isSameDay(current, today);
 
-      const isSelectedStart = !!(start && current.isSame(start, 'day'));
-      const isSelectedEnd = !!(end && current.isSame(end, 'day'));
+      const isSelectedStart = !!(start && isSameDay(current, start));
+      const isSelectedEnd = !!(end && isSameDay(current, end));
 
       let isInRange = false;
       if (start && end) {
-        const rangeStart = start.isBefore(end) ? start : end;
-        const rangeEnd = start.isBefore(end) ? end : start;
-        isInRange = current.isAfter(rangeStart, 'day') && current.isBefore(rangeEnd, 'day');
+        const rangeStart = isBefore(start, end) ? start : end;
+        const rangeEnd = isBefore(start, end) ? end : start;
+        isInRange = isAfter(startOfDay(current), startOfDay(rangeStart)) && isBefore(startOfDay(current), startOfDay(rangeEnd));
       }
 
       let isHoveredRange = false;
       if (start && !end && hover) {
-        const rangeStart = start.isBefore(hover) ? start : hover;
-        const rangeEnd = start.isBefore(hover) ? hover : start;
-        isHoveredRange = current.isSameOrAfter(rangeStart, 'day') && current.isSameOrBefore(rangeEnd, 'day');
+        const rangeStart = isBefore(start, hover) ? start : hover;
+        const rangeEnd = isBefore(start, hover) ? hover : start;
+        isHoveredRange = (isSameDay(current, rangeStart) || isAfter(startOfDay(current), startOfDay(rangeStart))) &&
+                         (isSameDay(current, rangeEnd) || isBefore(startOfDay(current), startOfDay(rangeEnd)));
       }
 
       let isDisabled = false;
-      if (min && current.isBefore(min, 'day')) isDisabled = true;
-      if (max && current.isAfter(max, 'day')) isDisabled = true;
-      if (filter && !filter(current.clone())) isDisabled = true;
+      if (min && isBefore(startOfDay(current), startOfDay(min))) isDisabled = true;
+      if (max && isAfter(startOfDay(current), startOfDay(max))) isDisabled = true;
+      if (filter && !filter(current)) isDisabled = true;
 
       // Span validation
-      if (start && !end && (minS || maxS)) {
-        const diffDays = Math.abs(current.diff(start, 'days'));
+      if (start && !end && (minS !== null || maxS !== null)) {
+        const diffDays = Math.abs(differenceInCalendarDays(current, start));
         if (minS !== null && diffDays < minS) isDisabled = true;
         if (maxS !== null && diffDays > maxS) isDisabled = true;
       }
 
       days.push({
         date: current,
-        dayNumber: current.date(),
+        dayNumber: getDate(current),
         isCurrentMonth,
         isToday,
         isSelectedStart,
@@ -767,24 +813,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     }
 
     return days;
-  }
-
-  private parseDateValue(val: unknown): Moment | null {
-    if (!val) return null;
-    if (moment.isMoment(val)) return val.clone();
-    if (val instanceof Date) return moment(val);
-
-    const formats = [
-      this.effectiveDisplayFormat(),
-      this.effectiveValueFormat(),
-      'YYYY-MM-DD HH:mm:ss',
-      'YYYY-MM-DD HH:mm',
-      'YYYY-MM-DD',
-      'MM/DD/YYYY',
-      moment.ISO_8601
-    ];
-    const parsed = moment(val, formats, true);
-    return parsed.isValid() ? parsed : moment(val);
   }
 
   private emitValue(range: InternalDateRange | null): void {
@@ -807,10 +835,10 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     this.rangeChange.emit(outVal);
   }
 
-  private formatOutputDate(date: Moment, fmt: string): unknown {
-    if (fmt === 'moment') return date.clone();
-    if (fmt === 'date') return date.toDate();
-    return date.format(fmt);
+  private formatOutputDate(date: Date, fmt: string): unknown {
+    if (fmt === 'date') return date;
+    if (fmt === 'iso') return date.toISOString();
+    return formatDate(date, fmt);
   }
 
   markAsTouched(): void {

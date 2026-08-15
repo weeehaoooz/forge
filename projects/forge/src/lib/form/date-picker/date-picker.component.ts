@@ -12,11 +12,39 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
-import moment from 'moment';
-import type { Moment } from 'moment';
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  addYears,
+  endOfDay,
+  endOfMonth,
+  getDate,
+  getHours,
+  getMinutes,
+  getMonth,
+  getSeconds,
+  getYear,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isSameMonth,
+  isValid,
+  set,
+  setMonth,
+  setYear,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks,
+  subYears
+} from 'date-fns';
+import { formatDate, parseFlexibleDate } from '@forge/components/core';
 
 export interface CalendarDay {
-  date: Moment;
+  date: Date;
   dayNumber: number;
   isCurrentMonth: boolean;
   isToday: boolean;
@@ -74,15 +102,15 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly clearable = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg'>('md');
   readonly displayFormat = input<string>('');
-  readonly valueFormat = input<string>(''); // 'YYYY-MM-DD', 'YYYY-MM-DD HH:mm', 'moment', or 'date'
+  readonly valueFormat = input<string>(''); // 'yyyy-MM-dd', 'yyyy-MM-dd HH:mm', 'date', or custom format tokens
   readonly showTime = input<boolean>(false);
   readonly use24Hour = input<boolean>(true);
   readonly showSeconds = input<boolean>(false);
   readonly minuteStep = input<number>(1);
-  readonly minDate = input<string | Date | Moment | null>(null);
-  readonly maxDate = input<string | Date | Moment | null>(null);
+  readonly minDate = input<string | Date | number | null>(null);
+  readonly maxDate = input<string | Date | number | null>(null);
   readonly firstDayOfWeek = input<number>(0); // 0 = Sunday, 1 = Monday
-  readonly filterDate = input<((date: Moment) => boolean) | null>(null);
+  readonly filterDate = input<((date: Date) => boolean) | null>(null);
 
   // Signal Outputs
   readonly dateChange = output<unknown>();
@@ -130,19 +158,19 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly dialogId = `${this.componentId}-dialog`;
 
   // Component Internal State Signals
-  readonly selectedDate = signal<Moment | null>(null);
-  readonly viewDate = signal<Moment>(moment());
+  readonly selectedDate = signal<Date | null>(null);
+  readonly viewDate = signal<Date>(new Date());
   readonly viewMode = signal<'day' | 'month' | 'year'>('day');
   readonly isOpen = signal<boolean>(false);
   readonly isDisabledSignal = signal<boolean>(false);
   readonly isTouched = signal<boolean>(false);
-  readonly focusedDate = signal<Moment | null>(null);
+  readonly focusedDate = signal<Date | null>(null);
   readonly inputText = signal<string>('');
 
   // Draft time signals (active when showTime is true)
-  readonly draftHour = signal<number>(moment().hour());
-  readonly draftMinute = signal<number>(moment().minute());
-  readonly draftSecond = signal<number>(moment().second());
+  readonly draftHour = signal<number>(new Date().getHours());
+  readonly draftMinute = signal<number>(new Date().getMinutes());
+  readonly draftSecond = signal<number>(new Date().getSeconds());
 
   // Computed state
   readonly effectiveDisabled = computed(() => this.disabled() || this.isDisabledSignal());
@@ -150,21 +178,21 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly effectiveDisplayFormat = computed(() => {
     const fmt = this.displayFormat();
     if (fmt) return fmt;
-    return this.showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    return this.showTime() ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd';
   });
 
   readonly effectiveValueFormat = computed(() => {
     const fmt = this.valueFormat();
     if (fmt) return fmt;
-    return this.showTime() ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    return this.showTime() ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd';
   });
 
   readonly formattedValue = computed(() => {
     const sel = this.selectedDate();
-    if (!sel || !sel.isValid()) {
+    if (!sel || !isValid(sel)) {
       return '';
     }
-    return sel.format(this.effectiveDisplayFormat());
+    return formatDate(sel, this.effectiveDisplayFormat());
   });
 
   readonly displayHour = computed(() => {
@@ -191,24 +219,23 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly parsedMinDate = computed(() => {
     const min = this.minDate();
     if (!min) return null;
-    const m = moment(min);
-    return m.isValid() ? (this.showTime() ? m : m.startOf('day')) : null;
+    const d = parseFlexibleDate(min);
+    return d && isValid(d) ? (this.showTime() ? d : startOfDay(d)) : null;
   });
 
   readonly parsedMaxDate = computed(() => {
     const max = this.maxDate();
     if (!max) return null;
-    const m = moment(max);
-    return m.isValid() ? (this.showTime() ? m : m.endOf('day')) : null;
+    const d = parseFlexibleDate(max);
+    return d && isValid(d) ? (this.showTime() ? d : endOfDay(d)) : null;
   });
 
   readonly weekDayNames = computed(() => {
     const names: string[] = [];
-    const firstDay = this.firstDayOfWeek();
-    const temp = moment().day(firstDay);
+    const firstDay = (this.firstDayOfWeek() % 7) as 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    const base = startOfWeek(new Date(), { weekStartsOn: firstDay });
     for (let i = 0; i < 7; i++) {
-      names.push(temp.format('dd'));
-      temp.add(1, 'day');
+      names.push(formatDate(addDays(base, i), 'EEEEEE'));
     }
     return names;
   });
@@ -220,39 +247,34 @@ export class DatePickerComponent implements ControlValueAccessor {
     const min = this.parsedMinDate();
     const max = this.parsedMaxDate();
     const filter = this.filterDate();
-    const firstDay = this.firstDayOfWeek();
+    const firstDay = (this.firstDayOfWeek() % 7) as 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
     const days: CalendarDay[] = [];
-    const startOfMonth = view.clone().startOf('month');
-
-    let gridStart = startOfMonth.clone().day(firstDay);
-    if (gridStart.isAfter(startOfMonth)) {
-      gridStart.subtract(7, 'days');
-    }
-
-    const today = moment().startOf('day');
+    const monthStart = startOfMonth(view);
+    const gridStart = startOfWeek(monthStart, { weekStartsOn: firstDay });
+    const today = startOfDay(new Date());
 
     for (let i = 0; i < 42; i++) {
-      const current = gridStart.clone().add(i, 'days');
-      const isCurrentMonth = current.isSame(view, 'month');
-      const isToday = current.isSame(today, 'day');
-      const isSelected = sel ? current.isSame(sel, 'day') : false;
-      const isFocused = foc ? current.isSame(foc, 'day') : false;
+      const current = addDays(gridStart, i);
+      const isCurrentMonth = isSameMonth(current, view);
+      const isToday = isSameDay(current, today);
+      const isSelected = sel ? isSameDay(current, sel) : false;
+      const isFocused = foc ? isSameDay(current, foc) : false;
 
       let isDisabled = false;
-      if (min && current.isBefore(min, 'day')) {
+      if (min && isBefore(startOfDay(current), startOfDay(min))) {
         isDisabled = true;
       }
-      if (max && current.isAfter(max, 'day')) {
+      if (max && isAfter(startOfDay(current), startOfDay(max))) {
         isDisabled = true;
       }
-      if (filter && !filter(current.clone())) {
+      if (filter && !filter(current)) {
         isDisabled = true;
       }
 
       days.push({
         date: current,
-        dayNumber: current.date(),
+        dayNumber: getDate(current),
         isCurrentMonth,
         isToday,
         isSelected,
@@ -270,25 +292,27 @@ export class DatePickerComponent implements ControlValueAccessor {
     const min = this.parsedMinDate();
     const max = this.parsedMaxDate();
     const months: CalendarMonth[] = [];
-    const currentMonthIdx = moment().month();
+    const now = new Date();
+    const currentMonthIdx = getMonth(now);
+    const viewYear = getYear(view);
 
     for (let i = 0; i < 12; i++) {
-      const m = view.clone().month(i);
-      const endOfMonth = m.clone().endOf('month');
-      const startOfMonth = m.clone().startOf('month');
+      const m = setMonth(view, i);
+      const mEnd = endOfMonth(m);
+      const mStart = startOfMonth(m);
       let isDisabled = false;
-      if (min && endOfMonth.isBefore(min, 'day')) {
+      if (min && isBefore(mEnd, startOfDay(min))) {
         isDisabled = true;
       }
-      if (max && startOfMonth.isAfter(max, 'day')) {
+      if (max && isAfter(mStart, endOfDay(max))) {
         isDisabled = true;
       }
 
       months.push({
-        name: m.format('MMM'),
+        name: formatDate(m, 'MMM'),
         monthIndex: i,
-        isSelected: sel ? sel.year() === view.year() && sel.month() === i : false,
-        isCurrentMonth: moment().year() === view.year() && currentMonthIdx === i,
+        isSelected: sel ? getYear(sel) === viewYear && getMonth(sel) === i : false,
+        isCurrentMonth: getYear(now) === viewYear && currentMonthIdx === i,
         isDisabled
       });
     }
@@ -296,27 +320,27 @@ export class DatePickerComponent implements ControlValueAccessor {
   });
 
   readonly yearList = computed(() => {
-    const viewYear = this.viewDate().year();
+    const viewYear = getYear(this.viewDate());
     const sel = this.selectedDate();
     const min = this.parsedMinDate();
     const max = this.parsedMaxDate();
     const startYear = Math.floor(viewYear / 12) * 12;
     const years: CalendarYear[] = [];
-    const currentYear = moment().year();
+    const currentYear = getYear(new Date());
 
     for (let i = 0; i < 12; i++) {
       const y = startYear + i;
       let isDisabled = false;
-      if (min && y < min.year()) {
+      if (min && y < getYear(min)) {
         isDisabled = true;
       }
-      if (max && y > max.year()) {
+      if (max && y > getYear(max)) {
         isDisabled = true;
       }
 
       years.push({
         year: y,
-        isSelected: sel ? sel.year() === y : false,
+        isSelected: sel ? getYear(sel) === y : false,
         isCurrentYear: currentYear === y,
         isDisabled
       });
@@ -330,12 +354,12 @@ export class DatePickerComponent implements ControlValueAccessor {
     const view = this.viewDate();
     const mode = this.viewMode();
     if (mode === 'day') {
-      return view.clone().startOf('month').isSameOrBefore(min.clone().startOf('month'));
+      return !isAfter(startOfMonth(view), startOfMonth(min));
     } else if (mode === 'month') {
-      return view.year() <= min.year();
+      return getYear(view) <= getYear(min);
     } else {
-      const startYear = Math.floor(view.year() / 12) * 12;
-      return startYear <= min.year();
+      const startYear = Math.floor(getYear(view) / 12) * 12;
+      return startYear <= getYear(min);
     }
   });
 
@@ -345,32 +369,32 @@ export class DatePickerComponent implements ControlValueAccessor {
     const view = this.viewDate();
     const mode = this.viewMode();
     if (mode === 'day') {
-      return view.clone().endOf('month').isSameOrAfter(max.clone().endOf('month'));
+      return !isBefore(endOfMonth(view), endOfMonth(max));
     } else if (mode === 'month') {
-      return view.year() >= max.year();
+      return getYear(view) >= getYear(max);
     } else {
-      const startYear = Math.floor(view.year() / 12) * 12;
-      return startYear + 11 >= max.year();
+      const startYear = Math.floor(getYear(view) / 12) * 12;
+      return startYear + 11 >= getYear(max);
     }
   });
 
   readonly isTodayDisabled = computed(() => {
-    return this.isDateDisabled(moment().startOf('day'));
+    return this.isDateDisabled(startOfDay(new Date()));
   });
 
   readonly isNowDisabled = computed(() => {
-    return this.isDateDisabled(moment());
+    return this.isDateDisabled(new Date());
   });
 
   readonly currentHeaderLabel = computed(() => {
     const view = this.viewDate();
     const mode = this.viewMode();
     if (mode === 'day') {
-      return view.format('MMMM YYYY');
+      return formatDate(view, 'MMMM yyyy');
     } else if (mode === 'month') {
-      return view.format('YYYY');
+      return formatDate(view, 'yyyy');
     } else {
-      const start = Math.floor(view.year() / 12) * 12;
+      const start = Math.floor(getYear(view) / 12) * 12;
       return `${start} - ${start + 11}`;
     }
   });
@@ -383,20 +407,20 @@ export class DatePickerComponent implements ControlValueAccessor {
     // Keep focused date synced with viewDate when viewDate changes
     effect(() => {
       if (!this.focusedDate()) {
-        this.focusedDate.set(this.viewDate().clone());
+        this.focusedDate.set(this.viewDate());
       }
     });
 
     // Keep inputText synced with selectedDate
     effect(() => {
       const sel = this.selectedDate();
-      if (sel && sel.isValid()) {
+      if (sel && isValid(sel)) {
         if (this.showTime()) {
-          this.draftHour.set(sel.hour());
-          this.draftMinute.set(sel.minute());
-          this.draftSecond.set(sel.second());
+          this.draftHour.set(getHours(sel));
+          this.draftMinute.set(getMinutes(sel));
+          this.draftSecond.set(getSeconds(sel));
         }
-        this.inputText.set(sel.format(this.effectiveDisplayFormat()));
+        this.inputText.set(formatDate(sel, this.effectiveDisplayFormat()));
       } else {
         this.inputText.set('');
       }
@@ -410,26 +434,16 @@ export class DatePickerComponent implements ControlValueAccessor {
       return;
     }
 
-    let parsed: Moment;
-    if (moment.isMoment(val)) {
-      parsed = val.clone();
-    } else if (val instanceof Date) {
-      parsed = moment(val);
-    } else {
-      parsed = moment(val, [this.effectiveValueFormat(), this.effectiveDisplayFormat(), moment.ISO_8601], true);
-      if (!parsed.isValid()) {
-        parsed = moment(val);
-      }
-    }
+    const parsed = parseFlexibleDate(val, [this.effectiveValueFormat(), this.effectiveDisplayFormat()]);
 
-    if (parsed.isValid()) {
+    if (parsed && isValid(parsed)) {
       this.selectedDate.set(parsed);
-      this.viewDate.set(parsed.clone());
-      this.focusedDate.set(parsed.clone());
+      this.viewDate.set(parsed);
+      this.focusedDate.set(parsed);
       if (this.showTime()) {
-        this.draftHour.set(parsed.hour());
-        this.draftMinute.set(parsed.minute());
-        this.draftSecond.set(parsed.second());
+        this.draftHour.set(getHours(parsed));
+        this.draftMinute.set(getMinutes(parsed));
+        this.draftSecond.set(getSeconds(parsed));
       }
     } else {
       this.selectedDate.set(null);
@@ -464,22 +478,22 @@ export class DatePickerComponent implements ControlValueAccessor {
     this.viewMode.set('day');
 
     const sel = this.selectedDate();
-    if (sel && sel.isValid()) {
-      this.viewDate.set(sel.clone());
-      this.focusedDate.set(sel.clone());
+    if (sel && isValid(sel)) {
+      this.viewDate.set(sel);
+      this.focusedDate.set(sel);
       if (this.showTime()) {
-        this.draftHour.set(sel.hour());
-        this.draftMinute.set(sel.minute());
-        this.draftSecond.set(sel.second());
+        this.draftHour.set(getHours(sel));
+        this.draftMinute.set(getMinutes(sel));
+        this.draftSecond.set(getSeconds(sel));
       }
     } else {
-      const now = moment();
-      this.viewDate.set(now.clone());
-      this.focusedDate.set(now.clone());
+      const now = new Date();
+      this.viewDate.set(now);
+      this.focusedDate.set(now);
       if (this.showTime()) {
-        this.draftHour.set(now.hour());
-        this.draftMinute.set(now.minute());
-        this.draftSecond.set(now.second());
+        this.draftHour.set(getHours(now));
+        this.draftMinute.set(getMinutes(now));
+        this.draftSecond.set(getSeconds(now));
       }
     }
 
@@ -498,11 +512,11 @@ export class DatePickerComponent implements ControlValueAccessor {
     if (this.isPrevDisabled()) return;
     const mode = this.viewMode();
     if (mode === 'day') {
-      this.viewDate.update((d) => d.clone().subtract(1, 'month'));
+      this.viewDate.update((d) => subMonths(d, 1));
     } else if (mode === 'month') {
-      this.viewDate.update((d) => d.clone().subtract(1, 'year'));
+      this.viewDate.update((d) => subYears(d, 1));
     } else {
-      this.viewDate.update((d) => d.clone().subtract(12, 'years'));
+      this.viewDate.update((d) => subYears(d, 12));
     }
   }
 
@@ -510,11 +524,11 @@ export class DatePickerComponent implements ControlValueAccessor {
     if (this.isNextDisabled()) return;
     const mode = this.viewMode();
     if (mode === 'day') {
-      this.viewDate.update((d) => d.clone().add(1, 'month'));
+      this.viewDate.update((d) => addMonths(d, 1));
     } else if (mode === 'month') {
-      this.viewDate.update((d) => d.clone().add(1, 'year'));
+      this.viewDate.update((d) => addYears(d, 1));
     } else {
-      this.viewDate.update((d) => d.clone().add(12, 'years'));
+      this.viewDate.update((d) => addYears(d, 12));
     }
   }
 
@@ -530,46 +544,54 @@ export class DatePickerComponent implements ControlValueAccessor {
   }
 
   selectMonth(monthIdx: number): void {
-    this.viewDate.update((d) => d.clone().month(monthIdx));
+    this.viewDate.update((d) => setMonth(d, monthIdx));
     this.viewMode.set('day');
   }
 
   selectYear(year: number): void {
-    this.viewDate.update((d) => d.clone().year(year));
+    this.viewDate.update((d) => setYear(d, year));
     this.viewMode.set('month');
   }
 
   selectDay(day: CalendarDay): void {
     if (day.isDisabled) return;
     if (this.showTime()) {
-      const baseDate = day.date.clone().hour(this.draftHour()).minute(this.draftMinute()).second(this.draftSecond());
+      const baseDate = set(day.date, {
+        hours: this.draftHour(),
+        minutes: this.draftMinute(),
+        seconds: this.draftSecond()
+      });
       this.commitSelection(baseDate);
     } else {
-      this.commitSelection(day.date.clone());
+      this.commitSelection(day.date);
       this.close();
     }
   }
 
   selectToday(): void {
-    const today = moment().startOf('day');
+    const today = startOfDay(new Date());
     if (this.isDateDisabled(today)) return;
     this.commitSelection(today);
     this.close();
   }
 
   selectNow(): void {
-    const now = moment();
+    const now = new Date();
     if (this.isDateDisabled(now)) return;
-    this.draftHour.set(now.hour());
-    this.draftMinute.set(now.minute());
-    this.draftSecond.set(now.second());
+    this.draftHour.set(getHours(now));
+    this.draftMinute.set(getMinutes(now));
+    this.draftSecond.set(getSeconds(now));
     this.commitSelection(now);
     this.close();
   }
 
   applySelection(): void {
-    const sel = this.selectedDate() || this.viewDate().clone();
-    const finalVal = sel.clone().hour(this.draftHour()).minute(this.draftMinute()).second(this.draftSecond());
+    const sel = this.selectedDate() || this.viewDate();
+    const finalVal = set(sel, {
+      hours: this.draftHour(),
+      minutes: this.draftMinute(),
+      seconds: this.draftSecond()
+    });
     this.commitSelection(finalVal);
     this.close();
   }
@@ -680,11 +702,15 @@ export class DatePickerComponent implements ControlValueAccessor {
   }
 
   private updateSelectedTime(): void {
-    const current = this.selectedDate() || this.viewDate().clone();
-    let updated = current.clone().hour(this.draftHour()).minute(this.draftMinute()).second(this.draftSecond());
-    this.draftHour.set(updated.hour());
-    this.draftMinute.set(updated.minute());
-    this.draftSecond.set(updated.second());
+    const current = this.selectedDate() || this.viewDate();
+    const updated = set(current, {
+      hours: this.draftHour(),
+      minutes: this.draftMinute(),
+      seconds: this.draftSecond()
+    });
+    this.draftHour.set(getHours(updated));
+    this.draftMinute.set(getMinutes(updated));
+    this.draftSecond.set(getSeconds(updated));
     this.commitSelection(updated);
   }
 
@@ -709,27 +735,15 @@ export class DatePickerComponent implements ControlValueAccessor {
       return;
     }
 
-    const formats = [
-      this.effectiveDisplayFormat(),
-      this.effectiveValueFormat(),
-      'YYYY-MM-DD HH:mm:ss',
-      'YYYY-MM-DD HH:mm',
-      'YYYY-MM-DD hh:mm A',
-      'YYYY-MM-DD',
-      'MM/DD/YYYY HH:mm',
-      'MM/DD/YYYY',
-      'DD/MM/YYYY',
-      'YYYY/MM/DD'
-    ];
-    const parsed = moment(val, formats, true);
-    if (parsed.isValid() && !this.isDateDisabled(parsed)) {
+    const parsed = parseFlexibleDate(val, [this.effectiveDisplayFormat(), this.effectiveValueFormat()]);
+    if (parsed && isValid(parsed) && !this.isDateDisabled(parsed)) {
       this.selectedDate.set(parsed);
-      this.viewDate.set(parsed.clone());
-      this.focusedDate.set(parsed.clone());
+      this.viewDate.set(parsed);
+      this.focusedDate.set(parsed);
       if (this.showTime()) {
-        this.draftHour.set(parsed.hour());
-        this.draftMinute.set(parsed.minute());
-        this.draftSecond.set(parsed.second());
+        this.draftHour.set(getHours(parsed));
+        this.draftMinute.set(getMinutes(parsed));
+        this.draftSecond.set(getSeconds(parsed));
       }
       const outValue = this.formatOutputValue(parsed);
       this.onChange(outValue);
@@ -739,8 +753,8 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   onInputBlur(event: FocusEvent): void {
     const sel = this.selectedDate();
-    if (sel && sel.isValid()) {
-      this.inputText.set(sel.format(this.effectiveDisplayFormat()));
+    if (sel && isValid(sel)) {
+      this.inputText.set(formatDate(sel, this.effectiveDisplayFormat()));
     } else {
       this.inputText.set('');
     }
@@ -752,24 +766,12 @@ export class DatePickerComponent implements ControlValueAccessor {
       event.preventDefault();
       const val = this.inputText();
       if (val.trim()) {
-        const formats = [
-          this.effectiveDisplayFormat(),
-          this.effectiveValueFormat(),
-          'YYYY-MM-DD HH:mm:ss',
-          'YYYY-MM-DD HH:mm',
-          'YYYY-MM-DD hh:mm A',
-          'YYYY-MM-DD',
-          'MM/DD/YYYY HH:mm',
-          'MM/DD/YYYY',
-          'DD/MM/YYYY',
-          'YYYY/MM/DD'
-        ];
-        const parsed = moment(val, formats, false);
-        if (parsed.isValid() && !this.isDateDisabled(parsed)) {
+        const parsed = parseFlexibleDate(val, [this.effectiveDisplayFormat(), this.effectiveValueFormat()]);
+        if (parsed && isValid(parsed) && !this.isDateDisabled(parsed)) {
           if (this.showTime()) {
-            this.draftHour.set(parsed.hour());
-            this.draftMinute.set(parsed.minute());
-            this.draftSecond.set(parsed.second());
+            this.draftHour.set(getHours(parsed));
+            this.draftMinute.set(getMinutes(parsed));
+            this.draftSecond.set(getSeconds(parsed));
           }
           this.commitSelection(parsed);
         }
@@ -788,32 +790,32 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  private commitSelection(date: Moment): void {
+  private commitSelection(date: Date): void {
     this.selectedDate.set(date);
     const outValue = this.formatOutputValue(date);
     this.onChange(outValue);
     this.dateChange.emit(outValue);
   }
 
-  private formatOutputValue(date: Moment): unknown {
+  private formatOutputValue(date: Date): unknown {
     const fmt = this.effectiveValueFormat();
-    if (fmt === 'moment') {
-      return date.clone();
-    } else if (fmt === 'date') {
-      return date.toDate();
+    if (fmt === 'date') {
+      return date;
+    } else if (fmt === 'iso') {
+      return date.toISOString();
     } else {
-      return date.format(fmt);
+      return formatDate(date, fmt);
     }
   }
 
-  private isDateDisabled(date: Moment): boolean {
+  private isDateDisabled(date: Date): boolean {
     const min = this.parsedMinDate();
     const max = this.parsedMaxDate();
     const filter = this.filterDate();
 
-    if (min && date.isBefore(min, 'day')) return true;
-    if (max && date.isAfter(max, 'day')) return true;
-    if (filter && !filter(date.clone())) return true;
+    if (min && isBefore(startOfDay(date), startOfDay(min))) return true;
+    if (max && isAfter(startOfDay(date), startOfDay(max))) return true;
+    if (filter && !filter(date)) return true;
     return false;
   }
 
@@ -841,22 +843,22 @@ export class DatePickerComponent implements ControlValueAccessor {
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();
-        this.navigateKeyboardDay(currentFocused.clone().subtract(1, 'day'));
+        this.navigateKeyboardDay(subDays(currentFocused, 1));
         break;
 
       case 'ArrowRight':
         event.preventDefault();
-        this.navigateKeyboardDay(currentFocused.clone().add(1, 'day'));
+        this.navigateKeyboardDay(addDays(currentFocused, 1));
         break;
 
       case 'ArrowUp':
         event.preventDefault();
-        this.navigateKeyboardDay(currentFocused.clone().subtract(1, 'week'));
+        this.navigateKeyboardDay(subWeeks(currentFocused, 1));
         break;
 
       case 'ArrowDown':
         event.preventDefault();
-        this.navigateKeyboardDay(currentFocused.clone().add(1, 'week'));
+        this.navigateKeyboardDay(addWeeks(currentFocused, 1));
         break;
 
       case 'Enter':
@@ -864,10 +866,14 @@ export class DatePickerComponent implements ControlValueAccessor {
         event.preventDefault();
         if (currentFocused && !this.isDateDisabled(currentFocused)) {
           if (this.showTime()) {
-            const baseDate = currentFocused.clone().hour(this.draftHour()).minute(this.draftMinute()).second(this.draftSecond());
+            const baseDate = set(currentFocused, {
+              hours: this.draftHour(),
+              minutes: this.draftMinute(),
+              seconds: this.draftSecond()
+            });
             this.commitSelection(baseDate);
           } else {
-            this.commitSelection(currentFocused.clone());
+            this.commitSelection(currentFocused);
             this.close();
           }
         }
@@ -885,9 +891,9 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  private navigateKeyboardDay(newDate: Moment): void {
-    if (!newDate.isSame(this.viewDate(), 'month')) {
-      this.viewDate.set(newDate.clone());
+  private navigateKeyboardDay(newDate: Date): void {
+    if (!isSameMonth(newDate, this.viewDate())) {
+      this.viewDate.set(newDate);
     }
     this.focusedDate.set(newDate);
   }

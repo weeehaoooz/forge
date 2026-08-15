@@ -9,12 +9,10 @@ import {
   LucideCircleHelp,
   LucideSettings,
   LucideChevronsUpDown,
-  LucideDynamicIcon,
   LucidePanelLeftOpen,
   LucidePanelLeftClose
 } from '@lucide/angular';
 import { LayoutService } from '@forge/components/layout';
-
 
 export interface SideNavItem {
   id?: string;
@@ -44,7 +42,8 @@ export interface SideNavUserProfile {
     NgTemplateOutlet,
     LucidePanelLeft,
     LucideChevronsUpDown,
-    LucideDynamicIcon
+    LucidePanelLeftOpen,
+    LucidePanelLeftClose
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',

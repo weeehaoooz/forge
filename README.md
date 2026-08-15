@@ -229,12 +229,12 @@ A feature-rich date (and optional time) picker with calendar popover, month/year
   size="md"
   [clearable]="true"
   [minDate]="'2020-01-01'"
-  [maxDate]="'2030-12-31'"
-/>
+Modern standalone date picker supporting single date and date-time selection, calendar navigation, month/year decade grids, keyboard accessibility, and time selection panels. Powered by tree-shakeable `date-fns`.
 
-<!-- With time picking -->
+```html
 <forge-date-picker
-  [(ngModel)]="selectedDateTime"
+  formControlName="meetingDate"
+  [clearable]="true"
   [showTime]="true"
   [use24Hour]="true"
   [showSeconds]="false"
@@ -248,16 +248,16 @@ A feature-rich date (and optional time) picker with calendar popover, month/year
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Visual size of the picker |
 | `disabled` | `boolean` | `false` | Disables the picker |
 | `clearable` | `boolean` | `true` | Shows a clear button when a value is set |
-| `displayFormat` | `string` | `'YYYY-MM-DD'` | Moment format string for display |
-| `valueFormat` | `string` | `'YYYY-MM-DD'` | Moment format string for emitted value (`'moment'` or `'date'` also accepted) |
+| `displayFormat` | `string` | `'yyyy-MM-dd'` | Date format string for display (Unicode/UTS-35 or legacy Moment tokens) |
+| `valueFormat` | `string` | `'yyyy-MM-dd'` | Format for emitted value (`'date'` or format tokens) |
 | `showTime` | `boolean` | `false` | Enables time selection panel |
 | `use24Hour` | `boolean` | `true` | 24-hour vs 12-hour time format |
 | `showSeconds` | `boolean` | `false` | Shows seconds column in time panel |
 | `minuteStep` | `number` | `1` | Minute increment step |
-| `minDate` | `string \| Date \| Moment \| null` | `null` | Minimum selectable date |
-| `maxDate` | `string \| Date \| Moment \| null` | `null` | Maximum selectable date |
+| `minDate` | `string \| Date \| number \| null` | `null` | Minimum selectable date |
+| `maxDate` | `string \| Date \| number \| null` | `null` | Maximum selectable date |
 | `firstDayOfWeek` | `number` | `0` | First day of week (`0` = Sunday, `1` = Monday) |
-| `filterDate` | `(date: Moment) => boolean \| null` | `null` | Custom function to disable specific dates |
+| `filterDate` | `((date: Date) => boolean) \| null` | `null` | Custom function to disable specific dates |
 
 | Output | Type | Description |
 |---|---|---|

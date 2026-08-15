@@ -1,20 +1,18 @@
-import type { Moment } from 'moment';
-
 export interface DateRangeValue {
-  startDate: string | Date | Moment | null;
-  endDate: string | Date | Moment | null;
+  startDate: string | Date | number | null;
+  endDate: string | Date | number | null;
 }
 
 export interface InternalDateRange {
-  startDate: Moment | null;
-  endDate: Moment | null;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 export interface DateRangePreset {
   label: string;
   key?: string;
   isDuration?: boolean;
-  getValue?: (referenceDate?: Moment | null) => InternalDateRange;
+  getValue?: (referenceDate?: Date | null) => InternalDateRange;
   duration?: {
     days?: number;
     weeks?: number;
@@ -24,7 +22,7 @@ export interface DateRangePreset {
 }
 
 export interface RangeCalendarDay {
-  date: Moment;
+  date: Date;
   dayNumber: number;
   isCurrentMonth: boolean;
   isToday: boolean;

@@ -46,7 +46,7 @@
               [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
               @if (item.icon) {
               <span class="nav-icon">
-                <svg [lucideIcon]="item.icon" [size]="18"></svg>
+                <ng-container *ngComponentOutlet="item.icon" />
               </span>
               }
               <span class="nav-label">{{ item.label }}</span>
@@ -78,7 +78,7 @@
               (click)="selectItem(item)" [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
               @if (item.icon) {
               <span class="nav-icon">
-                <svg [lucideIcon]="item.icon" [size]="18"></svg>
+                <ng-container *ngComponentOutlet="item.icon" />
               </span>
               }
               <span class="nav-label">{{ item.label }}</span>
@@ -115,8 +115,11 @@
           [attr.aria-label]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
           [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'">
           <span class="collapse-bar-icon">
-            <svg [lucideIcon]="layoutService.isLeftNavCollapsed() ? LucidePanelLeftOpen : LucidePanelLeftClose"
-              [size]="16"></svg>
+            @if (layoutService.isLeftNavCollapsed()) {
+            <svg lucidePanelLeftOpen [size]="16"></svg>
+            } @else {
+            <svg lucidePanelLeftClose [size]="16"></svg>
+            }
           </span>
           <span class="collapse-bar-text">Collapse sidebar</span>
         </button>

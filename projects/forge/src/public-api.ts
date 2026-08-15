@@ -43,6 +43,7 @@ export * from './lib/form/checkbox/checkbox.component';
 export * from './lib/form/checkbox/checkbox.module';
 
 // DatePicker, DateTimePicker & Range Picker components
+export * from './lib/core/date-utils';
 export * from './lib/form/date-picker/date-picker.component';
 export * from './lib/form/date-time-picker/date-time-picker.component';
 export * from './lib/form/date-range-picker/date-range-picker.component';
