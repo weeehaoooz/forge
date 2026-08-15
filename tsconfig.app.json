@@ -8,11 +8,11 @@
   },
   "include": [
     "src/**/*.ts",
-    "projects/forge/src/**/*.ts"
+    "projects/talos/src/**/*.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts",
-    "projects/forge/src/**/*.spec.ts"
+    "projects/talos/src/**/*.spec.ts"
   ],
   "angularCompilerOptions": {
     "extendedDiagnostics": {

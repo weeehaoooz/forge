@@ -1,0 +1,174 @@
+<div class="talos-heatmap-container">
+  <!-- Header Toolbar -->
+  @if (showToolbar()) {
+  <div class="talos-heatmap-header">
+    <div class="talos-heatmap-title-area">
+      <h3 class="talos-heatmap-title">{{ title() }}</h3>
+    </div>
+
+    <div class="talos-heatmap-actions">
+      <!-- Interval Selector Toggle (Hour vs Day) -->
+      @if (showIntervalToggle()) {
+      <div class="talos-heatmap-interval-group" role="radiogroup" aria-label="Time Interval">
+        <button type="button" class="talos-heatmap-interval-btn" [class.is-active]="interval() === 'hour'"
+          (click)="setInterval('hour')" role="radio" [attr.aria-checked]="interval() === 'hour'">
+          <svg lucideClock [size]="13"></svg>
+          <span>Hour</span>
+        </button>
+        <button type="button" class="talos-heatmap-interval-btn" [class.is-active]="interval() === 'day'"
+          (click)="setInterval('day')" role="radio" [attr.aria-checked]="interval() === 'day'">
+          <svg lucideCalendar [size]="13"></svg>
+          <span>Day</span>
+        </button>
+      </div>
+      }
+
+      <!-- Date Range Picker Integration -->
+      @if (showDateRangePicker()) {
+      <div class="talos-heatmap-daterange-box">
+        <talos-date-range-picker size="sm" [ngModel]="dateRange()" (rangeChange)="onDateRangePickerChange($event)"
+          [presets]="dateRangePresets()" placeholder="Select date range" />
+      </div>
+      }
+
+      <!-- Metric Dropdown Selector -->
+      @if (metrics().length > 0) {
+      <div class="talos-heatmap-dropdown-wrapper">
+        <button type="button" class="talos-heatmap-dropdown-btn" [class.is-open]="isMetricDropdownOpen()"
+          (click)="toggleMetricDropdown($event)" aria-haspopup="listbox" [attr.aria-expanded]="isMetricDropdownOpen()">
+          <span class="talos-heatmap-dropdown-label">{{ currentMetric()?.label || 'Select metric' }}</span>
+          <svg lucideChevronDown [size]="14" class="talos-heatmap-dropdown-icon"></svg>
+        </button>
+
+        @if (isMetricDropdownOpen()) {
+        <div class="talos-heatmap-menu" role="listbox">
+          @for (m of metrics(); track m.id) {
+          <button type="button" class="talos-heatmap-menu-item" [class.is-selected]="m.id === currentMetric()?.id"
+            (click)="selectMetric(m)" role="option" [attr.aria-selected]="m.id === currentMetric()?.id">
+            <span>{{ m.label }}</span>
+            @if (m.id === currentMetric()?.id) {
+            <svg lucideCheck [size]="14" class="talos-heatmap-check-icon"></svg>
+            }
+          </button>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Refresh Button -->
+      @if (showRefresh()) {
+      <button type="button" class="talos-heatmap-icon-btn" [class.is-spinning]="loading()" (click)="onRefreshClick()"
+        title="Refresh data" aria-label="Refresh data">
+        <svg lucideRefreshCw [size]="16" class="talos-heatmap-action-icon"></svg>
+      </button>
+      }
+
+      <!-- Export Dropdown Button -->
+      @if (showExport()) {
+      <div class="talos-heatmap-dropdown-wrapper">
+        <button type="button" class="talos-heatmap-icon-btn" (click)="toggleExportDropdown($event)" title="Export data"
+          aria-label="Export data">
+          <svg lucideUpload [size]="16" class="talos-heatmap-action-icon"></svg>
+        </button>
+
+        @if (isExportDropdownOpen()) {
+        <div class="talos-heatmap-menu talos-heatmap-export-menu" role="menu">
+          <button type="button" class="talos-heatmap-menu-item" (click)="triggerExport('csv')" role="menuitem">
+            <svg lucideFileSpreadsheet [size]="14" class="talos-heatmap-menu-icon"></svg>
+            <span>Export to CSV</span>
+          </button>
+          <button type="button" class="talos-heatmap-menu-item" (click)="triggerExport('json')" role="menuitem">
+            <svg lucideFileJson [size]="14" class="talos-heatmap-menu-icon"></svg>
+            <span>Export to JSON</span>
+          </button>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Swap Axes Button -->
+      @if (showSwapAxes()) {
+      <button type="button" class="talos-heatmap-icon-btn" [class.is-active]="swapAxes()" (click)="toggleSwapAxes()"
+        [title]="swapAxes() ? 'Reset axis orientation' : 'Swap axes (Days / Hours)'"
+        [attr.aria-label]="swapAxes() ? 'Reset axis orientation' : 'Swap axes (Days / Hours)'">
+        <svg lucideArrowLeftRight [size]="16" class="talos-heatmap-action-icon"></svg>
+      </button>
+      }
+
+      <!-- Fullscreen / Expand Button -->
+      @if (showExpand()) {
+      <button type="button" class="talos-heatmap-icon-btn" (click)="toggleExpand()"
+        [title]="isExpanded() ? 'Minimize' : 'Expand'" [aria-label]="isExpanded() ? 'Minimize' : 'Expand'">
+        @if (isExpanded()) {
+        <svg lucideMinimize2 [size]="16" class="talos-heatmap-action-icon"></svg>
+        } @else {
+        <svg lucideMaximize2 [size]="16" class="talos-heatmap-action-icon"></svg>
+        }
+      </button>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Heatmap Matrix Grid Wrapper -->
+  <div class="talos-heatmap-body" [class.is-loading]="loading()">
+    <!-- Grid Table -->
+    <div class="talos-heatmap-grid" role="grid" [attr.aria-rowcount]="gridRows().length + 1"
+      [attr.aria-colcount]="columnHeaders().length + 1">
+      <!-- Column Headers -->
+      <div class="talos-heatmap-row talos-heatmap-header-row" role="row" aria-rowindex="1">
+        <div class="talos-heatmap-corner-cell" role="columnheader"></div>
+        @for (col of columnHeaders(); track col.key; let colIdx = $index) {
+        <div class="talos-heatmap-col-header" role="columnheader" [attr.aria-colindex]="colIdx + 2">
+          {{ col.label }}
+        </div>
+        }
+      </div>
+
+      <!-- Data Rows -->
+      @for (row of gridRows(); track row.key; let rowIdx = $index) {
+      <div class="talos-heatmap-row" role="row" [attr.aria-rowindex]="rowIdx + 2">
+        <!-- Row Header (Hour or Week Range) -->
+        <div class="talos-heatmap-row-header" role="rowheader" aria-colindex="1" [title]="row.label">
+          {{ row.label }}
+        </div>
+
+        <!-- Heatmap Cells -->
+        @for (cell of row.cells; track cell.id; let colIdx = $index) {
+        <div class="talos-heatmap-cell-wrapper" role="gridcell" [attr.aria-colindex]="colIdx + 2"
+          [attr.aria-label]="cell.tooltipText" tabindex="0" [attr.data-cell-coord]="rowIdx + '_' + colIdx"
+          [talosTooltip]="cell.tooltipText" (mouseenter)="onCellMouseEnter(cell)" (mouseleave)="onCellMouseLeave()"
+          (click)="onCellClick(cell, $event)" (keydown)="onKeydown($event, colIdx, rowIdx)">
+          <div class="talos-heatmap-pill" [style.background-color]="cell.backgroundColor" [style.color]="cell.textColor"
+            [class.has-value]="cell.value > 0">
+            @if (showValues()) {
+            <span class="talos-heatmap-cell-value">{{ cell.formattedValue }}</span>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Loading Skeleton Shimmer Overlay -->
+    @if (loading()) {
+    <div class="talos-heatmap-loading-overlay" aria-hidden="true">
+      <div class="talos-heatmap-loading-spinner-box">
+        <svg lucideRefreshCw [size]="16" class="talos-heatmap-loading-spinner"></svg>
+        <span>Loading data...</span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Bottom Legend Bar -->
+  @if (showLegend()) {
+  <div class="talos-heatmap-legend">
+    <span class="talos-heatmap-legend-bound">{{ computedScaleBounds().min }}</span>
+    <div class="talos-heatmap-legend-bar" [style.background]="legendGradientCss()" aria-hidden="true"></div>
+    <span class="talos-heatmap-legend-bound">{{ computedScaleBounds().max }}</span>
+  </div>
+  }
+</div>

@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · Button &amp; Button Groups</div>
+    <div class="badge">talos/components · Button &amp; Button Groups</div>
     <h1>Button &amp; Button Group Showcase</h1>
     <p class="subtitle">
       Design system buttons and CDK-powered button group components with horizontal/vertical orientations,
@@ -17,7 +17,7 @@
           <span class="card-subtitle">Individual design system buttons with CSS ripple effect &amp; state
             modifiers</span>
         </div>
-        <button type="button" forgeButton variant="secondary" size="sm" (click)="toggleButtonLoading()">
+        <button type="button" talosButton variant="secondary" size="sm" (click)="toggleButtonLoading()">
           Simulate 2s Async Load
         </button>
       </div>
@@ -27,19 +27,19 @@
         <div class="showcase-group">
           <span class="group-label">Variants:</span>
           <div class="button-row">
-            <button type="button" forgeButton variant="primary">Primary</button>
-            <button type="button" forgeButton variant="secondary">Secondary</button>
-            <button type="button" forgeButton variant="outline">Outline</button>
-            <button type="button" forgeButton variant="ghost">Ghost</button>
-            <button type="button" forgeButton variant="danger">
+            <button type="button" talosButton variant="primary">Primary</button>
+            <button type="button" talosButton variant="secondary">Secondary</button>
+            <button type="button" talosButton variant="outline">Outline</button>
+            <button type="button" talosButton variant="ghost">Ghost</button>
+            <button type="button" talosButton variant="danger">
               <svg lucideTrash2 [size]="16"></svg>
               Danger
             </button>
-            <button type="button" forgeButton variant="success">
+            <button type="button" talosButton variant="success">
               <svg lucideCheck [size]="16"></svg>
               Success
             </button>
-            <button type="button" forgeButton variant="link">Link Style</button>
+            <button type="button" talosButton variant="link">Link Style</button>
           </div>
         </div>
 
@@ -47,16 +47,16 @@
         <div class="showcase-group">
           <span class="group-label">Sizes &amp; Icon Only:</span>
           <div class="button-row">
-            <button type="button" forgeButton variant="primary" size="sm">Small (32px)</button>
-            <button type="button" forgeButton variant="primary" size="md">Medium (36px)</button>
-            <button type="button" forgeButton variant="primary" size="lg">Large (42px)</button>
-            <button type="button" forgeButton variant="ghost" size="sm" [iconOnly]="true" tooltip="Plus Icon">
+            <button type="button" talosButton variant="primary" size="sm">Small (32px)</button>
+            <button type="button" talosButton variant="primary" size="md">Medium (36px)</button>
+            <button type="button" talosButton variant="primary" size="lg">Large (42px)</button>
+            <button type="button" talosButton variant="ghost" size="sm" [iconOnly]="true" tooltip="Plus Icon">
               <svg lucidePlus [size]="14"></svg>
             </button>
-            <button type="button" forgeButton variant="outline" size="md" [iconOnly]="true" tooltip="Sparkles Icon">
+            <button type="button" talosButton variant="outline" size="md" [iconOnly]="true" tooltip="Sparkles Icon">
               <svg lucideSparkles [size]="16"></svg>
             </button>
-            <button type="button" forgeButton variant="primary" size="lg" [iconOnly]="true" tooltip="Send Icon">
+            <button type="button" talosButton variant="primary" size="lg" [iconOnly]="true" tooltip="Send Icon">
               <svg lucideSend [size]="18"></svg>
             </button>
           </div>
@@ -66,11 +66,11 @@
         <div class="showcase-group">
           <span class="group-label">Shapes, Loading &amp; Disabled:</span>
           <div class="button-row">
-            <button type="button" forgeButton variant="primary" [pill]="true">Pill Shaped</button>
-            <button type="button" forgeButton variant="primary" [loading]="isBtnLoading()">
+            <button type="button" talosButton variant="primary" [pill]="true">Pill Shaped</button>
+            <button type="button" talosButton variant="primary" [loading]="isBtnLoading()">
               {{ isBtnLoading() ? 'Saving Data...' : 'Click to Load' }}
             </button>
-            <button type="button" forgeButton variant="outline" [disabled]="true">Disabled State</button>
+            <button type="button" talosButton variant="outline" [disabled]="true">Disabled State</button>
           </div>
         </div>
       </div>
@@ -91,24 +91,24 @@
         <div class="showcase-group">
           <span class="group-label">Segmented Horizontal View Switcher (CDK SelectionModel):</span>
           <div class="button-row">
-            <forge-button-group variant="segmented" selectionMode="single" [(value)]="selectedView" [pill]="true">
-              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Switch to Grid View">
+            <talos-button-group variant="segmented" selectionMode="single" [(value)]="selectedView" [pill]="true">
+              <button type="button" talosButton talosButtonGroupItem value="grid" tooltip="Switch to Grid View">
                 <svg lucideLayoutGrid [size]="16"></svg>
                 Grid
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="feed" tooltip="Switch to Feed View">
+              <button type="button" talosButton talosButtonGroupItem value="feed" tooltip="Switch to Feed View">
                 <svg lucideRss [size]="16"></svg>
                 Feed
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="stack" tooltip="Switch to Stack View">
+              <button type="button" talosButton talosButtonGroupItem value="stack" tooltip="Switch to Stack View">
                 <svg lucideLayers [size]="16"></svg>
                 Stack
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Switch to List View">
+              <button type="button" talosButton talosButtonGroupItem value="list" tooltip="Switch to List View">
                 <svg lucideList [size]="16"></svg>
                 List
               </button>
-            </forge-button-group>
+            </talos-button-group>
           </div>
         </div>
 
@@ -117,40 +117,40 @@
           <span class="group-label">Attached Split Action Groups &amp; Badges:</span>
           <div class="button-row-wrap">
             <!-- Save 36 Split -->
-            <forge-button-group variant="attached">
-              <button type="button" forgeButton variant="outline" tooltip="Save item">
+            <talos-button-group variant="attached">
+              <button type="button" talosButton variant="outline" tooltip="Save item">
                 <svg lucideBookmark [size]="16"></svg>
                 Save
-                <span class="forge-badge forge-badge-subtle">36</span>
+                <span class="talos-badge talos-badge-subtle">36</span>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" tooltip="More Save Options">
+              <button type="button" talosButton variant="outline" [iconOnly]="true" tooltip="More Save Options">
                 <svg lucideChevronDown [size]="14"></svg>
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Fork 12 Split -->
-            <forge-button-group variant="attached">
-              <button type="button" forgeButton variant="outline" tooltip="Fork repository">
+            <talos-button-group variant="attached">
+              <button type="button" talosButton variant="outline" tooltip="Fork repository">
                 <svg lucideGitFork [size]="16"></svg>
                 Fork
-                <span class="forge-badge forge-badge-blue">12</span>
+                <span class="talos-badge talos-badge-blue">12</span>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" tooltip="Fork Options">
+              <button type="button" talosButton variant="outline" [iconOnly]="true" tooltip="Fork Options">
                 <svg lucideChevronDown [size]="14"></svg>
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Star 148 Split -->
-            <forge-button-group variant="attached">
-              <button type="button" forgeButton variant="outline" tooltip="Star repository">
+            <talos-button-group variant="attached">
+              <button type="button" talosButton variant="outline" tooltip="Star repository">
                 <svg lucideStar [size]="16"></svg>
                 Star
-                <span class="forge-badge forge-badge-amber">148</span>
+                <span class="talos-badge talos-badge-amber">148</span>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" tooltip="Star Options">
+              <button type="button" talosButton variant="outline" [iconOnly]="true" tooltip="Star Options">
                 <svg lucideChevronDown [size]="14"></svg>
               </button>
-            </forge-button-group>
+            </talos-button-group>
           </div>
         </div>
 
@@ -159,36 +159,36 @@
           <span class="group-label">Billing Interval &amp; Action Button Groups:</span>
           <div class="button-row-wrap">
             <!-- Billing Interval -->
-            <forge-button-group variant="attached" selectionMode="single" [(value)]="selectedBilling">
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="monthly"
+            <talos-button-group variant="attached" selectionMode="single" [(value)]="selectedBilling">
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="monthly"
                 tooltip="Monthly Billing Plan">
                 Monthly
               </button>
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="yearly"
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="yearly"
                 tooltip="Yearly Billing Plan (Save 20%)">
                 Yearly
               </button>
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="lifetime"
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="lifetime"
                 tooltip="Lifetime Access">
                 Lifetime
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Actions Group -->
-            <forge-button-group variant="attached">
-              <button type="button" forgeButton variant="outline" tooltip="Edit Record">
+            <talos-button-group variant="attached">
+              <button type="button" talosButton variant="outline" tooltip="Edit Record">
                 <svg lucidePencil [size]="15"></svg>
                 Edit
               </button>
-              <button type="button" forgeButton variant="outline" tooltip="Duplicate Record">
+              <button type="button" talosButton variant="outline" tooltip="Duplicate Record">
                 <svg lucideCopy [size]="15"></svg>
                 Duplicate
               </button>
-              <button type="button" forgeButton variant="outline" [disabled]="true" tooltip="Delete Record (Disabled)">
+              <button type="button" talosButton variant="outline" [disabled]="true" tooltip="Delete Record (Disabled)">
                 <svg lucideTrash2 [size]="15"></svg>
                 Delete
               </button>
-            </forge-button-group>
+            </talos-button-group>
           </div>
         </div>
 
@@ -197,40 +197,40 @@
           <span class="group-label">Button Group Sizing Controls (size="sm" | "md" | "lg"):</span>
           <div class="button-row-wrap">
             <!-- Small Group -->
-            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="'grid'">
-              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Small Grid View">
+            <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="'grid'">
+              <button type="button" talosButton talosButtonGroupItem value="grid" tooltip="Small Grid View">
                 <svg lucideLayoutGrid [size]="14"></svg>
                 Small (32px)
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Small List View">
+              <button type="button" talosButton talosButtonGroupItem value="list" tooltip="Small List View">
                 <svg lucideList [size]="14"></svg>
                 List
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Medium Group -->
-            <forge-button-group variant="segmented" size="md" selectionMode="single" [value]="'grid'">
-              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Medium Grid View">
+            <talos-button-group variant="segmented" size="md" selectionMode="single" [value]="'grid'">
+              <button type="button" talosButton talosButtonGroupItem value="grid" tooltip="Medium Grid View">
                 <svg lucideLayoutGrid [size]="16"></svg>
                 Medium (36px)
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Medium List View">
+              <button type="button" talosButton talosButtonGroupItem value="list" tooltip="Medium List View">
                 <svg lucideList [size]="16"></svg>
                 List
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Large Group -->
-            <forge-button-group variant="segmented" size="lg" selectionMode="single" [value]="'grid'">
-              <button type="button" forgeButton forgeButtonGroupItem value="grid" tooltip="Large Grid View">
+            <talos-button-group variant="segmented" size="lg" selectionMode="single" [value]="'grid'">
+              <button type="button" talosButton talosButtonGroupItem value="grid" tooltip="Large Grid View">
                 <svg lucideLayoutGrid [size]="18"></svg>
                 Large (42px)
               </button>
-              <button type="button" forgeButton forgeButtonGroupItem value="list" tooltip="Large List View">
+              <button type="button" talosButton talosButtonGroupItem value="list" tooltip="Large List View">
                 <svg lucideList [size]="18"></svg>
                 List
               </button>
-            </forge-button-group>
+            </talos-button-group>
           </div>
         </div>
 
@@ -239,61 +239,61 @@
           <span class="group-label">Vertical Button Groups (Icon-Only &amp; Rating):</span>
           <div class="button-row-wrap vertical-showcase-row">
             <!-- Vertical Text Alignment Bar -->
-            <forge-button-group orientation="vertical" variant="attached" selectionMode="single"
+            <talos-button-group orientation="vertical" variant="attached" selectionMode="single"
               [(value)]="selectedAlignment">
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="left"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="left"
                 tooltip="Align Left">
                 <svg lucideAlignLeft [size]="16"></svg>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="center"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="center"
                 tooltip="Align Center">
                 <svg lucideAlignCenter [size]="16"></svg>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="right"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="right"
                 tooltip="Align Right">
                 <svg lucideAlignRight [size]="16"></svg>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="justify"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="justify"
                 tooltip="Justify Block">
                 <svg lucideAlignJustify [size]="16"></svg>
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Vertical Emoji Rating Bar -->
-            <forge-button-group orientation="vertical" variant="attached" selectionMode="single"
+            <talos-button-group orientation="vertical" variant="attached" selectionMode="single"
               [(value)]="selectedRating">
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="smile"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="smile"
                 tooltip="Satisfied">
                 <svg lucideSmile [size]="18"></svg>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="meh"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="meh"
                 tooltip="Neutral">
                 <svg lucideMeh [size]="18"></svg>
               </button>
-              <button type="button" forgeButton variant="outline" [iconOnly]="true" forgeButtonGroupItem value="frown"
+              <button type="button" talosButton variant="outline" [iconOnly]="true" talosButtonGroupItem value="frown"
                 tooltip="Dissatisfied">
                 <svg lucideFrown [size]="18"></svg>
               </button>
-            </forge-button-group>
+            </talos-button-group>
 
             <!-- Horizontal Mail Navigation Group -->
-            <forge-button-group variant="attached" selectionMode="single" [(value)]="selectedMailFolder">
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="inbox"
+            <talos-button-group variant="attached" selectionMode="single" [(value)]="selectedMailFolder">
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="inbox"
                 tooltip="Inbox Folder">
                 <svg lucideInbox [size]="16"></svg>
                 Inbox
               </button>
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="sent"
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="sent"
                 tooltip="Sent Messages">
                 <svg lucideSend [size]="16"></svg>
                 Sent
               </button>
-              <button type="button" forgeButton variant="outline" forgeButtonGroupItem value="archived"
+              <button type="button" talosButton variant="outline" talosButtonGroupItem value="archived"
                 tooltip="Archived Messages">
                 <svg lucideArchive [size]="16"></svg>
                 Archived
               </button>
-            </forge-button-group>
+            </talos-button-group>
           </div>
         </div>
       </div>

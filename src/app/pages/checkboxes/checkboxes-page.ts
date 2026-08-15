@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ForgeCheckboxModule, ForgeButtonGroupModule } from '@forge/components';
+import { TalosCheckboxModule, TalosButtonGroupModule } from '@talos/components';
 import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-checkboxes-page',
-  imports: [ReactiveFormsModule, ForgeCheckboxModule, ForgeButtonGroupModule, JsonPipe],
+  imports: [ReactiveFormsModule, TalosCheckboxModule, TalosButtonGroupModule, JsonPipe],
   templateUrl: './checkboxes-page.html',
   styleUrl: './checkboxes-page.scss'
 })

@@ -1,9 +1,10 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · Form Controls</div>
+    <div class="badge">talos/components · Form Controls</div>
     <h1>Range Input &amp; Slider</h1>
     <p class="subtitle">
-      A flexible, accessible range input and dual-thumb slider component supporting customizable steps, min/max bounds, interval tick marks, synchronized numeric inputs, and seamless ControlValueAccessor integration.
+      A flexible, accessible range input and dual-thumb slider component supporting customizable steps, min/max bounds,
+      interval tick marks, synchronized numeric inputs, and seamless ControlValueAccessor integration.
     </p>
   </header>
 
@@ -16,100 +17,59 @@
           <h2>STANDARD RANGE INPUT CONFIGURATIONS</h2>
         </div>
 
-        <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
-          <button
-            type="button"
-            forgeButton
-            forgeButtonGroupItem
-            value="preview"
-            (click)="activeTab.set('preview')"
-          >
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
             <svg lucideEye [size]="14"></svg>
             <span>Preview</span>
           </button>
-          <button
-            type="button"
-            forgeButton
-            forgeButtonGroupItem
-            value="code"
-            (click)="activeTab.set('code')"
-          >
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
             <svg lucideCode [size]="14"></svg>
             <span>Code</span>
           </button>
-        </forge-button-group>
+        </talos-button-group>
       </div>
 
       <!-- Preview Tab -->
       @if (activeTab() === 'preview') {
-        <div class="mockup-preview-container">
-          <!-- Example 1: Basic Single Slider with Step & Intervals -->
-          <div class="range-demo-row">
-            <forge-range-input
-              label="Volume Level"
-              hint="Continuous volume control with 5% steps and 25% intervals"
-              [min]="0"
-              [max]="100"
-              [step]="5"
-              [interval]="25"
-              [showTicks]="true"
-              [showIntervals]="true"
-              suffix="%"
-              [(value)]="singleValue"
-              (change)="onRangeChange($event)"
-            />
-          </div>
-
-          <!-- Example 2: Dual Range Price Selector -->
-          <div class="range-demo-row">
-            <forge-range-input
-              label="Price Range Filter"
-              hint="Dual handle slider with synchronized number inputs"
-              [min]="0"
-              [max]="1000"
-              [step]="10"
-              [interval]="200"
-              [range]="true"
-              [showTicks]="true"
-              [showIntervals]="true"
-              [showInputs]="true"
-              prefix="$"
-              [(value)]="priceRange"
-              (change)="onRangeChange($event)"
-            />
-          </div>
-
-          <!-- Example 3: Discrete Labeled Ticks with Snapping -->
-          <div class="range-demo-row">
-            <forge-range-input
-              label="Service Tier Selection"
-              hint="Snaps strictly to discrete milestones with custom labels"
-              [marks]="customMarks"
-              [snapToTicks]="true"
-              [showTicks]="true"
-              [showIntervals]="true"
-              variant="primary"
-              (change)="onRangeChange($event)"
-            />
-          </div>
+      <div class="mockup-preview-container">
+        <!-- Example 1: Basic Single Slider with Step & Intervals -->
+        <div class="range-demo-row">
+          <talos-range-input label="Volume Level" hint="Continuous volume control with 5% steps and 25% intervals"
+            [min]="0" [max]="100" [step]="5" [interval]="25" [showTicks]="true" [showIntervals]="true" suffix="%"
+            [(value)]="singleValue" (change)="onRangeChange($event)" />
         </div>
+
+        <!-- Example 2: Dual Range Price Selector -->
+        <div class="range-demo-row">
+          <talos-range-input label="Price Range Filter" hint="Dual handle slider with synchronized number inputs"
+            [min]="0" [max]="1000" [step]="10" [interval]="200" [range]="true" [showTicks]="true" [showIntervals]="true"
+            [showInputs]="true" prefix="$" [(value)]="priceRange" (change)="onRangeChange($event)" />
+        </div>
+
+        <!-- Example 3: Discrete Labeled Ticks with Snapping -->
+        <div class="range-demo-row">
+          <talos-range-input label="Service Tier Selection"
+            hint="Snaps strictly to discrete milestones with custom labels" [marks]="customMarks" [snapToTicks]="true"
+            [showTicks]="true" [showIntervals]="true" variant="primary" (change)="onRangeChange($event)" />
+        </div>
+      </div>
       } @else {
-        <!-- Code Tab -->
-        <div class="code-view-container">
-          <div class="code-toolbar">
-            <span class="code-lang">HTML / Angular Template</span>
-            <button type="button" forgeButton variant="outline" size="sm" (click)="copyCode()">
-              @if (copied()) {
-                <svg lucideCheck [size]="14"></svg>
-                <span>Copied!</span>
-              } @else {
-                <svg lucideCopy [size]="14"></svg>
-                <span>Copy Code</span>
-              }
-            </button>
-          </div>
-          <pre class="code-block"><code>{{ codeSnippet }}</code></pre>
+      <!-- Code Tab -->
+      <div class="code-view-container">
+        <div class="code-toolbar">
+          <span class="code-lang">HTML / Angular Template</span>
+          <button type="button" talosButton variant="outline" size="sm" (click)="copyCode()">
+            @if (copied()) {
+            <svg lucideCheck [size]="14"></svg>
+            <span>Copied!</span>
+            } @else {
+            <svg lucideCopy [size]="14"></svg>
+            <span>Copy Code</span>
+            }
+          </button>
         </div>
+        <pre class="code-block"><code>{{ codeSnippet }}</code></pre>
+      </div>
       }
     </div>
 
@@ -130,33 +90,26 @@
           <!-- Slider Mode (Single vs Dual Range) -->
           <div class="control-item">
             <label class="control-label">Slider Mode:</label>
-            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="pgRange() ? 'dual' : 'single'">
-              <button type="button" forgeButton forgeButtonGroupItem value="single" (click)="toggleDualMode(false)">Single</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="dual" (click)="toggleDualMode(true)">Dual Range</button>
-            </forge-button-group>
+            <talos-button-group variant="segmented" size="sm" selectionMode="single"
+              [value]="pgRange() ? 'dual' : 'single'">
+              <button type="button" talosButton talosButtonGroupItem value="single"
+                (click)="toggleDualMode(false)">Single</button>
+              <button type="button" talosButton talosButtonGroupItem value="dual" (click)="toggleDualMode(true)">Dual
+                Range</button>
+            </talos-button-group>
           </div>
 
           <!-- Min / Max Bounds -->
           <div class="control-item-row">
             <div class="control-item">
               <label class="control-label" for="pgMinInput">Min:</label>
-              <input
-                id="pgMinInput"
-                type="number"
-                class="playground-number-input"
-                [ngModel]="pgMin()"
-                (ngModelChange)="pgMin.set($event)"
-              />
+              <input id="pgMinInput" type="number" class="playground-number-input" [ngModel]="pgMin()"
+                (ngModelChange)="pgMin.set($event)" />
             </div>
             <div class="control-item">
               <label class="control-label" for="pgMaxInput">Max:</label>
-              <input
-                id="pgMaxInput"
-                type="number"
-                class="playground-number-input"
-                [ngModel]="pgMax()"
-                (ngModelChange)="pgMax.set($event)"
-              />
+              <input id="pgMaxInput" type="number" class="playground-number-input" [ngModel]="pgMax()"
+                (ngModelChange)="pgMax.set($event)" />
             </div>
           </div>
 
@@ -164,108 +117,73 @@
           <div class="control-item-row">
             <div class="control-item">
               <label class="control-label" for="pgStepInput">Step:</label>
-              <input
-                id="pgStepInput"
-                type="number"
-                class="playground-number-input"
-                [ngModel]="pgStep()"
-                (ngModelChange)="pgStep.set($event)"
-              />
+              <input id="pgStepInput" type="number" class="playground-number-input" [ngModel]="pgStep()"
+                (ngModelChange)="pgStep.set($event)" />
             </div>
             <div class="control-item">
               <label class="control-label" for="pgIntervalInput">Interval:</label>
-              <input
-                id="pgIntervalInput"
-                type="number"
-                class="playground-number-input"
-                [ngModel]="pgInterval()"
-                (ngModelChange)="pgInterval.set($event)"
-              />
+              <input id="pgIntervalInput" type="number" class="playground-number-input" [ngModel]="pgInterval()"
+                (ngModelChange)="pgInterval.set($event)" />
             </div>
           </div>
 
           <!-- Size Variant -->
           <div class="control-item">
             <label class="control-label">Size Variant:</label>
-            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="pgSize()">
-              <button type="button" forgeButton forgeButtonGroupItem value="sm" (click)="pgSize.set('sm')">SM</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="md" (click)="pgSize.set('md')">MD</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="lg" (click)="pgSize.set('lg')">LG</button>
-            </forge-button-group>
+            <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="pgSize()">
+              <button type="button" talosButton talosButtonGroupItem value="sm" (click)="pgSize.set('sm')">SM</button>
+              <button type="button" talosButton talosButtonGroupItem value="md" (click)="pgSize.set('md')">MD</button>
+              <button type="button" talosButton talosButtonGroupItem value="lg" (click)="pgSize.set('lg')">LG</button>
+            </talos-button-group>
           </div>
 
           <!-- Color Variant -->
           <div class="control-item">
             <label class="control-label">Color Variant:</label>
-            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="pgVariant()">
-              <button type="button" forgeButton forgeButtonGroupItem value="primary" (click)="pgVariant.set('primary')">Primary</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="success" (click)="pgVariant.set('success')">Success</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="warning" (click)="pgVariant.set('warning')">Warning</button>
-              <button type="button" forgeButton forgeButtonGroupItem value="danger" (click)="pgVariant.set('danger')">Danger</button>
-            </forge-button-group>
+            <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="pgVariant()">
+              <button type="button" talosButton talosButtonGroupItem value="primary"
+                (click)="pgVariant.set('primary')">Primary</button>
+              <button type="button" talosButton talosButtonGroupItem value="success"
+                (click)="pgVariant.set('success')">Success</button>
+              <button type="button" talosButton talosButtonGroupItem value="warning"
+                (click)="pgVariant.set('warning')">Warning</button>
+              <button type="button" talosButton talosButtonGroupItem value="danger"
+                (click)="pgVariant.set('danger')">Danger</button>
+            </talos-button-group>
           </div>
 
           <!-- Feature Toggles -->
           <div class="control-toggles">
-            <forge-slide-toggle
-              [checked]="pgShowTicks()"
-              (checkedChange)="pgShowTicks.set($event)"
-              labelPosition="after"
-              size="sm"
-            >
+            <talos-slide-toggle [checked]="pgShowTicks()" (checkedChange)="pgShowTicks.set($event)"
+              labelPosition="after" size="sm">
               Show Tick Marks
-            </forge-slide-toggle>
+            </talos-slide-toggle>
 
-            <forge-slide-toggle
-              [checked]="pgShowIntervals()"
-              (checkedChange)="pgShowIntervals.set($event)"
-              labelPosition="after"
-              size="sm"
-            >
+            <talos-slide-toggle [checked]="pgShowIntervals()" (checkedChange)="pgShowIntervals.set($event)"
+              labelPosition="after" size="sm">
               Show Interval Labels
-            </forge-slide-toggle>
+            </talos-slide-toggle>
 
-            <forge-slide-toggle
-              [checked]="pgShowInputs()"
-              (checkedChange)="pgShowInputs.set($event)"
-              labelPosition="after"
-              size="sm"
-            >
+            <talos-slide-toggle [checked]="pgShowInputs()" (checkedChange)="pgShowInputs.set($event)"
+              labelPosition="after" size="sm">
               Show Synchronized Inputs
-            </forge-slide-toggle>
+            </talos-slide-toggle>
 
-            <forge-slide-toggle
-              [checked]="pgDisabled()"
-              (checkedChange)="pgDisabled.set($event)"
-              labelPosition="after"
-              size="sm"
-            >
+            <talos-slide-toggle [checked]="pgDisabled()" (checkedChange)="pgDisabled.set($event)" labelPosition="after"
+              size="sm">
               Disabled State
-            </forge-slide-toggle>
+            </talos-slide-toggle>
           </div>
         </div>
 
         <!-- Live Output Column -->
         <div class="playground-preview-area">
-          <forge-range-input
-            label="Configured Range Slider"
-            hint="Interactive preview updating based on playground settings"
-            [min]="pgMin()"
-            [max]="pgMax()"
-            [step]="pgStep()"
-            [interval]="pgInterval()"
-            [range]="pgRange()"
-            [size]="pgSize()"
-            [variant]="pgVariant()"
-            [showTicks]="pgShowTicks()"
-            [showIntervals]="pgShowIntervals()"
-            [showInputs]="pgShowInputs()"
-            [disabled]="pgDisabled()"
-            [snapToTicks]="pgSnapToTicks()"
-            [value]="pgValue()"
-            (valueChange)="pgValue.set($event)"
-            (change)="onRangeChange($event)"
-          />
+          <talos-range-input label="Configured Range Slider"
+            hint="Interactive preview updating based on playground settings" [min]="pgMin()" [max]="pgMax()"
+            [step]="pgStep()" [interval]="pgInterval()" [range]="pgRange()" [size]="pgSize()" [variant]="pgVariant()"
+            [showTicks]="pgShowTicks()" [showIntervals]="pgShowIntervals()" [showInputs]="pgShowInputs()"
+            [disabled]="pgDisabled()" [snapToTicks]="pgSnapToTicks()" [value]="pgValue()"
+            (valueChange)="pgValue.set($event)" (change)="onRangeChange($event)" />
 
           <!-- Live Event Log -->
           <div class="event-log-banner">
@@ -294,19 +212,8 @@
             <h4>Cloud Infrastructure Budget</h4>
             <span class="badge-pill">Reactive Form</span>
           </div>
-          <forge-range-input
-            formControlName="budget"
-            [min]="500"
-            [max]="10000"
-            [step]="250"
-            [interval]="2500"
-            [range]="true"
-            [showTicks]="true"
-            [showIntervals]="true"
-            [showInputs]="true"
-            prefix="$"
-            variant="success"
-          />
+          <talos-range-input formControlName="budget" [min]="500" [max]="10000" [step]="250" [interval]="2500"
+            [range]="true" [showTicks]="true" [showIntervals]="true" [showInputs]="true" prefix="$" variant="success" />
           <div class="form-value-summary">
             <span>Form Value: <code>{{ formGroup.get('budget')?.value | json }}</code></span>
           </div>
@@ -318,17 +225,8 @@
             <h4>Disk Utilization Alert Threshold</h4>
             <span class="badge-pill warning">Warning Variant</span>
           </div>
-          <forge-range-input
-            formControlName="volume"
-            [min]="0"
-            [max]="100"
-            [step]="5"
-            [interval]="20"
-            [showTicks]="true"
-            [showIntervals]="true"
-            suffix="%"
-            variant="warning"
-          />
+          <talos-range-input formControlName="volume" [min]="0" [max]="100" [step]="5" [interval]="20"
+            [showTicks]="true" [showIntervals]="true" suffix="%" variant="warning" />
           <div class="form-value-summary">
             <span>Form Value: <code>{{ formGroup.get('volume')?.value }}%</code></span>
           </div>

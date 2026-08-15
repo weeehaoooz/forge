@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import {
-  ForgeButtonDirective,
-  ForgeButtonGroupComponent,
-  ForgeButtonGroupItemDirective,
-  ForgeTooltipDirective
-} from '@forge/components';
+  TalosButtonDirective,
+  TalosButtonGroupComponent,
+  TalosButtonGroupItemDirective,
+  TalosTooltipDirective
+} from '@talos/components';
 import {
   LucideSparkles,
   LucidePlus,
@@ -35,10 +35,10 @@ import {
 @Component({
   selector: 'app-buttons-page',
   imports: [
-    ForgeButtonDirective,
-    ForgeButtonGroupComponent,
-    ForgeButtonGroupItemDirective,
-    ForgeTooltipDirective,
+    TalosButtonDirective,
+    TalosButtonGroupComponent,
+    TalosButtonGroupItemDirective,
+    TalosTooltipDirective,
     LucideSparkles,
     LucidePlus,
     LucideTrash2,

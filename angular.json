@@ -74,29 +74,29 @@
           "options": {
             "include": [
               "**/*.spec.ts",
-              "../projects/forge/src/**/*.spec.ts"
+              "../projects/talos/src/**/*.spec.ts"
             ]
           }
         }
       }
     },
-    "forge": {
+    "talos": {
       "projectType": "library",
-      "root": "projects/forge",
-      "sourceRoot": "projects/forge/src",
-      "prefix": "forge",
+      "root": "projects/talos",
+      "sourceRoot": "projects/talos/src",
+      "prefix": "talos",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/forge/ng-package.json"
+            "project": "projects/talos/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/forge/tsconfig.lib.json"
+              "tsConfig": "projects/talos/tsconfig.lib.json"
             },
             "development": {
-              "tsConfig": "projects/forge/tsconfig.lib.json"
+              "tsConfig": "projects/talos/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"

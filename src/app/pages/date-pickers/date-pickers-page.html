@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · Date Pickers</div>
+    <div class="badge">talos/components · Date Pickers</div>
     <h1>Date Pickers Showcase</h1>
     <p class="subtitle">
       DatePicker, DateTimePicker, DateRangePicker, and DateTimeRangePicker
@@ -15,13 +15,13 @@
           <h2>Date &amp; Time Picker Controls</h2>
           <span class="card-subtitle">Min: Aug 5 · Max: Aug 25 (for bounded pickers)</span>
         </div>
-        <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+        <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
           (valueChange)="setInputSize($event)">
-          <button type="button" forgeButton forgeButtonGroupItem value="sm"
+          <button type="button" talosButton talosButtonGroupItem value="sm"
             tooltip="Compact Size (32px)">Compact</button>
-          <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
-          <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
-        </forge-button-group>
+          <button type="button" talosButton talosButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
+          <button type="button" talosButton talosButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+        </talos-button-group>
       </div>
 
       <div class="form-fields">
@@ -30,10 +30,10 @@
           <label class="form-label" for="start-date-picker">
             DatePicker (Min: Aug 5, Max: Aug 25) <span class="required-star">*</span>
           </label>
-          <forge-date-picker id="start-date-picker" formControlName="startDate" placeholder="Select start date..."
+          <talos-date-picker id="start-date-picker" formControlName="startDate" placeholder="Select start date..."
             displayFormat="YYYY-MM-DD" valueFormat="YYYY-MM-DD" [minDate]="minDateDemo" [maxDate]="maxDateDemo"
             [size]="inputSize()" [clearable]="true">
-          </forge-date-picker>
+          </talos-date-picker>
           @if (dateForm.controls.startDate.touched && dateForm.controls.startDate.hasError('required')) {
           <span class="field-error">Start date is required.</span>
           }
@@ -44,11 +44,11 @@
           <label class="form-label" for="appointment-datetime-picker">
             DateTimePicker (Min: Aug 5 09:00, Max: Aug 25 18:00) <span class="required-star">*</span>
           </label>
-          <forge-date-time-picker id="appointment-datetime-picker" formControlName="appointmentDateTime"
+          <talos-date-time-picker id="appointment-datetime-picker" formControlName="appointmentDateTime"
             placeholder="Select appointment time..." displayFormat="YYYY-MM-DD HH:mm" valueFormat="YYYY-MM-DD HH:mm"
             [minDate]="minDateTimeDemo" [maxDate]="maxDateTimeDemo" [use24Hour]="true" [size]="inputSize()"
             [clearable]="true">
-          </forge-date-time-picker>
+          </talos-date-time-picker>
           @if (dateForm.controls.appointmentDateTime.touched &&
           dateForm.controls.appointmentDateTime.hasError('required')) {
           <span class="field-error">Appointment date and time is required.</span>
@@ -60,10 +60,10 @@
           <label class="form-label" for="date-range-picker">
             DateRangePicker (Dual Calendar &amp; Duration Presets)
           </label>
-          <forge-date-range-picker id="date-range-picker" formControlName="dateRange"
+          <talos-date-range-picker id="date-range-picker" formControlName="dateRange"
             placeholder="Select start and end dates..." displayFormat="YYYY-MM-DD" presetType="calendar"
             valueFormat="YYYY-MM-DD" [size]="inputSize()" [clearable]="true">
-          </forge-date-range-picker>
+          </talos-date-range-picker>
         </div>
 
         <!-- DateTimeRangePicker -->
@@ -71,10 +71,10 @@
           <label class="form-label" for="datetime-range-picker">
             DateTimeRangePicker (Date &amp; Time Range with Presets)
           </label>
-          <forge-date-time-range-picker id="datetime-range-picker" formControlName="dateTimeRange"
+          <talos-date-time-range-picker id="datetime-range-picker" formControlName="dateTimeRange"
             placeholder="Select start &amp; end date/time..." displayFormat="YYYY-MM-DD HH:mm" presetType="duration"
             valueFormat="YYYY-MM-DD HH:mm" [use24Hour]="true" [size]="inputSize()" [clearable]="true">
-          </forge-date-time-range-picker>
+          </talos-date-time-range-picker>
         </div>
       </div>
     </form>

@@ -1,0 +1,80 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "paths": {
+      "@talos/components/button": [
+        "./src/lib/button/index.ts"
+      ],
+      "@talos/components/tooltip": [
+        "./src/lib/tooltip/index.ts"
+      ],
+      "@talos/components/button-group": [
+        "./src/lib/button-group/index.ts"
+      ],
+      "@talos/components/form/input": [
+        "./src/lib/form/input/index.ts"
+      ],
+      "@talos/components/form/checkbox": [
+        "./src/lib/form/checkbox/index.ts"
+      ],
+      "@talos/components/form/radio": [
+        "./src/lib/form/radio/index.ts"
+      ],
+      "@talos/components/form/slide-toggle": [
+        "./src/lib/form/slide-toggle/index.ts"
+      ],
+      "@talos/components/form/select-input": [
+        "./src/lib/form/select-input/index.ts"
+      ],
+      "@talos/components/form/date-picker": [
+        "./src/lib/form/date-picker/index.ts"
+      ],
+      "@talos/components/form/date-range-picker": [
+        "./src/lib/form/date-range-picker/index.ts"
+      ],
+      "@talos/components/form/date-time-picker": [
+        "./src/lib/form/date-time-picker/index.ts"
+      ],
+      "@talos/components/form/date-time-range-picker": [
+        "./src/lib/form/date-time-range-picker/index.ts"
+      ],
+      "@talos/components/form/autocomplete": [
+        "./src/lib/form/autocomplete/index.ts"
+      ],
+      "@talos/components/form/range-input": [
+        "./src/lib/form/range-input/index.ts"
+      ],
+      "@talos/components/snackbar": [
+        "./src/lib/snackbar/index.ts"
+      ],
+      "@talos/components/category-bar": [
+        "./src/lib/category-bar/index.ts"
+      ],
+      "@talos/components/layout": [
+        "./src/lib/layout/index.ts"
+      ],
+      "@talos/components/nav": [
+        "./src/lib/nav/index.ts"
+      ],
+      "@talos/components/heatmap": [
+        "./src/lib/heatmap/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
+}

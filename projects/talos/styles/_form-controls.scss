@@ -1,0 +1,455 @@
+/* Talos UI Form Controls & Utility Classes */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.875rem;
+
+  .form-label {
+    font-size: var(--talos-control-font-size, 0.8125rem);
+    font-weight: 600;
+    color: var(--talos-text-color, #0f172a);
+    margin-bottom: 0.375rem;
+
+    .required-star {
+      color: var(--talos-error-color, #ef4444);
+      margin-left: 0.125rem;
+    }
+  }
+
+  .field-error {
+    font-size: 0.75rem;
+    color: var(--talos-error-color, #ef4444);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  .field-help {
+    font-size: 0.75rem;
+    color: var(--talos-text-muted, #64748b);
+    margin-top: 0.25rem;
+  }
+}
+
+/* Base Input & Textarea Form Controls */
+.form-control,
+.talos-input {
+  --input-bg: var(--talos-card-bg, #ffffff);
+  --input-border: var(--talos-border-color, #cbd5e1);
+  --input-border-hover: var(--talos-border-hover, #64748b);
+  --input-border-focus: var(--talos-border-focus, #2563eb);
+  --input-shadow-focus: var(--talos-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+  --input-color: var(--talos-text-color, #0f172a);
+  --input-placeholder-color: #94a3b8;
+  --input-radius: var(--talos-border-radius, 0.375rem);
+  --input-height: var(--talos-control-height, 2.25rem);
+  --input-padding-x: var(--talos-control-padding-x, 0.625rem);
+  --input-font-size: var(--talos-control-font-size, 0.8125rem);
+
+  display: block;
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 var(--input-padding-x);
+  font-size: var(--input-font-size);
+  font-family: inherit;
+  line-height: 1.25rem;
+  color: var(--input-color);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled):not([readonly]):not(.is-disabled) {
+    border-color: var(--input-border-hover);
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: var(--input-border-focus);
+    box-shadow: var(--input-shadow-focus);
+  }
+
+  &:disabled,
+  &.is-disabled,
+  &[disabled] {
+    background-color: var(--talos-bg-color, #f8fafc);
+    border-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.is-invalid,
+  &:invalid.ng-touched {
+    border-color: var(--talos-error-color, #ef4444);
+
+    &:focus,
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+/* Textarea Specific Styling Overrides */
+textarea.form-control,
+textarea.talos-input,
+textarea[talosInput],
+textarea[talosTextarea] {
+  height: auto;
+  min-height: 5rem;
+  padding: 0.5rem var(--input-padding-x);
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* Sizing Variations for Inputs & Textareas */
+.form-control-sm,
+.input-sm {
+  --input-height: 2rem;
+  --input-padding-x: 0.5rem;
+  --input-font-size: 0.8125rem;
+  --input-radius: 0.25rem;
+}
+
+textarea.form-control-sm,
+textarea.input-sm,
+textarea[size="sm"] {
+  min-height: 4rem;
+  padding: 0.375rem 0.5rem;
+}
+
+.form-control-md,
+.input-md {
+  --input-height: 2.25rem;
+  --input-padding-x: 0.625rem;
+  --input-font-size: 0.8125rem;
+  --input-radius: 0.375rem;
+}
+
+textarea.form-control-md,
+textarea.input-md,
+textarea[size="md"] {
+  min-height: 5rem;
+  padding: 0.5rem 0.625rem;
+}
+
+.form-control-lg,
+.input-lg {
+  --input-height: 2.625rem;
+  --input-padding-x: 0.75rem;
+  --input-font-size: 0.875rem;
+  --input-radius: 0.375rem;
+}
+
+textarea.form-control-lg,
+textarea.input-lg,
+textarea[size="lg"] {
+  min-height: 6.25rem;
+  padding: 0.625rem 0.75rem;
+}
+
+/* Talos Checkbox Directive Styling */
+.talos-checkbox {
+  --checkbox-size: 1.125rem;
+  --checkbox-bg: var(--talos-card-bg, #ffffff);
+  --checkbox-border: var(--talos-border-color, #cbd5e1);
+  --checkbox-border-hover: var(--talos-border-hover, #64748b);
+  --checkbox-color: var(--talos-primary-color, #2563eb);
+  --checkbox-color-hover: var(--talos-primary-hover, #1d4ed8);
+  --checkbox-mark-color: #ffffff;
+  --checkbox-radius: 0.25rem;
+  --checkbox-focus-ring: var(--talos-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin: 0;
+  padding: 0;
+  background-color: var(--checkbox-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid var(--checkbox-border);
+  border-radius: var(--checkbox-radius);
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: var(--checkbox-border-hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--checkbox-focus-ring);
+    border-color: var(--checkbox-color);
+  }
+
+  &:checked {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      background-color: var(--checkbox-color-hover);
+      border-color: var(--checkbox-color-hover);
+    }
+  }
+
+  &:indeterminate,
+  &.is-indeterminate {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M4 8a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 014 8z' clip-rule='evenodd'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      background-color: var(--checkbox-color-hover);
+      border-color: var(--checkbox-color-hover);
+    }
+  }
+
+  /* Sizing Variations */
+  &.checkbox-sm {
+    --checkbox-size: 0.9375rem;
+    --checkbox-radius: 0.1875rem;
+  }
+
+  &.checkbox-md {
+    --checkbox-size: 1.125rem;
+    --checkbox-radius: 0.25rem;
+  }
+
+  &.checkbox-lg {
+    --checkbox-size: 1.375rem;
+    --checkbox-radius: 0.3125rem;
+  }
+
+  /* Color Variants */
+  &.talos-checkbox-primary {
+    --checkbox-color: var(--talos-primary-color, #2563eb);
+    --checkbox-color-hover: var(--talos-primary-hover, #1d4ed8);
+    --checkbox-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  &.talos-checkbox-secondary {
+    --checkbox-color: #475569;
+    --checkbox-color-hover: #334155;
+    --checkbox-focus-ring: 0 0 0 3px rgba(71, 85, 105, 0.15);
+  }
+
+  &.talos-checkbox-success {
+    --checkbox-color: #16a34a;
+    --checkbox-color-hover: #15803d;
+    --checkbox-focus-ring: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  }
+
+  &.talos-checkbox-danger {
+    --checkbox-color: var(--talos-error-color, #ef4444);
+    --checkbox-color-hover: #dc2626;
+    --checkbox-focus-ring: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
+
+  /* Disabled State */
+  &:disabled,
+  &[disabled] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    &:checked,
+    &:indeterminate,
+    &.is-indeterminate {
+      background-color: #94a3b8;
+      border-color: #94a3b8;
+    }
+  }
+
+  /* Invalid / Error State */
+  &.is-invalid {
+    border-color: var(--talos-error-color, #ef4444);
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+/* Talos Radio Directive & Radio Component Styling */
+.talos-radio {
+  --radio-size: 1.125rem;
+  --radio-bg: var(--talos-card-bg, #ffffff);
+  --radio-border: var(--talos-border-color, #cbd5e1);
+  --radio-border-hover: var(--talos-border-hover, #64748b);
+  --radio-color: var(--talos-primary-color, #2563eb);
+  --radio-color-hover: var(--talos-primary-hover, #1d4ed8);
+  --radio-focus-ring: var(--talos-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  margin: 0;
+  padding: 0;
+  background-color: var(--radio-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid var(--radio-border);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: var(--radio-border-hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--radio-focus-ring);
+    border-color: var(--radio-color);
+  }
+
+  &:checked {
+    background-color: var(--radio-bg);
+    border-color: var(--radio-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      border-color: var(--radio-color-hover);
+    }
+  }
+
+  /* Sizing Variations */
+  &.radio-sm {
+    --radio-size: 0.9375rem;
+  }
+
+  &.radio-md {
+    --radio-size: 1.125rem;
+  }
+
+  &.radio-lg {
+    --radio-size: 1.375rem;
+  }
+
+  /* Color Variants */
+  &.talos-radio-primary {
+    --radio-color: var(--talos-primary-color, #2563eb);
+    --radio-color-hover: var(--talos-primary-hover, #1d4ed8);
+    --radio-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.talos-radio-secondary {
+    --radio-color: #475569;
+    --radio-color-hover: #334155;
+    --radio-focus-ring: 0 0 0 3px rgba(71, 85, 105, 0.15);
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23475569'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.talos-radio-success {
+    --radio-color: #16a34a;
+    --radio-color-hover: #15803d;
+    --radio-focus-ring: 0 0 0 3px rgba(22, 163, 74, 0.15);
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2316a34a'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  &.talos-radio-danger {
+    --radio-color: var(--talos-error-color, #ef4444);
+    --radio-color-hover: #dc2626;
+    --radio-focus-ring: 0 0 0 3px rgba(239, 68, 68, 0.15);
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ef4444'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+    }
+  }
+
+  /* Disabled State */
+  &:disabled,
+  &[disabled] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2394a3b8'%3E%3Ccircle cx='8' cy='8' r='4'/%3E%3C/svg%3E");
+      border-color: #94a3b8;
+    }
+  }
+
+  /* Invalid / Error State */
+  &.is-invalid {
+    border-color: var(--talos-error-color, #ef4444);
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+/* Radio Group & Wrapper Layout Styling */
+.talos-radio-group {
+  display: flex;
+
+  &.direction-vertical {
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  &.direction-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+  }
+}
+
+.talos-radio-host {
+  display: inline-block;
+}
+
+.talos-radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--talos-control-font-size, 0.875rem);
+  color: var(--talos-text-color, #0f172a);
+  line-height: 1.25;
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    .talos-radio-label {
+      color: var(--talos-text-muted, #64748b);
+    }
+  }
+}

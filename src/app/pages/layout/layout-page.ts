@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { ForgeButtonDirective, LayoutService } from '@forge/components';
+import { TalosButtonDirective, LayoutService } from '@talos/components';
 import { SampleDetailPanelComponent } from '../../demo/sample-detail-panel.component';
 
 @Component({
   selector: 'app-layout-page',
-  imports: [ForgeButtonDirective],
+  imports: [TalosButtonDirective],
   templateUrl: './layout-page.html',
   styleUrl: './layout-page.scss'
 })

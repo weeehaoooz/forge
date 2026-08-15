@@ -10,9 +10,9 @@
   .badge {
     display: inline-block;
     padding: 0.25rem 0.625rem;
-    background-color: var(--forge-primary-light, #eff6ff);
-    color: var(--forge-primary-color, #2563eb);
-    border-radius: var(--forge-border-radius, 0.375rem);
+    background-color: var(--talos-primary-light, #eff6ff);
+    color: var(--talos-primary-color, #2563eb);
+    border-radius: var(--talos-border-radius, 0.375rem);
     font-size: 0.75rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -21,13 +21,13 @@
   h1 {
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--forge-text-color, #0f172a);
+    color: var(--talos-text-color, #0f172a);
     margin: 0 0 0.5rem 0;
   }
 
   .subtitle {
     font-size: 0.9375rem;
-    color: var(--forge-text-muted, #64748b);
+    color: var(--talos-text-muted, #64748b);
     margin: 0;
     line-height: 1.5;
   }
@@ -40,9 +40,9 @@
 }
 
 .card {
-  background-color: var(--forge-card-bg, #ffffff);
-  border: 1px solid var(--forge-border-color, #cbd5e1);
-  border-radius: var(--forge-border-radius, 0.375rem);
+  background-color: var(--talos-card-bg, #ffffff);
+  border: 1px solid var(--talos-border-color, #cbd5e1);
+  border-radius: var(--talos-border-radius, 0.375rem);
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
@@ -55,13 +55,13 @@
     h2 {
       font-size: 1.125rem;
       font-weight: 600;
-      color: var(--forge-text-color, #0f172a);
+      color: var(--talos-text-color, #0f172a);
       margin: 0 0 0.25rem 0;
     }
 
     .card-subtitle {
       font-size: 0.8125rem;
-      color: var(--forge-text-muted, #64748b);
+      color: var(--talos-text-muted, #64748b);
     }
   }
 }
@@ -86,7 +86,7 @@
   .field-label {
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--forge-text-color, #0f172a);
+    color: var(--talos-text-color, #0f172a);
   }
 }
 
@@ -101,13 +101,13 @@
   align-items: center;
   gap: 0.375rem;
   padding: 0.375rem 0.75rem;
-  border: 1px solid var(--forge-border-color, #cbd5e1);
-  border-radius: var(--forge-border-radius, 0.375rem);
+  border: 1px solid var(--talos-border-color, #cbd5e1);
+  border-radius: var(--talos-border-radius, 0.375rem);
   font-size: 0.8125rem;
   cursor: pointer;
 
   &:hover {
-    background-color: var(--forge-bg-color, #f8fafc);
+    background-color: var(--talos-bg-color, #f8fafc);
   }
 
   input[type='radio'] {
@@ -126,7 +126,7 @@
   gap: 0.5rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--forge-text-color, #0f172a);
+  color: var(--talos-text-color, #0f172a);
   cursor: pointer;
 
   input[type='checkbox'] {
@@ -151,7 +151,7 @@
   font-family: monospace;
   font-size: 0.75rem;
   padding: 0.375rem 0.625rem;
-  background-color: var(--forge-bg-color, #f8fafc);
-  border-radius: var(--forge-border-radius, 0.375rem);
-  color: var(--forge-text-color, #0f172a);
+  background-color: var(--talos-bg-color, #f8fafc);
+  border-radius: var(--talos-border-radius, 0.375rem);
+  color: var(--talos-text-color, #0f172a);
 }

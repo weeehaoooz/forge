@@ -2,19 +2,19 @@ import { Component, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
-  ForgeRadioDirective,
-  ForgeRadioGroupComponent,
-  ForgeRadioComponent,
-  ForgeRadioModule,
-  ForgeButtonGroupModule,
+  TalosRadioDirective,
+  TalosRadioGroupComponent,
+  TalosRadioComponent,
+  TalosRadioModule,
+  TalosButtonGroupModule,
   RadioSize,
   RadioVariant,
   RadioDirection
-} from '@forge/components';
+} from '@talos/components';
 
 @Component({
   selector: 'app-radio-page',
-  imports: [ReactiveFormsModule, ForgeRadioModule, ForgeButtonGroupModule, JsonPipe],
+  imports: [ReactiveFormsModule, TalosRadioModule, TalosButtonGroupModule, JsonPipe],
   templateUrl: './radio-page.html',
   styleUrl: './radio-page.scss'
 })

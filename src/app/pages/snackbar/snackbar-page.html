@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · ForgeSnackbarModule</div>
+    <div class="badge">talos/components · TalosSnackbarModule</div>
     <h1>Snackbar &amp; Toast Showcase</h1>
     <p class="subtitle">
       Configurable, signal-driven notification toasts styled with design system variables,
@@ -18,25 +18,25 @@
         </div>
       </div>
       <div class="button-group">
-        <button type="button" forgeButton variant="primary" (click)="showSuccess()">
+        <button type="button" talosButton variant="primary" (click)="showSuccess()">
           Success Toast
         </button>
-        <button type="button" forgeButton variant="danger" (click)="showError()">
+        <button type="button" talosButton variant="danger" (click)="showError()">
           Error Toast
         </button>
-        <button type="button" forgeButton variant="secondary" (click)="showWarning()">
+        <button type="button" talosButton variant="secondary" (click)="showWarning()">
           Warning Toast
         </button>
-        <button type="button" forgeButton variant="outline" (click)="showInfo()">
+        <button type="button" talosButton variant="outline" (click)="showInfo()">
           Info Toast
         </button>
-        <button type="button" forgeButton variant="ghost" (click)="showCustomTemplate()">
+        <button type="button" talosButton variant="ghost" (click)="showCustomTemplate()">
           Custom Template
         </button>
-        <button type="button" forgeButton variant="outline" (click)="showPersistent()">
+        <button type="button" talosButton variant="outline" (click)="showPersistent()">
           Persistent Toast
         </button>
-        <button type="button" forgeButton variant="danger" (click)="dismissAll()">
+        <button type="button" talosButton variant="danger" (click)="dismissAll()">
           Dismiss All
         </button>
       </div>
@@ -47,50 +47,45 @@
       <div class="card-header">
         <div>
           <h2>Custom Configurator</h2>
-          <span class="card-subtitle">Test all options of ForgeSnackbarConfig</span>
+          <span class="card-subtitle">Test all options of TalosSnackbarConfig</span>
         </div>
       </div>
 
       <div class="config-grid">
         <div class="field-group">
           <label class="field-label">Title</label>
-          <input
-            forgeInput
-            type="text"
-            [ngModel]="titleText()"
-            (ngModelChange)="titleText.set($event)"
-            placeholder="Notification title"
-          />
+          <input talosInput type="text" [ngModel]="titleText()" (ngModelChange)="titleText.set($event)"
+            placeholder="Notification title" />
         </div>
 
         <div class="field-group">
           <label class="field-label">Message</label>
-          <input
-            forgeInput
-            type="text"
-            [ngModel]="messageText()"
-            (ngModelChange)="messageText.set($event)"
-            placeholder="Notification message"
-          />
+          <input talosInput type="text" [ngModel]="messageText()" (ngModelChange)="messageText.set($event)"
+            placeholder="Notification message" />
         </div>
 
         <div class="field-group">
           <label class="field-label">Variant</label>
           <div class="radio-row">
             <label class="radio-chip">
-              <input type="radio" name="variant" value="default" [checked]="selectedVariant() === 'default'" (change)="selectedVariant.set('default')" /> Default
+              <input type="radio" name="variant" value="default" [checked]="selectedVariant() === 'default'"
+                (change)="selectedVariant.set('default')" /> Default
             </label>
             <label class="radio-chip">
-              <input type="radio" name="variant" value="success" [checked]="selectedVariant() === 'success'" (change)="selectedVariant.set('success')" /> Success
+              <input type="radio" name="variant" value="success" [checked]="selectedVariant() === 'success'"
+                (change)="selectedVariant.set('success')" /> Success
             </label>
             <label class="radio-chip">
-              <input type="radio" name="variant" value="warning" [checked]="selectedVariant() === 'warning'" (change)="selectedVariant.set('warning')" /> Warning
+              <input type="radio" name="variant" value="warning" [checked]="selectedVariant() === 'warning'"
+                (change)="selectedVariant.set('warning')" /> Warning
             </label>
             <label class="radio-chip">
-              <input type="radio" name="variant" value="error" [checked]="selectedVariant() === 'error'" (change)="selectedVariant.set('error')" /> Error
+              <input type="radio" name="variant" value="error" [checked]="selectedVariant() === 'error'"
+                (change)="selectedVariant.set('error')" /> Error
             </label>
             <label class="radio-chip">
-              <input type="radio" name="variant" value="info" [checked]="selectedVariant() === 'info'" (change)="selectedVariant.set('info')" /> Info
+              <input type="radio" name="variant" value="info" [checked]="selectedVariant() === 'info'"
+                (change)="selectedVariant.set('info')" /> Info
             </label>
           </div>
         </div>
@@ -99,45 +94,41 @@
           <label class="field-label">Position</label>
           <div class="radio-row">
             <label class="radio-chip">
-              <input type="radio" name="pos" value="bottom-right" [checked]="selectedPosition() === 'bottom-right'" (change)="selectedPosition.set('bottom-right')" /> bottom-right
+              <input type="radio" name="pos" value="bottom-right" [checked]="selectedPosition() === 'bottom-right'"
+                (change)="selectedPosition.set('bottom-right')" /> bottom-right
             </label>
             <label class="radio-chip">
-              <input type="radio" name="pos" value="bottom-center" [checked]="selectedPosition() === 'bottom-center'" (change)="selectedPosition.set('bottom-center')" /> bottom-center
+              <input type="radio" name="pos" value="bottom-center" [checked]="selectedPosition() === 'bottom-center'"
+                (change)="selectedPosition.set('bottom-center')" /> bottom-center
             </label>
             <label class="radio-chip">
-              <input type="radio" name="pos" value="bottom-left" [checked]="selectedPosition() === 'bottom-left'" (change)="selectedPosition.set('bottom-left')" /> bottom-left
+              <input type="radio" name="pos" value="bottom-left" [checked]="selectedPosition() === 'bottom-left'"
+                (change)="selectedPosition.set('bottom-left')" /> bottom-left
             </label>
             <label class="radio-chip">
-              <input type="radio" name="pos" value="top-right" [checked]="selectedPosition() === 'top-right'" (change)="selectedPosition.set('top-right')" /> top-right
+              <input type="radio" name="pos" value="top-right" [checked]="selectedPosition() === 'top-right'"
+                (change)="selectedPosition.set('top-right')" /> top-right
             </label>
             <label class="radio-chip">
-              <input type="radio" name="pos" value="top-center" [checked]="selectedPosition() === 'top-center'" (change)="selectedPosition.set('top-center')" /> top-center
+              <input type="radio" name="pos" value="top-center" [checked]="selectedPosition() === 'top-center'"
+                (change)="selectedPosition.set('top-center')" /> top-center
             </label>
             <label class="radio-chip">
-              <input type="radio" name="pos" value="top-left" [checked]="selectedPosition() === 'top-left'" (change)="selectedPosition.set('top-left')" /> top-left
+              <input type="radio" name="pos" value="top-left" [checked]="selectedPosition() === 'top-left'"
+                (change)="selectedPosition.set('top-left')" /> top-left
             </label>
           </div>
         </div>
 
         <div class="field-group">
           <label class="field-label">Action Button Label</label>
-          <input
-            forgeInput
-            type="text"
-            [ngModel]="actionText()"
-            (ngModelChange)="actionText.set($event)"
-            placeholder="e.g. Undo"
-          />
+          <input talosInput type="text" [ngModel]="actionText()" (ngModelChange)="actionText.set($event)"
+            placeholder="e.g. Undo" />
         </div>
 
         <div class="field-group">
           <label class="field-label">Duration (ms, 0 = persistent)</label>
-          <input
-            forgeInput
-            type="number"
-            [ngModel]="durationMs()"
-            (ngModelChange)="durationMs.set(+$event)"
-          />
+          <input talosInput type="number" [ngModel]="durationMs()" (ngModelChange)="durationMs.set(+$event)" />
         </div>
 
         <div class="field-group toggle-group">
@@ -153,7 +144,7 @@
         </div>
 
         <div class="actions-row">
-          <button type="button" forgeButton variant="primary" (click)="showDefault()">
+          <button type="button" talosButton variant="primary" (click)="showDefault()">
             Trigger Configured Snackbar
           </button>
         </div>
@@ -162,19 +153,19 @@
 
     <!-- Event Log -->
     @if (actionLog().length > 0) {
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h2>Event Activity Log</h2>
-            <span class="card-subtitle">Callbacks received from snackbar events</span>
-          </div>
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Event Activity Log</h2>
+          <span class="card-subtitle">Callbacks received from snackbar events</span>
         </div>
-        <ul class="log-list">
-          @for (log of actionLog(); track log) {
-            <li class="log-item">{{ log }}</li>
-          }
-        </ul>
       </div>
+      <ul class="log-list">
+        @for (log of actionLog(); track log) {
+        <li class="log-item">{{ log }}</li>
+        }
+      </ul>
+    </div>
     }
   </main>
 </div>

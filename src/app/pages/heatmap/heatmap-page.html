@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · Data Solutions &amp; Heatmap</div>
+    <div class="badge">talos/components · Data Solutions &amp; Heatmap</div>
     <h1>Heatmap &amp; Busy Times Visualization</h1>
     <p class="subtitle">
       Illustrate time-series activity density, peak hours, and customer interactions with configurable time
@@ -22,7 +22,7 @@
       </div>
 
       <div class="showcase-heatmap-wrapper">
-        <forge-heatmap [metrics]="busiestTimesMetrics()" [loading]="isBusiestLoading()" [hoursRange]="[9, 17]"
+        <talos-heatmap [metrics]="busiestTimesMetrics()" [loading]="isBusiestLoading()" [hoursRange]="[9, 17]"
           [showSwapAxes]="true" (refresh)="simulateBusiestRefresh()" (cellClick)="onCellClick($event)" />
       </div>
     </div>
@@ -43,27 +43,27 @@
       <div class="flexible-showcase-toolbar">
         <div class="control-section">
           <label class="control-label">Interval Granularity:</label>
-          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeInterval()">
-            <button type="button" forgeButton forgeButtonGroupItem value="hour" (click)="onIntervalToggle('hour')">
+          <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeInterval()">
+            <button type="button" talosButton talosButtonGroupItem value="hour" (click)="onIntervalToggle('hour')">
               <svg lucideClock [size]="14"></svg>
               Hour-by-Hour
             </button>
-            <button type="button" forgeButton forgeButtonGroupItem value="day" (click)="onIntervalToggle('day')">
+            <button type="button" talosButton talosButtonGroupItem value="day" (click)="onIntervalToggle('day')">
               <svg lucideCalendar [size]="14"></svg>
               Day-by-Day
             </button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
 
         <div class="control-section">
           <label class="control-label">Time Range Selection:</label>
-          <forge-date-range-picker size="sm" [ngModel]="selectedDateRange()" (rangeChange)="onDateRangeChanged($event)"
+          <talos-date-range-picker size="sm" [ngModel]="selectedDateRange()" (rangeChange)="onDateRangeChanged($event)"
             [presets]="rangePresets" placeholder="Select date range" />
         </div>
       </div>
 
       <div class="showcase-heatmap-wrapper">
-        <forge-heatmap title="Team Activity &amp; Inquiries" [data]="flexibleDataPoints()" [interval]="activeInterval()"
+        <talos-heatmap title="Team Activity &amp; Inquiries" [data]="flexibleDataPoints()" [interval]="activeInterval()"
           [dateRange]="selectedDateRange()" [hoursRange]="[9, 17]" [showSwapAxes]="true" colorScheme="indigo"
           unit="activities" (cellClick)="onCellClick($event)" />
       </div>
@@ -79,7 +79,7 @@
             visible window. Includes working refresh &amp; shimmer loading skeleton.
           </span>
         </div>
-        <button type="button" forgeButton variant="secondary" size="sm" [loading]="isApiLoading()"
+        <button type="button" talosButton variant="secondary" size="sm" [loading]="isApiLoading()"
           (click)="simulateApiFetch()">
           <svg lucideRefreshCw [size]="14"></svg>
           Fetch / Simulate API Load
@@ -88,7 +88,7 @@
 
       <div class="integration-grid">
         <div class="integration-heatmap-col">
-          <forge-heatmap title="Live Customer Traffic" [data]="apiDataPoints()" [loading]="isApiLoading()"
+          <talos-heatmap title="Live Customer Traffic" [data]="apiDataPoints()" [loading]="isApiLoading()"
             [hoursRange]="[9, 17]" colorScheme="blue" unit="queries" (timeRangeChange)="onTimeRangeChange($event)"
             (refresh)="simulateApiFetch()" (cellClick)="onCellClick($event)" />
         </div>
@@ -101,7 +101,7 @@
 
           <div class="info-block">
             <span class="info-label">Integration Code Example:</span>
-            <pre class="ts-code"><code>&lt;forge-heatmap
+            <pre class="ts-code"><code>&lt;talos-heatmap
   [data]="heatmapData()"
   [loading]="isLoading()"
   (timeRangeChange)="onTimeRangeChange($event)"
@@ -132,20 +132,20 @@ onTimeRangeChange(range: HeatmapTimeRange) &#123;
           </span>
         </div>
         <div class="format-button-group">
-          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedInputFormat()">
-            <button type="button" forgeButton forgeButtonGroupItem value="points"
+          <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedInputFormat()">
+            <button type="button" talosButton talosButtonGroupItem value="points"
               (click)="setInputFormatPreset('points')">
               Flat Data Points (Recommended)
             </button>
-            <button type="button" forgeButton forgeButtonGroupItem value="timestamps"
+            <button type="button" talosButton talosButtonGroupItem value="timestamps"
               (click)="setInputFormatPreset('timestamps')">
               Raw Timestamps List
             </button>
-            <button type="button" forgeButton forgeButtonGroupItem value="matrix"
+            <button type="button" talosButton talosButtonGroupItem value="matrix"
               (click)="setInputFormatPreset('matrix')">
               2D Matrix Map
             </button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
       </div>
 
@@ -169,7 +169,7 @@ onTimeRangeChange(range: HeatmapTimeRange) &#123;
         </div>
 
         <div class="playground-preview">
-          <forge-heatmap title="Custom Input Preview" [data]="parsedPlaygroundData()" [hoursRange]="[9, 17]"
+          <talos-heatmap title="Custom Input Preview" [data]="parsedPlaygroundData()" [hoursRange]="[9, 17]"
             colorScheme="emerald" (cellClick)="onCellClick($event)" />
         </div>
       </div>
@@ -204,55 +204,55 @@ onTimeRangeChange(range: HeatmapTimeRange) &#123;
         <!-- Cell Shape -->
         <div class="control-group">
           <label class="control-label">Cell Shape:</label>
-          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellShape()">
-            <button type="button" forgeButton forgeButtonGroupItem value="pill"
+          <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellShape()">
+            <button type="button" talosButton talosButtonGroupItem value="pill"
               (click)="customizerCellShape.set('pill')">Pill</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="rounded"
+            <button type="button" talosButton talosButtonGroupItem value="rounded"
               (click)="customizerCellShape.set('rounded')">Rounded</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="square"
+            <button type="button" talosButton talosButtonGroupItem value="square"
               (click)="customizerCellShape.set('square')">Square</button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
 
         <!-- Cell Size -->
         <div class="control-group">
           <label class="control-label">Size:</label>
-          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellSize()">
-            <button type="button" forgeButton forgeButtonGroupItem value="sm"
+          <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellSize()">
+            <button type="button" talosButton talosButtonGroupItem value="sm"
               (click)="customizerCellSize.set('sm')">Small</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="md"
+            <button type="button" talosButton talosButtonGroupItem value="md"
               (click)="customizerCellSize.set('md')">Medium</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="lg"
+            <button type="button" talosButton talosButtonGroupItem value="lg"
               (click)="customizerCellSize.set('lg')">Large</button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
 
         <!-- Time Format -->
         <div class="control-group">
           <label class="control-label">Time Format:</label>
-          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerTimeFormat()">
-            <button type="button" forgeButton forgeButtonGroupItem value="12h"
+          <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerTimeFormat()">
+            <button type="button" talosButton talosButtonGroupItem value="12h"
               (click)="customizerTimeFormat.set('12h')">12h</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="24h"
+            <button type="button" talosButton talosButtonGroupItem value="24h"
               (click)="customizerTimeFormat.set('24h')">24h</button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
 
         <!-- Show Values -->
         <div class="control-group">
           <label class="control-label">Values:</label>
-          <forge-button-group variant="segmented" size="sm" selectionMode="single"
+          <talos-button-group variant="segmented" size="sm" selectionMode="single"
             [value]="customizerShowValues() ? 'show' : 'hide'">
-            <button type="button" forgeButton forgeButtonGroupItem value="show"
+            <button type="button" talosButton talosButtonGroupItem value="show"
               (click)="customizerShowValues.set(true)">Show</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="hide"
+            <button type="button" talosButton talosButtonGroupItem value="hide"
               (click)="customizerShowValues.set(false)">Hide</button>
-          </forge-button-group>
+          </talos-button-group>
         </div>
       </div>
 
       <div class="full-24h-heatmap-container">
-        <forge-heatmap title="24/7 Global Server Load" [data]="customizer24hData()" [hoursRange]="[0, 23]"
+        <talos-heatmap title="24/7 Global Server Load" [data]="customizer24hData()" [hoursRange]="[0, 23]"
           [timeFormat]="customizerTimeFormat()" [colorScheme]="customizerScheme()" [cellShape]="customizerCellShape()"
           [cellSize]="customizerCellSize()" [showValues]="customizerShowValues()" [showSwapAxes]="true" unit="req/s"
           (cellClick)="onCellClick($event)" />

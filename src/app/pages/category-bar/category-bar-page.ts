@@ -2,18 +2,18 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  ForgeCategoryBarComponent,
-  ForgeButtonDirective,
-  ForgeButtonGroupComponent,
-  ForgeButtonGroupItemDirective,
-  ForgeSlideToggleComponent,
+  TalosCategoryBarComponent,
+  TalosButtonDirective,
+  TalosButtonGroupComponent,
+  TalosButtonGroupItemDirective,
+  TalosSlideToggleComponent,
   CategoryBarSegment,
   CategoryBarSegmentClickEvent,
   CategoryBarMarkerClickEvent,
   CategoryBarSize,
   CategoryBarShape,
   CategoryBarLabelPosition
-} from '@forge/components';
+} from '@talos/components';
 import {
   LucideEye,
   LucideCode,
@@ -26,11 +26,11 @@ import {
   imports: [
     CommonModule,
     FormsModule,
-    ForgeCategoryBarComponent,
-    ForgeButtonDirective,
-    ForgeButtonGroupComponent,
-    ForgeButtonGroupItemDirective,
-    ForgeSlideToggleComponent,
+    TalosCategoryBarComponent,
+    TalosButtonDirective,
+    TalosButtonGroupComponent,
+    TalosButtonGroupItemDirective,
+    TalosSlideToggleComponent,
     LucideEye,
     LucideCode,
     LucideCopy,
@@ -86,7 +86,7 @@ export class CategoryBarPage {
   ]);
 
   readonly codeSnippet = `<!-- 1. Basic Category Bar with Scale Labels & Marker (Revenue Breakdown) -->
-<forge-category-bar
+<talos-category-bar
   title="Revenue Breakdown"
   subtitle="Quarterly revenue distribution across products"
   [values]="[120, 80, 60, 40]"
@@ -97,7 +97,7 @@ export class CategoryBarPage {
 />
 
 <!-- 2. Performance Metrics (Custom Scale without marker) -->
-<forge-category-bar
+<talos-category-bar
   title="Performance Metrics"
   subtitle="System performance distribution"
   [values]="[85, 65, 40, 25]"
@@ -107,7 +107,7 @@ export class CategoryBarPage {
 />
 
 <!-- 3. Budget Allocation with Detailed Categories & Labels -->
-<forge-category-bar
+<talos-category-bar
   title="Budget Allocation"
   subtitle="Department budget distribution with marker"
   [categories]="[

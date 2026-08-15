@@ -2,12 +2,12 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import {
-  ForgeAutocompleteComponent,
-  ForgeAutocompleteModule,
-  ForgeButtonDirective,
-  ForgeButtonGroupModule,
+  TalosAutocompleteComponent,
+  TalosAutocompleteModule,
+  TalosButtonDirective,
+  TalosButtonGroupModule,
   AutocompleteSize
-} from '@forge/components';
+} from '@talos/components';
 
 interface TechItem {
   id: string;
@@ -30,9 +30,9 @@ interface UserProfile {
   imports: [
     ReactiveFormsModule,
     JsonPipe,
-    ForgeAutocompleteModule,
-    ForgeButtonDirective,
-    ForgeButtonGroupModule
+    TalosAutocompleteModule,
+    TalosButtonDirective,
+    TalosButtonGroupModule
   ],
   templateUrl: './autocomplete-page.html',
   styleUrl: './autocomplete-page.scss'

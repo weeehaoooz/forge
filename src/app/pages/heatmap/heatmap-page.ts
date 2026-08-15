@@ -16,10 +16,10 @@ import {
   subWeeks
 } from 'date-fns';
 import {
-  ForgeHeatmapComponent,
-  ForgeHeatmapModule,
-  ForgeButtonDirective,
-  ForgeButtonGroupModule,
+  TalosHeatmapComponent,
+  TalosHeatmapModule,
+  TalosButtonDirective,
+  TalosButtonGroupModule,
   DateRangePickerComponent,
   DateRangePreset,
   DateRangeValue,
@@ -32,7 +32,7 @@ import {
   HeatmapMetric,
   HeatmapTimeFormat,
   HeatmapTimeRange
-} from '@forge/components';
+} from '@talos/components';
 import {
   LucideRefreshCw,
   LucideCode,
@@ -46,9 +46,9 @@ import {
   imports: [
     FormsModule,
     JsonPipe,
-    ForgeHeatmapModule,
-    ForgeButtonDirective,
-    ForgeButtonGroupModule,
+    TalosHeatmapModule,
+    TalosButtonDirective,
+    TalosButtonGroupModule,
     DateRangePickerComponent,
     LucideRefreshCw,
     LucideCode,

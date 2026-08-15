@@ -1,0 +1,112 @@
+/* Talos UI Design System Tokens & CSS Variables */
+:root {
+  /* Core & Brand Colors (Reads user-defined --primary-color etc. with defaults) */
+  --talos-primary-color: var(--primary-color, #2563eb);
+  --talos-primary-hover: var(--primary-hover, #1d4ed8);
+  --talos-primary-light: var(--primary-light, #eff6ff);
+  --talos-primary-light-hover: var(--primary-light-hover, #dbeafe);
+  --talos-bg-color: var(--bg-color, #f8fafc);
+  --talos-card-bg: var(--card-bg, #ffffff);
+  --talos-border-color: var(--border-color, #cbd5e1);
+  --talos-border-hover: var(--border-hover, #64748b);
+  --talos-border-focus: var(--border-focus, #2563eb);
+  --talos-text-color: var(--text-color, #0f172a);
+  --talos-text-muted: var(--text-muted, #64748b);
+  --talos-error-color: var(--error-color, #ef4444);
+
+  /* Form Control Base Tokens */
+  --talos-border-radius: var(--border-radius, 0.375rem);
+  --talos-control-height: var(--control-height, 2.25rem);
+  --talos-control-padding-x: var(--control-padding-x, 0.625rem);
+  --talos-control-font-size: var(--control-font-size, 0.8125rem);
+  --talos-focus-ring: var(--focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+
+  /* Navigation & Sidebar Tokens */
+  --talos-sidebar-width: var(--sidebar-width, 260px);
+  --talos-sidebar-collapsed-width: var(--sidebar-collapsed-width, 68px);
+  --talos-nav-bg: var(--nav-bg, #ffffff);
+  --talos-nav-border-color: var(--nav-border-color, #f1f5f9);
+
+  /* Button Specific Tokens */
+  --talos-btn-font-family: inherit;
+  --talos-btn-border-radius: var(--border-radius, 0.375rem);
+  --talos-btn-font-weight: 600;
+  --talos-btn-transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --talos-btn-ripple-color: rgba(255, 255, 255, 0.35);
+
+  --talos-btn-primary-bg: var(--btn-primary-bg, var(--talos-primary-color));
+  --talos-btn-primary-hover: var(--btn-primary-hover, var(--talos-primary-hover));
+  --talos-btn-primary-active: var(--btn-primary-active, #1e40af);
+  --talos-btn-primary-text: var(--btn-primary-text, #ffffff);
+
+  --talos-btn-secondary-bg: var(--btn-secondary-bg, #475569);
+  --talos-btn-secondary-hover: var(--btn-secondary-hover, #334155);
+  --talos-btn-secondary-active: var(--btn-secondary-active, #1e293b);
+  --talos-btn-secondary-text: var(--btn-secondary-text, #ffffff);
+
+  --talos-btn-outline-bg: var(--btn-outline-bg, var(--talos-card-bg));
+  --talos-btn-outline-border: var(--btn-outline-border, var(--talos-border-color));
+  --talos-btn-outline-hover-bg: var(--btn-outline-hover-bg, #f8fafc);
+  --talos-btn-outline-hover-border: var(--btn-outline-hover-border, var(--talos-border-hover));
+  --talos-btn-outline-text: var(--btn-outline-text, #334155);
+
+  --talos-btn-ghost-bg: var(--btn-ghost-bg, transparent);
+  --talos-btn-ghost-text: var(--btn-ghost-text, #64748b);
+  --talos-btn-ghost-hover-bg: var(--btn-ghost-hover-bg, #f1f5f9);
+  --talos-btn-ghost-hover-text: var(--btn-ghost-hover-text, #0f172a);
+  --talos-btn-ghost-active-bg: var(--btn-ghost-active-bg, #e2e8f0);
+
+  --talos-btn-danger-bg: var(--btn-danger-bg, var(--talos-error-color));
+  --talos-btn-danger-hover: var(--btn-danger-hover, #dc2626);
+  --talos-btn-danger-active: var(--btn-danger-active, #b91c1c);
+  --talos-btn-danger-text: var(--btn-danger-text, #ffffff);
+
+  --talos-btn-success-bg: var(--btn-success-bg, #16a34a);
+  --talos-btn-success-hover: var(--btn-success-hover, #15803d);
+  --talos-btn-success-active: var(--btn-success-active, #166534);
+  --talos-btn-success-text: var(--btn-success-text, #ffffff);
+
+  --talos-btn-height-sm: var(--btn-height-sm, 2rem);
+  --talos-btn-height-md: var(--btn-height-md, 2.25rem);
+  --talos-btn-height-lg: var(--btn-height-lg, 2.625rem);
+
+  --talos-btn-padding-x-sm: var(--btn-padding-x-sm, 0.625rem);
+  --talos-btn-padding-x-md: var(--btn-padding-x-md, 0.875rem);
+  --talos-btn-padding-x-lg: var(--btn-padding-x-lg, 1.125rem);
+
+  --talos-btn-font-size-sm: var(--btn-font-size-sm, 0.75rem);
+  --talos-btn-font-size-md: var(--btn-font-size-md, 0.8125rem);
+  --talos-btn-font-size-lg: var(--btn-font-size-lg, 0.875rem);
+
+  /* Category Bar Specific Tokens */
+  --talos-category-bar-gap: var(--category-bar-gap, 2px);
+  --talos-category-bar-track-bg: var(--category-bar-track-bg, rgba(0, 0, 0, 0.08));
+  --talos-category-bar-border-radius: var(--category-bar-radius, var(--talos-border-radius));
+  --talos-category-bar-height-xs: var(--category-bar-height-xs, 0.25rem);
+  --talos-category-bar-height-sm: var(--category-bar-height-sm, 0.375rem);
+  --talos-category-bar-height-md: var(--category-bar-height-md, 0.5rem);
+  --talos-category-bar-height-lg: var(--category-bar-height-lg, 0.75rem);
+  --talos-category-bar-marker-ring: var(--category-bar-marker-ring, var(--talos-card-bg));
+
+  /* Range Input Specific Tokens */
+  --talos-range-track-bg: var(--range-track-bg, #e2e8f0);
+  --talos-range-track-fill: var(--range-track-fill, var(--talos-primary-color));
+  --talos-range-track-disabled-bg: var(--range-track-disabled-bg, #cbd5e1);
+  --talos-range-track-disabled-fill: var(--range-track-disabled-fill, #94a3b8);
+  --talos-range-track-height-sm: var(--range-track-height-sm, 0.25rem);
+  --talos-range-track-height-md: var(--range-track-height-md, 0.375rem);
+  --talos-range-track-height-lg: var(--range-track-height-lg, 0.5rem);
+  --talos-range-thumb-size-sm: var(--range-thumb-size-sm, 1rem);
+  --talos-range-thumb-size-md: var(--range-thumb-size-md, 1.25rem);
+  --talos-range-thumb-size-lg: var(--range-thumb-size-lg, 1.5rem);
+  --talos-range-thumb-bg: var(--range-thumb-bg, var(--talos-card-bg));
+  --talos-range-thumb-border: var(--range-thumb-border, var(--talos-primary-color));
+  --talos-range-thumb-shadow: var(--range-thumb-shadow, 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08));
+  --talos-range-thumb-hover-shadow: var(--range-thumb-hover-shadow, 0 0 0 4px rgba(37, 99, 235, 0.15));
+  --talos-range-thumb-active-shadow: var(--range-thumb-active-shadow, 0 0 0 6px rgba(37, 99, 235, 0.25));
+  --talos-range-tick-color: var(--range-tick-color, #94a3b8);
+  --talos-range-tick-active-color: var(--range-tick-active-color, #ffffff);
+  --talos-range-tick-label-color: var(--range-tick-label-color, var(--talos-text-muted));
+  --talos-range-tooltip-bg: var(--range-tooltip-bg, #1e293b);
+  --talos-range-tooltip-text: var(--range-tooltip-text, #ffffff);
+}

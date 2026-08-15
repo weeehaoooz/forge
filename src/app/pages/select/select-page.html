@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · SelectInputModule</div>
+    <div class="badge">talos/components · SelectInputModule</div>
     <h1>Select &amp; Autocomplete Showcase</h1>
     <p class="subtitle">
       Standard and searchable autocomplete selects with dynamic options,
@@ -13,17 +13,17 @@
       <div class="card-header">
         <div>
           <h2>Select Controls</h2>
-          <span class="card-subtitle">Standard Select and Searchable Autocomplete with ForgeSelectInput</span>
+          <span class="card-subtitle">Standard Select and Searchable Autocomplete with TalosSelectInput</span>
         </div>
         <div class="actions">
-          <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
             (valueChange)="setInputSize($event)">
-            <button type="button" forgeButton forgeButtonGroupItem value="sm"
+            <button type="button" talosButton talosButtonGroupItem value="sm"
               tooltip="Compact Size (32px)">Compact</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="md"
+            <button type="button" talosButton talosButtonGroupItem value="md"
               tooltip="Medium Size (36px)">Medium</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
-          </forge-button-group>
+            <button type="button" talosButton talosButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+          </talos-button-group>
         </div>
       </div>
 
@@ -33,14 +33,14 @@
           <label class="form-label" for="fruit-select">
             Standard Select <span class="required-star">*</span>
           </label>
-          <forge-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
+          <talos-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
             [size]="inputSize()">
-            <forge-option value="apple">🍎 Apple</forge-option>
-            <forge-option value="banana">🍌 Banana</forge-option>
-            <forge-option value="cherry">🍒 Cherry</forge-option>
-            <forge-option value="dragonfruit">🐉 Dragon Fruit</forge-option>
-            <forge-option value="elderberry">🫐 Elderberry</forge-option>
-          </forge-select-input>
+            <talos-option value="apple">🍎 Apple</talos-option>
+            <talos-option value="banana">🍌 Banana</talos-option>
+            <talos-option value="cherry">🍒 Cherry</talos-option>
+            <talos-option value="dragonfruit">🐉 Dragon Fruit</talos-option>
+            <talos-option value="elderberry">🫐 Elderberry</talos-option>
+          </talos-select-input>
           @if (selectForm.controls.singleFruit.touched && selectForm.controls.singleFruit.hasError('required')) {
           <span class="field-error">Please select a fruit.</span>
           }
@@ -51,18 +51,18 @@
           <label class="form-label" for="tech-select">
             Searchable Autocomplete Select <span class="required-star">*</span>
           </label>
-          <forge-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
+          <talos-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
             searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
             (searchChange)="onSearchChange($event)">
             @for (fw of frameworks(); track fw.id) {
-            <forge-option [value]="fw.id" [label]="fw.name">
+            <talos-option [value]="fw.id" [label]="fw.name">
               <div class="option-custom-content">
                 <span class="fw-name">{{ fw.name }}</span>
                 <span class="fw-badge">{{ fw.category }}</span>
               </div>
-            </forge-option>
+            </talos-option>
             }
-          </forge-select-input>
+          </talos-select-input>
         </div>
       </div>
     </form>
@@ -74,7 +74,7 @@
         <span class="card-subtitle">Add options at runtime and observe typeahead search events</span>
       </div>
       <div class="actions-row">
-        <button type="button" forgeButton variant="outline" size="sm" (click)="addCustomFramework()">
+        <button type="button" talosButton variant="outline" size="sm" (click)="addCustomFramework()">
           + Add Custom Framework
         </button>
         <span class="options-count">{{ frameworks().length }} options loaded</span>

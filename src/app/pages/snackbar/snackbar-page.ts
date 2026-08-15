@@ -1,29 +1,29 @@
 import { Component, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  ForgeButtonDirective,
-  ForgeInputDirective,
-  ForgeSnackbarPosition,
-  ForgeSnackbarService,
-  ForgeSnackbarVariant
-} from '@forge/components';
+  TalosButtonDirective,
+  TalosInputDirective,
+  TalosSnackbarPosition,
+  TalosSnackbarService,
+  TalosSnackbarVariant
+} from '@talos/components';
 
 @Component({
   selector: 'app-snackbar-page',
-  imports: [FormsModule, ForgeButtonDirective, ForgeInputDirective],
+  imports: [FormsModule, TalosButtonDirective, TalosInputDirective],
   templateUrl: './snackbar-page.html',
   styleUrl: './snackbar-page.scss'
 })
 export class SnackbarPage {
-  private readonly snackbarService = inject(ForgeSnackbarService);
+  private readonly snackbarService = inject(TalosSnackbarService);
 
   @ViewChild('customTemplate') customTemplate!: TemplateRef<unknown>;
 
   // Interactive config state
   protected readonly messageText = signal<string>('Operation completed successfully!');
   protected readonly titleText = signal<string>('Notification');
-  protected readonly selectedVariant = signal<ForgeSnackbarVariant>('success');
-  protected readonly selectedPosition = signal<ForgeSnackbarPosition>('bottom-right');
+  protected readonly selectedVariant = signal<TalosSnackbarVariant>('success');
+  protected readonly selectedPosition = signal<TalosSnackbarPosition>('bottom-right');
   protected readonly durationMs = signal<number>(4000);
   protected readonly isDismissible = signal<boolean>(true);
   protected readonly showProgress = signal<boolean>(true);

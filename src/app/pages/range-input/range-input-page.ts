@@ -2,17 +2,17 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  ForgeRangeInputComponent,
-  ForgeButtonDirective,
-  ForgeButtonGroupComponent,
-  ForgeButtonGroupItemDirective,
-  ForgeSlideToggleComponent,
+  TalosRangeInputComponent,
+  TalosButtonDirective,
+  TalosButtonGroupComponent,
+  TalosButtonGroupItemDirective,
+  TalosSlideToggleComponent,
   RangeInputSize,
   RangeInputVariant,
   RangeInputValue,
   RangeInputChangeEvent,
   RangeInputMark
-} from '@forge/components';
+} from '@talos/components';
 import {
   LucideEye,
   LucideCode,
@@ -26,11 +26,11 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ForgeRangeInputComponent,
-    ForgeButtonDirective,
-    ForgeButtonGroupComponent,
-    ForgeButtonGroupItemDirective,
-    ForgeSlideToggleComponent,
+    TalosRangeInputComponent,
+    TalosButtonDirective,
+    TalosButtonGroupComponent,
+    TalosButtonGroupItemDirective,
+    TalosSlideToggleComponent,
     LucideEye,
     LucideCode,
     LucideCopy,
@@ -83,7 +83,7 @@ export class RangeInputPage {
   protected readonly lastEventLog = signal<string>('Drag thumbs or type in inputs to see live events.');
 
   readonly codeSnippet = `<!-- 1. Basic Single Slider with Step & Intervals -->
-<forge-range-input
+<talos-range-input
   label="Brightness Level"
   hint="Adjust screen backlight brightness"
   [min]="0"
@@ -97,7 +97,7 @@ export class RangeInputPage {
 />
 
 <!-- 2. Dual Range Price Slider with Currency Prefix & Inputs -->
-<forge-range-input
+<talos-range-input
   label="Price Range Filter"
   [min]="0"
   [max]="1000"
@@ -112,7 +112,7 @@ export class RangeInputPage {
 />
 
 <!-- 3. Reactive Forms Integration (CVA) -->
-<forge-range-input
+<talos-range-input
   formControlName="budget"
   label="Monthly Cloud Budget"
   [min]="500"
@@ -127,7 +127,7 @@ export class RangeInputPage {
 />
 
 <!-- 4. Custom Discrete Ticks & Labels with Snapping -->
-<forge-range-input
+<talos-range-input
   label="Subscription Tier"
   [marks]="[
     { value: 0, label: 'Free' },

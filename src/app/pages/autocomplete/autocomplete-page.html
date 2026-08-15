@@ -1,7 +1,7 @@
 <div class="demo-page-content">
   <!-- Page Header -->
   <header class="page-header">
-    <div class="badge">forge/components · ForgeAutocompleteComponent</div>
+    <div class="badge">talos/components · TalosAutocompleteComponent</div>
     <h1>Autocomplete Field Showcase</h1>
     <p class="subtitle">
       Configurable autocomplete typeahead inputs supporting local or asynchronous search results,
@@ -15,14 +15,16 @@
       <div class="card-header">
         <div>
           <h2>Autocomplete Fields &amp; Configurable Results</h2>
-          <span class="card-subtitle">Test remote simulated searches, local datasets, custom templates, and loading spinners</span>
+          <span class="card-subtitle">Test remote simulated searches, local datasets, custom templates, and loading
+            spinners</span>
         </div>
         <div class="actions">
-          <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()" (valueChange)="setInputSize($event)">
-            <button type="button" forgeButton forgeButtonGroupItem value="sm" tooltip="Compact (32px)">Compact</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium (36px)">Medium</button>
-            <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large (42px)">Large</button>
-          </forge-button-group>
+          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
+            (valueChange)="setInputSize($event)">
+            <button type="button" talosButton talosButtonGroupItem value="sm" tooltip="Compact (32px)">Compact</button>
+            <button type="button" talosButton talosButtonGroupItem value="md" tooltip="Medium (36px)">Medium</button>
+            <button type="button" talosButton talosButtonGroupItem value="lg" tooltip="Large (42px)">Large</button>
+          </talos-button-group>
         </div>
       </div>
 
@@ -33,36 +35,22 @@
             <label class="form-label" for="async-tech-autocomplete">
               Async Remote Search with Spinner <span class="required-star">*</span>
             </label>
-            <button
-              type="button"
-              forgeButton
-              variant="outline"
-              size="sm"
-              class="spinner-toggle-btn"
-              (click)="toggleSearchingManual()"
-            >
+            <button type="button" talosButton variant="outline" size="sm" class="spinner-toggle-btn"
+              (click)="toggleSearchingManual()">
               Toggle Searching Spinner ({{ isSearching() ? 'Active' : 'Off' }})
             </button>
           </div>
-          <span class="field-help">Simulates a 500ms server lookup. When typing, the `searching` signal activates the loading spinner.</span>
+          <span class="field-help">Simulates a 500ms server lookup. When typing, the `searching` signal activates the
+            loading spinner.</span>
 
-          <forge-autocomplete
-            id="async-tech-autocomplete"
-            formControlName="asyncTech"
-            [options]="asyncResults()"
-            [searching]="isSearching()"
-            [size]="inputSize()"
-            [filterFn]="null"
-            placeholder="Type to search tech stack (e.g. 'angular', 'rust', 'react')..."
-            displayWith="name"
-            valueWith="id"
-            (searchChange)="onAsyncSearch($event)"
-            (selectionChange)="onSelection($event)"
-            [itemTemplate]="techCardTemplate"
-          />
+          <talos-autocomplete id="async-tech-autocomplete" formControlName="asyncTech" [options]="asyncResults()"
+            [searching]="isSearching()" [size]="inputSize()" [filterFn]="null"
+            placeholder="Type to search tech stack (e.g. 'angular', 'rust', 'react')..." displayWith="name"
+            valueWith="id" (searchChange)="onAsyncSearch($event)" (selectionChange)="onSelection($event)"
+            [itemTemplate]="techCardTemplate" />
 
           @if (demoForm.controls.asyncTech.touched && demoForm.controls.asyncTech.hasError('required')) {
-            <span class="field-error">Technology selection is required.</span>
+          <span class="field-error">Technology selection is required.</span>
           }
 
           <!-- Custom Template for Tech Items -->
@@ -87,14 +75,8 @@
           </label>
           <span class="field-help">Filters locally across string array with automatic match highlighting.</span>
 
-          <forge-autocomplete
-            id="country-autocomplete"
-            formControlName="localCountry"
-            [options]="countries()"
-            [size]="inputSize()"
-            placeholder="Search country..."
-            (selectionChange)="onSelection($event)"
-          />
+          <talos-autocomplete id="country-autocomplete" formControlName="localCountry" [options]="countries()"
+            [size]="inputSize()" placeholder="Search country..." (selectionChange)="onSelection($event)" />
         </div>
 
         <!-- 3. Custom Rich User Profile Template -->
@@ -104,17 +86,9 @@
           </label>
           <span class="field-help">Demonstrates rich template projection with avatar circles and roles.</span>
 
-          <forge-autocomplete
-            id="user-autocomplete"
-            formControlName="customUser"
-            [options]="users()"
-            [size]="inputSize()"
-            placeholder="Search team member..."
-            displayWith="name"
-            valueWith="id"
-            (selectionChange)="onSelection($event)"
-            [itemTemplate]="userCardTemplate"
-          />
+          <talos-autocomplete id="user-autocomplete" formControlName="customUser" [options]="users()"
+            [size]="inputSize()" placeholder="Search team member..." displayWith="name" valueWith="id"
+            (selectionChange)="onSelection($event)" [itemTemplate]="userCardTemplate" />
 
           <!-- Custom Template for User Items -->
           <ng-template #userCardTemplate let-user let-selected="selected">
@@ -150,13 +124,13 @@
         <div class="state-box">
           <span class="state-title">Live Activity Log</span>
           @if (eventLogs().length > 0) {
-            <ul class="activity-log-list">
-              @for (log of eventLogs(); track $index) {
-                <li>{{ log }}</li>
-              }
-            </ul>
+          <ul class="activity-log-list">
+            @for (log of eventLogs(); track $index) {
+            <li>{{ log }}</li>
+            }
+          </ul>
           } @else {
-            <span class="empty-log-text">Interact with the autocomplete fields above to see live events.</span>
+          <span class="empty-log-text">Interact with the autocomplete fields above to see live events.</span>
           }
         </div>
       </div>

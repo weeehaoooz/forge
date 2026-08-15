@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · LayoutService</div>
+    <div class="badge">talos/components · LayoutService</div>
     <h1>Layout Controls</h1>
     <p class="subtitle">
       Test the side-nav toggle, dynamic right-panel injection with blur/overlay/inline modes,
@@ -15,26 +15,25 @@
         <span class="card-subtitle">Test side-nav, dynamic right panel, and backdrop blur</span>
       </div>
       <div class="layout-controls-grid">
-        <button type="button" forgeButton variant="outline" (click)="layoutService.toggleLeftNav()">
+        <button type="button" talosButton variant="outline" (click)="layoutService.toggleLeftNav()">
           {{ layoutService.isLeftNavCollapsed() ? 'Expand Left Side-Nav' : 'Collapse Left Side-Nav' }}
         </button>
 
-        <button type="button" forgeButton variant="primary"
+        <button type="button" talosButton variant="primary"
           (click)="openDetailWithBlur('Subject Details (Blurred)', 'SUBJ-101')">
           Open Dynamic Panel (With Backdrop Blur)
         </button>
 
-        <button type="button" forgeButton variant="secondary"
+        <button type="button" talosButton variant="secondary"
           (click)="openDetailNoBlur('Quick Inspection (Unblurred)', 'QUICK-902')">
           Open Floating Panel (Overlay)
         </button>
 
-        <button type="button" forgeButton variant="primary"
-          (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
+        <button type="button" talosButton variant="primary" (click)="openDetailInline('Split-Pane View', 'INLINE-303')">
           Open Inline Panel (Push Content)
         </button>
 
-        <button type="button" forgeButton variant="outline" (click)="layoutService.toggleMainContentExpanded()">
+        <button type="button" talosButton variant="outline" (click)="layoutService.toggleMainContentExpanded()">
           {{ layoutService.isMainContentExpanded() ? 'Reset Container Padding' : 'Expand Container Area' }}
         </button>
       </div>
@@ -48,11 +47,13 @@
       <div class="info-list">
         <div class="info-item">
           <span class="info-label">openRightPanel()</span>
-          <p class="info-desc">Dynamically injects any standalone component into the layout's right panel. Pass component inputs as the second argument.</p>
+          <p class="info-desc">Dynamically injects any standalone component into the layout's right panel. Pass
+            component inputs as the second argument.</p>
         </div>
         <div class="info-item">
           <span class="info-label">mode: 'overlay'</span>
-          <p class="info-desc">Panel floats over the main content. Optional <code>blurBackdrop</code> applies a frosted glass effect.</p>
+          <p class="info-desc">Panel floats over the main content. Optional <code>blurBackdrop</code> applies a frosted
+            glass effect.</p>
         </div>
         <div class="info-item">
           <span class="info-label">mode: 'inline'</span>

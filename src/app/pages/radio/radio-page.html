@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">forge/components · ForgeRadioModule</div>
+    <div class="badge">talos/components · TalosRadioModule</div>
     <h1>Radio Group &amp; Radio Buttons</h1>
     <p class="subtitle">
       Form-bound radio groups and standalone radio directives featuring keyboard navigation, custom sizing, color
@@ -13,28 +13,28 @@
     <form [formGroup]="radioForm" class="card form-card">
       <div class="card-header">
         <div>
-          <h2>Radio Group Component (&lt;forge-radio-group&gt;)</h2>
+          <h2>Radio Group Component (&lt;talos-radio-group&gt;)</h2>
           <span class="card-subtitle">Reactive form integration with ControlValueAccessor &amp; keyboard arrow
             navigation</span>
         </div>
-        <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="radioSize()"
+        <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="radioSize()"
           (valueChange)="setRadioSize($event)">
-          <button type="button" forgeButton forgeButtonGroupItem value="sm" tooltip="Small Size (32px)">Small</button>
-          <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
-          <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
-        </forge-button-group>
+          <button type="button" talosButton talosButtonGroupItem value="sm" tooltip="Small Size (32px)">Small</button>
+          <button type="button" talosButton talosButtonGroupItem value="md" tooltip="Medium Size (36px)">Medium</button>
+          <button type="button" talosButton talosButtonGroupItem value="lg" tooltip="Large Size (42px)">Large</button>
+        </talos-button-group>
       </div>
 
       <div class="form-fields">
         <!-- Billing Plan Selection -->
         <div class="form-group">
           <label class="form-label">Subscription Billing Plan <span class="required-star">*</span></label>
-          <forge-radio-group formControlName="billingPlan" [size]="radioSize()" [variant]="radioVariant()"
+          <talos-radio-group formControlName="billingPlan" [size]="radioSize()" [variant]="radioVariant()"
             [direction]="radioDirection()">
-            <forge-radio value="starter">Starter Plan ($9/mo)</forge-radio>
-            <forge-radio value="pro">Pro Professional ($29/mo)</forge-radio>
-            <forge-radio value="enterprise">Enterprise Custom ($99/mo)</forge-radio>
-          </forge-radio-group>
+            <talos-radio value="starter">Starter Plan ($9/mo)</talos-radio>
+            <talos-radio value="pro">Pro Professional ($29/mo)</talos-radio>
+            <talos-radio value="enterprise">Enterprise Custom ($99/mo)</talos-radio>
+          </talos-radio-group>
         </div>
 
         <!-- Direction & Layout Controls -->
@@ -71,34 +71,34 @@
           <div class="variant-groups">
             <div class="variant-item">
               <span class="variant-label">Primary:</span>
-              <forge-radio-group variant="primary" direction="horizontal">
-                <forge-radio value="p1" [disabled]="false">Option A</forge-radio>
-                <forge-radio value="p2">Option B</forge-radio>
-              </forge-radio-group>
+              <talos-radio-group variant="primary" direction="horizontal">
+                <talos-radio value="p1" [disabled]="false">Option A</talos-radio>
+                <talos-radio value="p2">Option B</talos-radio>
+              </talos-radio-group>
             </div>
 
             <div class="variant-item">
               <span class="variant-label">Secondary:</span>
-              <forge-radio-group variant="secondary" direction="horizontal">
-                <forge-radio value="s1">Option A</forge-radio>
-                <forge-radio value="s2">Option B</forge-radio>
-              </forge-radio-group>
+              <talos-radio-group variant="secondary" direction="horizontal">
+                <talos-radio value="s1">Option A</talos-radio>
+                <talos-radio value="s2">Option B</talos-radio>
+              </talos-radio-group>
             </div>
 
             <div class="variant-item">
               <span class="variant-label">Success:</span>
-              <forge-radio-group variant="success" direction="horizontal">
-                <forge-radio value="g1">Option A</forge-radio>
-                <forge-radio value="g2">Option B</forge-radio>
-              </forge-radio-group>
+              <talos-radio-group variant="success" direction="horizontal">
+                <talos-radio value="g1">Option A</talos-radio>
+                <talos-radio value="g2">Option B</talos-radio>
+              </talos-radio-group>
             </div>
 
             <div class="variant-item">
               <span class="variant-label">Danger:</span>
-              <forge-radio-group variant="danger" direction="horizontal">
-                <forge-radio value="d1">Option A</forge-radio>
-                <forge-radio value="d2">Option B</forge-radio>
-              </forge-radio-group>
+              <talos-radio-group variant="danger" direction="horizontal">
+                <talos-radio value="d1">Option A</talos-radio>
+                <talos-radio value="d2">Option B</talos-radio>
+              </talos-radio-group>
             </div>
           </div>
         </div>
@@ -106,50 +106,50 @@
         <!-- Disabled States -->
         <div class="form-group">
           <label class="form-label">Disabled Group &amp; Item States</label>
-          <forge-radio-group [disabled]="true" direction="horizontal">
-            <forge-radio value="disabled1">Disabled Option 1</forge-radio>
-            <forge-radio value="disabled2">Disabled Option 2</forge-radio>
-          </forge-radio-group>
+          <talos-radio-group [disabled]="true" direction="horizontal">
+            <talos-radio value="disabled1">Disabled Option 1</talos-radio>
+            <talos-radio value="disabled2">Disabled Option 2</talos-radio>
+          </talos-radio-group>
         </div>
       </div>
     </div>
 
-    <!-- Card 3: Standalone Radio Directive (forgeRadio) -->
+    <!-- Card 3: Standalone Radio Directive (talosRadio) -->
     <div class="card form-card">
       <div class="card-header">
         <div>
-          <h2>Native Radio Directive (forgeRadio)</h2>
-          <span class="card-subtitle">Using [forgeRadio] attribute directly on native HTML &lt;input
+          <h2>Native Radio Directive (talosRadio)</h2>
+          <span class="card-subtitle">Using [talosRadio] attribute directly on native HTML &lt;input
             type="radio"&gt;</span>
         </div>
       </div>
 
       <div class="form-fields">
         <div class="form-group">
-          <label class="form-label">Native &lt;input type="radio" forgeRadio&gt;</label>
+          <label class="form-label">Native &lt;input type="radio" talosRadio&gt;</label>
           <div class="native-radio-list">
             <label class="native-radio-item">
-              <input type="radio" forgeRadio name="nativeDemo" value="optA" size="sm" variant="primary" />
+              <input type="radio" talosRadio name="nativeDemo" value="optA" size="sm" variant="primary" />
               <span>Compact Native Radio (sm)</span>
             </label>
 
             <label class="native-radio-item">
-              <input type="radio" forgeRadio name="nativeDemo" value="optB" size="md" variant="success" checked />
+              <input type="radio" talosRadio name="nativeDemo" value="optB" size="md" variant="success" checked />
               <span>Medium Success Native Radio (md)</span>
             </label>
 
             <label class="native-radio-item">
-              <input type="radio" forgeRadio name="nativeDemo" value="optC" size="lg" variant="danger" />
+              <input type="radio" talosRadio name="nativeDemo" value="optC" size="lg" variant="danger" />
               <span>Large Danger Native Radio (lg)</span>
             </label>
 
             <label class="native-radio-item">
-              <input type="radio" forgeRadio name="nativeDemo" value="optD" size="md" [invalid]="true" />
+              <input type="radio" talosRadio name="nativeDemo" value="optD" size="md" [invalid]="true" />
               <span>Invalid Error State (.is-invalid)</span>
             </label>
 
             <label class="native-radio-item native-radio-item--disabled">
-              <input type="radio" forgeRadio name="nativeDemo" value="optE" size="md" disabled />
+              <input type="radio" talosRadio name="nativeDemo" value="optE" size="md" disabled />
               <span>Disabled Native Radio</span>
             </label>
           </div>

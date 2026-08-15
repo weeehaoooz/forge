@@ -1,6 +1,6 @@
-# Forge Component Library (`@forge/components`)
+# Talos Component Library (`@talos/components`)
 
-Forge is a modern, modular Angular shared component library built for Angular 20+. It provides layout managers, customizable navigation sidebars, drawer panels, standardized design system buttons, and custom form controls designed with clean styling, dynamic animations, and developer ergonomics in mind.
+Talos is a modern, modular Angular shared component library built for Angular 20+. It provides layout managers, customizable navigation sidebars, drawer panels, standardized design system buttons, and custom form controls designed with clean styling, dynamic animations, and developer ergonomics in mind.
 
 ---
 
@@ -27,16 +27,16 @@ Ensure your target application includes the required dependencies:
 
 ## Exported Components & Features
 
-### 1. Standardized Button System (`ForgeButtonDirective`)
+### 1. Standardized Button System (`TalosButtonDirective`)
 A high-performance button design system supporting multiple visual variants, sizing modifiers, interactive states, and built-in CSS ripple animations.
 
 ```html
-<button type="button" forgeButton variant="primary" size="md" [loading]="isSubmitting()">
+<button type="button" talosButton variant="primary" size="md" [loading]="isSubmitting()">
   Submit Form
 </button>
 
 <!-- Icon-only button -->
-<button type="button" forgeButton variant="ghost" size="sm" [iconOnly]="true" aria-label="Close">
+<button type="button" talosButton variant="ghost" size="sm" [iconOnly]="true" aria-label="Close">
   <svg lucideX [size]="16"></svg>
 </button>
 ```
@@ -57,19 +57,19 @@ A high-performance button design system supporting multiple visual variants, siz
 Responsive app shell with a left sidebar slot, main content area, and an optional right slide-over drawer panel.
 
 ```html
-<forge-main-layout>
-  <forge-side-nav side-nav />
+<talos-main-layout>
+  <talos-side-nav side-nav />
 
   <main class="demo-page-content">
     <router-outlet />
   </main>
-</forge-main-layout>
+</talos-main-layout>
 ```
 
 **Opening a side panel via service:**
 ```typescript
 import { inject } from '@angular/core';
-import { LayoutService } from '@forge/components';
+import { LayoutService } from '@talos/components';
 
 export class MyComponent {
   private layoutService = inject(LayoutService);
@@ -86,21 +86,21 @@ export class MyComponent {
 A collapsible sidebar with navigation sections, active state matching, badges, logo projection, and a user profile footer.
 
 ```html
-<forge-side-nav>
+<talos-side-nav>
   <div side-nav-logo class="app-logo">
-    <span>The Forge</span>
+    <span>The Talos</span>
   </div>
-</forge-side-nav>
+</talos-side-nav>
 ```
 
 ---
 
-### 4. Text Input & Textarea (`ForgeInputDirective`)
-A lightweight directive that applies Forge styling and validation states to native `<input>` and `<textarea>` elements.
+### 4. Text Input & Textarea (`TalosInputDirective`)
+A lightweight directive that applies Talos styling and validation states to native `<input>` and `<textarea>` elements.
 
 ```html
-<input type="text" forgeInput size="md" [invalid]="hasError()" />
-<textarea forgeInput size="lg"></textarea>
+<input type="text" talosInput size="md" [invalid]="hasError()" />
+<textarea talosInput size="lg"></textarea>
 ```
 
 | Input | Type | Default | Description |
@@ -114,28 +114,28 @@ A lightweight directive that applies Forge styling and validation states to nati
 Signal-friendly select inputs supporting single and multiple selections, search filtering, grouped options, and custom triggers.
 
 ```html
-<forge-select-input [(value)]="selectedItem" placeholder="Select item...">
-  <forge-option-group label="Category 1">
-    <forge-option value="item1">Item 1</forge-option>
-    <forge-option value="item2">Item 2</forge-option>
-  </forge-option-group>
-</forge-select-input>
+<talos-select-input [(value)]="selectedItem" placeholder="Select item...">
+  <talos-option-group label="Category 1">
+    <talos-option value="item1">Item 1</talos-option>
+    <talos-option value="item2">Item 2</talos-option>
+  </talos-option-group>
+</talos-select-input>
 ```
 
 ---
 
-### 6. Checkbox (`ForgeCheckboxDirective`, `ForgeCheckboxComponent`)
+### 6. Checkbox (`TalosCheckboxDirective`, `TalosCheckboxComponent`)
 An accessible checkbox directive and standalone component with size, variant, indeterminate, and validation state support.
 
 **Standalone usage:**
 ```html
 <!-- As a directive on a native input -->
-<input type="checkbox" forgeCheckbox [checked]="isChecked()" (checkedChange)="onCheck($event)" />
+<input type="checkbox" talosCheckbox [checked]="isChecked()" (checkedChange)="onCheck($event)" />
 
 <!-- As a component with label -->
-<forge-checkbox [checked]="isChecked()" (checkedChange)="onCheck($event)">
+<talos-checkbox [checked]="isChecked()" (checkedChange)="onCheck($event)">
   Accept terms
-</forge-checkbox>
+</talos-checkbox>
 ```
 
 | Input | Type | Default | Description |
@@ -154,23 +154,23 @@ An accessible checkbox directive and standalone component with size, variant, in
 
 ---
 
-### 7. Checkbox Group (`ForgeCheckboxGroupDirective`, `ForgeCheckboxGroupComponent`)
+### 7. Checkbox Group (`TalosCheckboxGroupDirective`, `TalosCheckboxGroupComponent`)
 A group container for managing multi-selection across a set of checkboxes. Implements `ControlValueAccessor` for reactive forms.
 
 ```html
-<div forgeCheckboxGroup [(ngModel)]="selectedFruits" direction="horizontal">
-  <input type="checkbox" forgeCheckbox value="apple" /> Apple
-  <input type="checkbox" forgeCheckbox value="banana" /> Banana
-  <input type="checkbox" forgeCheckbox value="cherry" /> Cherry
+<div talosCheckboxGroup [(ngModel)]="selectedFruits" direction="horizontal">
+  <input type="checkbox" talosCheckbox value="apple" /> Apple
+  <input type="checkbox" talosCheckbox value="banana" /> Banana
+  <input type="checkbox" talosCheckbox value="cherry" /> Cherry
 </div>
 ```
 
 **With a parent "Select All" checkbox:**
 ```html
-<div forgeCheckboxGroup #fruitGroup="forgeCheckboxGroup" [(ngModel)]="selectedFruits">
-  <input type="checkbox" forgeCheckbox forgeCheckboxParent [values]="allFruitValues" /> Select All
-  <input type="checkbox" forgeCheckbox value="apple" /> Apple
-  <input type="checkbox" forgeCheckbox value="banana" /> Banana
+<div talosCheckboxGroup #fruitGroup="talosCheckboxGroup" [(ngModel)]="selectedFruits">
+  <input type="checkbox" talosCheckbox talosCheckboxParent [values]="allFruitValues" /> Select All
+  <input type="checkbox" talosCheckbox value="apple" /> Apple
+  <input type="checkbox" talosCheckbox value="banana" /> Banana
 </div>
 ```
 
@@ -186,19 +186,19 @@ A group container for managing multi-selection across a set of checkboxes. Imple
 | Input (Parent/Select-All) | Type | Default | Description |
 |---|---|---|---|
 | `values` | `any[]` | `[]` | All selectable values this parent checkbox manages |
-| `group` | `ForgeCheckboxGroupDirective` | (ancestor) | Explicit group reference if not a descendant |
+| `group` | `TalosCheckboxGroupDirective` | (ancestor) | Explicit group reference if not a descendant |
 
 ---
 
-### 8. Radio Button (`ForgeRadioComponent`, `ForgeRadioGroupComponent`)
+### 8. Radio Button (`TalosRadioComponent`, `TalosRadioGroupComponent`)
 An accessible radio group with keyboard arrow-key navigation, size/variant cascading, and `ControlValueAccessor` support.
 
 ```html
-<forge-radio-group [(ngModel)]="selectedPlan" direction="horizontal" variant="primary">
-  <forge-radio value="basic">Basic</forge-radio>
-  <forge-radio value="pro">Pro</forge-radio>
-  <forge-radio value="enterprise">Enterprise</forge-radio>
-</forge-radio-group>
+<talos-radio-group [(ngModel)]="selectedPlan" direction="horizontal" variant="primary">
+  <talos-radio value="basic">Basic</talos-radio>
+  <talos-radio value="pro">Pro</talos-radio>
+  <talos-radio value="enterprise">Enterprise</talos-radio>
+</talos-radio-group>
 ```
 
 | Input (Group) | Type | Default | Description |
@@ -223,7 +223,7 @@ An accessible radio group with keyboard arrow-key navigation, size/variant casca
 A feature-rich date (and optional time) picker with calendar popover, month/year drill-down views, min/max constraints, and reactive forms integration.
 
 ```html
-<forge-date-picker
+<talos-date-picker
   [(ngModel)]="selectedDate"
   placeholder="Select date"
   size="md"
@@ -232,7 +232,7 @@ A feature-rich date (and optional time) picker with calendar popover, month/year
 Modern standalone date picker supporting single date and date-time selection, calendar navigation, month/year decade grids, keyboard accessibility, and time selection panels. Powered by tree-shakeable `date-fns`.
 
 ```html
-<forge-date-picker
+<talos-date-picker
   formControlName="meetingDate"
   [clearable]="true"
   [showTime]="true"
@@ -271,7 +271,7 @@ Modern standalone date picker supporting single date and date-time selection, ca
 A convenience alias for `DatePickerComponent` with `showTime` pre-enabled, using the same API.
 
 ```html
-<forge-date-time-picker
+<talos-date-time-picker
   [(ngModel)]="selectedDateTime"
   [use24Hour]="false"
   [showSeconds]="true"
@@ -286,7 +286,7 @@ Accepts all the same inputs and outputs as `DatePickerComponent`.
 A dual-calendar date range picker with optional time selection, range span constraints, and built-in preset shortcuts.
 
 ```html
-<forge-date-range-picker
+<talos-date-range-picker
   [(ngModel)]="dateRange"
   placeholder="Select date range"
   [clearable]="true"
@@ -337,7 +337,7 @@ interface DateRangeValue {
 A convenience alias for `DateRangePickerComponent` with `showTime` pre-enabled, using the same API.
 
 ```html
-<forge-date-time-range-picker
+<talos-date-time-range-picker
   [(ngModel)]="dateTimeRange"
   [use24Hour]="true"
   [showSeconds]="false"
@@ -350,16 +350,16 @@ Accepts all the same inputs and outputs as `DateRangePickerComponent`.
 
 ## Global Styles & SCSS Variables
 
-Forge includes customizable SASS variables for themes, form controls, and button design tokens:
+Talos includes customizable SASS variables for themes, form controls, and button design tokens:
 
 ```scss
-/* Import main Forge SCSS theme bundle */
-@use '@forge/components/styles/index';
+/* Import main Talos SCSS theme bundle */
+@use '@talos/components/styles/index';
 
 /* Or import individual SCSS modules */
-@use '@forge/components/styles/variables';
-@use '@forge/components/styles/buttons';
-@use '@forge/components/styles/form-controls';
+@use '@talos/components/styles/variables';
+@use '@talos/components/styles/buttons';
+@use '@talos/components/styles/form-controls';
 ```
 
 ---
@@ -369,6 +369,6 @@ Forge includes customizable SASS variables for themes, form controls, and button
 | Script | Command | Description |
 |---|---|---|
 | Development Demo | `npm start` | Launches local Angular dev server with showcase app |
-| Build Library | `npm run build:lib` | Compiles `@forge/components` into `dist/forge` via `ng-packagr` |
+| Build Library | `npm run build:lib` | Compiles `@talos/components` into `dist/talos` via `ng-packagr` |
 | Build App | `npm run build` | Builds production application bundle |
 | Test | `npm test` | Runs unit test suite |

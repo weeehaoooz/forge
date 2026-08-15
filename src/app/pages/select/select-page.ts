@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectInputModule, ForgeButtonDirective, ForgeButtonGroupModule } from '@forge/components';
+import { SelectInputModule, TalosButtonDirective, TalosButtonGroupModule } from '@talos/components';
 
 interface FrameworkOption {
   id: string;
@@ -10,7 +10,7 @@ interface FrameworkOption {
 
 @Component({
   selector: 'app-select-page',
-  imports: [ReactiveFormsModule, SelectInputModule, ForgeButtonDirective, ForgeButtonGroupModule],
+  imports: [ReactiveFormsModule, SelectInputModule, TalosButtonDirective, TalosButtonGroupModule],
   templateUrl: './select-page.html',
   styleUrl: './select-page.scss'
 })

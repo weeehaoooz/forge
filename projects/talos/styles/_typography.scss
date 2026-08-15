@@ -1,0 +1,84 @@
+/* Talos UI Typography Tokens & Global Typography Rules */
+:root {
+  /* Font Families */
+  --talos-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --talos-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Global Fallback Aliases */
+  --font-sans: var(--talos-font-sans);
+  --font-mono: var(--talos-font-mono);
+
+  /* Font Weights */
+  --talos-font-weight-regular: 400;
+  --talos-font-weight-medium: 500;
+  --talos-font-weight-semibold: 600;
+  --talos-font-weight-bold: 700;
+  --talos-font-weight-extrabold: 800;
+
+  --font-weight-regular: var(--talos-font-weight-regular);
+  --font-weight-medium: var(--talos-font-weight-medium);
+  --font-weight-semibold: var(--talos-font-weight-semibold);
+  --font-weight-bold: var(--talos-font-weight-bold);
+  --font-weight-extrabold: var(--talos-font-weight-extrabold);
+
+  /* Font Sizes */
+  --talos-font-size-xs: 0.75rem;
+  /* 12px */
+  --talos-font-size-sm: 0.8125rem;
+  /* 13px */
+  --talos-font-size-base: 0.875rem;
+  /* 14px */
+  --talos-font-size-md: 1rem;
+  /* 16px */
+  --talos-font-size-lg: 1.125rem;
+  /* 18px */
+  --talos-font-size-xl: 1.25rem;
+  /* 20px */
+  --talos-font-size-2xl: 1.5rem;
+  /* 24px */
+  --talos-font-size-3xl: 1.875rem;
+  /* 30px */
+
+  --font-size-xs: var(--talos-font-size-xs);
+  --font-size-sm: var(--talos-font-size-sm);
+  --font-size-base: var(--talos-font-size-base);
+  --font-size-md: var(--talos-font-size-md);
+  --font-size-lg: var(--talos-font-size-lg);
+  --font-size-xl: var(--talos-font-size-xl);
+  --font-size-2xl: var(--talos-font-size-2xl);
+  --font-size-3xl: var(--talos-font-size-3xl);
+
+  /* Line Heights */
+  --talos-line-height-tight: 1.25;
+  --talos-line-height-normal: 1.5;
+
+  --line-height-tight: var(--talos-line-height-tight);
+  --line-height-normal: var(--talos-line-height-normal);
+}
+
+/* Global Typography Application */
+html,
+body {
+  font-family: var(--talos-font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Form Controls & Buttons Typography Inheritance */
+button,
+input,
+select,
+textarea,
+optgroup {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--talos-font-mono);
+}

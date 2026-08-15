@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { MainLayoutComponent, SideNavComponent, LayoutService } from '@forge/components';
-import type { SideNavGroup, SideNavItem } from '@forge/components';
+import { MainLayoutComponent, SideNavComponent, LayoutService } from '@talos/components';
+import type { SideNavGroup, SideNavItem } from '@talos/components';
 import {
   LucideHexagon,
   LucideMousePointerClick,

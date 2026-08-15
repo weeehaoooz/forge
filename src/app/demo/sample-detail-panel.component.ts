@@ -1,10 +1,10 @@
 import { Component, input, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { LayoutService, ForgeButtonDirective } from '@forge/components';
+import { LayoutService, TalosButtonDirective } from '@talos/components';
 
 @Component({
   selector: 'app-sample-detail-panel',
-  imports: [JsonPipe, ForgeButtonDirective],
+  imports: [JsonPipe, TalosButtonDirective],
   template: `
     <div class="subject-detail-panel">
       <div class="badge">Subject ID: {{ subjectId() }}</div>
@@ -20,7 +20,7 @@ import { LayoutService, ForgeButtonDirective } from '@forge/components';
       </div>
 
       <div class="actions">
-        <button type="button" forgeButton variant="secondary" (click)="close()">
+        <button type="button" talosButton variant="secondary" (click)="close()">
           Close Panel
         </button>
       </div>

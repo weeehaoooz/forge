@@ -11,7 +11,7 @@
   "include": [
     "src/**/*.d.ts",
     "src/**/*.spec.ts",
-    "projects/forge/src/**/*.d.ts",
-    "projects/forge/src/**/*.spec.ts"
+    "projects/talos/src/**/*.d.ts",
+    "projects/talos/src/**/*.spec.ts"
   ]
 }

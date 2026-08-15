@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ForgeSlideToggleModule, ForgeButtonGroupModule } from '@forge/components';
+import { TalosSlideToggleModule, TalosButtonGroupModule } from '@talos/components';
 import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-slide-toggle-page',
-  imports: [ReactiveFormsModule, ForgeSlideToggleModule, ForgeButtonGroupModule, JsonPipe],
+  imports: [ReactiveFormsModule, TalosSlideToggleModule, TalosButtonGroupModule, JsonPipe],
   templateUrl: './slide-toggle-page.html',
   styleUrl: './slide-toggle-page.scss'
 })

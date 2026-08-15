@@ -1,0 +1,537 @@
+:host {
+  display: block;
+  font-family: inherit;
+  --talos-heatmap-bg: var(--talos-bg-surface, #ffffff);
+  --talos-heatmap-text: var(--talos-text-color, #0f172a);
+  --talos-heatmap-muted: var(--talos-text-muted, #64748b);
+  --talos-heatmap-border: var(--talos-border-color, #e2e8f0);
+  --talos-heatmap-hover-bg: #f1f5f9;
+
+  // Fit to Width defaults (pill / rounded)
+  --talos-heatmap-cell-height: 28px;
+  --talos-heatmap-cell-radius: 9999px;
+  --talos-heatmap-row-header-width: 68px;
+  --talos-heatmap-cell-font-size: 0.85rem;
+  --talos-heatmap-gap: 6px;
+
+  // Compact Square defaults
+  --talos-heatmap-square-size: 32px;
+}
+
+:host(.talos-heatmap-sm) {
+  --talos-heatmap-cell-height: 22px;
+  --talos-heatmap-row-header-width: 56px;
+  --talos-heatmap-cell-font-size: 0.72rem;
+  --talos-heatmap-square-size: 24px;
+  --talos-heatmap-gap: 4px;
+}
+
+:host(.talos-heatmap-md) {
+  --talos-heatmap-cell-height: 28px;
+  --talos-heatmap-row-header-width: 68px;
+  --talos-heatmap-cell-font-size: 0.82rem;
+  --talos-heatmap-square-size: 32px;
+  --talos-heatmap-gap: 6px;
+}
+
+:host(.talos-heatmap-lg) {
+  --talos-heatmap-cell-height: 36px;
+  --talos-heatmap-row-header-width: 80px;
+  --talos-heatmap-cell-font-size: 0.92rem;
+  --talos-heatmap-square-size: 40px;
+  --talos-heatmap-gap: 8px;
+}
+
+:host(.talos-heatmap-square) {
+  --talos-heatmap-cell-radius: 6px;
+}
+
+:host(.talos-heatmap-rounded) {
+  --talos-heatmap-cell-radius: 8px;
+}
+
+:host(.talos-heatmap-pill) {
+  --talos-heatmap-cell-radius: 9999px;
+}
+
+:host(.talos-heatmap-expanded) {
+  position: fixed;
+  inset: 16px;
+  z-index: 1000;
+  background: var(--talos-heatmap-bg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border-radius: 16px;
+  padding: 24px;
+  overflow: auto;
+  border: 1px solid var(--talos-heatmap-border);
+}
+
+.talos-heatmap-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--talos-heatmap-bg);
+  border-radius: 12px;
+  position: relative;
+  width: 100%;
+}
+
+// -------------------------------------------------------------
+// Header Toolbar
+// -------------------------------------------------------------
+.talos-heatmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.talos-heatmap-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--talos-heatmap-text);
+  letter-spacing: -0.015em;
+}
+
+.talos-heatmap-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+// Interval Group (Hour vs Day)
+.talos-heatmap-interval-group {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border: 1px solid var(--talos-heatmap-border);
+  gap: 2px;
+}
+
+.talos-heatmap-interval-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--talos-heatmap-muted);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--talos-heatmap-text);
+  }
+
+  &.is-active {
+    background: #ffffff;
+    color: #4338ca;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.talos-heatmap-daterange-box {
+  min-width: 220px;
+}
+
+.talos-heatmap-dropdown-wrapper {
+  position: relative;
+}
+
+.talos-heatmap-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--talos-heatmap-text);
+  background: #f8fafc;
+  border: 1px solid var(--talos-heatmap-border);
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  &.is-open {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+  }
+
+  .talos-heatmap-dropdown-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--talos-heatmap-muted);
+  }
+}
+
+.talos-heatmap-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--talos-heatmap-muted);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--talos-heatmap-hover-bg);
+    color: var(--talos-heatmap-text);
+  }
+
+  &.is-active {
+    background: #e0e7ff;
+    color: #4338ca;
+    border-color: #c7d2fe;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.is-spinning .talos-heatmap-action-icon {
+    animation: talos-heatmap-spin 0.8s linear infinite;
+  }
+
+  .talos-heatmap-action-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@keyframes talos-heatmap-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Dropdown Menus
+.talos-heatmap-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 50;
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid var(--talos-heatmap-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: talos-heatmap-menu-fade 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes talos-heatmap-menu-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.talos-heatmap-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--talos-heatmap-text);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: #f1f5f9;
+  }
+
+  &.is-selected {
+    font-weight: 600;
+    color: #4338ca;
+  }
+
+  .talos-heatmap-check-icon {
+    width: 14px;
+    height: 14px;
+    color: #4338ca;
+  }
+
+  .talos-heatmap-menu-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--talos-heatmap-muted);
+  }
+}
+
+// -------------------------------------------------------------
+// Heatmap Grid Matrix
+// -------------------------------------------------------------
+.talos-heatmap-body {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  &.is-loading {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.talos-heatmap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--talos-heatmap-gap);
+  width: 100%;
+}
+
+.talos-heatmap-row {
+  display: flex;
+  align-items: center;
+  gap: var(--talos-heatmap-gap);
+  width: 100%;
+}
+
+.talos-heatmap-header-row {
+  margin-bottom: 2px;
+}
+
+.talos-heatmap-corner-cell {
+  width: var(--talos-heatmap-row-header-width);
+  flex-shrink: 0;
+}
+
+.talos-heatmap-row-header {
+  width: var(--talos-heatmap-row-header-width);
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--talos-heatmap-muted);
+  user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+// -------------------------------------------------------------
+// Fit to Width Mode (Default for pill & rounded)
+// -------------------------------------------------------------
+:host(.talos-heatmap-fit-width) {
+  .talos-heatmap-grid {
+    min-width: 440px;
+    width: 100%;
+  }
+
+  .talos-heatmap-col-header {
+    flex: 1;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--talos-heatmap-muted);
+    user-select: none;
+    letter-spacing: 0.01em;
+  }
+
+  .talos-heatmap-cell-wrapper {
+    flex: 1;
+    height: var(--talos-heatmap-cell-height);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border-radius: var(--talos-heatmap-cell-radius);
+    transition: transform 0.15s ease;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+      z-index: 5;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Compact Square Mode (Default for cellShape="square" or fitWidth=false)
+// -------------------------------------------------------------
+:host(.talos-heatmap-compact-square) {
+  .talos-heatmap-grid {
+    min-width: auto;
+    width: max-content;
+  }
+
+  .talos-heatmap-col-header {
+    width: var(--talos-heatmap-square-size);
+    flex: 0 0 var(--talos-heatmap-square-size);
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--talos-heatmap-muted);
+    user-select: none;
+    letter-spacing: 0.01em;
+  }
+
+  .talos-heatmap-cell-wrapper {
+    width: var(--talos-heatmap-square-size);
+    height: var(--talos-heatmap-square-size);
+    flex: 0 0 var(--talos-heatmap-square-size);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border-radius: var(--talos-heatmap-cell-radius);
+    transition: transform 0.15s ease;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+      z-index: 5;
+    }
+  }
+}
+
+.talos-heatmap-pill {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--talos-heatmap-cell-radius);
+  font-size: var(--talos-heatmap-cell-font-size);
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, filter 0.15s ease;
+
+  &:not(.has-value) {
+    box-shadow: inset 0 0 0 1px rgba(226, 232, 240, 0.9);
+  }
+
+  .talos-heatmap-cell-wrapper:hover & {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 14px -2px rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    filter: brightness(1.03);
+    z-index: 2;
+  }
+
+  .talos-heatmap-cell-wrapper:active & {
+    transform: translateY(0) scale(0.96);
+  }
+}
+
+.talos-heatmap-cell-value {
+  display: inline-block;
+  text-align: center;
+}
+
+// -------------------------------------------------------------
+// Loading Shimmer Overlay
+// -------------------------------------------------------------
+.talos-heatmap-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  border-radius: 8px;
+  animation: talos-heatmap-fade-in 0.2s ease;
+}
+
+@keyframes talos-heatmap-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.talos-heatmap-loading-spinner-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid var(--talos-heatmap-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--talos-heatmap-text);
+
+  .talos-heatmap-loading-spinner {
+    width: 16px;
+    height: 16px;
+    color: #4338ca;
+    animation: talos-heatmap-spin 0.8s linear infinite;
+  }
+}
+
+// -------------------------------------------------------------
+// Legend Bar
+// -------------------------------------------------------------
+.talos-heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-left: var(--talos-heatmap-row-header-width);
+}
+
+.talos-heatmap-legend-bound {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--talos-heatmap-muted);
+  min-width: 12px;
+}
+
+.talos-heatmap-legend-bar {
+  height: 8px;
+  width: 130px;
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}

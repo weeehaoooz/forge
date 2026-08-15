@@ -5,9 +5,9 @@ import {
   DateTimePickerComponent,
   DateRangePickerComponent,
   DateTimeRangePickerComponent,
-  ForgeButtonGroupModule,
+  TalosButtonGroupModule,
   DateRangeValue
-} from '@forge/components';
+} from '@talos/components';
 
 @Component({
   selector: 'app-date-pickers-page',
@@ -17,7 +17,7 @@ import {
     DateTimePickerComponent,
     DateRangePickerComponent,
     DateTimeRangePickerComponent,
-    ForgeButtonGroupModule
+    TalosButtonGroupModule
   ],
   templateUrl: './date-pickers-page.html',
   styleUrl: './date-pickers-page.scss'
