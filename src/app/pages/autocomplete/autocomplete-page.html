@@ -1,0 +1,165 @@
+<div class="demo-page-content">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="badge">forge/components · ForgeAutocompleteComponent</div>
+    <h1>Autocomplete Field Showcase</h1>
+    <p class="subtitle">
+      Configurable autocomplete typeahead inputs supporting local or asynchronous search results,
+      custom item templates, keyboard navigation, and reactive "searching" spinner signals.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- Main Interactive Form Card -->
+    <form [formGroup]="demoForm" class="card form-card">
+      <div class="card-header">
+        <div>
+          <h2>Autocomplete Fields &amp; Configurable Results</h2>
+          <span class="card-subtitle">Test remote simulated searches, local datasets, custom templates, and loading spinners</span>
+        </div>
+        <div class="actions">
+          <forge-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()" (valueChange)="setInputSize($event)">
+            <button type="button" forgeButton forgeButtonGroupItem value="sm" tooltip="Compact (32px)">Compact</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="md" tooltip="Medium (36px)">Medium</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="lg" tooltip="Large (42px)">Large</button>
+          </forge-button-group>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <!-- 1. Async Search with Searching Spinner -->
+        <div class="form-group">
+          <div class="field-header">
+            <label class="form-label" for="async-tech-autocomplete">
+              Async Remote Search with Spinner <span class="required-star">*</span>
+            </label>
+            <button
+              type="button"
+              forgeButton
+              variant="outline"
+              size="sm"
+              class="spinner-toggle-btn"
+              (click)="toggleSearchingManual()"
+            >
+              Toggle Searching Spinner ({{ isSearching() ? 'Active' : 'Off' }})
+            </button>
+          </div>
+          <span class="field-help">Simulates a 500ms server lookup. When typing, the `searching` signal activates the loading spinner.</span>
+
+          <forge-autocomplete
+            id="async-tech-autocomplete"
+            formControlName="asyncTech"
+            [options]="asyncResults()"
+            [searching]="isSearching()"
+            [size]="inputSize()"
+            [filterFn]="null"
+            placeholder="Type to search tech stack (e.g. 'angular', 'rust', 'react')..."
+            displayWith="name"
+            valueWith="id"
+            (searchChange)="onAsyncSearch($event)"
+            (selectionChange)="onSelection($event)"
+            [itemTemplate]="techCardTemplate"
+          />
+
+          @if (demoForm.controls.asyncTech.touched && demoForm.controls.asyncTech.hasError('required')) {
+            <span class="field-error">Technology selection is required.</span>
+          }
+
+          <!-- Custom Template for Tech Items -->
+          <ng-template #techCardTemplate let-tech let-selected="selected" let-active="active">
+            <div class="tech-item-card" [class.is-selected]="selected">
+              <div class="tech-item-main">
+                <span class="tech-name">{{ tech.name }}</span>
+                <span class="tech-badge">{{ tech.category }}</span>
+              </div>
+              <p class="tech-desc">{{ tech.description }}</p>
+              <div class="tech-footer">
+                <span class="tech-stars">★ {{ tech.stars }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- 2. Local Country Autocomplete with Substring Highlighting -->
+        <div class="form-group">
+          <label class="form-label" for="country-autocomplete">
+            Local Dataset with Substring Match Highlighting
+          </label>
+          <span class="field-help">Filters locally across string array with automatic match highlighting.</span>
+
+          <forge-autocomplete
+            id="country-autocomplete"
+            formControlName="localCountry"
+            [options]="countries()"
+            [size]="inputSize()"
+            placeholder="Search country..."
+            (selectionChange)="onSelection($event)"
+          />
+        </div>
+
+        <!-- 3. Custom Rich User Profile Template -->
+        <div class="form-group">
+          <label class="form-label" for="user-autocomplete">
+            Custom Item Template (Team Members)
+          </label>
+          <span class="field-help">Demonstrates rich template projection with avatar circles and roles.</span>
+
+          <forge-autocomplete
+            id="user-autocomplete"
+            formControlName="customUser"
+            [options]="users()"
+            [size]="inputSize()"
+            placeholder="Search team member..."
+            displayWith="name"
+            valueWith="id"
+            (selectionChange)="onSelection($event)"
+            [itemTemplate]="userCardTemplate"
+          />
+
+          <!-- Custom Template for User Items -->
+          <ng-template #userCardTemplate let-user let-selected="selected">
+            <div class="user-item-card" [class.is-selected]="selected">
+              <div class="user-avatar" [style.background-color]="user.avatarBg">
+                {{ user.initials }}
+              </div>
+              <div class="user-info">
+                <span class="user-name">{{ user.name }}</span>
+                <span class="user-role">{{ user.role }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+
+    <!-- State Monitor & Live Event Log Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Form State &amp; Event Stream</h2>
+          <span class="card-subtitle">Reactive form model values, touched status, and live output events</span>
+        </div>
+      </div>
+
+      <div class="state-grid">
+        <div class="state-box">
+          <span class="state-title">Form Control Values</span>
+          <pre class="state-code">{{ demoForm.value | json }}</pre>
+        </div>
+
+        <div class="state-box">
+          <span class="state-title">Live Activity Log</span>
+          @if (eventLogs().length > 0) {
+            <ul class="activity-log-list">
+              @for (log of eventLogs(); track $index) {
+                <li>{{ log }}</li>
+              }
+            </ul>
+          } @else {
+            <span class="empty-log-text">Interact with the autocomplete fields above to see live events.</span>
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,153 @@
+<!-- Autocomplete Input Container -->
+<div class="autocomplete-control" [class.is-focused]="isOpen()">
+  <!-- Leading Search Icon -->
+  <span class="autocomplete-icon leading-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </span>
+
+  <!-- Editable Input Field -->
+  <input
+    #inputEl
+    type="text"
+    class="autocomplete-input"
+    [id]="inputId()"
+    [placeholder]="placeholder()"
+    [value]="inputValue()"
+    [disabled]="effectiveDisabled()"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (click)="onInputClick()"
+    (keydown)="onKeyDown($event)"
+    role="combobox"
+    aria-autocomplete="list"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-haspopup]="'listbox'"
+    [attr.aria-controls]="listboxId()"
+    [attr.aria-activedescendant]="activeOptionId()"
+    [attr.aria-disabled]="effectiveDisabled()"
+    autocomplete="off"
+    autocapitalize="off"
+    spellcheck="false"
+  />
+
+  <!-- Trailing Actions Container -->
+  <div class="autocomplete-actions">
+    <!-- Searching Spinner -->
+    @if (effectiveSearching()) {
+      <span class="autocomplete-spinner" aria-label="Searching..." title="Searching...">
+        <svg class="spinner-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle class="spinner-track" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity="0.25"></circle>
+          <path class="spinner-head" d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+        </svg>
+      </span>
+    }
+
+    <!-- Clear Selection / Text Button -->
+    @if (clearable() && inputValue() && !effectiveDisabled() && !effectiveSearching()) {
+      <button
+        type="button"
+        class="autocomplete-clear-btn"
+        aria-label="Clear search"
+        title="Clear search"
+        (click)="onClear($event)"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    }
+
+    <!-- Dropdown Arrow Indicator -->
+    <button
+      type="button"
+      class="autocomplete-arrow-btn"
+      [class.is-open]="isOpen()"
+      [disabled]="effectiveDisabled()"
+      aria-label="Toggle options"
+      tabindex="-1"
+      (click)="onTriggerClick()"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Dropdown Panel -->
+@if (isOpen()) {
+  <div #dropdownEl class="autocomplete-dropdown-panel" [id]="listboxId()" role="listbox">
+    <!-- Searching State inside Dropdown -->
+    @if (effectiveSearching()) {
+      <div class="autocomplete-searching-state" aria-live="polite">
+        <span class="dropdown-spinner">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle class="spinner-track" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity="0.25"></circle>
+            <path class="spinner-head" d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+          </svg>
+        </span>
+        <span class="searching-text">{{ searchingText() }}</span>
+      </div>
+    }
+
+    <!-- Options List -->
+    <div class="autocomplete-options-list">
+      @for (opt of formattedOptions(); track opt.id; let idx = $index) {
+        <div
+          class="autocomplete-option"
+          [id]="opt.id"
+          role="option"
+          [attr.aria-selected]="selectedItem() === opt.raw"
+          [class.is-focused]="focusedIndex() === idx"
+          [class.is-selected]="selectedItem() === opt.raw"
+          (mousedown)="selectOption(opt, $event)"
+        >
+          @if (itemTemplate()) {
+            <ng-container
+              *ngTemplateOutlet="itemTemplate()!; context: {
+                $implicit: opt.raw,
+                index: idx,
+                selected: selectedItem() === opt.raw,
+                active: focusedIndex() === idx,
+                highlightParts: opt.highlightParts
+              }"
+            ></ng-container>
+          } @else {
+            <div class="option-default-content">
+              @if (highlightMatch() && opt.highlightParts.length > 0) {
+                <span class="option-label">
+                  @for (part of opt.highlightParts; track $index) {
+                    @if (part.isMatch) {
+                      <mark class="highlight-match">{{ part.text }}</mark>
+                    } @else {
+                      <span>{{ part.text }}</span>
+                    }
+                  }
+                </span>
+              } @else {
+                <span class="option-label">{{ opt.label }}</span>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- No Results State -->
+      @if (!effectiveSearching() && formattedOptions().length === 0) {
+        <div class="autocomplete-no-options" role="status">
+          <svg class="no-options-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+          <span>{{ noResultsText() }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}

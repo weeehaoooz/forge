@@ -63,3 +63,9 @@ export * from './lib/form/slide-toggle/slide-toggle.directive';
 export * from './lib/form/slide-toggle/slide-toggle.component';
 export * from './lib/form/slide-toggle/slide-toggle.module';
 
+// Autocomplete component, module & types
+export * from './lib/form/autocomplete/autocomplete.types';
+export * from './lib/form/autocomplete/autocomplete.component';
+export * from './lib/form/autocomplete/autocomplete.module';
+
+

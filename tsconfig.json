@@ -16,7 +16,6 @@
     "module": "preserve",
     "paths": {
       "@forge/components": [
-        "./dist/forge",
         "./projects/forge/src/public-api.ts"
       ]
     }

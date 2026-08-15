@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/select/select-page').then(m => m.SelectPage)
   },
   {
+    path: 'autocomplete',
+    loadComponent: () => import('./pages/autocomplete/autocomplete-page').then(m => m.AutocompletePage)
+  },
+  {
     path: 'date-pickers',
     loadComponent: () => import('./pages/date-pickers/date-pickers-page').then(m => m.DatePickersPage)
   },

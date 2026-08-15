@@ -8,6 +8,7 @@ import {
   LucideMousePointerClick,
   LucideTextCursorInput,
   LucideChevronDown,
+  LucideSearch,
   LucideCalendarDays,
   LucideSquareCheck,
   LucideCircleDot,
@@ -35,7 +36,10 @@ export class App {
     {
       title: 'BUTTONS',
       items: [
-        { id: 'buttons', label: 'Buttons', icon: LucideMousePointerClick, route: '/buttons' }
+        { id: 'buttons', label: 'Buttons', icon: LucideMousePointerClick, route: '/buttons' },
+        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' },
+        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' },
+        { id: 'slide-toggle', label: 'Slide Toggle', icon: LucideToggleRight, route: '/slide-toggle' }
       ]
     },
     {
@@ -43,10 +47,8 @@ export class App {
       items: [
         { id: 'inputs', label: 'Inputs', icon: LucideTextCursorInput, route: '/inputs' },
         { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
-        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
-        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' },
-        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' },
-        { id: 'slide-toggle', label: 'Slide Toggle', icon: LucideToggleRight, route: '/slide-toggle' }
+        { id: 'autocomplete', label: 'Autocomplete', icon: LucideSearch, route: '/autocomplete' },
+        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' }
       ]
     },
     {
