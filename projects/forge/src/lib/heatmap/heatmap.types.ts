@@ -65,7 +65,7 @@ export interface HeatmapMetric {
  */
 export interface HeatmapCell {
   id: string;
-  colKey: string;
+  colKey: string | number;
   colLabel: string;
   rowKey: string | number;
   rowLabel: string;
@@ -90,6 +90,7 @@ export interface HeatmapTimeRange {
   endHour?: number;
   days: string[];
   dateRange?: DateRangeValue | null;
+  swapAxes?: boolean;
 }
 
 /**
@@ -97,7 +98,7 @@ export interface HeatmapTimeRange {
  */
 export interface HeatmapCellClickEvent {
   cell: HeatmapCell;
-  colKey: string;
+  colKey: string | number;
   rowKey: string | number;
   value: number;
   interval: HeatmapInterval;

@@ -125,4 +125,45 @@ describe('ForgeHeatmapComponent', () => {
     component.onRefreshClick();
     expect(refreshFired).toBe(true);
   });
+
+  it('should correctly swap axes when swapAxes is enabled (Hour interval)', async () => {
+    const testData: HeatmapDataPoint[] = [
+      { day: 'Tue', hour: 10, value: 9 },
+      { day: 'Fri', hour: 14, value: 15 }
+    ];
+
+    fixture.componentRef.setInput('data', testData);
+    fixture.componentRef.setInput('hoursRange', [9, 17]);
+    fixture.componentRef.setInput('swapAxes', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // In swapped mode, column headers are Hours, rows are Days
+    const colHeaders = component.columnHeaders();
+    expect(colHeaders.length).toBe(9); // 9 hours (9 AM to 5 PM)
+    expect(colHeaders[0].label).toContain('9 AM');
+
+    const gridRows = component.gridRows();
+    expect(gridRows.length).toBe(7); // 7 days (Mon to Sun)
+
+    // Row for Tue
+    const tueRow = gridRows.find((r) => r.key === 'Tue');
+    expect(tueRow).toBeTruthy();
+    const cell10 = tueRow?.cells.find((c) => c.colKey === 10);
+    expect(cell10?.value).toBe(9);
+
+    // Row for Fri
+    const friRow = gridRows.find((r) => r.key === 'Fri');
+    expect(friRow).toBeTruthy();
+    const cell14 = friRow?.cells.find((c) => c.colKey === 14);
+    expect(cell14?.value).toBe(15);
+  });
+
+  it('should toggle swapAxes when toggleSwapAxes is called', async () => {
+    expect(component.swapAxes()).toBe(false);
+    component.toggleSwapAxes();
+    expect(component.swapAxes()).toBe(true);
+    component.toggleSwapAxes();
+    expect(component.swapAxes()).toBe(false);
+  });
 });

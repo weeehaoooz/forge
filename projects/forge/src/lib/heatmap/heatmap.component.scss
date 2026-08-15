@@ -6,27 +6,52 @@
   --forge-heatmap-muted: var(--forge-text-muted, #64748b);
   --forge-heatmap-border: var(--forge-border-color, #e2e8f0);
   --forge-heatmap-hover-bg: #f1f5f9;
+
+  // Fit to Width defaults (pill / rounded)
   --forge-heatmap-cell-height: 28px;
   --forge-heatmap-cell-radius: 9999px;
-  --forge-heatmap-row-header-width: 72px;
+  --forge-heatmap-row-header-width: 68px;
+  --forge-heatmap-cell-font-size: 0.85rem;
+  --forge-heatmap-gap: 6px;
+
+  // Compact Square defaults
+  --forge-heatmap-square-size: 32px;
 }
 
 :host(.forge-heatmap-sm) {
   --forge-heatmap-cell-height: 22px;
-  --forge-heatmap-row-header-width: 60px;
+  --forge-heatmap-row-header-width: 56px;
+  --forge-heatmap-cell-font-size: 0.72rem;
+  --forge-heatmap-square-size: 24px;
+  --forge-heatmap-gap: 4px;
+}
+
+:host(.forge-heatmap-md) {
+  --forge-heatmap-cell-height: 28px;
+  --forge-heatmap-row-header-width: 68px;
+  --forge-heatmap-cell-font-size: 0.82rem;
+  --forge-heatmap-square-size: 32px;
+  --forge-heatmap-gap: 6px;
 }
 
 :host(.forge-heatmap-lg) {
   --forge-heatmap-cell-height: 36px;
-  --forge-heatmap-row-header-width: 84px;
+  --forge-heatmap-row-header-width: 80px;
+  --forge-heatmap-cell-font-size: 0.92rem;
+  --forge-heatmap-square-size: 40px;
+  --forge-heatmap-gap: 8px;
+}
+
+:host(.forge-heatmap-square) {
+  --forge-heatmap-cell-radius: 6px;
 }
 
 :host(.forge-heatmap-rounded) {
   --forge-heatmap-cell-radius: 8px;
 }
 
-:host(.forge-heatmap-square) {
-  --forge-heatmap-cell-radius: 4px;
+:host(.forge-heatmap-pill) {
+  --forge-heatmap-cell-radius: 9999px;
 }
 
 :host(.forge-heatmap-expanded) {
@@ -174,6 +199,12 @@
     color: var(--forge-heatmap-text);
   }
 
+  &.is-active {
+    background: #e0e7ff;
+    color: #4338ca;
+    border-color: #c7d2fe;
+  }
+
   &:active {
     transform: scale(0.95);
   }
@@ -283,15 +314,14 @@
 .forge-heatmap-grid {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 480px;
+  gap: var(--forge-heatmap-gap);
   width: 100%;
 }
 
 .forge-heatmap-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--forge-heatmap-gap);
   width: 100%;
 }
 
@@ -302,15 +332,6 @@
 .forge-heatmap-corner-cell {
   width: var(--forge-heatmap-row-header-width);
   flex-shrink: 0;
-}
-
-.forge-heatmap-col-header {
-  flex: 1;
-  text-align: center;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--forge-heatmap-muted);
-  user-select: none;
 }
 
 .forge-heatmap-row-header {
@@ -327,19 +348,82 @@
   overflow: hidden;
 }
 
-.forge-heatmap-cell-wrapper {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--forge-heatmap-cell-height);
-  cursor: pointer;
-  outline: none;
-  border-radius: var(--forge-heatmap-cell-radius);
+// -------------------------------------------------------------
+// Fit to Width Mode (Default for pill & rounded)
+// -------------------------------------------------------------
+:host(.forge-heatmap-fit-width) {
+  .forge-heatmap-grid {
+    min-width: 440px;
+    width: 100%;
+  }
 
-  &:focus-visible {
-    box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+  .forge-heatmap-col-header {
+    flex: 1;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--forge-heatmap-muted);
+    user-select: none;
+    letter-spacing: 0.01em;
+  }
+
+  .forge-heatmap-cell-wrapper {
+    flex: 1;
+    height: var(--forge-heatmap-cell-height);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border-radius: var(--forge-heatmap-cell-radius);
+    transition: transform 0.15s ease;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+      z-index: 5;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Compact Square Mode (Default for cellShape="square" or fitWidth=false)
+// -------------------------------------------------------------
+:host(.forge-heatmap-compact-square) {
+  .forge-heatmap-grid {
+    min-width: auto;
+    width: max-content;
+  }
+
+  .forge-heatmap-col-header {
+    width: var(--forge-heatmap-square-size);
+    flex: 0 0 var(--forge-heatmap-square-size);
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--forge-heatmap-muted);
+    user-select: none;
+    letter-spacing: 0.01em;
+  }
+
+  .forge-heatmap-cell-wrapper {
+    width: var(--forge-heatmap-square-size);
+    height: var(--forge-heatmap-square-size);
+    flex: 0 0 var(--forge-heatmap-square-size);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border-radius: var(--forge-heatmap-cell-radius);
+    transition: transform 0.15s ease;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+      z-index: 5;
+    }
   }
 }
 
@@ -350,82 +434,32 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--forge-heatmap-cell-radius);
-  font-size: 0.85rem;
+  font-size: var(--forge-heatmap-cell-font-size);
   font-weight: 600;
   line-height: 1;
   user-select: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, filter 0.15s ease;
+
+  &:not(.has-value) {
+    box-shadow: inset 0 0 0 1px rgba(226, 232, 240, 0.9);
+  }
 
   .forge-heatmap-cell-wrapper:hover & {
-    transform: translateY(-1px) scale(1.03);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-    filter: brightness(1.02);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 14px -2px rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    filter: brightness(1.03);
+    z-index: 2;
   }
 
   .forge-heatmap-cell-wrapper:active & {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.96);
   }
 }
 
 .forge-heatmap-cell-value {
   display: inline-block;
   text-align: center;
-}
-
-// -------------------------------------------------------------
-// Tooltip
-// -------------------------------------------------------------
-.forge-heatmap-tooltip {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #0f172a;
-  color: #ffffff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 60;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  animation: forge-heatmap-tooltip-pop 0.12s cubic-bezier(0.16, 1, 0.3, 1);
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 4px;
-    border-style: solid;
-    border-color: #0f172a transparent transparent transparent;
-  }
-}
-
-@keyframes forge-heatmap-tooltip-pop {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 4px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-  }
-}
-
-.forge-heatmap-tooltip-title {
-  font-weight: 500;
-  color: #94a3b8;
-}
-
-.forge-heatmap-tooltip-value {
-  font-weight: 700;
-  color: #ffffff;
 }
 
 // -------------------------------------------------------------

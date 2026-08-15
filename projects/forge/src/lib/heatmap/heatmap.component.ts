@@ -20,7 +20,8 @@ import {
   LucideFileSpreadsheet,
   LucideFileJson,
   LucideCalendar,
-  LucideClock
+  LucideClock,
+  LucideArrowLeftRight
 } from '@lucide/angular';
 import {
   addDays,
@@ -37,6 +38,7 @@ import {
 import { formatDate } from '@forge/components/core';
 import { DateRangePickerComponent } from '@forge/components/form/date-range-picker';
 import type { DateRangePreset, DateRangeValue } from '@forge/components/form/date-range-picker';
+import { ForgeTooltipDirective } from '@forge/components/tooltip';
 import {
   HeatmapCell,
   HeatmapCellClickEvent,
@@ -121,6 +123,7 @@ const PALETTE_CONFIG: Record<
   imports: [
     FormsModule,
     DateRangePickerComponent,
+    ForgeTooltipDirective,
     LucideRefreshCw,
     LucideUpload,
     LucideMaximize2,
@@ -130,7 +133,8 @@ const PALETTE_CONFIG: Record<
     LucideFileSpreadsheet,
     LucideFileJson,
     LucideCalendar,
-    LucideClock
+    LucideClock,
+    LucideArrowLeftRight
   ],
   templateUrl: './heatmap.component.html',
   styleUrl: './heatmap.component.scss',
@@ -144,6 +148,9 @@ const PALETTE_CONFIG: Record<
     '[class.forge-heatmap-pill]': 'cellShape() === "pill"',
     '[class.forge-heatmap-rounded]': 'cellShape() === "rounded"',
     '[class.forge-heatmap-square]': 'cellShape() === "square"',
+    '[class.forge-heatmap-fit-width]': 'isFitWidth()',
+    '[class.forge-heatmap-compact-square]': '!isFitWidth()',
+    '[class.forge-heatmap-swapped-axes]': 'swapAxes()',
     '[attr.role]': '"region"',
     '[attr.aria-label]': 'title()'
   }
@@ -157,6 +164,7 @@ export class ForgeHeatmapComponent {
   readonly selectedMetricId = model<string | undefined>(undefined);
   readonly interval = model<HeatmapInterval>('hour');
   readonly dateRange = model<DateRangeValue | null>(null);
+  readonly swapAxes = model<boolean>(false);
   readonly title = input<string>('Busiest times');
   readonly hoursRange = input<[number, number]>([9, 17]);
   readonly timeFormat = input<HeatmapTimeFormat>('12h');
@@ -167,11 +175,13 @@ export class ForgeHeatmapComponent {
   readonly showValues = input<boolean>(true);
   readonly cellShape = input<HeatmapCellShape>('pill');
   readonly cellSize = input<HeatmapCellSize>('md');
+  readonly fitWidth = input<boolean | undefined>(undefined);
   readonly loading = input<boolean>(false);
   readonly showToolbar = input<boolean>(true);
   readonly showRefresh = input<boolean>(true);
   readonly showExport = input<boolean>(true);
   readonly showExpand = input<boolean>(true);
+  readonly showSwapAxes = input<boolean>(false);
   readonly showIntervalToggle = input<boolean>(false);
   readonly showDateRangePicker = input<boolean>(false);
   readonly dateRangePresets = input<DateRangePreset[] | null>(null);
@@ -193,6 +203,13 @@ export class ForgeHeatmapComponent {
   readonly isExportDropdownOpen = signal<boolean>(false);
   readonly hoveredCell = signal<HeatmapCell | null>(null);
   readonly focusedCoord = signal<{ colIndex: number; rowIndex: number } | null>(null);
+
+  // Layout Fit computation
+  readonly isFitWidth = computed<boolean>(() => {
+    const fw = this.fitWidth();
+    if (fw !== undefined) return fw;
+    return this.cellShape() !== 'square';
+  });
 
   // Active Metric computation
   readonly currentMetric = computed<HeatmapMetric | undefined>(() => {
@@ -428,123 +445,205 @@ export class ForgeHeatmapComponent {
     return PALETTE_CONFIG[scheme]?.gradientCss || PALETTE_CONFIG.indigo.gradientCss;
   });
 
+  // Column Headers computation (supports axis swapping)
+  readonly columnHeaders = computed<{ key: string | number; label: string }[]>(() => {
+    const isSwapped = this.swapAxes();
+    const currentInterval = this.interval();
+
+    if (!isSwapped) {
+      return this.days().map((day) => ({ key: day, label: day }));
+    }
+
+    // When axes are swapped:
+    if (currentInterval === 'day') {
+      const weeks = this.dayModeWeeks();
+      return weeks.map((w) => ({ key: w.label, label: w.label }));
+    }
+
+    const hoursList = this.hours();
+    const format = this.timeFormat();
+    return hoursList.map((hour) => ({
+      key: hour,
+      label: this.formatHourLabel(hour, format)
+    }));
+  });
+
   // Grid Matrix computation
   readonly gridRows = computed<{ key: string | number; label: string; cells: HeatmapCell[] }[]>(() => {
     const currentInterval = this.interval();
+    const isSwapped = this.swapAxes();
     const map = this.normalizedValueMap();
     const { min, max } = this.computedScaleBounds();
     const scheme = this.activeColorScheme();
     const palette = PALETTE_CONFIG[scheme] || PALETTE_CONFIG.indigo;
     const unitStr = this.activeUnit();
     const unitSuffix = unitStr ? ` ${unitStr}` : '';
+    const format = this.timeFormat();
 
+    const getVisuals = (val: number) => {
+      const intensity = max > min ? Math.max(0, Math.min(1, (val - min) / (max - min))) : 0;
+      let bgColor = '';
+      let textColor = '';
+      if (val === 0) {
+        bgColor = palette.zero.bg;
+        textColor = palette.zero.text;
+      } else {
+        const r = Math.round(palette.min.r + (palette.max.r - palette.min.r) * intensity);
+        const g = Math.round(palette.min.g + (palette.max.g - palette.min.g) * intensity);
+        const b = Math.round(palette.min.b + (palette.max.b - palette.min.b) * intensity);
+        bgColor = `rgb(${r}, ${g}, ${b})`;
+        textColor = intensity >= 0.55 ? '#ffffff' : palette.zero.text;
+      }
+      return { intensity, bgColor, textColor };
+    };
+
+    // --- DAY-BY-DAY MODE ---
     if (currentInterval === 'day') {
-      // Day-by-Day Mode: Rows = Weeks, Columns = Mon..Sun
       const weeks = this.dayModeWeeks();
       const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-      return weeks.map((week, weekIdx) => {
-        const cells: HeatmapCell[] = week.days.map((d, dayIdx) => {
-          const dateStr = formatDate(d, 'yyyy-MM-dd');
-          const dayName = dayLabels[dayIdx];
-          const entry = map.get(dateStr) || map.get(`${dayName}_${weekIdx}`);
-          const val = entry?.value ?? 0;
+      if (!isSwapped) {
+        // Standard: Rows = Weeks, Columns = Days
+        return weeks.map((week, weekIdx) => {
+          const cells: HeatmapCell[] = week.days.map((d, dayIdx) => {
+            const dateStr = formatDate(d, 'yyyy-MM-dd');
+            const dayName = dayLabels[dayIdx];
+            const entry = map.get(dateStr) || map.get(`${dayName}_${weekIdx}`);
+            const val = entry?.value ?? 0;
+            const { intensity, bgColor, textColor } = getVisuals(val);
+            const tooltip = `${formatDate(d, 'EEEE, MMMM d, yyyy')}: ${val}${unitSuffix}`;
 
-          const intensity = max > min ? Math.max(0, Math.min(1, (val - min) / (max - min))) : 0;
-
-          let bgColor = '';
-          let textColor = '';
-
-          if (val === 0) {
-            bgColor = palette.zero.bg;
-            textColor = palette.zero.text;
-          } else {
-            const r = Math.round(palette.min.r + (palette.max.r - palette.min.r) * intensity);
-            const g = Math.round(palette.min.g + (palette.max.g - palette.min.g) * intensity);
-            const b = Math.round(palette.min.b + (palette.max.b - palette.min.b) * intensity);
-            bgColor = `rgb(${r}, ${g}, ${b})`;
-            textColor = intensity >= 0.55 ? '#ffffff' : palette.zero.text;
-          }
-
-          const tooltip = `${formatDate(d, 'EEEE, MMMM d, yyyy')}: ${val}${unitSuffix}`;
+            return {
+              id: dateStr,
+              colKey: dayName,
+              colLabel: `${dayName} (${formatDate(d, 'd')})`,
+              rowKey: week.label,
+              rowLabel: week.label,
+              value: val,
+              intensity,
+              backgroundColor: bgColor,
+              textColor,
+              formattedValue: String(val),
+              tooltipText: tooltip,
+              date: d,
+              meta: entry?.meta
+            };
+          });
 
           return {
-            id: dateStr,
-            colKey: dayName,
-            colLabel: `${dayName} (${formatDate(d, 'd')})`,
-            rowKey: week.label,
-            rowLabel: week.label,
+            key: week.label,
+            label: week.label,
+            cells
+          };
+        });
+      } else {
+        // Swapped: Rows = Days (Mon..Sun), Columns = Weeks
+        return dayLabels.map((dayName, dayIdx) => {
+          const cells: HeatmapCell[] = weeks.map((week, weekIdx) => {
+            const d = week.days[dayIdx];
+            const dateStr = formatDate(d, 'yyyy-MM-dd');
+            const entry = map.get(dateStr) || map.get(`${dayName}_${weekIdx}`);
+            const val = entry?.value ?? 0;
+            const { intensity, bgColor, textColor } = getVisuals(val);
+            const tooltip = `${formatDate(d, 'EEEE, MMMM d, yyyy')}: ${val}${unitSuffix}`;
+
+            return {
+              id: `${dateStr}_swapped`,
+              colKey: week.label,
+              colLabel: week.label,
+              rowKey: dayName,
+              rowLabel: dayName,
+              value: val,
+              intensity,
+              backgroundColor: bgColor,
+              textColor,
+              formattedValue: String(val),
+              tooltipText: tooltip,
+              date: d,
+              meta: entry?.meta
+            };
+          });
+
+          return {
+            key: dayName,
+            label: dayName,
+            cells
+          };
+        });
+      }
+    }
+
+    // --- HOUR-BY-HOUR MODE ---
+    const hoursList = this.hours();
+    const colsList = this.days();
+
+    if (!isSwapped) {
+      // Standard: Rows = Hours, Columns = Days
+      return hoursList.map((hour) => {
+        const hourLabel = this.formatHourLabel(hour, format);
+        const cells: HeatmapCell[] = colsList.map((col) => {
+          const key = `${col}_${hour}`;
+          const entry = map.get(key);
+          const val = entry?.value ?? 0;
+          const { intensity, bgColor, textColor } = getVisuals(val);
+          const tooltip = `${col}, ${hourLabel}: ${val}${unitSuffix}`;
+
+          return {
+            id: key,
+            colKey: col,
+            colLabel: col,
+            rowKey: hour,
+            rowLabel: hourLabel,
             value: val,
             intensity,
             backgroundColor: bgColor,
             textColor,
             formattedValue: String(val),
             tooltipText: tooltip,
-            date: d,
             meta: entry?.meta
           };
         });
 
         return {
-          key: week.label,
-          label: week.label,
+          key: hour,
+          label: hourLabel,
+          cells
+        };
+      });
+    } else {
+      // Swapped: Rows = Days, Columns = Hours
+      return colsList.map((day) => {
+        const cells: HeatmapCell[] = hoursList.map((hour) => {
+          const hourLabel = this.formatHourLabel(hour, format);
+          const key = `${day}_${hour}`;
+          const entry = map.get(key);
+          const val = entry?.value ?? 0;
+          const { intensity, bgColor, textColor } = getVisuals(val);
+          const tooltip = `${day}, ${hourLabel}: ${val}${unitSuffix}`;
+
+          return {
+            id: `${key}_swapped`,
+            colKey: hour,
+            colLabel: hourLabel,
+            rowKey: day,
+            rowLabel: day,
+            value: val,
+            intensity,
+            backgroundColor: bgColor,
+            textColor,
+            formattedValue: String(val),
+            tooltipText: tooltip,
+            meta: entry?.meta
+          };
+        });
+
+        return {
+          key: day,
+          label: day,
           cells
         };
       });
     }
-
-    // Hour-by-Hour Mode: Rows = Hours, Columns = Days
-    const hoursList = this.hours();
-    const colsList = this.days();
-    const format = this.timeFormat();
-
-    return hoursList.map((hour) => {
-      const hourLabel = this.formatHourLabel(hour, format);
-      const cells: HeatmapCell[] = colsList.map((col) => {
-        const key = `${col}_${hour}`;
-        const entry = map.get(key);
-        const val = entry?.value ?? 0;
-
-        const intensity = max > min ? Math.max(0, Math.min(1, (val - min) / (max - min))) : 0;
-
-        let bgColor = '';
-        let textColor = '';
-
-        if (val === 0) {
-          bgColor = palette.zero.bg;
-          textColor = palette.zero.text;
-        } else {
-          const r = Math.round(palette.min.r + (palette.max.r - palette.min.r) * intensity);
-          const g = Math.round(palette.min.g + (palette.max.g - palette.min.g) * intensity);
-          const b = Math.round(palette.min.b + (palette.max.b - palette.min.b) * intensity);
-          bgColor = `rgb(${r}, ${g}, ${b})`;
-          textColor = intensity >= 0.55 ? '#ffffff' : palette.zero.text;
-        }
-
-        const tooltip = `${col} ${hourLabel}: ${val}${unitSuffix}`;
-
-        return {
-          id: key,
-          colKey: col,
-          colLabel: col,
-          rowKey: hour,
-          rowLabel: hourLabel,
-          value: val,
-          intensity,
-          backgroundColor: bgColor,
-          textColor,
-          formattedValue: String(val),
-          tooltipText: tooltip,
-          meta: entry?.meta
-        };
-      });
-
-      return {
-        key: hour,
-        label: hourLabel,
-        cells
-      };
-    });
   });
 
   constructor() {
@@ -554,6 +653,7 @@ export class ForgeHeatmapComponent {
       const hours = this.hours();
       const inter = this.interval();
       const dr = this.dateRange();
+      const swapped = this.swapAxes();
 
       this.timeRangeChange.emit({
         interval: inter,
@@ -562,7 +662,8 @@ export class ForgeHeatmapComponent {
         days,
         startDate: dr?.startDate ? new Date(dr.startDate as any) : undefined,
         endDate: dr?.endDate ? new Date(dr.endDate as any) : undefined,
-        dateRange: dr
+        dateRange: dr,
+        swapAxes: swapped
       });
     });
 
@@ -590,6 +691,10 @@ export class ForgeHeatmapComponent {
 
   setInterval(newInterval: HeatmapInterval): void {
     this.interval.set(newInterval);
+  }
+
+  toggleSwapAxes(): void {
+    this.swapAxes.update((v) => !v);
   }
 
   onDateRangePickerChange(val: DateRangeValue | null): void {
@@ -645,7 +750,7 @@ export class ForgeHeatmapComponent {
 
   onKeydown(event: KeyboardEvent, colIdx: number, rowIdx: number): void {
     const rows = this.gridRows();
-    const cols = this.days();
+    const cols = this.columnHeaders();
     let targetRow = rowIdx;
     let targetCol = colIdx;
 

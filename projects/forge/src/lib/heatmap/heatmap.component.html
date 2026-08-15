@@ -137,6 +137,20 @@
           </div>
         }
 
+        <!-- Swap Axes Button -->
+        @if (showSwapAxes()) {
+          <button
+            type="button"
+            class="forge-heatmap-icon-btn"
+            [class.is-active]="swapAxes()"
+            (click)="toggleSwapAxes()"
+            [title]="swapAxes() ? 'Reset axis orientation' : 'Swap axes (Days / Hours)'"
+            [attr.aria-label]="swapAxes() ? 'Reset axis orientation' : 'Swap axes (Days / Hours)'"
+          >
+            <svg lucideArrowLeftRight [size]="16" class="forge-heatmap-action-icon"></svg>
+          </button>
+        }
+
         <!-- Fullscreen / Expand Button -->
         @if (showExpand()) {
           <button
@@ -160,17 +174,17 @@
   <!-- Heatmap Matrix Grid Wrapper -->
   <div class="forge-heatmap-body" [class.is-loading]="loading()">
     <!-- Grid Table -->
-    <div class="forge-heatmap-grid" role="grid" [attr.aria-rowcount]="gridRows().length + 1" [attr.aria-colcount]="days().length + 1">
-      <!-- Column Headers (Days) -->
+    <div class="forge-heatmap-grid" role="grid" [attr.aria-rowcount]="gridRows().length + 1" [attr.aria-colcount]="columnHeaders().length + 1">
+      <!-- Column Headers -->
       <div class="forge-heatmap-row forge-heatmap-header-row" role="row" aria-rowindex="1">
         <div class="forge-heatmap-corner-cell" role="columnheader"></div>
-        @for (day of days(); track day; let colIdx = $index) {
+        @for (col of columnHeaders(); track col.key; let colIdx = $index) {
           <div
             class="forge-heatmap-col-header"
             role="columnheader"
             [attr.aria-colindex]="colIdx + 2"
           >
-            {{ day }}
+            {{ col.label }}
           </div>
         }
       </div>
@@ -197,6 +211,7 @@
               [attr.aria-label]="cell.tooltipText"
               tabindex="0"
               [attr.data-cell-coord]="rowIdx + '_' + colIdx"
+              [forgeTooltip]="cell.tooltipText"
               (mouseenter)="onCellMouseEnter(cell)"
               (mouseleave)="onCellMouseLeave()"
               (click)="onCellClick(cell, $event)"
@@ -212,16 +227,6 @@
                   <span class="forge-heatmap-cell-value">{{ cell.formattedValue }}</span>
                 }
               </div>
-
-              <!-- Inline Tooltip on Hover / Focus -->
-              @if (hoveredCell()?.id === cell.id) {
-                <div class="forge-heatmap-tooltip" role="tooltip">
-                  <span class="forge-heatmap-tooltip-title">{{ cell.colLabel }}, {{ cell.rowLabel }}</span>
-                  <span class="forge-heatmap-tooltip-value">
-                    {{ cell.value }} {{ activeUnit() ? activeUnit() : (cell.value === 1 ? 'item' : 'items') }}
-                  </span>
-                </div>
-              }
             </div>
           }
         </div>
