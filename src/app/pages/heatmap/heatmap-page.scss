@@ -1,0 +1,246 @@
+.showcase-card {
+  margin-bottom: 24px;
+}
+
+.showcase-heatmap-wrapper {
+  padding: 8px 0;
+  max-width: 820px;
+}
+
+.flexible-showcase-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 16px;
+
+  .control-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .control-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+      white-space: nowrap;
+    }
+  }
+}
+
+// Integration Grid
+.integration-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.integration-heatmap-col {
+  min-width: 0;
+}
+
+.integration-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .info-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--forge-text-muted, #64748b);
+  }
+
+  .json-code,
+  .ts-code {
+    margin: 0;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #0f172a;
+    overflow-x: auto;
+    max-height: 180px;
+  }
+}
+
+// Playground
+.playground-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.playground-editor {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+
+  .editor-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .json-valid {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #059669;
+  }
+
+  .json-error {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #dc2626;
+  }
+}
+
+.playground-textarea {
+  width: 100%;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #0f172a;
+  background: #ffffff;
+  border: none;
+  resize: vertical;
+  outline: none;
+  min-height: 240px;
+}
+
+.playground-preview {
+  min-width: 0;
+}
+
+// Customizer
+.customizer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .control-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+  }
+}
+
+.palette-swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.swatch-btn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: all 0.12s ease;
+
+  &:hover {
+    background: #f1f5f9;
+  }
+
+  &.is-active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+  }
+}
+
+.full-24h-heatmap-container {
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+// Event Log
+.event-log-container {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.event-log-empty {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.event-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-log-item {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  color: #334155;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}

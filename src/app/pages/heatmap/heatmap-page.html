@@ -1,0 +1,350 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · Data Solutions &amp; Heatmap</div>
+    <h1>Heatmap &amp; Busy Times Visualization</h1>
+    <p class="subtitle">
+      Illustrate time-series activity density, peak hours, and customer interactions with configurable time granularities (Hour-by-Hour vs Day-by-Day), DateRangePicker integration, and dynamic gradient color scales.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- Showcase 1: Busiest Times (Exact Match to User Mock) -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>Busiest Times (Mock Recreation)</h2>
+          <span class="card-subtitle">
+            Exact visual reproduction from the user mock featuring capsule pills, dynamic intensity interpolation, metric switcher dropdown, and gradient legend bar.
+          </span>
+        </div>
+      </div>
+
+      <div class="showcase-heatmap-wrapper">
+        <forge-heatmap
+          [metrics]="busiestTimesMetrics()"
+          [loading]="isBusiestLoading()"
+          [hoursRange]="[9, 17]"
+          (refresh)="simulateBusiestRefresh()"
+          (cellClick)="onCellClick($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Showcase 2: Date Range Picker & Interval Selection (Hour vs Day) -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>Date Range &amp; Interval Period Selection (Day vs Hour)</h2>
+          <span class="card-subtitle">
+            Toggle between <strong>Hour-by-Hour</strong> and <strong>Day-by-Day</strong> time granularities with integrated <code>DateRangePicker</code> and quick presets.
+          </span>
+        </div>
+      </div>
+
+      <!-- Live Toolbar with Integrated Controls -->
+      <div class="flexible-showcase-toolbar">
+        <div class="control-section">
+          <label class="control-label">Interval Granularity:</label>
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeInterval()">
+            <button
+              type="button"
+              forgeButton
+              forgeButtonGroupItem
+              value="hour"
+              (click)="onIntervalToggle('hour')"
+            >
+              <svg lucideClock [size]="14"></svg>
+              Hour-by-Hour
+            </button>
+            <button
+              type="button"
+              forgeButton
+              forgeButtonGroupItem
+              value="day"
+              (click)="onIntervalToggle('day')"
+            >
+              <svg lucideCalendar [size]="14"></svg>
+              Day-by-Day
+            </button>
+          </forge-button-group>
+        </div>
+
+        <div class="control-section">
+          <label class="control-label">Time Range Selection:</label>
+          <forge-date-range-picker
+            size="sm"
+            [ngModel]="selectedDateRange()"
+            (rangeChange)="onDateRangeChanged($event)"
+            [presets]="rangePresets"
+            placeholder="Select date range"
+          />
+        </div>
+      </div>
+
+      <div class="showcase-heatmap-wrapper">
+        <forge-heatmap
+          title="Team Activity &amp; Inquiries"
+          [data]="flexibleDataPoints()"
+          [interval]="activeInterval()"
+          [dateRange]="selectedDateRange()"
+          [hoursRange]="[9, 17]"
+          colorScheme="indigo"
+          unit="activities"
+          (cellClick)="onCellClick($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Showcase 3: Simulated Backend Integration & TimeRange Output -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>Dynamic Time Range Output &amp; Loading Skeleton</h2>
+          <span class="card-subtitle">
+            Component outputs <code>(timeRangeChange)</code> so developers can dynamically fetch backend data for the visible window. Includes working refresh &amp; shimmer loading skeleton.
+          </span>
+        </div>
+        <button
+          type="button"
+          forgeButton
+          variant="secondary"
+          size="sm"
+          [loading]="isApiLoading()"
+          (click)="simulateApiFetch()"
+        >
+          <svg lucideRefreshCw [size]="14"></svg>
+          Fetch / Simulate API Load
+        </button>
+      </div>
+
+      <div class="integration-grid">
+        <div class="integration-heatmap-col">
+          <forge-heatmap
+            title="Live Customer Traffic"
+            [data]="apiDataPoints()"
+            [loading]="isApiLoading()"
+            [hoursRange]="[9, 17]"
+            colorScheme="blue"
+            unit="queries"
+            (timeRangeChange)="onTimeRangeChange($event)"
+            (refresh)="simulateApiFetch()"
+            (cellClick)="onCellClick($event)"
+          />
+        </div>
+
+        <div class="integration-info-col">
+          <div class="info-block">
+            <span class="info-label">Emitted Time Range Event (<code>timeRangeChange</code>):</span>
+            <pre class="json-code">{{ lastEmittedRange() | json }}</pre>
+          </div>
+
+          <div class="info-block">
+            <span class="info-label">Integration Code Example:</span>
+            <pre class="ts-code"><code>&lt;forge-heatmap
+  [data]="heatmapData()"
+  [loading]="isLoading()"
+  (timeRangeChange)="onTimeRangeChange($event)"
+  (refresh)="loadData()"
+/&gt;
+
+onTimeRangeChange(range: HeatmapTimeRange) &#123;
+  this.isLoading.set(true);
+  this.api.getHeatmap(range.interval, range.startDate, range.endDate)
+    .subscribe(data =&gt; &#123;
+      this.heatmapData.set(data);
+      this.isLoading.set(false);
+    &#125;);
+&#125;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Showcase 4: Developer Input Format Playground -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>Developer Live Data Playground</h2>
+          <span class="card-subtitle">
+            Test any developer input format in real-time: Flat data points array, raw timestamp event list, or 2D matrix maps.
+          </span>
+        </div>
+        <div class="format-button-group">
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedInputFormat()">
+            <button
+              type="button"
+              forgeButton
+              forgeButtonGroupItem
+              value="points"
+              (click)="setInputFormatPreset('points')"
+            >
+              Flat Data Points (Recommended)
+            </button>
+            <button
+              type="button"
+              forgeButton
+              forgeButtonGroupItem
+              value="timestamps"
+              (click)="setInputFormatPreset('timestamps')"
+            >
+              Raw Timestamps List
+            </button>
+            <button
+              type="button"
+              forgeButton
+              forgeButtonGroupItem
+              value="matrix"
+              (click)="setInputFormatPreset('matrix')"
+            >
+              2D Matrix Map
+            </button>
+          </forge-button-group>
+        </div>
+      </div>
+
+      <div class="playground-layout">
+        <div class="playground-editor">
+          <div class="editor-header">
+            <span class="editor-title">
+              <svg lucideCode [size]="14"></svg>
+              Live JSON Data Editor
+            </span>
+            @if (playgroundJsonError()) {
+              <span class="json-error">JSON Syntax Error</span>
+            } @else {
+              <span class="json-valid">
+                <svg lucideCheck [size]="12"></svg>
+                Valid Format
+              </span>
+            }
+          </div>
+          <textarea
+            class="playground-textarea"
+            [(ngModel)]="customJsonText"
+            rows="14"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <div class="playground-preview">
+          <forge-heatmap
+            title="Custom Input Preview"
+            [data]="parsedPlaygroundData()"
+            [hoursRange]="[9, 17]"
+            colorScheme="emerald"
+            (cellClick)="onCellClick($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Showcase 5: 24/7 Full Day Matrix & Customizer -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>24/7 Server Load &amp; Appearance Customizer</h2>
+          <span class="card-subtitle">
+            Full 24-hour time series scale (00:00 - 23:00) with configurable palettes, cell geometries, and time format.
+          </span>
+        </div>
+      </div>
+
+      <!-- Controls Row -->
+      <div class="customizer-toolbar">
+        <!-- Palette -->
+        <div class="control-group">
+          <label class="control-label">Color Theme:</label>
+          <div class="palette-swatches">
+            @for (scheme of colorSchemes; track scheme) {
+              <button
+                type="button"
+                class="swatch-btn"
+                [class.is-active]="customizerScheme() === scheme"
+                [attr.data-scheme]="scheme"
+                (click)="customizerScheme.set(scheme)"
+                [title]="scheme"
+              >
+                {{ scheme }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Cell Shape -->
+        <div class="control-group">
+          <label class="control-label">Cell Shape:</label>
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellShape()">
+            <button type="button" forgeButton forgeButtonGroupItem value="pill" (click)="customizerCellShape.set('pill')">Pill</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="rounded" (click)="customizerCellShape.set('rounded')">Rounded</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="square" (click)="customizerCellShape.set('square')">Square</button>
+          </forge-button-group>
+        </div>
+
+        <!-- Cell Size -->
+        <div class="control-group">
+          <label class="control-label">Size:</label>
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerCellSize()">
+            <button type="button" forgeButton forgeButtonGroupItem value="sm" (click)="customizerCellSize.set('sm')">Small</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="md" (click)="customizerCellSize.set('md')">Medium</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="lg" (click)="customizerCellSize.set('lg')">Large</button>
+          </forge-button-group>
+        </div>
+
+        <!-- Time Format -->
+        <div class="control-group">
+          <label class="control-label">Time Format:</label>
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerTimeFormat()">
+            <button type="button" forgeButton forgeButtonGroupItem value="12h" (click)="customizerTimeFormat.set('12h')">12h</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="24h" (click)="customizerTimeFormat.set('24h')">24h</button>
+          </forge-button-group>
+        </div>
+
+        <!-- Show Values -->
+        <div class="control-group">
+          <label class="control-label">Values:</label>
+          <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="customizerShowValues() ? 'show' : 'hide'">
+            <button type="button" forgeButton forgeButtonGroupItem value="show" (click)="customizerShowValues.set(true)">Show</button>
+            <button type="button" forgeButton forgeButtonGroupItem value="hide" (click)="customizerShowValues.set(false)">Hide</button>
+          </forge-button-group>
+        </div>
+      </div>
+
+      <div class="full-24h-heatmap-container">
+        <forge-heatmap
+          title="24/7 Global Server Load"
+          [data]="customizer24hData()"
+          [hoursRange]="[0, 23]"
+          [timeFormat]="customizerTimeFormat()"
+          [colorScheme]="customizerScheme()"
+          [cellShape]="customizerCellShape()"
+          [cellSize]="customizerCellSize()"
+          [showValues]="customizerShowValues()"
+          unit="req/s"
+          (cellClick)="onCellClick($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Event Logs -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <h2>Interactive Event &amp; Interaction Stream</h2>
+          <span class="card-subtitle">Real-time log of cell selections, refresh triggers, interval changes, and date range events</span>
+        </div>
+      </div>
+
+      <div class="event-log-container">
+        @if (eventLogs().length === 0) {
+          <div class="event-log-empty">Click or interact with any heatmap cell above to see live event payloads...</div>
+        } @else {
+          <div class="event-log-list">
+            @for (log of eventLogs(); track $index) {
+              <div class="event-log-item">{{ log }}</div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </main>
+</div>

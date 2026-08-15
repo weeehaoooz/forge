@@ -14,7 +14,8 @@ import {
   LucideCircleDot,
   LucideToggleRight,
   LucideLayout,
-  LucideBell
+  LucideBell,
+  LucideFlame
 } from '@lucide/angular';
 
 @Component({
@@ -49,6 +50,12 @@ export class App {
         { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
         { id: 'autocomplete', label: 'Autocomplete', icon: LucideSearch, route: '/autocomplete' },
         { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' }
+      ]
+    },
+    {
+      title: 'DATA VISUALIZATION',
+      items: [
+        { id: 'heatmap', label: 'Heatmap / Busy Times', icon: LucideFlame, route: '/heatmap' }
       ]
     },
     {

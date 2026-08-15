@@ -1,0 +1,500 @@
+:host {
+  display: block;
+  font-family: inherit;
+  --forge-heatmap-bg: var(--forge-bg-surface, #ffffff);
+  --forge-heatmap-text: var(--forge-text-color, #0f172a);
+  --forge-heatmap-muted: var(--forge-text-muted, #64748b);
+  --forge-heatmap-border: var(--forge-border-color, #e2e8f0);
+  --forge-heatmap-hover-bg: #f1f5f9;
+  --forge-heatmap-cell-height: 28px;
+  --forge-heatmap-cell-radius: 9999px;
+  --forge-heatmap-row-header-width: 72px;
+}
+
+:host(.forge-heatmap-sm) {
+  --forge-heatmap-cell-height: 22px;
+  --forge-heatmap-row-header-width: 60px;
+}
+
+:host(.forge-heatmap-lg) {
+  --forge-heatmap-cell-height: 36px;
+  --forge-heatmap-row-header-width: 84px;
+}
+
+:host(.forge-heatmap-rounded) {
+  --forge-heatmap-cell-radius: 8px;
+}
+
+:host(.forge-heatmap-square) {
+  --forge-heatmap-cell-radius: 4px;
+}
+
+:host(.forge-heatmap-expanded) {
+  position: fixed;
+  inset: 16px;
+  z-index: 1000;
+  background: var(--forge-heatmap-bg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border-radius: 16px;
+  padding: 24px;
+  overflow: auto;
+  border: 1px solid var(--forge-heatmap-border);
+}
+
+.forge-heatmap-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--forge-heatmap-bg);
+  border-radius: 12px;
+  position: relative;
+  width: 100%;
+}
+
+// -------------------------------------------------------------
+// Header Toolbar
+// -------------------------------------------------------------
+.forge-heatmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.forge-heatmap-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--forge-heatmap-text);
+  letter-spacing: -0.015em;
+}
+
+.forge-heatmap-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+// Interval Group (Hour vs Day)
+.forge-heatmap-interval-group {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border: 1px solid var(--forge-heatmap-border);
+  gap: 2px;
+}
+
+.forge-heatmap-interval-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--forge-heatmap-muted);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--forge-heatmap-text);
+  }
+
+  &.is-active {
+    background: #ffffff;
+    color: #4338ca;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.forge-heatmap-daterange-box {
+  min-width: 220px;
+}
+
+.forge-heatmap-dropdown-wrapper {
+  position: relative;
+}
+
+.forge-heatmap-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--forge-heatmap-text);
+  background: #f8fafc;
+  border: 1px solid var(--forge-heatmap-border);
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  &.is-open {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+  }
+
+  .forge-heatmap-dropdown-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--forge-heatmap-muted);
+  }
+}
+
+.forge-heatmap-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--forge-heatmap-muted);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--forge-heatmap-hover-bg);
+    color: var(--forge-heatmap-text);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.is-spinning .forge-heatmap-action-icon {
+    animation: forge-heatmap-spin 0.8s linear infinite;
+  }
+
+  .forge-heatmap-action-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@keyframes forge-heatmap-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Dropdown Menus
+.forge-heatmap-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 50;
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid var(--forge-heatmap-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: forge-heatmap-menu-fade 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes forge-heatmap-menu-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.forge-heatmap-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--forge-heatmap-text);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: #f1f5f9;
+  }
+
+  &.is-selected {
+    font-weight: 600;
+    color: #4338ca;
+  }
+
+  .forge-heatmap-check-icon {
+    width: 14px;
+    height: 14px;
+    color: #4338ca;
+  }
+
+  .forge-heatmap-menu-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--forge-heatmap-muted);
+  }
+}
+
+// -------------------------------------------------------------
+// Heatmap Grid Matrix
+// -------------------------------------------------------------
+.forge-heatmap-body {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  &.is-loading {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.forge-heatmap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 480px;
+  width: 100%;
+}
+
+.forge-heatmap-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.forge-heatmap-header-row {
+  margin-bottom: 2px;
+}
+
+.forge-heatmap-corner-cell {
+  width: var(--forge-heatmap-row-header-width);
+  flex-shrink: 0;
+}
+
+.forge-heatmap-col-header {
+  flex: 1;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--forge-heatmap-muted);
+  user-select: none;
+}
+
+.forge-heatmap-row-header {
+  width: var(--forge-heatmap-row-header-width);
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--forge-heatmap-muted);
+  user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.forge-heatmap-cell-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--forge-heatmap-cell-height);
+  cursor: pointer;
+  outline: none;
+  border-radius: var(--forge-heatmap-cell-radius);
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #4338ca, 0 0 0 4px rgba(67, 56, 202, 0.25);
+  }
+}
+
+.forge-heatmap-pill {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--forge-heatmap-cell-radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+
+  .forge-heatmap-cell-wrapper:hover & {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    filter: brightness(1.02);
+  }
+
+  .forge-heatmap-cell-wrapper:active & {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+.forge-heatmap-cell-value {
+  display: inline-block;
+  text-align: center;
+}
+
+// -------------------------------------------------------------
+// Tooltip
+// -------------------------------------------------------------
+.forge-heatmap-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: forge-heatmap-tooltip-pop 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: #0f172a transparent transparent transparent;
+  }
+}
+
+@keyframes forge-heatmap-tooltip-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.forge-heatmap-tooltip-title {
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.forge-heatmap-tooltip-value {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+// -------------------------------------------------------------
+// Loading Shimmer Overlay
+// -------------------------------------------------------------
+.forge-heatmap-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  border-radius: 8px;
+  animation: forge-heatmap-fade-in 0.2s ease;
+}
+
+@keyframes forge-heatmap-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.forge-heatmap-loading-spinner-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid var(--forge-heatmap-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--forge-heatmap-text);
+
+  .forge-heatmap-loading-spinner {
+    width: 16px;
+    height: 16px;
+    color: #4338ca;
+    animation: forge-heatmap-spin 0.8s linear infinite;
+  }
+}
+
+// -------------------------------------------------------------
+// Legend Bar
+// -------------------------------------------------------------
+.forge-heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-left: var(--forge-heatmap-row-header-width);
+}
+
+.forge-heatmap-legend-bound {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--forge-heatmap-muted);
+  min-width: 12px;
+}
+
+.forge-heatmap-legend-bar {
+  height: 8px;
+  width: 130px;
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}

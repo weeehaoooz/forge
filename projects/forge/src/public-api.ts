@@ -68,4 +68,10 @@ export * from './lib/form/autocomplete/autocomplete.types';
 export * from './lib/form/autocomplete/autocomplete.component';
 export * from './lib/form/autocomplete/autocomplete.module';
 
+// Heatmap component, module & types
+export * from './lib/heatmap/heatmap.types';
+export * from './lib/heatmap/heatmap.component';
+export * from './lib/heatmap/heatmap.module';
+
+
 
