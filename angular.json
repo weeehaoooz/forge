@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-shared-components": {
+    "talos-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-shared-components:build:production"
+              "buildTarget": "talos-ui:build:production"
             },
             "development": {
-              "buildTarget": "angular-shared-components:build:development"
+              "buildTarget": "talos-ui:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -88,7 +88,7 @@ A collapsible sidebar with navigation sections, active state matching, badges, l
 ```html
 <talos-side-nav>
   <div side-nav-logo class="app-logo">
-    <span>The Talos</span>
+    <span>Talos</span>
   </div>
 </talos-side-nav>
 ```
