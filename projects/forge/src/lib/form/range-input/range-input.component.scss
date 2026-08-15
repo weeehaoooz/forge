@@ -1,0 +1,376 @@
+@use '../../../../styles/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forge-range-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  user-select: none;
+  font-family: inherit;
+  --range-accent: var(--forge-range-track-fill, var(--forge-primary-color));
+  --range-accent-hover: var(--forge-primary-hover, #1d4ed8);
+  --range-focus-glow: var(--forge-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
+  --range-track-h: var(--forge-range-track-height-md, 0.375rem);
+  --range-thumb-d: var(--forge-range-thumb-size-md, 1.25rem);
+  --range-thumb-border-width: 2px;
+  --range-tick-w: 2px;
+  --range-tick-h: 8px;
+  --range-font-size: var(--forge-control-font-size, 0.8125rem);
+
+  /* Sizing Variations */
+  &.size-sm {
+    --range-track-h: var(--forge-range-track-height-sm, 0.25rem);
+    --range-thumb-d: var(--forge-range-thumb-size-sm, 1rem);
+    --range-font-size: 0.75rem;
+    --range-tick-h: 6px;
+  }
+
+  &.size-lg {
+    --range-track-h: var(--forge-range-track-height-lg, 0.5rem);
+    --range-thumb-d: var(--forge-range-thumb-size-lg, 1.5rem);
+    --range-font-size: 0.875rem;
+    --range-tick-h: 10px;
+  }
+
+  /* Color Variations */
+  &.variant-primary {
+    --range-accent: var(--forge-primary-color, #2563eb);
+    --range-accent-hover: var(--forge-primary-hover, #1d4ed8);
+    --range-focus-glow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  }
+
+  &.variant-secondary {
+    --range-accent: #475569;
+    --range-accent-hover: #334155;
+    --range-focus-glow: 0 0 0 3px rgba(71, 85, 105, 0.2);
+  }
+
+  &.variant-success {
+    --range-accent: #16a34a;
+    --range-accent-hover: #15803d;
+    --range-focus-glow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+  }
+
+  &.variant-warning {
+    --range-accent: #d97706;
+    --range-accent-hover: #b45309;
+    --range-focus-glow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+  }
+
+  &.variant-danger {
+    --range-accent: var(--forge-error-color, #ef4444);
+    --range-accent-hover: #dc2626;
+    --range-focus-glow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+
+  &.variant-info {
+    --range-accent: #0284c7;
+    --range-accent-hover: #0369a1;
+    --range-focus-glow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+  }
+
+  /* Invalid State */
+  &.is-invalid {
+    --range-accent: var(--forge-error-color, #ef4444);
+    --range-focus-glow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+  }
+
+  /* Disabled State */
+  &.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    .forge-range-thumb {
+      cursor: not-allowed;
+      border-color: var(--forge-range-track-disabled-fill, #94a3b8);
+      background-color: var(--forge-range-track-disabled-bg, #cbd5e1);
+      box-shadow: none;
+    }
+
+    .forge-range-fill {
+      background-color: var(--forge-range-track-disabled-fill, #94a3b8);
+    }
+  }
+
+  /* Readonly State */
+  &.is-readonly {
+    .forge-range-slider {
+      cursor: default;
+    }
+    .forge-range-thumb {
+      cursor: default;
+    }
+  }
+}
+
+/* Header Area */
+.forge-range-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.forge-range-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.forge-range-label {
+  font-size: var(--range-font-size);
+  font-weight: 600;
+  color: var(--forge-text-color, #0f172a);
+}
+
+.forge-range-hint {
+  font-size: 0.75rem;
+  color: var(--forge-text-muted, #64748b);
+}
+
+.forge-range-value-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--forge-border-radius, 0.375rem);
+  background-color: var(--forge-primary-light, #eff6ff);
+  color: var(--range-accent);
+}
+
+/* Synchronized Number Inputs Group */
+.forge-range-inputs-group {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.forge-range-inputs-separator {
+  color: var(--forge-text-muted, #64748b);
+  font-weight: 500;
+}
+
+.forge-range-number-box {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--forge-card-bg, #ffffff);
+  border: 1px solid var(--forge-border-color, #cbd5e1);
+  border-radius: var(--forge-border-radius, 0.375rem);
+  padding: 0 0.375rem;
+  height: 1.875rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus-within {
+    border-color: var(--range-accent);
+    box-shadow: var(--range-focus-glow);
+  }
+}
+
+.forge-range-input-affix {
+  font-size: 0.75rem;
+  color: var(--forge-text-muted, #64748b);
+  user-select: none;
+}
+
+.forge-range-number-input {
+  width: 3.5rem;
+  border: none;
+  background: transparent;
+  padding: 0.125rem 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--forge-text-color, #0f172a);
+  text-align: right;
+  outline: none;
+  font-family: inherit;
+
+  /* Hide native number spinners */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
+
+/* Slider Track Container */
+.forge-range-slider {
+  position: relative;
+  width: 100%;
+  height: calc(var(--range-thumb-d) + 0.5rem);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+  padding: 0 calc(var(--range-thumb-d) / 2);
+  box-sizing: border-box;
+
+  &.is-active {
+    cursor: grabbing;
+  }
+}
+
+/* Background & Active Track */
+.forge-range-track {
+  position: relative;
+  width: 100%;
+  height: var(--range-track-h);
+  background-color: var(--forge-range-track-bg, #e2e8f0);
+  border-radius: 9999px;
+  overflow: visible;
+}
+
+.forge-range-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--range-accent);
+  border-radius: 9999px;
+  transition: background-color 0.18s ease;
+  pointer-events: none;
+}
+
+/* Tick Marks along the Track */
+.forge-range-ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.forge-range-tick {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--range-tick-w);
+  height: var(--range-tick-h);
+  background-color: var(--forge-range-tick-color, #94a3b8);
+  border-radius: 1px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+
+  &.is-active {
+    background-color: var(--forge-range-tick-active-color, #ffffff);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+
+/* Thumb Handles */
+.forge-range-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--range-thumb-d);
+  height: var(--range-thumb-d);
+  background-color: var(--forge-range-thumb-bg, #ffffff);
+  border: var(--range-thumb-border-width) solid var(--range-accent);
+  border-radius: 50%;
+  box-shadow: var(--forge-range-thumb-shadow, 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08));
+  cursor: grab;
+  outline: none;
+  box-sizing: border-box;
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+
+  &:hover {
+    box-shadow: var(--forge-range-thumb-hover-shadow, 0 0 0 4px rgba(37, 99, 235, 0.15));
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  &.is-focused,
+  &:focus-visible {
+    box-shadow: var(--range-focus-glow);
+    transform: translate(-50%, -50%) scale(1.12);
+    z-index: 3;
+  }
+
+  &.is-dragging {
+    cursor: grabbing;
+    box-shadow: var(--forge-range-thumb-active-shadow, 0 0 0 6px rgba(37, 99, 235, 0.25));
+    transform: translate(-50%, -50%) scale(1.16);
+    z-index: 4;
+  }
+}
+
+/* Floating Tooltip Bubble */
+.forge-range-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: var(--forge-range-tooltip-bg, #1e293b);
+  color: var(--forge-range-tooltip-text, #ffffff);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.1875rem 0.4375rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--forge-range-tooltip-bg, #1e293b) transparent transparent transparent;
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Step / Interval Labels Row */
+.forge-range-labels {
+  position: relative;
+  width: 100%;
+  margin-top: 0.25rem;
+  height: 1.125rem;
+  padding: 0 calc(var(--range-thumb-d) / 2);
+  box-sizing: border-box;
+}
+
+.forge-range-label-item {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.6875rem;
+  color: var(--forge-range-tick-label-color, var(--forge-text-muted, #64748b));
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease, font-weight 0.15s ease;
+
+  &.is-active {
+    color: var(--range-accent);
+    font-weight: 600;
+  }
+
+  &:hover {
+    color: var(--forge-text-color, #0f172a);
+  }
+}

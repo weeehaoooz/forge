@@ -77,3 +77,9 @@ export * from './lib/heatmap/heatmap.module';
 export * from './lib/category-bar/category-bar.types';
 export * from './lib/category-bar/category-bar.component';
 export * from './lib/category-bar/category-bar.module';
+
+// Range Input component, directive, module & types
+export * from './lib/form/range-input/range-input.types';
+export * from './lib/form/range-input/range-input.directive';
+export * from './lib/form/range-input/range-input.component';
+export * from './lib/form/range-input/range-input.module';

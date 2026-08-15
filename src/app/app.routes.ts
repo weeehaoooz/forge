@@ -49,6 +49,10 @@ export const routes: Routes = [
   {
     path: 'category-bar',
     loadComponent: () => import('./pages/category-bar/category-bar-page').then(m => m.CategoryBarPage)
+  },
+  {
+    path: 'range-input',
+    loadComponent: () => import('./pages/range-input/range-input-page').then(m => m.RangeInputPage)
   }
 ];
 

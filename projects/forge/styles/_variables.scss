@@ -87,4 +87,26 @@
   --forge-category-bar-height-md: var(--category-bar-height-md, 0.5rem);
   --forge-category-bar-height-lg: var(--category-bar-height-lg, 0.75rem);
   --forge-category-bar-marker-ring: var(--category-bar-marker-ring, var(--forge-card-bg));
+
+  /* Range Input Specific Tokens */
+  --forge-range-track-bg: var(--range-track-bg, #e2e8f0);
+  --forge-range-track-fill: var(--range-track-fill, var(--forge-primary-color));
+  --forge-range-track-disabled-bg: var(--range-track-disabled-bg, #cbd5e1);
+  --forge-range-track-disabled-fill: var(--range-track-disabled-fill, #94a3b8);
+  --forge-range-track-height-sm: var(--range-track-height-sm, 0.25rem);
+  --forge-range-track-height-md: var(--range-track-height-md, 0.375rem);
+  --forge-range-track-height-lg: var(--range-track-height-lg, 0.5rem);
+  --forge-range-thumb-size-sm: var(--range-thumb-size-sm, 1rem);
+  --forge-range-thumb-size-md: var(--range-thumb-size-md, 1.25rem);
+  --forge-range-thumb-size-lg: var(--range-thumb-size-lg, 1.5rem);
+  --forge-range-thumb-bg: var(--range-thumb-bg, var(--forge-card-bg));
+  --forge-range-thumb-border: var(--range-thumb-border, var(--forge-primary-color));
+  --forge-range-thumb-shadow: var(--range-thumb-shadow, 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08));
+  --forge-range-thumb-hover-shadow: var(--range-thumb-hover-shadow, 0 0 0 4px rgba(37, 99, 235, 0.15));
+  --forge-range-thumb-active-shadow: var(--range-thumb-active-shadow, 0 0 0 6px rgba(37, 99, 235, 0.25));
+  --forge-range-tick-color: var(--range-tick-color, #94a3b8);
+  --forge-range-tick-active-color: var(--range-tick-active-color, #ffffff);
+  --forge-range-tick-label-color: var(--range-tick-label-color, var(--forge-text-muted));
+  --forge-range-tooltip-bg: var(--range-tooltip-bg, #1e293b);
+  --forge-range-tooltip-text: var(--range-tooltip-text, #ffffff);
 }
