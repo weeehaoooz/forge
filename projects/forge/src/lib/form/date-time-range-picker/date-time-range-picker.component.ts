@@ -11,8 +11,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import moment from 'moment';
 import type { Moment } from 'moment';
 
-import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
-import { DateRangePreset, DateRangeValue } from '../date-range-picker/date-range-types';
+import { DateRangePickerComponent } from '@forge/components/form/date-range-picker';
+import { DateRangePreset, DateRangeValue } from '@forge/components/form/date-range-picker';
 
 let uniqueDateTimeRangePickerId = 0;
 

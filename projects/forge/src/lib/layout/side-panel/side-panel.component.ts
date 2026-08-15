@@ -1,6 +1,7 @@
 import { Component, Type, input, output } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import { ForgeButtonDirective } from '../../button/button.directive';
+import { ForgeButtonDirective } from '@forge/components/button';
+
 import { LucideX } from '@lucide/angular';
 
 @Component({

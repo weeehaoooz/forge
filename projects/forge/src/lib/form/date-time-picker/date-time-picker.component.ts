@@ -10,7 +10,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import moment from 'moment';
 import type { Moment } from 'moment';
 
-import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { DatePickerComponent } from '@forge/components/form/date-picker';
+
 
 let uniqueDateTimePickerId = 0;
 

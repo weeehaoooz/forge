@@ -21,7 +21,8 @@ import {
   InternalDateRange,
   RangeCalendarDay
 } from './date-range-types';
-import { CalendarMonth, CalendarYear } from '../date-picker/date-picker.component';
+import { CalendarMonth, CalendarYear } from '@forge/components/form/date-picker';
+
 
 let uniqueDateRangePickerId = 0;
 

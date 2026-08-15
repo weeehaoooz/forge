@@ -1,5 +1,9 @@
 /*
  * Public API Surface of @forge/components
+ *
+ * This root barrel re-exports everything for backward compatibility.
+ * For optimal tree-shaking, consumers should import directly from the
+ * secondary entry points (e.g. '@forge/components/button').
  */
 
 // Layout components & services

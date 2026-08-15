@@ -5,7 +5,28 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "@forge/components/button": ["./src/lib/button/index.ts"],
+      "@forge/components/tooltip": ["./src/lib/tooltip/index.ts"],
+      "@forge/components/button-group": ["./src/lib/button-group/index.ts"],
+      "@forge/components/form/input": ["./src/lib/form/input/index.ts"],
+      "@forge/components/form/checkbox": ["./src/lib/form/checkbox/index.ts"],
+      "@forge/components/form/radio": ["./src/lib/form/radio/index.ts"],
+      "@forge/components/form/slide-toggle": ["./src/lib/form/slide-toggle/index.ts"],
+      "@forge/components/form/select-input": ["./src/lib/form/select-input/index.ts"],
+      "@forge/components/form/date-picker": ["./src/lib/form/date-picker/index.ts"],
+      "@forge/components/form/date-range-picker": ["./src/lib/form/date-range-picker/index.ts"],
+      "@forge/components/form/date-time-picker": ["./src/lib/form/date-time-picker/index.ts"],
+      "@forge/components/form/date-time-range-picker": ["./src/lib/form/date-time-range-picker/index.ts"],
+      "@forge/components/form/autocomplete": ["./src/lib/form/autocomplete/index.ts"],
+      "@forge/components/form/range-input": ["./src/lib/form/range-input/index.ts"],
+      "@forge/components/snackbar": ["./src/lib/snackbar/index.ts"],
+      "@forge/components/category-bar": ["./src/lib/category-bar/index.ts"],
+      "@forge/components/layout": ["./src/lib/layout/index.ts"],
+      "@forge/components/nav": ["./src/lib/nav/index.ts"],
+      "@forge/components/heatmap": ["./src/lib/heatmap/index.ts"]
+    }
   },
   "exclude": [
     "**/*.spec.ts"

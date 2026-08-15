@@ -9,7 +9,8 @@ import {
   HostListener
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ForgeButtonDirective, ButtonSize } from '../button/button.directive';
+import { ForgeButtonDirective, ButtonSize } from '@forge/components/button';
+
 import { ForgeButtonGroupItemDirective } from './button-group-item.directive';
 
 export type ButtonGroupOrientation = 'horizontal' | 'vertical';

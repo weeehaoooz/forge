@@ -17,7 +17,26 @@
     "paths": {
       "@forge/components": [
         "./projects/forge/src/public-api.ts"
-      ]
+      ],
+      "@forge/components/button": ["./projects/forge/src/lib/button/index.ts"],
+      "@forge/components/tooltip": ["./projects/forge/src/lib/tooltip/index.ts"],
+      "@forge/components/button-group": ["./projects/forge/src/lib/button-group/index.ts"],
+      "@forge/components/form/input": ["./projects/forge/src/lib/form/input/index.ts"],
+      "@forge/components/form/checkbox": ["./projects/forge/src/lib/form/checkbox/index.ts"],
+      "@forge/components/form/radio": ["./projects/forge/src/lib/form/radio/index.ts"],
+      "@forge/components/form/slide-toggle": ["./projects/forge/src/lib/form/slide-toggle/index.ts"],
+      "@forge/components/form/select-input": ["./projects/forge/src/lib/form/select-input/index.ts"],
+      "@forge/components/form/date-picker": ["./projects/forge/src/lib/form/date-picker/index.ts"],
+      "@forge/components/form/date-range-picker": ["./projects/forge/src/lib/form/date-range-picker/index.ts"],
+      "@forge/components/form/date-time-picker": ["./projects/forge/src/lib/form/date-time-picker/index.ts"],
+      "@forge/components/form/date-time-range-picker": ["./projects/forge/src/lib/form/date-time-range-picker/index.ts"],
+      "@forge/components/form/autocomplete": ["./projects/forge/src/lib/form/autocomplete/index.ts"],
+      "@forge/components/form/range-input": ["./projects/forge/src/lib/form/range-input/index.ts"],
+      "@forge/components/snackbar": ["./projects/forge/src/lib/snackbar/index.ts"],
+      "@forge/components/category-bar": ["./projects/forge/src/lib/category-bar/index.ts"],
+      "@forge/components/layout": ["./projects/forge/src/lib/layout/index.ts"],
+      "@forge/components/nav": ["./projects/forge/src/lib/nav/index.ts"],
+      "@forge/components/heatmap": ["./projects/forge/src/lib/heatmap/index.ts"]
     }
   },
   "angularCompilerOptions": {

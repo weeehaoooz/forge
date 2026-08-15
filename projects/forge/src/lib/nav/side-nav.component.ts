@@ -13,7 +13,8 @@ import {
   LucidePanelLeftOpen,
   LucidePanelLeftClose
 } from '@lucide/angular';
-import { LayoutService } from '../layout/layout.service';
+import { LayoutService } from '@forge/components/layout';
+
 
 export interface SideNavItem {
   id?: string;

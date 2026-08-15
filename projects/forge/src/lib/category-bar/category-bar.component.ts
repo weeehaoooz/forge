@@ -7,7 +7,8 @@ import {
   output,
   signal
 } from '@angular/core';
-import { ForgeTooltipDirective } from '../tooltip/tooltip.directive';
+import { ForgeTooltipDirective } from '@forge/components/tooltip';
+
 import {
   CategoryBarColorScheme,
   CategoryBarComputedSegment,

@@ -1,4 +1,5 @@
-import type { DateRangeValue } from '../form/date-range-picker/date-range-types';
+import type { DateRangeValue } from '@forge/components/form/date-range-picker';
+
 
 /**
  * Forge Heatmap Type Definitions
