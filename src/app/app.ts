@@ -15,7 +15,8 @@ import {
   LucideToggleRight,
   LucideLayout,
   LucideBell,
-  LucideFlame
+  LucideFlame,
+  LucideSliders
 } from '@lucide/angular';
 
 @Component({
@@ -55,7 +56,8 @@ export class App {
     {
       title: 'DATA VISUALIZATION',
       items: [
-        { id: 'heatmap', label: 'Heatmap / Busy Times', icon: LucideFlame, route: '/heatmap' }
+        { id: 'heatmap', label: 'Heatmap / Busy Times', icon: LucideFlame, route: '/heatmap' },
+        { id: 'category-bar', label: 'Category Bar', icon: LucideSliders, route: '/category-bar' }
       ]
     },
     {

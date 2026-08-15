@@ -1,0 +1,271 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">forge/components · Data Visualization</div>
+    <h1>Category Bar &amp; Distribution Metric</h1>
+    <p class="subtitle">
+      A multi-segment proportional bar component to display categorical distributions, budget splits, and performance metrics with optional needle markers, boundary scale labels, and interactive tooltips.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- Main Showcase Card (Exact Reproduction of User Mockup) -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Examples</span>
+          <h2>BASIC CATEGORY BAR</h2>
+        </div>
+
+        <!-- Preview / Code Tab Switcher using Forge Button Group -->
+        <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button
+            type="button"
+            forgeButton
+            forgeButtonGroupItem
+            value="preview"
+            (click)="activeTab.set('preview')"
+          >
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button
+            type="button"
+            forgeButton
+            forgeButtonGroupItem
+            value="code"
+            (click)="activeTab.set('code')"
+          >
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </forge-button-group>
+      </div>
+
+      <!-- Tab 1: Live Mockup Preview -->
+      @if (activeTab() === 'preview') {
+        <div class="mockup-preview-container">
+          <!-- Item 1: Revenue Breakdown -->
+          <div class="category-bar-demo-row">
+            <forge-category-bar
+              title="Revenue Breakdown"
+              subtitle="Quarterly revenue distribution across products"
+              [values]="revenueValues"
+              [colors]="revenueColors"
+              [markerValue]="revenueMarker"
+              size="md"
+              shape="pill"
+              (segmentClick)="onSegmentClick($event)"
+              (markerClick)="onMarkerClick($event)"
+            />
+          </div>
+
+          <!-- Item 2: Performance Metrics -->
+          <div class="category-bar-demo-row">
+            <forge-category-bar
+              title="Performance Metrics"
+              subtitle="System performance distribution"
+              [values]="performanceValues"
+              [colors]="performanceColors"
+              size="md"
+              shape="pill"
+              (segmentClick)="onSegmentClick($event)"
+            />
+          </div>
+
+          <!-- Item 3: Budget Allocation -->
+          <div class="category-bar-demo-row">
+            <forge-category-bar
+              title="Budget Allocation"
+              subtitle="Department budget distribution with marker"
+              [categories]="budgetCategories"
+              [markerValue]="budgetMarker"
+              [showLabels]="false"
+              size="md"
+              shape="pill"
+              (segmentClick)="onSegmentClick($event)"
+              (markerClick)="onMarkerClick($event)"
+            />
+          </div>
+        </div>
+      } @else {
+        <!-- Tab 2: Code Snippet View -->
+        <div class="code-view-container">
+          <div class="code-toolbar">
+            <span class="code-lang">HTML / Template</span>
+            <button type="button" forgeButton variant="outline" size="sm" (click)="copyCode()">
+              @if (copied()) {
+                <svg lucideCheck [size]="14"></svg>
+                <span>Copied!</span>
+              } @else {
+                <svg lucideCopy [size]="14"></svg>
+                <span>Copy Code</span>
+              }
+            </button>
+          </div>
+          <pre class="code-block"><code>{{ codeSnippet }}</code></pre>
+        </div>
+      }
+    </div>
+
+    <!-- Interactive Playground Card -->
+    <div class="card playground-card">
+      <div class="card-header">
+        <div>
+          <h2>Interactive Playground &amp; Configurations</h2>
+          <span class="card-subtitle">
+            Customize parameters in real-time to preview dynamic reactivity, scale labels, and needle marker behavior.
+          </span>
+        </div>
+      </div>
+
+      <div class="playground-layout">
+        <!-- Interactive Controls -->
+        <div class="playground-controls">
+          <!-- Marker Position Slider -->
+          <div class="control-item">
+            <label class="control-label" for="markerSlider">
+              <span>Marker Value:</span>
+              <strong class="highlight-val">{{ interactiveMarker() }}</strong>
+            </label>
+            <input
+              id="markerSlider"
+              type="range"
+              min="0"
+              max="300"
+              step="5"
+              [ngModel]="interactiveMarker()"
+              (ngModelChange)="interactiveMarker.set($event)"
+              class="range-slider"
+            />
+          </div>
+
+          <!-- Size Variant using Segmented Button Group -->
+          <div class="control-item">
+            <label class="control-label">Bar Size / Height:</label>
+            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="interactiveSize()">
+              <button type="button" forgeButton forgeButtonGroupItem value="xs" (click)="interactiveSize.set('xs')">XS</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="sm" (click)="interactiveSize.set('sm')">SM</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="md" (click)="interactiveSize.set('md')">MD</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="lg" (click)="interactiveSize.set('lg')">LG</button>
+            </forge-button-group>
+          </div>
+
+          <!-- Shape Variant using Segmented Button Group -->
+          <div class="control-item">
+            <label class="control-label">Corner Shape:</label>
+            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="interactiveShape()">
+              <button type="button" forgeButton forgeButtonGroupItem value="pill" (click)="interactiveShape.set('pill')">Pill</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="rounded" (click)="interactiveShape.set('rounded')">Rounded</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="square" (click)="interactiveShape.set('square')">Square</button>
+            </forge-button-group>
+          </div>
+
+          <!-- Label Placement using Segmented Button Group -->
+          <div class="control-item">
+            <label class="control-label">Boundary Scale Labels:</label>
+            <forge-button-group variant="segmented" size="sm" selectionMode="single" [value]="interactiveLabelPos()">
+              <button type="button" forgeButton forgeButtonGroupItem value="top" (click)="interactiveLabelPos.set('top')">Top</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="bottom" (click)="interactiveLabelPos.set('bottom')">Bottom</button>
+              <button type="button" forgeButton forgeButtonGroupItem value="none" (click)="interactiveLabelPos.set('none')">None</button>
+            </forge-button-group>
+          </div>
+
+          <!-- Toggle Legend & Tooltips using Forge Slide Toggle -->
+          <div class="control-toggles">
+            <forge-slide-toggle
+              [checked]="interactiveShowLegend()"
+              (checkedChange)="interactiveShowLegend.set($event)"
+              labelPosition="after"
+              size="sm"
+            >
+              Show Category Legend
+            </forge-slide-toggle>
+
+            <forge-slide-toggle
+              [checked]="interactiveShowTooltip()"
+              (checkedChange)="interactiveShowTooltip.set($event)"
+              labelPosition="after"
+              size="sm"
+            >
+              Interactive Hover Tooltip
+            </forge-slide-toggle>
+          </div>
+        </div>
+
+        <!-- Live Live Output Preview -->
+        <div class="playground-preview-area">
+          <forge-category-bar
+            title="Product Revenue Distribution"
+            subtitle="Live reactive simulation with real-time marker and property bindings"
+            [categories]="playgroundSegments()"
+            [markerValue]="interactiveMarker()"
+            [size]="interactiveSize()"
+            [shape]="interactiveShape()"
+            [labelPosition]="interactiveLabelPos()"
+            [showLabels]="interactiveLabelPos() !== 'none'"
+            [showLegend]="interactiveShowLegend()"
+            [showTooltip]="interactiveShowTooltip()"
+            (segmentClick)="onSegmentClick($event)"
+            (markerClick)="onMarkerClick($event)"
+          />
+
+          <!-- Live Event Log -->
+          <div class="event-log-banner">
+            <span class="log-label">Live Output Event:</span>
+            <code class="log-msg">{{ lastEventLog() }}</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common Dashboard Integration Patterns -->
+    <div class="card use-cases-card">
+      <div class="card-header">
+        <div>
+          <h2>Common Integration Patterns</h2>
+          <span class="card-subtitle">
+            Compact inline progress, SLA breach indicators, and financial budget thresholds.
+          </span>
+        </div>
+      </div>
+
+      <div class="use-cases-grid">
+        <!-- Compact Card 1 -->
+        <div class="use-case-item">
+          <div class="use-case-header">
+            <h4>Cloud Storage Tier Allocation</h4>
+            <span class="badge-pill">78% Utilized</span>
+          </div>
+          <forge-category-bar
+            [values]="[500, 300, 200]"
+            [colors]="['#3b82f6', '#10b981', '#64748b']"
+            [markerValue]="780"
+            size="sm"
+            shape="pill"
+            [showLabels]="false"
+          />
+        </div>
+
+        <!-- Compact Card 2 -->
+        <div class="use-case-item">
+          <div class="use-case-header">
+            <h4>Incident Response SLA Thresholds</h4>
+            <span class="badge-pill warning">Within Normal SLA</span>
+          </div>
+          <forge-category-bar
+            [categories]="[
+              { value: 60, label: 'Optimal (<1h)', color: '#10b981' },
+              { value: 25, label: 'Warning (1-2h)', color: '#f59e0b' },
+              { value: 15, label: 'Critical (>2h)', color: '#ef4444' }
+            ]"
+            [markerValue]="42"
+            size="sm"
+            shape="pill"
+            [showLegend]="true"
+            [showLabels]="false"
+          />
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

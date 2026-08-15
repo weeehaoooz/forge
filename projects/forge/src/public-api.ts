@@ -73,5 +73,7 @@ export * from './lib/heatmap/heatmap.types';
 export * from './lib/heatmap/heatmap.component';
 export * from './lib/heatmap/heatmap.module';
 
-
-
+// Category Bar component, module & types
+export * from './lib/category-bar/category-bar.types';
+export * from './lib/category-bar/category-bar.component';
+export * from './lib/category-bar/category-bar.module';
