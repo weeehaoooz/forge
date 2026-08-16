@@ -1,0 +1,96 @@
+<div class="card demo-card-container">
+  <!-- Card Header -->
+  <div class="card-header">
+    <div class="header-left">
+      @if (badge()) {
+        <span class="sub-badge">{{ badge() }}</span>
+      }
+      @if (title()) {
+        <h2>{{ title() }}</h2>
+      }
+      @if (subtitle()) {
+        <p class="header-subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+
+    <div class="header-right">
+      <ng-content select="[actions]"></ng-content>
+
+      <!-- View Mode Segmented Switcher (Preview vs Code) -->
+      <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeMode()">
+        <button
+          type="button"
+          talosButton
+          talosButtonGroupItem
+          value="preview"
+          (click)="activeMode.set('preview')"
+          aria-label="View Preview"
+        >
+          <svg lucideEye [size]="14"></svg>
+          <span>Preview</span>
+        </button>
+        <button
+          type="button"
+          talosButton
+          talosButtonGroupItem
+          value="code"
+          (click)="activeMode.set('code')"
+          aria-label="View Code"
+        >
+          <svg lucideCode [size]="14"></svg>
+          <span>Code</span>
+        </button>
+      </talos-button-group>
+    </div>
+  </div>
+
+  <!-- Main Body Content -->
+  @if (activeMode() === 'preview') {
+    <div
+      class="preview-container"
+      [class.padding-none]="previewPadding() === 'none'"
+      [class.padding-sm]="previewPadding() === 'sm'"
+      [class.padding-md]="previewPadding() === 'md'"
+      [class.padding-lg]="previewPadding() === 'lg'"
+    >
+      <ng-content></ng-content>
+    </div>
+  } @else {
+    <!-- Code View Section -->
+    <div class="code-view-section">
+      <!-- Sub-Tabs if multiple code snippets exist -->
+      <div class="code-toolbar">
+        <div class="code-tabs-nav">
+          @if (resolvedTabs().length > 1) {
+            <div class="sub-tabs-list">
+              @for (tab of resolvedTabs(); track $index) {
+                <button
+                  type="button"
+                  class="sub-tab-btn"
+                  [class.is-active]="activeSubTab() === $index"
+                  (click)="activeSubTab.set($index)"
+                >
+                  {{ tab.label }}
+                </button>
+              }
+            </div>
+          } @else if (resolvedTabs().length === 1) {
+            <span class="single-tab-lang">{{ resolvedTabs()[0].label }}</span>
+          }
+        </div>
+
+        <button type="button" talosButton variant="secondary" size="sm" (click)="copyCurrentCode()">
+          @if (copied()) {
+            <svg lucideCheck [size]="14"></svg>
+            <span>Copied!</span>
+          } @else {
+            <svg lucideCopy [size]="14"></svg>
+            <span>Copy Code</span>
+          }
+        </button>
+      </div>
+
+      <pre class="code-block-display"><code>{{ currentCodeSnippet() }}</code></pre>
+    </div>
+  }
+</div>

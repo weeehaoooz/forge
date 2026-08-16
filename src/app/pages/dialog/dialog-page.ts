@@ -1,22 +1,16 @@
-import { Component, inject, signal, TemplateRef } from '@angular/core';
+import { Component, inject, signal, computed, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {
   TalosDialogService,
   TalosDialogSize,
   TalosDialogBlur,
-  TalosDialogModule,
-  TalosDialogRef,
-  TALOS_DIALOG_DATA
+  TalosDialogModule
 } from '@talos/components/dialog';
 import { TalosButtonDirective } from '@talos/components/button';
 import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
 import { TalosSlideToggleComponent } from '@talos/components/form/slide-toggle';
-import { TalosInputDirective } from '@talos/components/form/input';
-import { TalosFormFieldComponent } from '@talos/components/form/form-field';
-import { SelectInputComponent, OptionComponent } from '@talos/components/form/select-input';
-import { TalosStatusTagComponent } from '@talos/components/status-tag';
-import { TalosChipsComponent, TalosChipComponent } from '@talos/components/form/chips';
+import { TalosPreviewCodeCardComponent, DemoCodeTab } from '../../demo/preview-code-card/preview-code-card.component';
 import {
   LucideEye,
   LucideCode,
@@ -28,461 +22,16 @@ import {
   LucideCheckCircle2,
   LucideSettings,
   LucideUserCheck,
-  LucideFolderPlus,
-  LucideMaximize2
+  LucideMaximize2,
+  LucideFileCode2
 } from '@lucide/angular';
 
-/* -------------------------------------------------------------
- * 1. Medium Form Component Modal
- * ------------------------------------------------------------- */
-@Component({
-  selector: 'app-user-edit-dialog',
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TalosDialogModule,
-    TalosButtonDirective,
-    TalosFormFieldComponent,
-    TalosInputDirective,
-    SelectInputComponent,
-    OptionComponent,
-    TalosSlideToggleComponent,
-    LucideUserCheck
-  ],
-  template: `
-    <talos-dialog-header
-      title="Edit Member Profile"
-      subtitle="Update role permissions, email notification preferences, and team assignment.">
-      <div talos-dialog-icon class="dialog-icon-badge">
-        <svg lucideUserCheck [size]="20"></svg>
-      </div>
-    </talos-dialog-header>
+import { UserEditDialogComponent } from './modals/user-edit-dialog.component';
+import { LargeWorkflowDialogComponent } from './modals/large-workflow-dialog.component';
+import { ContentHugDialogComponent } from './modals/content-hug-dialog.component';
 
-    <talos-dialog-content padding="md">
-      <form [formGroup]="form" class="dialog-form-layout">
-        <div class="form-row-2">
-          <talos-form-field label="Full Name" [required]="true">
-            <input talosInput formControlName="fullName" placeholder="e.g. Eugene Lamar" />
-          </talos-form-field>
+export type PatternKey = 'userForm' | 'largeForm' | 'contentHug' | 'confirmAlert' | 'template';
 
-          <talos-form-field label="Email Address" [required]="true">
-            <input talosInput type="email" formControlName="email" placeholder="e.g. eugene@glan.com" />
-          </talos-form-field>
-        </div>
-
-        <talos-form-field label="Workspace Role">
-          <talos-select-input formControlName="role" placeholder="Select role">
-            <talos-option value="admin" label="Organization Admin" />
-            <talos-option value="editor" label="Workflow Editor" />
-            <talos-option value="viewer" label="Read-Only Viewer" />
-          </talos-select-input>
-        </talos-form-field>
-
-        <div class="form-toggle-row">
-          <div>
-            <span class="toggle-title">Security Alert Notifications</span>
-            <p class="toggle-desc">Receive instant email digests when new security keys are generated.</p>
-          </div>
-          <talos-slide-toggle formControlName="notifications" />
-        </div>
-      </form>
-    </talos-dialog-content>
-
-    <talos-dialog-footer align="end">
-      <button talosButton variant="secondary" size="md" [talosDialogClose]="null">
-        Cancel
-      </button>
-      <button talosButton variant="primary" size="md" [disabled]="form.invalid" (click)="save()">
-        Save Changes
-      </button>
-    </talos-dialog-footer>
-  `,
-  styles: [`
-    .dialog-icon-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 0.5rem;
-      background: var(--talos-primary-light, #eff6ff);
-      color: var(--talos-primary-color, #2563eb);
-    }
-    .dialog-form-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .form-row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      @media (max-width: 600px) {
-        grid-template-columns: 1fr;
-      }
-    }
-    .form-toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: var(--talos-border-radius, 0.375rem);
-      background-color: var(--talos-bg-subtle, #f8fafc);
-      border: 1px solid var(--talos-border-color, #e2e8f0);
-    }
-    .toggle-title {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--talos-text-color, #0f172a);
-    }
-    .toggle-desc {
-      margin: 0.125rem 0 0;
-      font-size: 0.8125rem;
-      color: var(--talos-text-muted, #64748b);
-    }
-  `]
-})
-export class UserEditDialogComponent {
-  private readonly dialogRef = inject(TalosDialogRef);
-  private readonly initialData = inject(TALOS_DIALOG_DATA, { optional: true }) as any;
-
-  protected readonly form = new FormGroup({
-    fullName: new FormControl(this.initialData?.fullName ?? 'Eugene Lamar', Validators.required),
-    email: new FormControl(this.initialData?.email ?? 'eugene@glan.com', [Validators.required, Validators.email]),
-    role: new FormControl(this.initialData?.role ?? 'admin'),
-    notifications: new FormControl(this.initialData?.notifications ?? true)
-  });
-
-  protected save(): void {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
-    }
-  }
-}
-
-/* -------------------------------------------------------------
- * 2. Large / Multi-Column Enterprise Workflow Form Modal
- * ------------------------------------------------------------- */
-@Component({
-  selector: 'app-large-workflow-dialog',
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TalosDialogModule,
-    TalosButtonDirective,
-    TalosFormFieldComponent,
-    TalosInputDirective,
-    SelectInputComponent,
-    OptionComponent,
-    TalosChipsComponent,
-    TalosChipComponent,
-    TalosStatusTagComponent,
-    LucideSettings
-  ],
-  template: `
-    <talos-dialog-header
-      title="Create Production Deployment Pipeline"
-      subtitle="Configure multi-region deployment target, autoscaling bounds, rollback thresholds, and secrets.">
-      <div talos-dialog-icon class="dialog-icon-badge">
-        <svg lucideSettings [size]="20"></svg>
-      </div>
-    </talos-dialog-header>
-
-    <talos-dialog-content padding="lg">
-      <form class="enterprise-form">
-        <!-- Section 1: General Info -->
-        <div class="form-section">
-          <h3 class="section-heading">1. Pipeline & Cluster Environment</h3>
-          <div class="grid-3">
-            <talos-form-field label="Pipeline Identifier" [required]="true">
-              <input talosInput [(ngModel)]="pipelineName" name="pName" placeholder="e.g. prod-asia-primary" />
-            </talos-form-field>
-
-            <talos-form-field label="Primary Cloud Region">
-              <talos-select-input [(ngModel)]="region" name="region">
-                <talos-option value="ap-southeast-1" label="Singapore (ap-southeast-1)" />
-                <talos-option value="us-east-1" label="US East (us-east-1)" />
-                <talos-option value="eu-central-1" label="Frankfurt (eu-central-1)" />
-                <talos-option value="ap-northeast-1" label="Tokyo (ap-northeast-1)" />
-              </talos-select-input>
-            </talos-form-field>
-
-            <talos-form-field label="Deployment Strategy">
-              <talos-select-input [(ngModel)]="strategy" name="strategy">
-                <talos-option value="blue-green" label="Blue / Green (Zero Downtime)" />
-                <talos-option value="canary" label="Canary (10% Increment)" />
-                <talos-option value="rolling" label="Rolling Update" />
-              </talos-select-input>
-            </talos-form-field>
-          </div>
-        </div>
-
-        <!-- Section 2: Autoscaling & Resource Allocation -->
-        <div class="form-section">
-          <h3 class="section-heading">2. Resource Limits & Autoscaling Bounds</h3>
-          <div class="grid-4">
-            <talos-form-field label="Min Replicas">
-              <input talosInput type="number" [(ngModel)]="minReplicas" name="minR" />
-            </talos-form-field>
-
-            <talos-form-field label="Max Replicas">
-              <input talosInput type="number" [(ngModel)]="maxReplicas" name="maxR" />
-            </talos-form-field>
-
-            <talos-form-field label="CPU Limit (vCPU)">
-              <input talosInput [(ngModel)]="cpuLimit" name="cpuL" placeholder="4000m" />
-            </talos-form-field>
-
-            <talos-form-field label="Memory Limit (GiB)">
-              <input talosInput [(ngModel)]="memLimit" name="memL" placeholder="16Gi" />
-            </talos-form-field>
-          </div>
-        </div>
-
-        <!-- Section 3: Tags & Compliance -->
-        <div class="form-section">
-          <h3 class="section-heading">3. Environment Tags & Notification Webhook</h3>
-          <div class="grid-2">
-            <talos-form-field label="Notification Slack Webhook">
-              <input talosInput [(ngModel)]="webhook" name="webhook" placeholder="https://hooks.slack.com/services/..." />
-            </talos-form-field>
-
-            <talos-form-field label="Environment Isolation Tier">
-              <talos-select-input [(ngModel)]="tier" name="tier">
-                <talos-option value="p0" label="P0 - Mission Critical SLA 99.99%" />
-                <talos-option value="p1" label="P1 - Production Workload" />
-                <talos-option value="p2" label="P2 - Staging / Preview" />
-              </talos-select-input>
-            </talos-form-field>
-          </div>
-
-          <div class="tags-group">
-            <span class="tags-label">Assigned Compliance Labels:</span>
-            <talos-chips>
-              <talos-chip label="SOC2-Type2" color="primary" />
-              <talos-chip label="HIPAA-Ready" color="success" />
-              <talos-chip label="PCI-DSS" color="warning" />
-              <talos-chip label="Auto-Encrypted" color="neutral" />
-            </talos-chips>
-          </div>
-        </div>
-      </form>
-    </talos-dialog-content>
-
-    <talos-dialog-footer align="space-between" [sticky]="true">
-      <div class="footer-status">
-        <talos-status-tag status="SUCCESS" label="Ready to provision" variant="subtle" size="sm" />
-      </div>
-      <div class="footer-actions">
-        <button talosButton variant="secondary" size="md" [talosDialogClose]="null">
-          Cancel
-        </button>
-        <button talosButton variant="primary" size="md" (click)="submit()">
-          Provision Pipeline
-        </button>
-      </div>
-    </talos-dialog-footer>
-  `,
-  styles: [`
-    .dialog-icon-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 0.5rem;
-      background: var(--talos-primary-light, #eff6ff);
-      color: var(--talos-primary-color, #2563eb);
-    }
-    .enterprise-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-    }
-    .form-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-    .section-heading {
-      margin: 0;
-      font-size: 0.875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--talos-text-color, #0f172a);
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
-    }
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
-    }
-    .tags-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .tags-label {
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--talos-text-muted, #64748b);
-    }
-    .footer-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-  `]
-})
-export class LargeWorkflowDialogComponent {
-  private readonly dialogRef = inject(TalosDialogRef);
-
-  protected pipelineName = 'prod-asia-cluster-01';
-  protected region = 'ap-southeast-1';
-  protected strategy = 'blue-green';
-  protected minReplicas = 4;
-  protected maxReplicas = 32;
-  protected cpuLimit = '4000m';
-  protected memLimit = '16Gi';
-  protected webhook = 'https://hooks.slack.com/services/T00/B00/XXXX';
-  protected tier = 'p0';
-
-  protected submit(): void {
-    this.dialogRef.close({
-      pipelineName: this.pipelineName,
-      region: this.region,
-      strategy: this.strategy
-    });
-  }
-}
-
-/* -------------------------------------------------------------
- * 3. Content-Based / Auto-Sizing Dynamic Modal Component
- * ------------------------------------------------------------- */
-@Component({
-  selector: 'app-content-hug-dialog',
-  imports: [
-    CommonModule,
-    TalosDialogModule,
-    TalosButtonDirective,
-    TalosChipComponent,
-    LucideSparkles,
-    LucideFolderPlus
-  ],
-  template: `
-    <talos-dialog-header
-      title="Dynamic Content Hugger"
-      subtitle="This dialog size is set to 'auto'. It hugs and expands seamlessly as items change.">
-      <div talos-dialog-icon class="dialog-icon-badge">
-        <svg lucideSparkles [size]="20"></svg>
-      </div>
-    </talos-dialog-header>
-
-    <talos-dialog-content padding="md">
-      <div class="content-hug-box">
-        <p class="desc-text">
-          Current active tags count: <strong>{{ tags().length }}</strong>
-        </p>
-
-        <div class="dynamic-chips-grid">
-          @for (tag of tags(); track tag) {
-            <talos-chip [label]="tag" color="primary" [removable]="true" (removed)="removeTag(tag)" />
-          }
-        </div>
-
-        <div class="hug-action-bar">
-          <button talosButton variant="outline" size="sm" (click)="addTag()">
-            <svg lucideFolderPlus [size]="14"></svg>
-            Add New Item
-          </button>
-        </div>
-      </div>
-    </talos-dialog-content>
-
-    <talos-dialog-footer align="end">
-      <button talosButton variant="primary" size="md" [talosDialogClose]="tags()">
-        Done ({{ tags().length }} items)
-      </button>
-    </talos-dialog-footer>
-  `,
-  styles: [`
-    .dialog-icon-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 0.5rem;
-      background: var(--talos-primary-light, #eff6ff);
-      color: var(--talos-primary-color, #2563eb);
-    }
-    .content-hug-box {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .desc-text {
-      margin: 0;
-      font-size: 0.875rem;
-      color: var(--talos-text-muted, #64748b);
-    }
-    .dynamic-chips-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      max-width: 440px;
-    }
-    .hug-action-bar {
-      margin-top: 0.5rem;
-    }
-  `]
-})
-export class ContentHugDialogComponent {
-  protected readonly tags = signal<string[]>([
-    'High Availability',
-    'Redis Cache',
-    'Postgres Cluster',
-    'Kafka Stream'
-  ]);
-
-  private count = 1;
-
-  protected addTag(): void {
-    this.tags.update(t => [...t, `Dynamic Microservice #${this.count++}`]);
-  }
-
-  protected removeTag(tag: string): void {
-    this.tags.update(t => t.filter(item => item !== tag));
-  }
-}
-
-/* -------------------------------------------------------------
- * Main Dialog Showcase Page Component
- * ------------------------------------------------------------- */
 @Component({
   selector: 'app-dialog-page',
   imports: [
@@ -493,17 +42,15 @@ export class ContentHugDialogComponent {
     TalosButtonGroupComponent,
     TalosButtonGroupItemDirective,
     TalosSlideToggleComponent,
-    LucideEye,
-    LucideCode,
-    LucideCopy,
-    LucideCheck,
-    LucideMaximize2,
+    TalosPreviewCodeCardComponent,
     LucideSparkles,
     LucideTrash2,
     LucideAlertTriangle,
     LucideCheckCircle2,
     LucideSettings,
-    LucideUserCheck
+    LucideUserCheck,
+    LucideMaximize2,
+    LucideFileCode2
   ],
   templateUrl: './dialog-page.html',
   styleUrl: './dialog-page.scss'
@@ -511,25 +58,15 @@ export class ContentHugDialogComponent {
 export class DialogPage {
   private readonly dialog = inject(TalosDialogService);
 
-  // Configurator state
-  protected readonly activeTab = signal<'preview' | 'code'>('preview');
+  // Playground Configurator state
   protected readonly selectedSize = signal<TalosDialogSize>('md');
   protected readonly selectedBlur = signal<TalosDialogBlur>('md');
   protected readonly disableClose = signal<boolean>(false);
   protected readonly lastDialogResult = signal<string>('No dialog opened yet');
 
-  // Icons
-  protected readonly LucideEye = LucideEye;
-  protected readonly LucideCode = LucideCode;
-  protected readonly LucideCopy = LucideCopy;
-  protected readonly LucideCheck = LucideCheck;
-  protected readonly LucideSparkles = LucideSparkles;
-  protected readonly LucideMaximize2 = LucideMaximize2;
-  protected readonly LucideTrash2 = LucideTrash2;
-  protected readonly LucideAlertTriangle = LucideAlertTriangle;
-
-  // Code snippets copied indicator
-  protected readonly copied = signal<boolean>(false);
+  // Unified Pattern Explorer state
+  protected readonly selectedPattern = signal<PatternKey>('userForm');
+  protected readonly patternViewMode = signal<'preview' | 'code'>('preview');
 
   /** Open Configured Playground Dialog */
   protected openConfiguredModal(): void {
@@ -562,6 +99,27 @@ export class DialogPage {
         this.lastDialogResult.set(`User Saved: ${JSON.stringify(result)}`);
       } else {
         this.lastDialogResult.set('Modal dismissed without changes');
+      }
+    });
+  }
+
+  /** Open Standard User Form Modal */
+  protected openUserFormModal(): void {
+    const ref = this.dialog.open(UserEditDialogComponent, {
+      size: 'md',
+      backdropBlur: this.selectedBlur(),
+      data: {
+        fullName: 'Eugene Lamar',
+        email: 'eugene@glan.com',
+        role: 'admin'
+      }
+    });
+
+    ref.closed.subscribe(result => {
+      if (result) {
+        this.lastDialogResult.set(`User Profile Updated: ${JSON.stringify(result)}`);
+      } else {
+        this.lastDialogResult.set('User form closed');
       }
     });
   }
@@ -620,7 +178,7 @@ export class DialogPage {
   /** Open Large / Enterprise Multi-column Form Modal */
   protected openLargeWorkflowModal(): void {
     const ref = this.dialog.open(LargeWorkflowDialogComponent, {
-      size: this.selectedSize() === 'xl' ? 'xl' : 'lg',
+      size: 'lg',
       backdropBlur: this.selectedBlur(),
       disableClose: this.disableClose()
     });
@@ -663,24 +221,18 @@ export class DialogPage {
     });
   }
 
-  /** Copy Code Snippet */
-  protected copyCode(): void {
-    navigator.clipboard?.writeText(this.generatedCode);
-    this.copied.set(true);
-    setTimeout(() => this.copied.set(false), 2000);
-  }
-
-  protected get generatedCode(): string {
+  /** Dynamic playground code */
+  protected get playgroundCode(): string {
     const blurVal = typeof this.selectedBlur() === 'string' ? `'${this.selectedBlur()}'` : this.selectedBlur();
     return `import { Component, inject } from '@angular/core';
 import { TalosDialogService } from '@talos/components/dialog';
-import { UserEditDialogComponent } from './user-edit-dialog.component';
+import { UserEditDialogComponent } from './modals/user-edit-dialog.component';
 
 @Component({
   selector: 'app-example',
   template: \`
     <button talosButton variant="primary" (click)="openDialog()">
-      Open Modal
+      Launch Modal (${this.selectedSize()})
     </button>
   \`
 })
@@ -692,15 +244,479 @@ export class ExampleComponent {
       size: '${this.selectedSize()}',
       backdropBlur: ${blurVal},
       disableClose: ${this.disableClose()},
-      data: { userId: 123 }
+      data: {
+        fullName: 'Eugene Lamar',
+        email: 'eugene@glan.com',
+        role: 'admin'
+      }
     });
 
     ref.closed.subscribe(result => {
       if (result) {
-        console.log('Dialog result:', result);
+        console.log('User saved:', result);
       }
     });
   }
 }`;
   }
+
+  /** Selected pattern metadata */
+  protected readonly currentPatternInfo = computed(() => {
+    switch (this.selectedPattern()) {
+      case 'userForm':
+        return {
+          title: 'STANDARD FORM MODAL (size: "md")',
+          subtitle: 'Clean modal for standard forms, profile editing, and validation with typed return payload.',
+          badge: 'Form Pattern',
+          tabs: this.userFormTabs
+        };
+      case 'largeForm':
+        return {
+          title: 'LARGE ENTERPRISE FORM (size: "lg" / "xl")',
+          subtitle: 'Multi-column grid inputs with sticky action footer for complex infrastructure workflows.',
+          badge: 'Enterprise Pattern',
+          tabs: this.largeWorkflowTabs
+        };
+      case 'contentHug':
+        return {
+          title: 'DYNAMIC CONTENT-HUGGER (size: "auto")',
+          subtitle: 'Modal dimensions tightly hug content and resize smoothly as dynamic elements change.',
+          badge: 'Dynamic Sizing',
+          tabs: this.contentHugTabs
+        };
+      case 'confirmAlert':
+        return {
+          title: '1-LINE CONFIRM & ALERT SHORTCUTS',
+          subtitle: 'Built-in convenience methods for irreversible danger prompts and success notices.',
+          badge: 'Convenience Helpers',
+          tabs: this.confirmAlertTabs
+        };
+      case 'template':
+        return {
+          title: 'INLINE TEMPLATE MODAL (<ng-template>)',
+          subtitle: 'Render dialogs directly from ng-template references without creating separate component files.',
+          badge: 'Template Pattern',
+          tabs: this.templateModalTabs
+        };
+    }
+  });
+
+  /* -------------------------------------------------------------
+   * Code Snippet Tabs for Reusable Reference Cards
+   * ------------------------------------------------------------- */
+  protected readonly userFormTabs: DemoCodeTab[] = [
+    {
+      label: 'Caller Service Usage',
+      code: `import { Component, inject } from '@angular/core';
+import { TalosDialogService } from '@talos/components/dialog';
+import { UserEditDialogComponent } from './modals/user-edit-dialog.component';
+
+@Component({
+  selector: 'app-users-view',
+  template: \`
+    <button talosButton variant="primary" (click)="editUser()">
+      Edit User Profile
+    </button>
+  \`
+})
+export class UsersViewComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  editUser(): void {
+    const ref = this.dialog.open(UserEditDialogComponent, {
+      size: 'md',             // Standard form width (~560px)
+      backdropBlur: 'md',     // Frosted glass background blur (8px)
+      data: {
+        fullName: 'Eugene Lamar',
+        email: 'eugene@glan.com',
+        role: 'admin'
+      }
+    });
+
+    ref.closed.subscribe(updatedData => {
+      if (updatedData) {
+        console.log('Saved user payload:', updatedData);
+      }
+    });
+  }
+}`
+    },
+    {
+      label: 'user-edit-dialog.component.ts',
+      code: `import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  TalosDialogModule,
+  TalosDialogRef,
+  TALOS_DIALOG_DATA
+} from '@talos/components/dialog';
+import { TalosButtonDirective } from '@talos/components/button';
+import { TalosFormFieldComponent } from '@talos/components/form/form-field';
+import { TalosInputDirective } from '@talos/components/form/input';
+import { SelectInputComponent, OptionComponent } from '@talos/components/form/select-input';
+import { TalosSlideToggleComponent } from '@talos/components/form/slide-toggle';
+import { LucideUserCheck } from '@lucide/angular';
+
+@Component({
+  selector: 'app-user-edit-dialog',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TalosDialogModule,
+    TalosButtonDirective,
+    TalosFormFieldComponent,
+    TalosInputDirective,
+    SelectInputComponent,
+    OptionComponent,
+    TalosSlideToggleComponent,
+    LucideUserCheck
+  ],
+  template: \`
+    <talos-dialog-header
+      title="Edit Member Profile"
+      subtitle="Update role permissions, email notification preferences, and team assignment.">
+      <div talos-dialog-icon class="dialog-icon-badge">
+        <svg lucideUserCheck [size]="20"></svg>
+      </div>
+    </talos-dialog-header>
+
+    <talos-dialog-content padding="md">
+      <form [formGroup]="form" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <talos-form-field label="Full Name" [required]="true">
+            <input talosInput formControlName="fullName" placeholder="e.g. Eugene Lamar" />
+          </talos-form-field>
+
+          <talos-form-field label="Email Address" [required]="true">
+            <input talosInput type="email" formControlName="email" placeholder="e.g. eugene@glan.com" />
+          </talos-form-field>
+        </div>
+
+        <talos-form-field label="Workspace Role">
+          <talos-select-input formControlName="role">
+            <talos-option value="admin" label="Organization Admin" />
+            <talos-option value="editor" label="Workflow Editor" />
+            <talos-option value="viewer" label="Read-Only Viewer" />
+          </talos-select-input>
+        </talos-form-field>
+      </form>
+    </talos-dialog-content>
+
+    <talos-dialog-footer align="end">
+      <button talosButton variant="secondary" [talosDialogClose]="null">
+        Cancel
+      </button>
+      <button talosButton variant="primary" [disabled]="form.invalid" (click)="save()">
+        Save Changes
+      </button>
+    </talos-dialog-footer>
+  \`
+})
+export class UserEditDialogComponent {
+  private readonly dialogRef = inject(TalosDialogRef);
+  private readonly initialData = inject(TALOS_DIALOG_DATA, { optional: true }) as any;
+
+  protected readonly form = new FormGroup({
+    fullName: new FormControl(this.initialData?.fullName ?? '', Validators.required),
+    email: new FormControl(this.initialData?.email ?? '', [Validators.required, Validators.email]),
+    role: new FormControl(this.initialData?.role ?? 'admin')
+  });
+
+  protected save(): void {
+    if (this.form.valid) {
+      this.dialogRef.close(this.form.value);
+    }
+  }
+}`
+    }
+  ];
+
+  protected readonly largeWorkflowTabs: DemoCodeTab[] = [
+    {
+      label: 'Caller Service Usage',
+      code: `import { Component, inject } from '@angular/core';
+import { TalosDialogService } from '@talos/components/dialog';
+import { LargeWorkflowDialogComponent } from './modals/large-workflow-dialog.component';
+
+@Component({
+  selector: 'app-deployment-view',
+  template: \`
+    <button talosButton variant="primary" (click)="openPipelineModal()">
+      New Production Pipeline (Large Form)
+    </button>
+  \`
+})
+export class DeploymentViewComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  openPipelineModal(): void {
+    const ref = this.dialog.open(LargeWorkflowDialogComponent, {
+      size: 'lg',            // 'lg' (768px) or 'xl' (1024px) gives ample multi-column room
+      backdropBlur: 'md',    // Frosted glass background
+      disableClose: false
+    });
+
+    ref.closed.subscribe(config => {
+      if (config) {
+        console.log('Pipeline provisioned:', config);
+      }
+    });
+  }
+}`
+    },
+    {
+      label: 'large-workflow-dialog.component.ts',
+      code: `import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TalosDialogModule, TalosDialogRef } from '@talos/components/dialog';
+import { TalosButtonDirective } from '@talos/components/button';
+import { TalosFormFieldComponent } from '@talos/components/form/form-field';
+import { TalosInputDirective } from '@talos/components/form/input';
+import { SelectInputComponent, OptionComponent } from '@talos/components/form/select-input';
+import { TalosChipsComponent, TalosChipComponent } from '@talos/components/form/chips';
+import { TalosStatusTagComponent } from '@talos/components/status-tag';
+import { LucideSettings } from '@lucide/angular';
+
+@Component({
+  selector: 'app-large-workflow-dialog',
+  imports: [
+    CommonModule,
+    FormsModule,
+    TalosDialogModule,
+    TalosButtonDirective,
+    TalosFormFieldComponent,
+    TalosInputDirective,
+    SelectInputComponent,
+    OptionComponent,
+    TalosChipsComponent,
+    TalosChipComponent,
+    TalosStatusTagComponent,
+    LucideSettings
+  ],
+  template: \`
+    <talos-dialog-header
+      title="Create Production Deployment Pipeline"
+      subtitle="Configure multi-region deployment targets and limits.">
+      <div talos-dialog-icon><svg lucideSettings [size]="20"></svg></div>
+    </talos-dialog-header>
+
+    <talos-dialog-content padding="lg">
+      <!-- 3-Column and 4-Column Grid Inputs -->
+      <div class="grid grid-cols-3 gap-4">
+        <talos-form-field label="Pipeline Name" [required]="true">
+          <input talosInput [(ngModel)]="pipelineName" />
+        </talos-form-field>
+        <talos-form-field label="Primary Region">
+          <talos-select-input [(ngModel)]="region">
+            <talos-option value="ap-southeast-1" label="Singapore" />
+            <talos-option value="us-east-1" label="US East" />
+          </talos-select-input>
+        </talos-form-field>
+        <talos-form-field label="Strategy">
+          <talos-select-input [(ngModel)]="strategy">
+            <talos-option value="blue-green" label="Blue/Green" />
+            <talos-option value="canary" label="Canary" />
+          </talos-select-input>
+        </talos-form-field>
+      </div>
+    </talos-dialog-content>
+
+    <talos-dialog-footer align="space-between" [sticky]="true">
+      <talos-status-tag status="SUCCESS" label="Ready to provision" variant="subtle" size="sm" />
+      <div class="flex gap-2">
+        <button talosButton variant="secondary" [talosDialogClose]="null">Cancel</button>
+        <button talosButton variant="primary" (click)="submit()">Provision Pipeline</button>
+      </div>
+    </talos-dialog-footer>
+  \`
+})
+export class LargeWorkflowDialogComponent {
+  private readonly dialogRef = inject(TalosDialogRef);
+  protected pipelineName = 'prod-asia-01';
+  protected region = 'ap-southeast-1';
+  protected strategy = 'blue-green';
+
+  submit(): void {
+    this.dialogRef.close({ pipelineName: this.pipelineName, region: this.region });
+  }
+}`
+    }
+  ];
+
+  protected readonly contentHugTabs: DemoCodeTab[] = [
+    {
+      label: 'Caller Service Usage',
+      code: `import { Component, inject } from '@angular/core';
+import { TalosDialogService } from '@talos/components/dialog';
+import { ContentHugDialogComponent } from './modals/content-hug-dialog.component';
+
+@Component({
+  selector: 'app-dynamic-view',
+  template: \`
+    <button talosButton variant="outline" (click)="openHugModal()">
+      Open Content-Hugging Modal (size: 'auto')
+    </button>
+  \`
+})
+export class DynamicViewComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  openHugModal(): void {
+    // size: 'auto' tightly wraps content and smoothly resizes as children change
+    this.dialog.open(ContentHugDialogComponent, {
+      size: 'auto',
+      backdropBlur: 'md'
+    });
+  }
+}`
+    },
+    {
+      label: 'content-hug-dialog.component.ts',
+      code: `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TalosDialogModule } from '@talos/components/dialog';
+import { TalosButtonDirective } from '@talos/components/button';
+import { TalosChipComponent } from '@talos/components/form/chips';
+import { LucideSparkles, LucideFolderPlus } from '@lucide/angular';
+
+@Component({
+  selector: 'app-content-hug-dialog',
+  imports: [
+    CommonModule,
+    TalosDialogModule,
+    TalosButtonDirective,
+    TalosChipComponent,
+    LucideSparkles,
+    LucideFolderPlus
+  ],
+  template: \`
+    <talos-dialog-header
+      title="Dynamic Content Hugger"
+      subtitle="Modal dimensions hug content snugly and animate smoothly.">
+      <div talos-dialog-icon><svg lucideSparkles [size]="20"></svg></div>
+    </talos-dialog-header>
+
+    <talos-dialog-content padding="md">
+      <div class="flex flex-wrap gap-2 max-w-md">
+        @for (tag of tags(); track tag) {
+          <talos-chip [label]="tag" color="primary" [removable]="true" (removed)="removeTag(tag)" />
+        }
+      </div>
+      <button talosButton variant="outline" size="sm" class="mt-4" (click)="addTag()">
+        <svg lucideFolderPlus [size]="14"></svg> Add New Item
+      </button>
+    </talos-dialog-content>
+
+    <talos-dialog-footer align="end">
+      <button talosButton variant="primary" [talosDialogClose]="tags()">Done</button>
+    </talos-dialog-footer>
+  \`
+})
+export class ContentHugDialogComponent {
+  protected readonly tags = signal<string[]>(['Redis Cache', 'Kafka Stream', 'Postgres Cluster']);
+  private count = 1;
+
+  addTag(): void {
+    this.tags.update(t => [...t, \`Microservice #\${this.count++}\`]);
+  }
+
+  removeTag(tag: string): void {
+    this.tags.update(t => t.filter(item => item !== tag));
+  }
+}`
+    }
+  ];
+
+  protected readonly confirmAlertTabs: DemoCodeTab[] = [
+    {
+      label: 'dialog.confirm() & dialog.alert()',
+      code: `import { Component, inject } from '@angular/core';
+import { TalosDialogService } from '@talos/components/dialog';
+
+@Component({
+  selector: 'app-actions-demo',
+  template: \`
+    <button talosButton variant="danger" (click)="deleteDatabase()">
+      Delete Database (Confirm)
+    </button>
+
+    <button talosButton variant="secondary" (click)="showAlert()">
+      Show Success Notice (Alert)
+    </button>
+  \`
+})
+export class ActionsDemoComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  deleteDatabase(): void {
+    this.dialog.confirm({
+      title: 'Delete Production Database?',
+      message: 'This action is irreversible. All table schemas and replica indices will be permanently deleted.',
+      confirmText: 'Delete Database',
+      cancelText: 'Cancel',
+      variant: 'danger',
+      backdropBlur: true
+    }).closed.subscribe(confirmed => {
+      if (confirmed) {
+        console.log('Database deletion confirmed by user.');
+      }
+    });
+  }
+
+  showAlert(): void {
+    this.dialog.alert({
+      title: 'Deployment Completed Successfully',
+      message: 'All 32 microservice containers have been verified and routed to live traffic.',
+      okText: 'Understood',
+      variant: 'success',
+      backdropBlur: 'sm'
+    });
+  }
+}`
+    }
+  ];
+
+  protected readonly templateModalTabs: DemoCodeTab[] = [
+    {
+      label: 'Inline Template Modal',
+      code: `import { Component, inject, TemplateRef } from '@angular/core';
+import { TalosDialogService, TalosDialogModule } from '@talos/components/dialog';
+import { TalosButtonDirective } from '@talos/components/button';
+
+@Component({
+  selector: 'app-template-dialog-demo',
+  imports: [TalosDialogModule, TalosButtonDirective],
+  template: \`
+    <button talosButton variant="outline" (click)="openTemplate(myDialogTpl)">
+      Open Template Dialog
+    </button>
+
+    <ng-template #myDialogTpl let-dialogRef>
+      <talos-dialog-header title="Template-Driven Dialog" subtitle="Directly rendered from ng-template." />
+      <talos-dialog-content padding="md">
+        <p>No separate Angular component class required.</p>
+      </talos-dialog-content>
+      <talos-dialog-footer align="end">
+        <button talosButton variant="primary" [talosDialogClose]="'completed'">
+          Done
+        </button>
+      </talos-dialog-footer>
+    </ng-template>
+  \`
+})
+export class TemplateDialogDemoComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  openTemplate(tpl: TemplateRef<unknown>): void {
+    this.dialog.open(tpl, {
+      size: 'sm',
+      backdropBlur: true
+    });
+  }
+}`
+    }
+  ];
 }
