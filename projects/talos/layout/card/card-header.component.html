@@ -1,0 +1,29 @@
+<div class="talos-card-header-main">
+  <div class="talos-card-header-leading">
+    <ng-content select="[talosCardAvatar], [talosCardIcon], [avatar], [icon]" />
+  </div>
+
+  @if (title() || subtitle()) {
+    <div class="talos-card-header-titles">
+      @if (title()) {
+        <h3 class="talos-card-title">{{ title() }}</h3>
+      }
+      @if (subtitle()) {
+        <p class="talos-card-subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+  }
+
+  <div class="talos-card-header-custom-titles">
+    <ng-content select="talos-card-title, [talosCardTitle], [title]" />
+    <ng-content select="talos-card-subtitle, [talosCardSubtitle], [subtitle]" />
+  </div>
+
+  <div class="talos-card-header-content">
+    <ng-content />
+  </div>
+</div>
+
+<div class="talos-card-header-actions">
+  <ng-content select="talos-card-actions, [talosCardActions], [actions]" />
+</div>

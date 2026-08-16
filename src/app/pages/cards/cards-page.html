@@ -1,0 +1,429 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Layout</div>
+    <h1>Cards &amp; Container Layouts</h1>
+    <p class="subtitle">
+      Flexible, modular card component system featuring header, body, footer, visual variants, interactive hover &amp; clickable states, and responsive content slots.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- 1. Interactive Playground Configurator Card -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Interactive Playground</span>
+          <h2>CARD COMPONENT CONFIGURATOR</h2>
+        </div>
+
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </talos-button-group>
+      </div>
+
+      @if (activeTab() === 'preview') {
+      <div class="interactive-stage-layout">
+        <!-- Live Preview Canvas -->
+        <div class="preview-stage">
+          <div class="preview-hero-box">
+            <talos-card
+              [variant]="selectedVariant()"
+              [padding]="selectedPadding()"
+              [hoverable]="isHoverable()"
+              [clickable]="isClickable()"
+              [selected]="isSelected()"
+              [disabled]="isDisabled()"
+              (cardClick)="onPlaygroundClick()"
+              style="max-width: 480px; width: 100%;">
+              
+              <talos-card-header
+                [title]="customTitle()"
+                [subtitle]="customSubtitle()"
+                [bordered]="headerBordered()">
+                @if (showAvatar()) {
+                  <div talosCardAvatar class="preview-avatar">
+                    <svg lucideSparkles [size]="16"></svg>
+                  </div>
+                }
+                <div talosCardActions>
+                  <button type="button" talosButton variant="ghost" size="sm" [iconOnly]="true" aria-label="Options">
+                    <svg lucideMoreVertical [size]="16"></svg>
+                  </button>
+                </div>
+              </talos-card-header>
+
+              <talos-card-body>
+                <p class="preview-text">
+                  Talos cards provide structured, accessible surfaces with clear visual hierarchy,
+                  supporting modular headers, customizable body content, and action footers.
+                </p>
+                <div class="preview-tags-row">
+                  <talos-status-tag status="healthy" label="Operational" size="sm" />
+                  <talos-status-tag status="info" label="v2.4.0" size="sm" />
+                </div>
+              </talos-card-body>
+
+              <talos-card-footer [bordered]="footerBordered()" [align]="footerAlign()">
+                <button type="button" talosButton variant="outline" size="sm">Cancel</button>
+                <button type="button" talosButton variant="primary" size="sm">Save Configuration</button>
+              </talos-card-footer>
+            </talos-card>
+          </div>
+
+          <div class="stage-metadata">
+            <span class="meta-item">Variant: <code>{{ selectedVariant() }}</code></span>
+            <span class="meta-item">Padding: <code>{{ selectedPadding() }}</code></span>
+            <span class="meta-item">Align: <code>{{ footerAlign() }}</code></span>
+            @if (isClickable()) {
+              <span class="meta-item">Clicks: <code>{{ clickCount() }}</code></span>
+            }
+          </div>
+        </div>
+
+        <!-- Interactive Controls Panel -->
+        <div class="playground-controls-panel">
+          <!-- Variant & Padding Pickers -->
+          <div class="control-two-col">
+            <div class="control-group">
+              <label class="control-label">Card Variant</label>
+              <div class="segmented-wrapper">
+                <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedVariant()">
+                  <button type="button" talosButton talosButtonGroupItem value="elevated"
+                    (click)="selectedVariant.set('elevated')">Elevated</button>
+                  <button type="button" talosButton talosButtonGroupItem value="outlined"
+                    (click)="selectedVariant.set('outlined')">Outlined</button>
+                  <button type="button" talosButton talosButtonGroupItem value="flat"
+                    (click)="selectedVariant.set('flat')">Flat</button>
+                  <button type="button" talosButton talosButtonGroupItem value="filled"
+                    (click)="selectedVariant.set('filled')">Filled</button>
+                </talos-button-group>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Inner Padding</label>
+              <div class="segmented-wrapper">
+                <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedPadding()">
+                  <button type="button" talosButton talosButtonGroupItem value="none"
+                    (click)="selectedPadding.set('none')">None</button>
+                  <button type="button" talosButton talosButtonGroupItem value="sm"
+                    (click)="selectedPadding.set('sm')">SM</button>
+                  <button type="button" talosButton talosButtonGroupItem value="md"
+                    (click)="selectedPadding.set('md')">MD</button>
+                  <button type="button" talosButton talosButtonGroupItem value="lg"
+                    (click)="selectedPadding.set('lg')">LG</button>
+                </talos-button-group>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Alignment -->
+          <div class="control-group">
+            <label class="control-label">Footer Actions Alignment</label>
+            <div class="segmented-wrapper">
+              <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="footerAlign()">
+                <button type="button" talosButton talosButtonGroupItem value="start"
+                  (click)="footerAlign.set('start')">Start</button>
+                <button type="button" talosButton talosButtonGroupItem value="center"
+                  (click)="footerAlign.set('center')">Center</button>
+                <button type="button" talosButton talosButtonGroupItem value="end"
+                  (click)="footerAlign.set('end')">End</button>
+                <button type="button" talosButton talosButtonGroupItem value="between"
+                  (click)="footerAlign.set('between')">Between</button>
+              </talos-button-group>
+            </div>
+          </div>
+
+          <!-- Toggles List -->
+          <div class="control-group toggle-group">
+            <label class="control-label">Card Features &amp; States</label>
+            <div class="toggle-list">
+              <talos-slide-toggle [checked]="headerBordered()" (checkedChange)="headerBordered.set($event)" size="sm">
+                Bordered Header Divider
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="footerBordered()" (checkedChange)="footerBordered.set($event)" size="sm">
+                Bordered Footer Divider
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="isHoverable()" (checkedChange)="isHoverable.set($event)" size="sm">
+                Hover Elevation Lift
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="isClickable()" (checkedChange)="isClickable.set($event)" size="sm">
+                Clickable &amp; Focusable
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="isSelected()" (checkedChange)="isSelected.set($event)" size="sm">
+                Selected Active State
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="isDisabled()" (checkedChange)="isDisabled.set($event)" size="sm">
+                Disabled State
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="showAvatar()" (checkedChange)="showAvatar.set($event)" size="sm">
+                Header Avatar Badge
+              </talos-slide-toggle>
+            </div>
+          </div>
+
+          <!-- Custom Labels -->
+          <div class="control-two-col">
+            <div class="control-group">
+              <label class="control-label" for="customTitleInput">Card Title</label>
+              <input id="customTitleInput" type="text" class="talos-input" placeholder="e.g. Card Title"
+                [value]="customTitle()" (input)="customTitle.set($any($event.target).value)" />
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="customSubtitleInput">Card Subtitle</label>
+              <input id="customSubtitleInput" type="text" class="talos-input" placeholder="e.g. Card Subtitle"
+                [value]="customSubtitle()" (input)="customSubtitle.set($any($event.target).value)" />
+            </div>
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="code-view-container">
+        <div class="code-toolbar">
+          <span class="code-lang">HTML</span>
+          <button type="button" class="copy-btn" (click)="copyCode()">
+            @if (copied()) {
+            <svg lucideCheck [size]="14"></svg>
+            <span>Copied!</span>
+            } @else {
+            <svg lucideCopy [size]="14"></svg>
+            <span>Copy</span>
+            }
+          </button>
+        </div>
+        <pre class="code-block"><code>{{ codeSnippet() }}</code></pre>
+      </div>
+      }
+    </div>
+
+    <!-- 2. Real-World Production Patterns -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Production Patterns</span>
+          <h2>REAL-WORLD CARD PATTERNS &amp; COMPOSITIONS</h2>
+        </div>
+      </div>
+
+      <div class="patterns-grid">
+        <!-- Scenario 1: Metric & KPI Widget Card -->
+        <talos-card variant="elevated" [hoverable]="true" class="pattern-card">
+          <talos-card-header title="Monthly Recurring Revenue" subtitle="Past 30 days performance" [bordered]="true">
+            <div talosCardAvatar class="metric-icon-box">
+              <svg lucideDollarSign [size]="18"></svg>
+            </div>
+            <div talosCardActions>
+              <talos-status-tag status="healthy" label="+14.2%" size="sm" />
+            </div>
+          </talos-card-header>
+
+          <talos-card-body>
+            <div class="metric-value-display">
+              <span class="metric-number">$142,850</span>
+              <span class="metric-unit">USD</span>
+            </div>
+            <p class="metric-subtext">Compared to $125,080 last month with 99.8% retention rate.</p>
+            <div class="metric-progress-track">
+              <div class="metric-progress-fill" style="width: 78%;"></div>
+            </div>
+          </talos-card-body>
+
+          <talos-card-footer [bordered]="true" align="between">
+            <span class="footer-timestamp">Updated 5m ago</span>
+            <button type="button" talosButton variant="ghost" size="sm">
+              <span>View Analytics</span>
+              <svg lucideArrowRight [size]="14"></svg>
+            </button>
+          </talos-card-footer>
+        </talos-card>
+
+        <!-- Scenario 2: Team Member Profile Card -->
+        <talos-card variant="outlined" [hoverable]="true" class="pattern-card">
+          <talos-card-header title="Sarah Jenkins" subtitle="Lead Systems Architect" [bordered]="true">
+            <div talosCardAvatar class="profile-avatar-box">
+              SJ
+            </div>
+            <div talosCardActions>
+              <button type="button" talosButton variant="ghost" size="sm" [iconOnly]="true" aria-label="Bookmark">
+                <svg lucideBookmark [size]="16"></svg>
+              </button>
+            </div>
+          </talos-card-header>
+
+          <talos-card-body>
+            <p class="profile-bio">
+              Specializes in distributed Angular micro-frontends, high-throughput streaming services, and design system tokens.
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">Angular v20</span>
+              <span class="skill-tag">Signals</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">SCSS</span>
+            </div>
+          </talos-card-body>
+
+          <talos-card-footer [bordered]="true" align="end">
+            <button type="button" talosButton variant="outline" size="sm">
+              <svg lucideMail [size]="14"></svg>
+              <span>Message</span>
+            </button>
+            <button type="button" talosButton variant="primary" size="sm">
+              <span>View Profile</span>
+            </button>
+          </talos-card-footer>
+        </talos-card>
+
+        <!-- Scenario 3: Media & Article Banner Card -->
+        <talos-card variant="elevated" [hoverable]="true" padding="none" class="pattern-card media-pattern-card">
+          <div talosCardMedia class="card-media-banner">
+            <div class="media-banner-overlay">
+              <span class="media-category-badge">ARCHITECTURE</span>
+            </div>
+          </div>
+
+          <div class="media-content-wrap">
+            <talos-card-header title="Building Scalable Layouts with Angular Signals" subtitle="By Engineering Team · 6 min read" />
+
+            <talos-card-body>
+              <p class="media-summary">
+                Discover how fine-grained reactivity and standalone compound components simplify complex enterprise layouts and responsive dashboard architectures.
+              </p>
+            </talos-card-body>
+
+            <talos-card-footer align="between" [bordered]="true">
+              <div class="media-footer-meta">
+                <svg lucideUsers [size]="14"></svg>
+                <span>1.4k readers</span>
+              </div>
+              <div class="media-footer-actions">
+                <button type="button" talosButton variant="ghost" size="sm" [iconOnly]="true" aria-label="Share">
+                  <svg lucideShare2 [size]="14"></svg>
+                </button>
+                <button type="button" talosButton variant="primary" size="sm">
+                  <span>Read Article</span>
+                  <svg lucideExternalLink [size]="14"></svg>
+                </button>
+              </div>
+            </talos-card-footer>
+          </div>
+        </talos-card>
+      </div>
+    </div>
+
+    <!-- 3. Selectable Interactive Cards Grid -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Selection Grids</span>
+          <h2>SELECTABLE TILES &amp; ACTION CARDS</h2>
+        </div>
+      </div>
+
+      <div class="selectable-plans-grid">
+        <!-- Plan 1 -->
+        <talos-card
+          variant="outlined"
+          [clickable]="true"
+          [hoverable]="true"
+          [selected]="selectedPlan() === 'starter'"
+          (cardClick)="selectedPlan.set('starter')"
+          class="plan-card">
+          <talos-card-header title="Starter Tier" subtitle="For small teams &amp; experiments">
+            <div talosCardActions>
+              @if (selectedPlan() === 'starter') {
+                <svg lucideCheckCircle2 [size]="18" class="plan-check-icon"></svg>
+              }
+            </div>
+          </talos-card-header>
+
+          <talos-card-body>
+            <div class="plan-price"><span class="price-val">$29</span><span class="price-period">/mo</span></div>
+            <ul class="plan-features">
+              <li>Up to 5 team members</li>
+              <li>Basic component library</li>
+              <li>Community support</li>
+            </ul>
+          </talos-card-body>
+
+          <talos-card-footer align="center">
+            <button type="button" talosButton [variant]="selectedPlan() === 'starter' ? 'primary' : 'outline'" size="sm" [fullWidth]="true">
+              {{ selectedPlan() === 'starter' ? 'Selected' : 'Select Starter' }}
+            </button>
+          </talos-card-footer>
+        </talos-card>
+
+        <!-- Plan 2 -->
+        <talos-card
+          variant="elevated"
+          [clickable]="true"
+          [hoverable]="true"
+          [selected]="selectedPlan() === 'pro'"
+          (cardClick)="selectedPlan.set('pro')"
+          class="plan-card">
+          <talos-card-header title="Professional Tier" subtitle="For fast growing products">
+            <div talosCardActions>
+              @if (selectedPlan() === 'pro') {
+                <svg lucideCheckCircle2 [size]="18" class="plan-check-icon"></svg>
+              }
+            </div>
+          </talos-card-header>
+
+          <talos-card-body>
+            <div class="plan-price"><span class="price-val">$79</span><span class="price-period">/mo</span></div>
+            <ul class="plan-features">
+              <li>Unlimited team members</li>
+              <li>Full Talos UI suite + MCP</li>
+              <li>Priority SLA support</li>
+            </ul>
+          </talos-card-body>
+
+          <talos-card-footer align="center">
+            <button type="button" talosButton [variant]="selectedPlan() === 'pro' ? 'primary' : 'outline'" size="sm" [fullWidth]="true">
+              {{ selectedPlan() === 'pro' ? 'Selected' : 'Select Pro' }}
+            </button>
+          </talos-card-footer>
+        </talos-card>
+
+        <!-- Plan 3 -->
+        <talos-card
+          variant="outlined"
+          [clickable]="true"
+          [hoverable]="true"
+          [selected]="selectedPlan() === 'enterprise'"
+          (cardClick)="selectedPlan.set('enterprise')"
+          class="plan-card">
+          <talos-card-header title="Enterprise Tier" subtitle="Custom scale &amp; compliance">
+            <div talosCardActions>
+              @if (selectedPlan() === 'enterprise') {
+                <svg lucideCheckCircle2 [size]="18" class="plan-check-icon"></svg>
+              }
+            </div>
+          </talos-card-header>
+
+          <talos-card-body>
+            <div class="plan-price"><span class="price-val">$249</span><span class="price-period">/mo</span></div>
+            <ul class="plan-features">
+              <li>Custom deployment targets</li>
+              <li>Dedicated design tokens</li>
+              <li>24/7 Enterprise escalation</li>
+            </ul>
+          </talos-card-body>
+
+          <talos-card-footer align="center">
+            <button type="button" talosButton [variant]="selectedPlan() === 'enterprise' ? 'primary' : 'outline'" size="sm" [fullWidth]="true">
+              {{ selectedPlan() === 'enterprise' ? 'Selected' : 'Select Enterprise' }}
+            </button>
+          </talos-card-footer>
+        </talos-card>
+      </div>
+    </div>
+  </main>
+</div>

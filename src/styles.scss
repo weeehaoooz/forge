@@ -46,9 +46,9 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--primary-color, #2563eb);
-    background-color: var(--primary-light, #eff6ff);
-    border: 1px solid var(--border-color, #bfdbfe);
+    color: var(--talos-primary-color, var(--primary-color, #2563eb));
+    background-color: var(--talos-primary-light, var(--primary-light, rgba(37, 99, 235, 0.12)));
+    border: 1px solid var(--talos-border-color, var(--border-color, #bfdbfe));
     border-radius: 9999px;
     margin-bottom: 0.5rem;
   }

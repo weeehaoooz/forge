@@ -17,7 +17,7 @@
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--talos-primary-color, #2563eb);
-    background: #eff6ff;
+    background: var(--talos-primary-light, rgba(37, 99, 235, 0.12));
     padding: 0.125rem 0.5rem;
     border-radius: 0.25rem;
     margin-bottom: 0.25rem;
@@ -26,7 +26,15 @@
   .info-desc {
     margin: 0;
     font-size: 0.875rem;
-    color: var(--talos-text-muted, #475569);
+    color: var(--talos-text-color, #475569);
     line-height: 1.5;
+
+    code {
+      background: var(--talos-card-bg-subtle, var(--talos-bg-subtle, #f1f5f9));
+      color: var(--talos-primary-color, #2563eb);
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+    }
   }
 }

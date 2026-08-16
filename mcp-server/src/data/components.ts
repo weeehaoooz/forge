@@ -666,5 +666,53 @@ Interactive multi-select chips input supporting custom tags and suggestion dropd
 </talos-chips>
 \`\`\`
 `
+  },
+  {
+    id: 'card',
+    name: 'Card & Container Layouts',
+    category: 'Layout',
+    kind: 'component',
+    selector: 'talos-card, talos-card-header, talos-card-body, talos-card-footer',
+    exportName: 'TalosCardComponent, TalosCardHeaderComponent, TalosCardBodyComponent, TalosCardFooterComponent, TalosCardModule',
+    secondaryEntrypoint: '@talos/components/layout',
+    rootExport: '@talos/components',
+    description: 'Modular card container system with structured header, body, footer, visual variants (elevated, outlined, flat, filled), padding options, hover/active elevation, and keyboard accessibility.',
+    inputs: [
+      { name: 'variant', type: "'elevated' | 'outlined' | 'flat' | 'filled'", default: "'elevated'", description: 'Visual style variant.' },
+      { name: 'padding', type: "'none' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Inner container padding size.' },
+      { name: 'hoverable', type: 'boolean', default: 'false', description: 'Enables hover elevation lift and animated border glow.' },
+      { name: 'clickable', type: 'boolean', default: 'false', description: 'Enables interactive pointer cursor, active state, and keyboard focus.' },
+      { name: 'selected', type: 'boolean', default: 'false', description: 'Visual active selected state for tiles/pickers.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables card interactions and dims opacity.' }
+    ],
+    outputs: [
+      { name: 'cardClick', type: 'output<MouseEvent | KeyboardEvent>()', description: 'Emitted when clickable card is activated.' }
+    ],
+    tags: ['card', 'cards', 'container', 'panel', 'surface', 'layout', 'tile', 'header', 'body', 'footer'],
+    docs: `
+### TalosCardComponent (\`talos-card\`)
+Modular card surface with header, body, footer, and action slots.
+
+**Usage:**
+\`\`\`html
+<talos-card variant="elevated" [hoverable]="true">
+  <talos-card-header title="Project Settings" subtitle="Manage workspace preferences" [bordered]="true">
+    <div talosCardAvatar>⚙️</div>
+    <div talosCardActions>
+      <button talosButton variant="ghost" size="sm">...</button>
+    </div>
+  </talos-card-header>
+
+  <talos-card-body>
+    <p>Card body content goes here.</p>
+  </talos-card-body>
+
+  <talos-card-footer [bordered]="true" align="end">
+    <button talosButton variant="outline" size="sm">Cancel</button>
+    <button talosButton variant="primary" size="sm">Save</button>
+  </talos-card-footer>
+</talos-card>
+\`\`\`
+`
   }
 ];

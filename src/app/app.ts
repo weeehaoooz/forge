@@ -28,7 +28,8 @@ import {
   LucideTags,
   LucideChevronsUpDown,
   LucidePanelLeftOpen,
-  LucidePanelLeftClose
+  LucidePanelLeftClose,
+  LucideCreditCard
 } from '@lucide/angular';
 
 @Component({
@@ -71,6 +72,7 @@ export class App {
   protected readonly LucideTags = LucideTags;
   protected readonly LucideBell = LucideBell;
   protected readonly LucideLayout = LucideLayout;
+  protected readonly LucideCreditCard = LucideCreditCard;
 
   constructor() {
     // Check initial system preference or attribute

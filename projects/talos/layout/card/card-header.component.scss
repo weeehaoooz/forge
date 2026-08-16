@@ -1,0 +1,94 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  &.is-bordered {
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid var(--talos-card-header-border, var(--talos-border-color, #e2e8f0));
+  }
+}
+
+.talos-card-header-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.talos-card-header-leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.talos-card-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.talos-card-header-custom-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.talos-card-header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.talos-card-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--talos-text-color, var(--text-color, #0f172a));
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.talos-card-subtitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--talos-text-muted, var(--text-muted, #64748b));
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.talos-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+
+  &:empty {
+    display: none;
+  }
+}

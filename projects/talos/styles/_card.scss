@@ -1,0 +1,18 @@
+/* Talos UI Card Tokens and Utilities */
+
+:root {
+  --talos-card-radius: var(--border-radius-lg, 0.75rem);
+  --talos-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  --talos-card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --talos-card-header-border: var(--talos-border-color, #e2e8f0);
+  --talos-card-footer-border: var(--talos-border-color, #e2e8f0);
+}
+
+[data-theme='dark'],
+.dark-theme,
+.dark {
+  --talos-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --talos-card-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.4), 0 4px 8px -4px rgba(0, 0, 0, 0.3);
+  --talos-card-header-border: var(--talos-border-color, #1f2937);
+  --talos-card-footer-border: var(--talos-border-color, #1f2937);
+}

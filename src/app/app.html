@@ -58,6 +58,8 @@
       <talos-nav-group title="LAYOUT" [collapsible]="true">
         <talos-nav-item label="Layout" [icon]="LucideLayout" [active]="activeSegment() === 'layout'"
           (itemClick)="navigate('/layout')" />
+        <talos-nav-item label="Cards" [icon]="LucideCreditCard" [active]="activeSegment() === 'cards'"
+          (itemClick)="navigate('/cards')" />
       </talos-nav-group>
     </nav>
   </ng-template>

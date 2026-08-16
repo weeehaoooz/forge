@@ -10,6 +10,7 @@
 export * from './layout/layout.service';
 export * from './layout/main-layout/main-layout.component';
 export * from './layout/side-panel/side-panel.component';
+export * from './layout/card';
 
 // Nav components & models
 export * from './nav/side-nav/side-nav.component';

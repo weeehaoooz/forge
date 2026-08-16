@@ -470,5 +470,62 @@ export class SidebarNavComponent {
   }
 }`,
     htmlCode: ``
+  },
+  {
+    id: 'card-composition',
+    componentId: 'card',
+    title: 'Modular Card with Header, Body & Footer',
+    description: 'Composing an elevated card surface with structured header, avatar badge, actions, and aligned footer.',
+    tsCode: `import { Component } from '@angular/core';
+import {
+  TalosCardComponent,
+  TalosCardHeaderComponent,
+  TalosCardBodyComponent,
+  TalosCardFooterComponent,
+  TalosCardAvatarDirective,
+  TalosCardActionsDirective,
+  TalosButtonDirective
+} from '@talos/components';
+
+@Component({
+  selector: 'app-card-demo',
+  imports: [
+    TalosCardComponent,
+    TalosCardHeaderComponent,
+    TalosCardBodyComponent,
+    TalosCardFooterComponent,
+    TalosCardAvatarDirective,
+    TalosCardActionsDirective,
+    TalosButtonDirective
+  ],
+  template: \`
+    <talos-card variant="elevated" [hoverable]="true">
+      <talos-card-header title="Project Analytics" subtitle="Real-time telemetry" [bordered]="true">
+        <div talosCardAvatar class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+          PA
+        </div>
+        <div talosCardActions>
+          <button type="button" talosButton variant="ghost" size="sm">Export</button>
+        </div>
+      </talos-card-header>
+
+      <talos-card-body>
+        <p class="text-sm text-slate-600">
+          Monitor container workloads, cluster memory utilization, and network traffic across all availability zones.
+        </p>
+      </talos-card-body>
+
+      <talos-card-footer [bordered]="true" align="between">
+        <span class="text-xs text-slate-400">Refreshed 2m ago</span>
+        <div class="flex gap-2">
+          <button type="button" talosButton variant="outline" size="sm">Dismiss</button>
+          <button type="button" talosButton variant="primary" size="sm">View Metrics</button>
+        </div>
+      </talos-card-footer>
+    </talos-card>
+  \`
+})
+export class CardDemoComponent {}`,
+    htmlCode: ``
   }
 ];

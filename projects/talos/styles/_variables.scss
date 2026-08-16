@@ -7,7 +7,9 @@
   --talos-primary-light: var(--primary-light, #eff6ff);
   --talos-primary-light-hover: var(--primary-light-hover, #dbeafe);
   --talos-bg-color: var(--bg-color, #f8fafc);
+  --talos-bg-subtle: var(--bg-subtle, #f1f5f9);
   --talos-card-bg: var(--card-bg, #ffffff);
+  --talos-card-bg-subtle: var(--card-bg-subtle, #f8fafc);
   --talos-border-color: var(--border-color, #cbd5e1);
   --talos-border-hover: var(--border-hover, #64748b);
   --talos-border-focus: var(--border-focus, #2563eb);
@@ -173,8 +175,10 @@
   --talos-primary-light: var(--primary-light, rgba(59, 130, 246, 0.18));
   --talos-primary-light-hover: var(--primary-light-hover, rgba(59, 130, 246, 0.28));
   --talos-bg-color: var(--bg-color, #0b0f19);
-  --talos-card-bg: var(--card-bg, #111827);
-  --talos-border-color: var(--border-color, #1f2937);
+  --talos-bg-subtle: var(--bg-subtle, #111827);
+  --talos-card-bg: var(--card-bg, #1e293b);
+  --talos-card-bg-subtle: var(--card-bg-subtle, #0f172a);
+  --talos-border-color: var(--border-color, #334155);
   --talos-border-hover: var(--border-hover, #374151);
   --talos-border-focus: var(--border-focus, #3b82f6);
   --talos-text-color: var(--text-color, #f9fafb);
