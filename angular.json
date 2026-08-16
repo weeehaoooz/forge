@@ -74,7 +74,7 @@
           "options": {
             "include": [
               "**/*.spec.ts",
-              "../projects/talos/src/**/*.spec.ts"
+              "../projects/talos/**/*.spec.ts"
             ]
           }
         }
@@ -83,7 +83,7 @@
     "talos": {
       "projectType": "library",
       "root": "projects/talos",
-      "sourceRoot": "projects/talos/src",
+      "sourceRoot": "projects/talos",
       "prefix": "talos",
       "architect": {
         "build": {
