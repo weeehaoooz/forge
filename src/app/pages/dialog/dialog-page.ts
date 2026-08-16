@@ -1,34 +1,30 @@
-import { Component, inject, signal, computed, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, computed, inject, signal, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  TalosDialogService,
-  TalosDialogSize,
-  TalosDialogBlur,
-  TalosDialogModule
-} from '@talos/components/dialog';
-import { TalosButtonDirective } from '@talos/components/button';
-import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
-import { TalosSlideToggleComponent } from '@talos/components/form/slide-toggle';
-import { TalosPreviewCodeCardComponent, DemoCodeTab } from '../../demo/preview-code-card/preview-code-card.component';
-import {
-  LucideEye,
-  LucideCode,
-  LucideCopy,
-  LucideCheck,
-  LucideSparkles,
-  LucideTrash2,
   LucideAlertTriangle,
   LucideCheckCircle2,
-  LucideSettings,
-  LucideUserCheck,
+  LucideFileCode2,
   LucideMaximize2,
-  LucideFileCode2
+  LucideSettings,
+  LucideSparkles,
+  LucideTrash2,
+  LucideUserCheck
 } from '@lucide/angular';
+import { TalosButtonDirective } from '@talos/components/button';
+import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
+import {
+  TalosDialogBlur,
+  TalosDialogModule,
+  TalosDialogService,
+  TalosDialogSize
+} from '@talos/components/dialog';
+import { TalosSlideToggleComponent } from '@talos/components/form/slide-toggle';
+import { DemoCodeTab, TalosPreviewCodeCardComponent } from '../../demo/preview-code-card/preview-code-card.component';
 
-import { UserEditDialogComponent } from './modals/user-edit-dialog.component';
-import { LargeWorkflowDialogComponent } from './modals/large-workflow-dialog.component';
 import { ContentHugDialogComponent } from './modals/content-hug-dialog.component';
+import { LargeWorkflowDialogComponent } from './modals/large-workflow-dialog.component';
+import { UserEditDialogComponent } from './modals/user-edit-dialog.component';
 
 export type PatternKey = 'userForm' | 'largeForm' | 'contentHug' | 'confirmAlert' | 'template';
 

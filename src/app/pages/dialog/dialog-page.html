@@ -3,26 +3,25 @@
     <div class="badge">talos/components · Overlays</div>
     <h1>Modal &amp; Dialog Component</h1>
     <p class="subtitle">
-      Comprehensive, accessible modal and dialog system built on Angular CDK. Supports customizable glassmorphic background blurring, content-hugging ('auto'), compact alerts, standard forms, and large multi-column enterprise workflows.
+      Comprehensive, accessible modal and dialog system built on Angular CDK. Supports customizable glassmorphic
+      background blurring, content-hugging ('auto'), compact alerts, standard forms, and large multi-column enterprise
+      workflows.
     </p>
   </header>
 
   <main class="demo-grid">
     <!-- 1. Interactive Playground Configurator Card -->
-    <talos-preview-code-card
-      title="DIALOG CONFIGURATOR &amp; PREVIEW"
+    <talos-preview-code-card title="DIALOG CONFIGURATOR &amp; PREVIEW"
       subtitle="Interact with size presets and backdrop blur intensities with live visual feedback."
-      badge="Interactive Playground"
-      [code]="playgroundCode"
-      previewPadding="none"
-    >
+      badge="Interactive Playground" [code]="playgroundCode" previewPadding="none">
       <div class="interactive-stage-layout">
         <!-- Live Preview Canvas -->
         <div class="preview-stage">
           <div class="stage-backdrop-visualizer">
             <div class="visualizer-header">
               <span class="visualizer-title">Backdrop Blur Visual Simulator</span>
-              <span class="visualizer-hint">Background cards below illustrate the frosted blur contrast when opening dialogs</span>
+              <span class="visualizer-hint">Background cards below illustrate the frosted blur contrast when opening
+                dialogs</span>
             </div>
             <div class="sample-bg-grid">
               <div class="sample-bg-card metric-card">
@@ -64,12 +63,18 @@
               Choose between content-hugging ('auto') or form sizes ('sm', 'md', 'lg', 'xl', 'fullscreen')
             </div>
             <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedSize()">
-              <button type="button" talosButton talosButtonGroupItem value="auto" (click)="selectedSize.set('auto')">Auto</button>
-              <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedSize.set('sm')">SM</button>
-              <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedSize.set('md')">MD</button>
-              <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedSize.set('lg')">LG</button>
-              <button type="button" talosButton talosButtonGroupItem value="xl" (click)="selectedSize.set('xl')">XL</button>
-              <button type="button" talosButton talosButtonGroupItem value="fullscreen" (click)="selectedSize.set('fullscreen')">Full</button>
+              <button type="button" talosButton talosButtonGroupItem value="auto"
+                (click)="selectedSize.set('auto')">Auto</button>
+              <button type="button" talosButton talosButtonGroupItem value="sm"
+                (click)="selectedSize.set('sm')">SM</button>
+              <button type="button" talosButton talosButtonGroupItem value="md"
+                (click)="selectedSize.set('md')">MD</button>
+              <button type="button" talosButton talosButtonGroupItem value="lg"
+                (click)="selectedSize.set('lg')">LG</button>
+              <button type="button" talosButton talosButtonGroupItem value="xl"
+                (click)="selectedSize.set('xl')">XL</button>
+              <button type="button" talosButton talosButtonGroupItem value="fullscreen"
+                (click)="selectedSize.set('fullscreen')">Full</button>
             </talos-button-group>
           </div>
 
@@ -79,11 +84,16 @@
             <div class="control-description">
               Applies high-performance CSS backdrop-filter blur over the background
             </div>
-            <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedBlur().toString()">
-              <button type="button" talosButton talosButtonGroupItem value="none" (click)="selectedBlur.set('none')">None</button>
-              <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedBlur.set('sm')">Light (4px)</button>
-              <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedBlur.set('md')">Medium (8px)</button>
-              <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedBlur.set('lg')">Heavy (16px)</button>
+            <talos-button-group variant="segmented" size="sm" selectionMode="single"
+              [value]="selectedBlur().toString()">
+              <button type="button" talosButton talosButtonGroupItem value="none"
+                (click)="selectedBlur.set('none')">None</button>
+              <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedBlur.set('sm')">Light
+                (4px)</button>
+              <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedBlur.set('md')">Medium
+                (8px)</button>
+              <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedBlur.set('lg')">Heavy
+                (16px)</button>
             </talos-button-group>
           </div>
 
@@ -100,34 +110,34 @@
     </talos-preview-code-card>
 
     <!-- 2. Unified Production Pattern Explorer Card -->
-    <talos-preview-code-card
-      [title]="currentPatternInfo().title"
-      [subtitle]="currentPatternInfo().subtitle"
-      [badge]="currentPatternInfo().badge"
-      [tabs]="currentPatternInfo().tabs"
-      [(activeMode)]="patternViewMode"
-      previewPadding="md"
-    >
+    <talos-preview-code-card [title]="currentPatternInfo().title" [subtitle]="currentPatternInfo().subtitle"
+      [badge]="currentPatternInfo().badge" [tabs]="currentPatternInfo().tabs" [(activeMode)]="patternViewMode"
+      previewPadding="md">
       <!-- Custom Pattern Selection Tabs in Card Actions slot -->
       <div actions class="pattern-switcher-nav">
         <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedPattern()">
-          <button type="button" talosButton talosButtonGroupItem value="userForm" (click)="selectedPattern.set('userForm')">
+          <button type="button" talosButton talosButtonGroupItem value="userForm"
+            (click)="selectedPattern.set('userForm')">
             <svg lucideUserCheck [size]="14"></svg>
             <span>Standard Form</span>
           </button>
-          <button type="button" talosButton talosButtonGroupItem value="largeForm" (click)="selectedPattern.set('largeForm')">
+          <button type="button" talosButton talosButtonGroupItem value="largeForm"
+            (click)="selectedPattern.set('largeForm')">
             <svg lucideSettings [size]="14"></svg>
             <span>Enterprise Form (LG)</span>
           </button>
-          <button type="button" talosButton talosButtonGroupItem value="contentHug" (click)="selectedPattern.set('contentHug')">
+          <button type="button" talosButton talosButtonGroupItem value="contentHug"
+            (click)="selectedPattern.set('contentHug')">
             <svg lucideSparkles [size]="14"></svg>
             <span>Content-Hugger</span>
           </button>
-          <button type="button" talosButton talosButtonGroupItem value="confirmAlert" (click)="selectedPattern.set('confirmAlert')">
+          <button type="button" talosButton talosButtonGroupItem value="confirmAlert"
+            (click)="selectedPattern.set('confirmAlert')">
             <svg lucideAlertTriangle [size]="14"></svg>
             <span>Confirm &amp; Alert</span>
           </button>
-          <button type="button" talosButton talosButtonGroupItem value="template" (click)="selectedPattern.set('template')">
+          <button type="button" talosButton talosButtonGroupItem value="template"
+            (click)="selectedPattern.set('template')">
             <svg lucideFileCode2 [size]="14"></svg>
             <span>TemplateRef</span>
           </button>
@@ -137,129 +147,134 @@
       <!-- Preview Mode Layout for Selected Pattern -->
       <div class="pattern-explorer-preview">
         @switch (selectedPattern()) {
-          @case ('userForm') {
-            <div class="pattern-detail-row">
-              <div class="pattern-detail-info">
-                <div class="preset-icon-badge">
-                  <svg lucideUserCheck [size]="22"></svg>
-                </div>
-                <div>
-                  <h3 class="detail-title">Edit Member Profile Dialog (size: 'md')</h3>
-                  <p class="detail-description">
-                    Demonstrates reactive form validation, role select dropdown, email toggle, and payload returning on modal close. Injects data via <code>TALOS_DIALOG_DATA</code>.
-                  </p>
-                </div>
-              </div>
-              <div class="detail-action">
-                <button talosButton variant="primary" size="md" (click)="openUserFormModal()">
-                  <svg lucideUserCheck [size]="16"></svg>
-                  Launch Standard Form Modal
-                </button>
-              </div>
+        @case ('userForm') {
+        <div class="pattern-detail-row">
+          <div class="pattern-detail-info">
+            <div class="preset-icon-badge">
+              <svg lucideUserCheck [size]="22"></svg>
             </div>
-          }
+            <div>
+              <h3 class="detail-title">Edit Member Profile Dialog (size: 'md')</h3>
+              <p class="detail-description">
+                Demonstrates reactive form validation, role select dropdown, email toggle, and payload returning on
+                modal close. Injects data via <code>TALOS_DIALOG_DATA</code>.
+              </p>
+            </div>
+          </div>
+          <div class="detail-action">
+            <button talosButton variant="primary" size="md" (click)="openUserFormModal()">
+              <svg lucideUserCheck [size]="16"></svg>
+              Launch Standard Form Modal
+            </button>
+          </div>
+        </div>
+        }
 
-          @case ('largeForm') {
-            <div class="pattern-detail-row">
-              <div class="pattern-detail-info">
-                <div class="preset-icon-badge">
-                  <svg lucideSettings [size]="22"></svg>
-                </div>
-                <div>
-                  <h3 class="detail-title">Production Pipeline Deployment Dialog (size: 'lg' / 'xl')</h3>
-                  <p class="detail-description">
-                    Multi-column grid inputs across 3 sections (Cluster info, Autoscaling bounds, and Compliance tags) with sticky action footer and status badge.
-                  </p>
-                </div>
-              </div>
-              <div class="detail-action flex gap-2">
-                <button talosButton variant="primary" size="md" (click)="openLargeWorkflowModal()">
-                  <svg lucideSettings [size]="16"></svg>
-                  Launch Large Modal (768px)
-                </button>
-                <button talosButton variant="secondary" size="md" (click)="openFullscreenModal()">
-                  <svg lucideMaximize2 [size]="16"></svg>
-                  Fullscreen Mode
-                </button>
-              </div>
+        @case ('largeForm') {
+        <div class="pattern-detail-row">
+          <div class="pattern-detail-info">
+            <div class="preset-icon-badge">
+              <svg lucideSettings [size]="22"></svg>
             </div>
-          }
+            <div>
+              <h3 class="detail-title">Production Pipeline Deployment Dialog (size: 'lg' / 'xl')</h3>
+              <p class="detail-description">
+                Multi-column grid inputs across 3 sections (Cluster info, Autoscaling bounds, and Compliance tags) with
+                sticky action footer and status badge.
+              </p>
+            </div>
+          </div>
+          <div class="detail-action flex gap-2">
+            <button talosButton variant="primary" size="md" (click)="openLargeWorkflowModal()">
+              <svg lucideSettings [size]="16"></svg>
+              Launch Large Modal (768px)
+            </button>
+            <button talosButton variant="secondary" size="md" (click)="openFullscreenModal()">
+              <svg lucideMaximize2 [size]="16"></svg>
+              Fullscreen Mode
+            </button>
+          </div>
+        </div>
+        }
 
-          @case ('contentHug') {
-            <div class="pattern-detail-row">
-              <div class="pattern-detail-info">
-                <div class="preset-icon-badge">
-                  <svg lucideSparkles [size]="22"></svg>
-                </div>
-                <div>
-                  <h3 class="detail-title">Dynamic Content Hugger (size: 'auto')</h3>
-                  <p class="detail-description">
-                    Dialog width and height dynamically adapt to child elements without fixed pixel constraints. Test adding and removing tags to watch it hug content.
-                  </p>
-                </div>
-              </div>
-              <div class="detail-action">
-                <button talosButton variant="outline" size="md" (click)="openContentHugModal()">
-                  <svg lucideSparkles [size]="16"></svg>
-                  Launch Content-Hugger
-                </button>
-              </div>
+        @case ('contentHug') {
+        <div class="pattern-detail-row">
+          <div class="pattern-detail-info">
+            <div class="preset-icon-badge">
+              <svg lucideSparkles [size]="22"></svg>
             </div>
-          }
+            <div>
+              <h3 class="detail-title">Dynamic Content Hugger (size: 'auto')</h3>
+              <p class="detail-description">
+                Dialog width and height dynamically adapt to child elements without fixed pixel constraints. Test adding
+                and removing tags to watch it hug content.
+              </p>
+            </div>
+          </div>
+          <div class="detail-action">
+            <button talosButton variant="outline" size="md" (click)="openContentHugModal()">
+              <svg lucideSparkles [size]="16"></svg>
+              Launch Content-Hugger
+            </button>
+          </div>
+        </div>
+        }
 
-          @case ('confirmAlert') {
-            <div class="pattern-detail-column">
-              <div class="pattern-detail-info">
-                <div class="preset-icon-badge">
-                  <svg lucideAlertTriangle [size]="22"></svg>
-                </div>
-                <div>
-                  <h3 class="detail-title">1-Line Service Confirm &amp; Alert Methods</h3>
-                  <p class="detail-description">
-                    Instantly trigger confirmation prompts or alert dialogs with single method calls: <code>dialog.confirm()</code> and <code>dialog.alert()</code>.
-                  </p>
-                </div>
-              </div>
-              <div class="convenience-buttons-row mt-3">
-                <button talosButton variant="danger" size="md" (click)="openConfirmDialog('danger')">
-                  <svg lucideTrash2 [size]="16"></svg>
-                  Delete Confirmation (Danger)
-                </button>
-                <button talosButton variant="primary" size="md" (click)="openConfirmDialog('primary')">
-                  <svg lucideCheckCircle2 [size]="16"></svg>
-                  Publish Confirmation (Primary)
-                </button>
-                <button talosButton variant="outline" size="md" (click)="openConfirmDialog('warning')">
-                  <svg lucideAlertTriangle [size]="16"></svg>
-                  Warning Prompt
-                </button>
-                <button talosButton variant="secondary" size="md" (click)="openAlertDialog()">
-                  Success Alert Notice
-                </button>
-              </div>
+        @case ('confirmAlert') {
+        <div class="pattern-detail-column">
+          <div class="pattern-detail-info">
+            <div class="preset-icon-badge">
+              <svg lucideAlertTriangle [size]="22"></svg>
             </div>
-          }
+            <div>
+              <h3 class="detail-title">1-Line Service Confirm &amp; Alert Methods</h3>
+              <p class="detail-description">
+                Instantly trigger confirmation prompts or alert dialogs with single method calls:
+                <code>dialog.confirm()</code> and <code>dialog.alert()</code>.
+              </p>
+            </div>
+          </div>
+          <div class="convenience-buttons-row mt-3">
+            <button talosButton variant="danger" size="md" (click)="openConfirmDialog('danger')">
+              <svg lucideTrash2 [size]="16"></svg>
+              Delete Confirmation (Danger)
+            </button>
+            <button talosButton variant="primary" size="md" (click)="openConfirmDialog('primary')">
+              <svg lucideCheckCircle2 [size]="16"></svg>
+              Publish Confirmation (Primary)
+            </button>
+            <button talosButton variant="outline" size="md" (click)="openConfirmDialog('warning')">
+              <svg lucideAlertTriangle [size]="16"></svg>
+              Warning Prompt
+            </button>
+            <button talosButton variant="secondary" size="md" (click)="openAlertDialog()">
+              Success Alert Notice
+            </button>
+          </div>
+        </div>
+        }
 
-          @case ('template') {
-            <div class="pattern-detail-row">
-              <div class="pattern-detail-info">
-                <div class="preset-icon-badge">
-                  <svg lucideFileCode2 [size]="22"></svg>
-                </div>
-                <div>
-                  <h3 class="detail-title">Inline Template-Driven Modal (&lt;ng-template&gt;)</h3>
-                  <p class="detail-description">
-                    Open an inline <code>&lt;ng-template&gt;</code> reference directly without creating a separate component file or decorator.
-                  </p>
-                </div>
-              </div>
-              <div class="detail-action">
-                <button talosButton variant="ghost" size="md" (click)="openTemplateDialog(simpleTemplate)">
-                  Launch Template Modal
-                </button>
-              </div>
+        @case ('template') {
+        <div class="pattern-detail-row">
+          <div class="pattern-detail-info">
+            <div class="preset-icon-badge">
+              <svg lucideFileCode2 [size]="22"></svg>
             </div>
-          }
+            <div>
+              <h3 class="detail-title">Inline Template-Driven Modal (&lt;ng-template&gt;)</h3>
+              <p class="detail-description">
+                Open an inline <code>&lt;ng-template&gt;</code> reference directly without creating a separate component
+                file or decorator.
+              </p>
+            </div>
+          </div>
+          <div class="detail-action">
+            <button talosButton variant="ghost" size="md" (click)="openTemplateDialog(simpleTemplate)">
+              Launch Template Modal
+            </button>
+          </div>
+        </div>
+        }
         }
       </div>
     </talos-preview-code-card>
@@ -338,7 +353,8 @@
 <ng-template #simpleTemplate let-dialogRef>
   <talos-dialog-header title="Template-Driven Dialog" subtitle="Instantiated directly from an ng-template reference." />
   <talos-dialog-content padding="md">
-    <p>This dialog was rendered from an inline <code>&lt;ng-template&gt;</code> without requiring a separate Angular component class.</p>
+    <p>This dialog was rendered from an inline <code>&lt;ng-template&gt;</code> without requiring a separate Angular
+      component class.</p>
   </talos-dialog-content>
   <talos-dialog-footer align="end">
     <button talosButton variant="primary" size="md" [talosDialogClose]="'template_saved'">
