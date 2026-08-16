@@ -60,30 +60,4 @@
       color: var(--text-muted, #64748b);
     }
   }
-
-  .demo-theme-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--text-color, #0f172a);
-    background-color: var(--bg-color, #f8fafc);
-    border: 1px solid var(--border-color, #cbd5e1);
-    border-radius: var(--border-radius, 0.375rem);
-    cursor: pointer;
-    transition: all 0.15s ease;
-
-    &:hover {
-      background-color: var(--primary-light, #eff6ff);
-      color: var(--primary-color, #2563eb);
-      border-color: var(--primary-color, #2563eb);
-    }
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.2));
-    }
-  }
 }

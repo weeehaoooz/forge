@@ -544,5 +544,50 @@ snackbar.info('Update downloaded');
 <talos-category-bar [categories]="categoryDistribution"></talos-category-bar>
 \`\`\`
 `
+    },
+    {
+        id: 'status-tag',
+        name: 'Status Tag & Indicators',
+        category: 'Visualization',
+        kind: 'component',
+        selector: 'talos-status-tag, [talosStatusTag]',
+        exportName: 'TalosStatusTagComponent, TalosStatusTagModule',
+        secondaryEntrypoint: '@talos/components/status-tag',
+        rootExport: '@talos/components',
+        description: 'Standardized status tags and indicators for workflow orchestration engines (NEW, PENDING, IN-PROGRESS, PAUSED, RETRYING, SKIPPED, SUCCESS, COMPLETED, ERROR, TERMINATED, EXPIRED) with semantic symbols, labels, and customizable CSS tokens.',
+        inputs: [
+            { name: 'status', type: "TalosWorkflowStatus | string", required: true, description: 'Workflow status name or alias (e.g. NEW, IN-PROGRESS, SUCCESS, ERROR, PAUSED, etc).' },
+            { name: 'label', type: 'string', description: 'Custom label override (defaults to canonical status label).' },
+            { name: 'variant', type: "'subtle' | 'solid' | 'outline' | 'dot'", default: "'subtle'", description: 'Visual presentation variant style.' },
+            { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Tag sizing scale.' },
+            { name: 'shape', type: "'rounded' | 'pill' | 'square'", default: "'rounded'", description: 'Border radius shape.' },
+            { name: 'showIcon', type: 'boolean', default: 'true', description: 'Whether to render the semantic icon.' },
+            { name: 'iconOnly', type: 'boolean', default: 'false', description: 'Whether to display icon only without label text.' },
+            { name: 'pulse', type: 'boolean', default: 'false', description: 'Enables animated pulsing beacon for active/waiting states.' },
+            { name: 'icon', type: 'Type<unknown>', description: 'Custom Lucide icon override component.' },
+            { name: 'ariaLabel', type: 'string', description: 'Custom accessibility ARIA label.' }
+        ],
+        tags: ['status-tag', 'status', 'badge', 'indicator', 'tag', 'workflow', 'pipeline', 'dag'],
+        docs: `
+### TalosStatusTagComponent (\`talos-status-tag\`)
+Standardized visual indicator for workflow orchestration systems and tasks.
+
+**Usage:**
+\`\`\`html
+<!-- Default subtle variant -->
+<talos-status-tag status="IN-PROGRESS" [pulse]="true" />
+<talos-status-tag status="SUCCESS" />
+<talos-status-tag status="ERROR" />
+
+<!-- Solid / Outline / Dot variants -->
+<talos-status-tag status="PAUSED" variant="solid" />
+<talos-status-tag status="RETRYING" variant="outline" />
+<talos-status-tag status="NEW" variant="dot" />
+
+<!-- Custom text via input or projected content -->
+<talos-status-tag status="IN-PROGRESS" label="Executing Batch 3/10" />
+<talos-status-tag status="TERMINATED">Cancelled by user</talos-status-tag>
+\`\`\`
+`
     }
 ];

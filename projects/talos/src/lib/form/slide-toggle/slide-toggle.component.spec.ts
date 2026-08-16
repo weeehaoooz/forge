@@ -120,5 +120,30 @@ describe('TalosSlideToggle Suite', () => {
       wrapperEl = toggleCompEl.querySelector('.talos-slide-toggle-wrapper');
       expect(wrapperEl.classList.contains('label-before')).toBe(true);
     });
+
+    it('should render projected content in label', () => {
+      const toggleCompEl = fixture.nativeElement.querySelector('#test-component-toggle');
+      const labelEl = toggleCompEl.querySelector('.talos-slide-toggle-label');
+      expect(labelEl.textContent.trim()).toBe('Enable Notifications');
+    });
+  });
+
+  describe('TalosSlideToggleComponent with label input fallback', () => {
+    @Component({
+      imports: [TalosSlideToggleComponent],
+      template: `
+        <talos-slide-toggle id="fallback-toggle" [label]="'Fallback Label Text'" />
+      `
+    })
+    class FallbackHostComponent {}
+
+    it('should render label text when provided as input property', async () => {
+      const fallbackFixture = TestBed.createComponent(FallbackHostComponent);
+      fallbackFixture.detectChanges();
+
+      const toggleCompEl = fallbackFixture.nativeElement.querySelector('#fallback-toggle');
+      const labelEl = toggleCompEl.querySelector('.talos-slide-toggle-label');
+      expect(labelEl.textContent.trim()).toBe('Fallback Label Text');
+    });
   });
 });

@@ -77,6 +77,9 @@
       ],
       "@talos/components/heatmap": [
         "./projects/talos/src/lib/heatmap/index.ts"
+      ],
+      "@talos/components/status-tag": [
+        "./projects/talos/src/lib/status-tag/index.ts"
       ]
     }
   },

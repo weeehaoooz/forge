@@ -1,5 +1,5 @@
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
-import { Component, TemplateRef, Type, inject, input, output, signal } from '@angular/core';
+import { Component, TemplateRef, Type, ViewEncapsulation, inject, input, output, signal } from '@angular/core';
 import {
   LucideChevronsUpDown,
   LucideCircleHelp,
@@ -9,6 +9,9 @@ import {
   LucideSettings
 } from '@lucide/angular';
 import { LayoutService } from '@talos/components/layout';
+import { TalosNavGroupComponent } from './nav-group.component';
+import { TalosNavItemComponent } from './nav-item.component';
+import { TalosNavThemeToggleComponent } from './theme-toggle.component';
 
 export interface SideNavItem {
   id?: string;
@@ -22,6 +25,8 @@ export interface SideNavItem {
 
 export interface SideNavGroup {
   title?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
   items: SideNavItem[];
 }
 
@@ -39,10 +44,14 @@ export interface SideNavUserProfile {
     LucidePanelLeft,
     LucideChevronsUpDown,
     LucidePanelLeftOpen,
-    LucidePanelLeftClose
+    LucidePanelLeftClose,
+    TalosNavGroupComponent,
+    TalosNavItemComponent,
+    TalosNavThemeToggleComponent
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
+  encapsulation: ViewEncapsulation.None,
   host: {
     'class': 'talos-side-nav-host',
     '[class.is-collapsed]': 'layoutService.isLeftNavCollapsed()',
@@ -55,6 +64,15 @@ export class SideNavComponent {
   protected readonly LucidePanelLeftOpen = LucidePanelLeftOpen;
   protected readonly LucidePanelLeftClose = LucidePanelLeftClose;
 
+  /** Custom header component to render entire header */
+  readonly headerComponent = input<Type<unknown> | null>(null);
+
+  /** Component inputs object to pass to headerComponent */
+  readonly headerComponentInputs = input<Record<string, unknown>>({});
+
+  /** Custom header template to render entire header */
+  readonly headerTemplate = input<TemplateRef<unknown> | null>(null);
+
   /** Custom logo component to render in header */
   readonly logoComponent = input<Type<unknown> | null>(null);
 
@@ -64,11 +82,38 @@ export class SideNavComponent {
   /** Custom logo template to render in header */
   readonly logoTemplate = input<TemplateRef<unknown> | null>(null);
 
+  /** Custom body component to render sidebar body */
+  readonly bodyComponent = input<Type<unknown> | null>(null);
+
+  /** Component inputs object to pass to bodyComponent */
+  readonly bodyComponentInputs = input<Record<string, unknown>>({});
+
+  /** Custom body template to render sidebar body */
+  readonly bodyTemplate = input<TemplateRef<unknown> | null>(null);
+
+  /** Custom footer component to render sidebar footer */
+  readonly footerComponent = input<Type<unknown> | null>(null);
+
+  /** Component inputs object to pass to footerComponent */
+  readonly footerComponentInputs = input<Record<string, unknown>>({});
+
+  /** Custom footer template to render sidebar footer */
+  readonly footerTemplate = input<TemplateRef<unknown> | null>(null);
+
   /** Whether to show the logo in header */
   readonly showLogo = input<boolean>(true);
 
   /** Whether to show the hamburger / panel toggle button in header */
   readonly showToggle = input<boolean>(true);
+
+  /** Whether to show the dark mode / light mode theme toggle button in sidebar */
+  readonly showThemeToggle = input<boolean>(true);
+
+  /** Current dark mode status */
+  readonly isDarkMode = input<boolean>(false);
+
+  /** Output event when theme toggle is clicked */
+  readonly themeToggle = output<void>();
 
   /** Track active item ID */
   readonly activeItemId = signal<string>('dashboards');

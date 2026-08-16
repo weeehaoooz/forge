@@ -1,0 +1,20 @@
+@if (variant() === 'dot') {
+  <span class="talos-status-tag__dot" [class.talos-status-tag__dot--pulse]="pulse()" aria-hidden="true">
+    @if (pulse()) {
+      <span class="talos-status-tag__dot-ping" aria-hidden="true"></span>
+    }
+  </span>
+} @else if (showIcon()) {
+  <span
+    class="talos-status-tag__icon"
+    [class.talos-status-tag__icon--spin]="shouldAnimateIcon()"
+    [class.talos-status-tag__icon--pulse]="pulse()"
+    aria-hidden="true"
+  >
+    <ng-container *ngComponentOutlet="activeIconComponent(); inputs: { size: iconSize() }" />
+  </span>
+}
+
+<span [class.talos-status-tag__label]="!iconOnly()" [class.talos-sr-only]="iconOnly()">
+  <ng-content>{{ resolvedLabel() }}</ng-content>
+</span>

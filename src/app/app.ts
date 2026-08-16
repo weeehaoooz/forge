@@ -1,8 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { MainLayoutComponent, SideNavComponent, LayoutService } from '@talos/components';
-import type { SideNavGroup, SideNavItem } from '@talos/components';
+import {
+  MainLayoutComponent,
+  SideNavComponent,
+  TalosNavGroupComponent,
+  TalosNavItemComponent,
+  TalosNavThemeToggleComponent,
+  LayoutService
+} from '@talos/components';
 import {
   LucideHexagon,
   LucideMousePointerClick,
@@ -18,8 +24,10 @@ import {
   LucideFlame,
   LucideSliders,
   LucideSlidersHorizontal,
-  LucideSun,
-  LucideMoon
+  LucideTag,
+  LucideChevronsUpDown,
+  LucidePanelLeftOpen,
+  LucidePanelLeftClose
 } from '@lucide/angular';
 
 @Component({
@@ -28,9 +36,13 @@ import {
     RouterOutlet,
     MainLayoutComponent,
     SideNavComponent,
+    TalosNavGroupComponent,
+    TalosNavItemComponent,
+    TalosNavThemeToggleComponent,
     LucideHexagon,
-    LucideSun,
-    LucideMoon
+    LucideChevronsUpDown,
+    LucidePanelLeftOpen,
+    LucidePanelLeftClose
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -40,47 +52,23 @@ export class App {
   private readonly router = inject(Router);
 
   protected readonly isDarkMode = signal<boolean>(false);
+  protected readonly activeSegment = signal<string>('buttons');
 
-  protected readonly navGroups = signal<SideNavGroup[]>([
-    {
-      title: 'BUTTONS',
-      items: [
-        { id: 'buttons', label: 'Buttons', icon: LucideMousePointerClick, route: '/buttons' },
-        { id: 'checkboxes', label: 'Checkboxes', icon: LucideSquareCheck, route: '/checkboxes' },
-        { id: 'radio', label: 'Radio Buttons', icon: LucideCircleDot, route: '/radio' },
-        { id: 'slide-toggle', label: 'Slide Toggle', icon: LucideToggleRight, route: '/slide-toggle' }
-      ]
-    },
-    {
-      title: 'FIELDS',
-      items: [
-        { id: 'inputs', label: 'Inputs', icon: LucideTextCursorInput, route: '/inputs' },
-        { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
-        { id: 'autocomplete', label: 'Autocomplete', icon: LucideSearch, route: '/autocomplete' },
-        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
-        { id: 'range-input', label: 'Range Input', icon: LucideSlidersHorizontal, route: '/range-input' },
-      ]
-    },
-    {
-      title: 'DATA VISUALIZATION',
-      items: [
-        { id: 'heatmap', label: 'Heatmap / Busy Times', icon: LucideFlame, route: '/heatmap' },
-        { id: 'category-bar', label: 'Category Bar', icon: LucideSliders, route: '/category-bar' }
-      ]
-    },
-    {
-      title: 'NOTIFICATIONS',
-      items: [
-        { id: 'snackbar', label: 'Snackbar / Toast', icon: LucideBell, route: '/snackbar' }
-      ]
-    },
-    {
-      title: 'LAYOUT',
-      items: [
-        { id: 'layout', label: 'Layout', icon: LucideLayout, route: '/layout' }
-      ]
-    }
-  ]);
+  // Lucide Icon references for template usage
+  protected readonly LucideMousePointerClick = LucideMousePointerClick;
+  protected readonly LucideSquareCheck = LucideSquareCheck;
+  protected readonly LucideCircleDot = LucideCircleDot;
+  protected readonly LucideToggleRight = LucideToggleRight;
+  protected readonly LucideTextCursorInput = LucideTextCursorInput;
+  protected readonly LucideChevronDown = LucideChevronDown;
+  protected readonly LucideSearch = LucideSearch;
+  protected readonly LucideCalendarDays = LucideCalendarDays;
+  protected readonly LucideSlidersHorizontal = LucideSlidersHorizontal;
+  protected readonly LucideFlame = LucideFlame;
+  protected readonly LucideSliders = LucideSliders;
+  protected readonly LucideTag = LucideTag;
+  protected readonly LucideBell = LucideBell;
+  protected readonly LucideLayout = LucideLayout;
 
   constructor() {
     // Check initial system preference or attribute
@@ -98,12 +86,16 @@ export class App {
       .subscribe((e) => {
         const url = (e as NavigationEnd).urlAfterRedirects;
         const segment = url.split('/')[1];
-        this._setActiveItem(segment);
+        if (segment) {
+          this.activeSegment.set(segment);
+        }
       });
 
     // Set initial active item from current URL
     const initialSegment = this.router.url.split('/')[1];
-    this._setActiveItem(initialSegment);
+    if (initialSegment) {
+      this.activeSegment.set(initialSegment);
+    }
   }
 
   toggleTheme(): void {
@@ -118,21 +110,8 @@ export class App {
     }
   }
 
-  private _setActiveItem(segment: string): void {
-    this.navGroups.update(groups =>
-      groups.map(group => ({
-        ...group,
-        items: group.items.map(item => ({
-          ...item,
-          active: item.id === segment
-        }))
-      }))
-    );
-  }
-
-  onNavItemClick(item: SideNavItem): void {
-    if (item.route) {
-      this.router.navigateByUrl(item.route);
-    }
+  navigate(route: string): void {
+    this.router.navigateByUrl(route);
   }
 }
+

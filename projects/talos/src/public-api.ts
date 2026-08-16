@@ -13,6 +13,10 @@ export * from './lib/layout/side-panel/side-panel.component';
 
 // Nav components & models
 export * from './lib/nav/side-nav.component';
+export * from './lib/nav/nav-group.component';
+export * from './lib/nav/nav-item.component';
+export * from './lib/nav/theme-toggle.component';
+export * from './lib/nav/side-nav.module';
 
 // Select input components & module
 export * from './lib/form/select-input/select-input.component';
@@ -92,3 +96,9 @@ export * from './lib/form/range-input/range-input.types';
 export * from './lib/form/range-input/range-input.directive';
 export * from './lib/form/range-input/range-input.component';
 export * from './lib/form/range-input/range-input.module';
+
+// Status Tag component, module & types
+export * from './lib/status-tag/status-tag.types';
+export * from './lib/status-tag/status-tag.component';
+export * from './lib/status-tag/status-tag.module';
+

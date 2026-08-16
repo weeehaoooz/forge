@@ -1,6 +1,6 @@
 <talos-main-layout>
   <!-- Side Navigation Component Slot -->
-  <talos-side-nav side-nav [navGroups]="navGroups()" (itemClick)="onNavItemClick($event)">
+  <talos-side-nav side-nav [bodyTemplate]="navBody" [footerTemplate]="navFooter">
     <div side-nav-logo class="app-custom-logo">
       <div class="logo-icon-badge">
         <svg lucideHexagon [size]="20"></svg>
@@ -9,6 +9,89 @@
     </div>
   </talos-side-nav>
 
+  <!-- Navigation Body Template -->
+  <ng-template #navBody>
+    <nav class="nav-groups-container" aria-label="Sidebar Navigation">
+      <talos-nav-group title="BUTTONS" [collapsible]="true">
+        <talos-nav-item label="Buttons" [icon]="LucideMousePointerClick" [active]="activeSegment() === 'buttons'"
+          (itemClick)="navigate('/buttons')" />
+        <talos-nav-item label="Checkboxes" [icon]="LucideSquareCheck" [active]="activeSegment() === 'checkboxes'"
+          (itemClick)="navigate('/checkboxes')" />
+        <talos-nav-item label="Radio Buttons" [icon]="LucideCircleDot" [active]="activeSegment() === 'radio'"
+          (itemClick)="navigate('/radio')" />
+        <talos-nav-item label="Slide Toggle" [icon]="LucideToggleRight" [active]="activeSegment() === 'slide-toggle'"
+          (itemClick)="navigate('/slide-toggle')" />
+      </talos-nav-group>
+
+      <talos-nav-group title="FIELDS" [collapsible]="true">
+        <talos-nav-item label="Inputs" [icon]="LucideTextCursorInput" [active]="activeSegment() === 'inputs'"
+          (itemClick)="navigate('/inputs')" />
+        <talos-nav-item label="Select" [icon]="LucideChevronDown" [active]="activeSegment() === 'select'"
+          (itemClick)="navigate('/select')" />
+        <talos-nav-item label="Autocomplete" [icon]="LucideSearch" [active]="activeSegment() === 'autocomplete'"
+          (itemClick)="navigate('/autocomplete')" />
+        <talos-nav-item label="Date Pickers" [icon]="LucideCalendarDays" [active]="activeSegment() === 'date-pickers'"
+          (itemClick)="navigate('/date-pickers')" />
+        <talos-nav-item label="Range Input" [icon]="LucideSlidersHorizontal"
+          [active]="activeSegment() === 'range-input'" (itemClick)="navigate('/range-input')" />
+      </talos-nav-group>
+
+      <talos-nav-group title="DATA VISUALIZATION" [collapsible]="true">
+        <talos-nav-item label="Heatmap / Busy Times" [icon]="LucideFlame" [active]="activeSegment() === 'heatmap'"
+          (itemClick)="navigate('/heatmap')" />
+        <talos-nav-item label="Category Bar" [icon]="LucideSliders" [active]="activeSegment() === 'category-bar'"
+          (itemClick)="navigate('/category-bar')" />
+        <talos-nav-item label="Status Tag & Indicators" [icon]="LucideTag" [active]="activeSegment() === 'status-tag'"
+          (itemClick)="navigate('/status-tag')" />
+      </talos-nav-group>
+
+      <talos-nav-group title="NOTIFICATIONS" [collapsible]="true">
+        <talos-nav-item label="Snackbar / Toast" [icon]="LucideBell" [active]="activeSegment() === 'snackbar'"
+          (itemClick)="navigate('/snackbar')" />
+      </talos-nav-group>
+
+      <talos-nav-group title="LAYOUT" [collapsible]="true">
+        <talos-nav-item label="Layout" [icon]="LucideLayout" [active]="activeSegment() === 'layout'"
+          (itemClick)="navigate('/layout')" />
+      </talos-nav-group>
+    </nav>
+  </ng-template>
+
+  <!-- Navigation Footer Template -->
+  <ng-template #navFooter>
+    <div class="default-nav-footer">
+      <talos-nav-theme-toggle [isDarkMode]="isDarkMode()" (themeToggle)="toggleTheme()" />
+
+      <div class="user-profile-card"
+        [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? 'Eugene Lamar (eugene@glan.com)' : null">
+        <div class="avatar-container">
+          <div class="avatar-placeholder">E</div>
+        </div>
+        <div class="user-info">
+          <span class="user-name">Eugene Lamar</span>
+          <span class="user-email">eugene&#64;glan.com</span>
+        </div>
+        <div class="profile-action">
+          <svg lucideChevronsUpDown class="profile-chevron" [size]="14"></svg>
+        </div>
+      </div>
+
+      <!-- Bottom Collapse/Expand Bar -->
+      <button type="button" class="footer-collapse-bar" (click)="layoutService.toggleLeftNav()"
+        [attr.aria-label]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+        [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'">
+        <span class="collapse-bar-icon">
+          @if (layoutService.isLeftNavCollapsed()) {
+          <svg lucidePanelLeftOpen [size]="16"></svg>
+          } @else {
+          <svg lucidePanelLeftClose [size]="16"></svg>
+          }
+        </span>
+        <span class="collapse-bar-text">Collapse sidebar</span>
+      </button>
+    </div>
+  </ng-template>
+
   <!-- Main Content Area -->
   <div class="demo-page-wrapper">
     <header class="demo-top-bar" aria-label="Demo Bar">
@@ -16,17 +99,6 @@
         <span class="talos-version-badge">v0.1.0</span>
         <span class="talos-tagline">Angular Enterprise Component Library</span>
       </div>
-
-      <button type="button" class="demo-theme-btn" (click)="toggleTheme()"
-        [attr.aria-label]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-        @if (isDarkMode()) {
-          <svg lucideSun [size]="16"></svg>
-          <span class="theme-label">Light Mode</span>
-        } @else {
-          <svg lucideMoon [size]="16"></svg>
-          <span class="theme-label">Dark Mode</span>
-        }
-      </button>
     </header>
 
     <router-outlet />

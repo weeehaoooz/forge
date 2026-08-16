@@ -1,0 +1,372 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Data Visualization</div>
+    <h1>Status Tag &amp; Workflow Indicators</h1>
+    <p class="subtitle">
+      Standardized visual status indicators and tags designed for workflow orchestration systems, DAGs, and task execution pipelines with full symbol support, humanized labels, and CSS token customization.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- 1. Interactive Playground & Visual Matrix -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Interactive Playground</span>
+          <h2>STATUS TAG CONFIGURATOR</h2>
+        </div>
+
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </talos-button-group>
+      </div>
+
+      @if (activeTab() === 'preview') {
+        <div class="interactive-stage-layout">
+          <!-- Live Preview Canvas -->
+          <div class="preview-stage">
+            <div class="preview-hero-box">
+              <talos-status-tag
+                [status]="selectedStatus()"
+                [variant]="selectedVariant()"
+                [size]="selectedSize()"
+                [shape]="selectedShape()"
+                [showIcon]="showIcon()"
+                [iconOnly]="iconOnly()"
+                [pulse]="pulse()"
+                [label]="customLabel() ? customLabel() : null"
+              />
+            </div>
+
+            <div class="stage-metadata">
+              <span class="meta-item">Status: <code>{{ selectedStatus() }}</code></span>
+              <span class="meta-item">Variant: <code>{{ selectedVariant() }}</code></span>
+              <span class="meta-item">Size: <code>{{ selectedSize() }}</code></span>
+              <span class="meta-item">Shape: <code>{{ selectedShape() }}</code></span>
+            </div>
+          </div>
+
+          <!-- Interactive Control Controls -->
+          <div class="playground-controls-panel">
+            <!-- Status Picker -->
+            <div class="control-row">
+              <label class="control-label">Status Variation</label>
+              <div class="status-chip-grid">
+                @for (st of allStatuses; track st) {
+                  <button
+                    type="button"
+                    class="status-chip-btn"
+                    [class.is-selected]="selectedStatus() === st"
+                    (click)="selectedStatus.set(st)"
+                  >
+                    <talos-status-tag [status]="st" size="xs" variant="dot" />
+                    <span>{{ st }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Variant & Size Pickers -->
+            <div class="control-two-col">
+              <div class="control-group">
+                <label class="control-label">Variant</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedVariant()">
+                    <button type="button" talosButton talosButtonGroupItem value="subtle" (click)="selectedVariant.set('subtle')">Subtle</button>
+                    <button type="button" talosButton talosButtonGroupItem value="solid" (click)="selectedVariant.set('solid')">Solid</button>
+                    <button type="button" talosButton talosButtonGroupItem value="outline" (click)="selectedVariant.set('outline')">Outline</button>
+                    <button type="button" talosButton talosButtonGroupItem value="dot" (click)="selectedVariant.set('dot')">Dot</button>
+                  </talos-button-group>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Size</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedSize()">
+                    <button type="button" talosButton talosButtonGroupItem value="xs" (click)="selectedSize.set('xs')">XS</button>
+                    <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedSize.set('sm')">SM</button>
+                    <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedSize.set('md')">MD</button>
+                    <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedSize.set('lg')">LG</button>
+                  </talos-button-group>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shape & Toggles -->
+            <div class="control-two-col">
+              <div class="control-group">
+                <label class="control-label">Border Shape</label>
+                <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedShape()">
+                  <button type="button" talosButton talosButtonGroupItem value="rounded" (click)="selectedShape.set('rounded')">Rounded</button>
+                  <button type="button" talosButton talosButtonGroupItem value="pill" (click)="selectedShape.set('pill')">Pill</button>
+                  <button type="button" talosButton talosButtonGroupItem value="square" (click)="selectedShape.set('square')">Square</button>
+                </talos-button-group>
+              </div>
+
+              <div class="control-group toggle-group">
+                <label class="control-label">Options</label>
+                <div class="toggle-list">
+                  <talos-slide-toggle [checked]="showIcon()" (checkedChange)="showIcon.set($event)" size="sm">
+                    Show Icon
+                  </talos-slide-toggle>
+                  <talos-slide-toggle [checked]="iconOnly()" (checkedChange)="iconOnly.set($event)" size="sm">
+                    Icon Only
+                  </talos-slide-toggle>
+                  <talos-slide-toggle [checked]="pulse()" (checkedChange)="pulse.set($event)" size="sm">
+                    Pulse Beacon
+                  </talos-slide-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Label Input -->
+            <div class="control-group">
+              <label class="control-label" for="customLabelInput">Custom Label Override (optional)</label>
+              <input
+                id="customLabelInput"
+                type="text"
+                class="talos-input"
+                placeholder="e.g. Processing 8,420 rows..."
+                [value]="customLabel()"
+                (input)="customLabel.set($any($event.target).value)"
+              />
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="code-view-container">
+          <div class="code-toolbar">
+            <span class="code-lang">HTML</span>
+            <button type="button" class="copy-btn" (click)="copyCode()">
+              @if (copied()) {
+                <svg lucideCheck [size]="14"></svg>
+                <span>Copied!</span>
+              } @else {
+                <svg lucideCopy [size]="14"></svg>
+                <span>Copy</span>
+              }
+            </button>
+          </div>
+          <pre class="code-block"><code>{{ codeSnippet() }}</code></pre>
+        </div>
+      }
+    </div>
+
+    <!-- 2. Full Status Variations Catalog Grid -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Reference Catalog</span>
+          <h2>ALL WORKFLOW ORCHESTRATION STATUSES</h2>
+        </div>
+      </div>
+
+      <div class="status-catalog-table-wrapper">
+        <table class="status-catalog-table" aria-label="Workflow Status Catalog">
+          <thead>
+            <tr>
+              <th>Status Key</th>
+              <th>Subtle (Default)</th>
+              <th>Solid</th>
+              <th>Outline</th>
+              <th>Indicator Dot</th>
+              <th>Aliases Supported</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>NEW</code></td>
+              <td><talos-status-tag status="NEW" variant="subtle" /></td>
+              <td><talos-status-tag status="NEW" variant="solid" /></td>
+              <td><talos-status-tag status="NEW" variant="outline" /></td>
+              <td><talos-status-tag status="NEW" variant="dot" /></td>
+              <td class="alias-cell"><code>new</code>, <code>created</code>, <code>draft</code></td>
+            </tr>
+            <tr>
+              <td><code>PENDING</code></td>
+              <td><talos-status-tag status="PENDING" variant="subtle" /></td>
+              <td><talos-status-tag status="PENDING" variant="solid" /></td>
+              <td><talos-status-tag status="PENDING" variant="outline" /></td>
+              <td><talos-status-tag status="PENDING" variant="dot" /></td>
+              <td class="alias-cell"><code>pending</code>, <code>queued</code>, <code>scheduled</code>, <code>waiting</code></td>
+            </tr>
+            <tr>
+              <td><code>IN-PROGRESS</code></td>
+              <td><talos-status-tag status="IN-PROGRESS" variant="subtle" /></td>
+              <td><talos-status-tag status="IN-PROGRESS" variant="solid" /></td>
+              <td><talos-status-tag status="IN-PROGRESS" variant="outline" /></td>
+              <td><talos-status-tag status="IN-PROGRESS" variant="dot" [pulse]="true" /></td>
+              <td class="alias-cell"><code>in-progress</code>, <code>running</code>, <code>executing</code></td>
+            </tr>
+            <tr>
+              <td><code>PAUSED</code></td>
+              <td><talos-status-tag status="PAUSED" variant="subtle" /></td>
+              <td><talos-status-tag status="PAUSED" variant="solid" /></td>
+              <td><talos-status-tag status="PAUSED" variant="outline" /></td>
+              <td><talos-status-tag status="PAUSED" variant="dot" /></td>
+              <td class="alias-cell"><code>paused</code>, <code>suspended</code>, <code>on_hold</code>, <code>waiting_for_approval</code></td>
+            </tr>
+            <tr>
+              <td><code>RETRYING</code></td>
+              <td><talos-status-tag status="RETRYING" variant="subtle" /></td>
+              <td><talos-status-tag status="RETRYING" variant="solid" /></td>
+              <td><talos-status-tag status="RETRYING" variant="outline" /></td>
+              <td><talos-status-tag status="RETRYING" variant="dot" [pulse]="true" /></td>
+              <td class="alias-cell"><code>retrying</code>, <code>up_for_retry</code></td>
+            </tr>
+            <tr>
+              <td><code>SKIPPED</code></td>
+              <td><talos-status-tag status="SKIPPED" variant="subtle" /></td>
+              <td><talos-status-tag status="SKIPPED" variant="solid" /></td>
+              <td><talos-status-tag status="SKIPPED" variant="outline" /></td>
+              <td><talos-status-tag status="SKIPPED" variant="dot" /></td>
+              <td class="alias-cell"><code>skipped</code>, <code>bypassed</code>, <code>ignored</code></td>
+            </tr>
+            <tr>
+              <td><code>SUCCESS</code></td>
+              <td><talos-status-tag status="SUCCESS" variant="subtle" /></td>
+              <td><talos-status-tag status="SUCCESS" variant="solid" /></td>
+              <td><talos-status-tag status="SUCCESS" variant="outline" /></td>
+              <td><talos-status-tag status="SUCCESS" variant="dot" /></td>
+              <td class="alias-cell"><code>success</code>, <code>succeeded</code>, <code>passed</code></td>
+            </tr>
+            <tr>
+              <td><code>COMPLETED</code></td>
+              <td><talos-status-tag status="COMPLETED" variant="subtle" /></td>
+              <td><talos-status-tag status="COMPLETED" variant="solid" /></td>
+              <td><talos-status-tag status="COMPLETED" variant="outline" /></td>
+              <td><talos-status-tag status="COMPLETED" variant="dot" /></td>
+              <td class="alias-cell"><code>completed</code>, <code>finished</code>, <code>done</code></td>
+            </tr>
+            <tr>
+              <td><code>ERROR</code></td>
+              <td><talos-status-tag status="ERROR" variant="subtle" /></td>
+              <td><talos-status-tag status="ERROR" variant="solid" /></td>
+              <td><talos-status-tag status="ERROR" variant="outline" /></td>
+              <td><talos-status-tag status="ERROR" variant="dot" /></td>
+              <td class="alias-cell"><code>error</code>, <code>failed</code>, <code>failure</code></td>
+            </tr>
+            <tr>
+              <td><code>TERMINATED</code></td>
+              <td><talos-status-tag status="TERMINATED" variant="subtle" /></td>
+              <td><talos-status-tag status="TERMINATED" variant="solid" /></td>
+              <td><talos-status-tag status="TERMINATED" variant="outline" /></td>
+              <td><talos-status-tag status="TERMINATED" variant="dot" /></td>
+              <td class="alias-cell"><code>terminated</code>, <code>cancelled</code>, <code>aborted</code>, <code>stopped</code></td>
+            </tr>
+            <tr>
+              <td><code>EXPIRED</code></td>
+              <td><talos-status-tag status="EXPIRED" variant="subtle" /></td>
+              <td><talos-status-tag status="EXPIRED" variant="solid" /></td>
+              <td><talos-status-tag status="EXPIRED" variant="outline" /></td>
+              <td><talos-status-tag status="EXPIRED" variant="dot" /></td>
+              <td class="alias-cell"><code>expired</code>, <code>timeout</code>, <code>timed_out</code>, <code>stale</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. Real-world Workflow Orchestration Pipeline Table Demo -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Live System Example</span>
+          <h2>DAG / WORKFLOW EXECUTION PIPELINE</h2>
+        </div>
+        <div class="actions">
+          <talos-status-tag status="IN-PROGRESS" label="Active DAG #4829" [pulse]="true" size="sm" shape="pill" />
+        </div>
+      </div>
+
+      <div class="pipeline-table-container">
+        <table class="pipeline-table" aria-label="Pipeline Tasks">
+          <thead>
+            <tr>
+              <th>Task ID</th>
+              <th>Task Description</th>
+              <th>Worker Node</th>
+              <th>Duration</th>
+              <th>Execution Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (task of pipelineTasks(); track task.id) {
+              <tr>
+                <td class="task-id-cell"><code>{{ task.id }}</code></td>
+                <td class="task-name-cell">{{ task.name }}</td>
+                <td class="worker-node-cell">
+                  <span class="node-pill">{{ task.workerNode }}</span>
+                </td>
+                <td class="duration-cell">{{ task.duration }}</td>
+                <td>
+                  <talos-status-tag
+                    [status]="task.status"
+                    [label]="task.customLabel ? task.customLabel : null"
+                    [pulse]="!!task.pulse"
+                    size="sm"
+                  />
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. Developer Color Override via Root Classes & CSS Variables -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Theme Customization</span>
+          <h2>ROOT CLASS &amp; CSS VARIABLE COLOR OVERRIDES</h2>
+        </div>
+      </div>
+
+      <p class="section-desc">
+        Developers can completely override any status colors globally on <code>:root</code> or scoped to specific classes using CSS custom properties.
+      </p>
+
+      <!-- Theme Switcher Selector -->
+      <div class="theme-override-toolbar">
+        <span class="toolbar-label">Select Custom Theme Class:</span>
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeThemeOverride()">
+          <button type="button" talosButton talosButtonGroupItem value="default" (click)="activeThemeOverride.set('default')">Default Talos UI</button>
+          <button type="button" talosButton talosButtonGroupItem value="vibrant" (click)="activeThemeOverride.set('vibrant')">Neon Cyber</button>
+          <button type="button" talosButton talosButtonGroupItem value="monochrome" (click)="activeThemeOverride.set('monochrome')">Monochrome Dark</button>
+        </talos-button-group>
+      </div>
+
+      <!-- Live Overridden Status Box -->
+      <div class="override-demo-box" [class]="'theme-preset-' + activeThemeOverride()">
+        <div class="override-tags-row">
+          <talos-status-tag status="NEW" />
+          <talos-status-tag status="PENDING" />
+          <talos-status-tag status="IN-PROGRESS" [pulse]="true" />
+          <talos-status-tag status="RETRYING" [pulse]="true" />
+          <talos-status-tag status="SUCCESS" />
+          <talos-status-tag status="ERROR" />
+          <talos-status-tag status="TERMINATED" />
+          <talos-status-tag status="EXPIRED" />
+        </div>
+
+        <div class="css-override-snippet">
+          <pre class="code-block"><code>/* Example Override in your global styles / root stylesheet */
+.{{ 'theme-preset-' + activeThemeOverride() }} {{ '{' }}
+  --talos-status-inprogress-color: #06b6d4;
+  --talos-status-inprogress-bg: #ecfeff;
+  --talos-status-inprogress-border: #a5f3fc;
+{{ '}' }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

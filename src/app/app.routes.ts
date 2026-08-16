@@ -53,6 +53,10 @@ export const routes: Routes = [
   {
     path: 'range-input',
     loadComponent: () => import('./pages/range-input/range-input-page').then(m => m.RangeInputPage)
+  },
+  {
+    path: 'status-tag',
+    loadComponent: () => import('./pages/status-tag/status-tag-page').then(m => m.StatusTagPage)
   }
 ];
 

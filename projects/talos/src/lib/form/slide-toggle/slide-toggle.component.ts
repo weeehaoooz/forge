@@ -39,12 +39,6 @@ let slideToggleCounter = 0;
       [class.is-checked]="isChecked()"
       [class.label-before]="labelPosition() === 'before'"
     >
-      @if (labelPosition() === 'before') {
-        <span class="talos-slide-toggle-label">
-          <ng-content></ng-content>
-        </span>
-      }
-
       <span class="talos-slide-toggle-switch">
         <input
           #inputEl
@@ -63,11 +57,9 @@ let slideToggleCounter = 0;
         </span>
       </span>
 
-      @if (labelPosition() === 'after') {
-        <span class="talos-slide-toggle-label">
-          <ng-content></ng-content>
-        </span>
-      }
+      <span class="talos-slide-toggle-label">
+        {{ label() }}<ng-content />
+      </span>
     </label>
   `
 })
@@ -91,6 +83,9 @@ export class TalosSlideToggleComponent implements ControlValueAccessor {
 
   /** Position of the label text relative to the toggle switch */
   readonly labelPosition = input<SlideToggleLabelPosition>('after');
+
+  /** Optional label text fallback if not projecting content */
+  readonly label = input<string>('');
 
   /** Element HTML ID */
   readonly id = input<string>('');

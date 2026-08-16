@@ -1,0 +1,233 @@
+/* ==========================================================================
+   Talos UI Design System - Status Tag & Indicators Global Tokens & Styles
+   ========================================================================== */
+
+:root {
+  /* Status Base Metric Tokens */
+  --talos-status-font-family: inherit;
+  --talos-status-font-weight: 600;
+  --talos-status-radius-rounded: 0.375rem;
+  --talos-status-radius-pill: 9999px;
+  --talos-status-radius-square: 0.25rem;
+
+  /* NEW - Cyan / Sky / Blue */
+  --talos-status-new-color: #0284c7;
+  --talos-status-new-bg: #f0f9ff;
+  --talos-status-new-border: #bae6fd;
+  --talos-status-new-solid-bg: #0284c7;
+  --talos-status-new-solid-text: #ffffff;
+
+  /* PENDING - Amber / Yellow */
+  --talos-status-pending-color: #d97706;
+  --talos-status-pending-bg: #fffbeb;
+  --talos-status-pending-border: #fde68a;
+  --talos-status-pending-solid-bg: #d97706;
+  --talos-status-pending-solid-text: #ffffff;
+
+  /* IN-PROGRESS - Royal Blue / Indigo */
+  --talos-status-inprogress-color: #2563eb;
+  --talos-status-inprogress-bg: #eff6ff;
+  --talos-status-inprogress-border: #bfdbfe;
+  --talos-status-inprogress-solid-bg: #2563eb;
+  --talos-status-inprogress-solid-text: #ffffff;
+
+  /* PAUSED - Amber Neutral / Slate */
+  --talos-status-paused-color: #b45309;
+  --talos-status-paused-bg: #fff7ed;
+  --talos-status-paused-border: #fed7aa;
+  --talos-status-paused-solid-bg: #ea580c;
+  --talos-status-paused-solid-text: #ffffff;
+
+  /* RETRYING - Orange */
+  --talos-status-retrying-color: #c2410c;
+  --talos-status-retrying-bg: #fff7ed;
+  --talos-status-retrying-border: #ffedd5;
+  --talos-status-retrying-solid-bg: #ea580c;
+  --talos-status-retrying-solid-text: #ffffff;
+
+  /* SKIPPED - Slate / Gray */
+  --talos-status-skipped-color: #475569;
+  --talos-status-skipped-bg: #f8fafc;
+  --talos-status-skipped-border: #e2e8f0;
+  --talos-status-skipped-solid-bg: #64748b;
+  --talos-status-skipped-solid-text: #ffffff;
+
+  /* SUCCESS - Emerald / Green */
+  --talos-status-success-color: #16a34a;
+  --talos-status-success-bg: #f0fdf4;
+  --talos-status-success-border: #bbf7d0;
+  --talos-status-success-solid-bg: #16a34a;
+  --talos-status-success-solid-text: #ffffff;
+
+  /* COMPLETED - Teal / Emerald Dark */
+  --talos-status-completed-color: #0f766e;
+  --talos-status-completed-bg: #f0fdfa;
+  --talos-status-completed-border: #99f6e4;
+  --talos-status-completed-solid-bg: #0d9488;
+  --talos-status-completed-solid-text: #ffffff;
+
+  /* ERROR - Red */
+  --talos-status-error-color: #dc2626;
+  --talos-status-error-bg: #fef2f2;
+  --talos-status-error-border: #fecaca;
+  --talos-status-error-solid-bg: #dc2626;
+  --talos-status-error-solid-text: #ffffff;
+
+  /* TERMINATED - Dark Slate / Crimson */
+  --talos-status-terminated-color: #334155;
+  --talos-status-terminated-bg: #f1f5f9;
+  --talos-status-terminated-border: #cbd5e1;
+  --talos-status-terminated-solid-bg: #334155;
+  --talos-status-terminated-solid-text: #ffffff;
+
+  /* EXPIRED - Purple / Violet */
+  --talos-status-expired-color: #7e22ce;
+  --talos-status-expired-bg: #faf5ff;
+  --talos-status-expired-border: #e9d5ff;
+  --talos-status-expired-solid-bg: #7e22ce;
+  --talos-status-expired-solid-text: #ffffff;
+}
+
+/* Dark Mode Tokens */
+:root[data-theme="dark"],
+:root.dark,
+[data-theme="dark"],
+[data-mode="dark"],
+.dark,
+.dark-theme {
+  --talos-status-new-color: #38bdf8;
+  --talos-status-new-bg: rgba(14, 165, 233, 0.15);
+  --talos-status-new-border: rgba(14, 165, 233, 0.35);
+  --talos-status-new-solid-bg: #0284c7;
+  --talos-status-new-solid-text: #ffffff;
+
+  --talos-status-pending-color: #fbbf24;
+  --talos-status-pending-bg: rgba(245, 158, 11, 0.15);
+  --talos-status-pending-border: rgba(245, 158, 11, 0.35);
+  --talos-status-pending-solid-bg: #d97706;
+  --talos-status-pending-solid-text: #ffffff;
+
+  --talos-status-inprogress-color: #60a5fa;
+  --talos-status-inprogress-bg: rgba(59, 130, 246, 0.16);
+  --talos-status-inprogress-border: rgba(59, 130, 246, 0.35);
+  --talos-status-inprogress-solid-bg: #2563eb;
+  --talos-status-inprogress-solid-text: #ffffff;
+
+  --talos-status-paused-color: #fb923c;
+  --talos-status-paused-bg: rgba(249, 115, 22, 0.15);
+  --talos-status-paused-border: rgba(249, 115, 22, 0.35);
+  --talos-status-paused-solid-bg: #ea580c;
+  --talos-status-paused-solid-text: #ffffff;
+
+  --talos-status-retrying-color: #fb923c;
+  --talos-status-retrying-bg: rgba(249, 115, 22, 0.15);
+  --talos-status-retrying-border: rgba(249, 115, 22, 0.35);
+  --talos-status-retrying-solid-bg: #ea580c;
+  --talos-status-retrying-solid-text: #ffffff;
+
+  --talos-status-skipped-color: #94a3b8;
+  --talos-status-skipped-bg: rgba(148, 163, 184, 0.12);
+  --talos-status-skipped-border: rgba(148, 163, 184, 0.28);
+  --talos-status-skipped-solid-bg: #475569;
+  --talos-status-skipped-solid-text: #f8fafc;
+
+  --talos-status-success-color: #4ade80;
+  --talos-status-success-bg: rgba(34, 197, 94, 0.15);
+  --talos-status-success-border: rgba(34, 197, 94, 0.35);
+  --talos-status-success-solid-bg: #16a34a;
+  --talos-status-success-solid-text: #ffffff;
+
+  --talos-status-completed-color: #2dd4bf;
+  --talos-status-completed-bg: rgba(20, 184, 166, 0.15);
+  --talos-status-completed-border: rgba(20, 184, 166, 0.35);
+  --talos-status-completed-solid-bg: #0d9488;
+  --talos-status-completed-solid-text: #ffffff;
+
+  --talos-status-error-color: #f87171;
+  --talos-status-error-bg: rgba(239, 68, 68, 0.16);
+  --talos-status-error-border: rgba(239, 68, 68, 0.35);
+  --talos-status-error-solid-bg: #dc2626;
+  --talos-status-error-solid-text: #ffffff;
+
+  --talos-status-terminated-color: #cbd5e1;
+  --talos-status-terminated-bg: rgba(71, 85, 105, 0.25);
+  --talos-status-terminated-border: rgba(100, 116, 139, 0.4);
+  --talos-status-terminated-solid-bg: #334155;
+  --talos-status-terminated-solid-text: #f8fafc;
+
+  --talos-status-expired-color: #c084fc;
+  --talos-status-expired-bg: rgba(168, 85, 247, 0.15);
+  --talos-status-expired-border: rgba(168, 85, 247, 0.35);
+  --talos-status-expired-solid-bg: #7e22ce;
+  --talos-status-expired-solid-text: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    --talos-status-new-color: #38bdf8;
+    --talos-status-new-bg: rgba(14, 165, 233, 0.15);
+    --talos-status-new-border: rgba(14, 165, 233, 0.35);
+    --talos-status-new-solid-bg: #0284c7;
+    --talos-status-new-solid-text: #ffffff;
+
+    --talos-status-pending-color: #fbbf24;
+    --talos-status-pending-bg: rgba(245, 158, 11, 0.15);
+    --talos-status-pending-border: rgba(245, 158, 11, 0.35);
+    --talos-status-pending-solid-bg: #d97706;
+    --talos-status-pending-solid-text: #ffffff;
+
+    --talos-status-inprogress-color: #60a5fa;
+    --talos-status-inprogress-bg: rgba(59, 130, 246, 0.16);
+    --talos-status-inprogress-border: rgba(59, 130, 246, 0.35);
+    --talos-status-inprogress-solid-bg: #2563eb;
+    --talos-status-inprogress-solid-text: #ffffff;
+
+    --talos-status-paused-color: #fb923c;
+    --talos-status-paused-bg: rgba(249, 115, 22, 0.15);
+    --talos-status-paused-border: rgba(249, 115, 22, 0.35);
+    --talos-status-paused-solid-bg: #ea580c;
+    --talos-status-paused-solid-text: #ffffff;
+
+    --talos-status-retrying-color: #fb923c;
+    --talos-status-retrying-bg: rgba(249, 115, 22, 0.15);
+    --talos-status-retrying-border: rgba(249, 115, 22, 0.35);
+    --talos-status-retrying-solid-bg: #ea580c;
+    --talos-status-retrying-solid-text: #ffffff;
+
+    --talos-status-skipped-color: #94a3b8;
+    --talos-status-skipped-bg: rgba(148, 163, 184, 0.12);
+    --talos-status-skipped-border: rgba(148, 163, 184, 0.28);
+    --talos-status-skipped-solid-bg: #475569;
+    --talos-status-skipped-solid-text: #f8fafc;
+
+    --talos-status-success-color: #4ade80;
+    --talos-status-success-bg: rgba(34, 197, 94, 0.15);
+    --talos-status-success-border: rgba(34, 197, 94, 0.35);
+    --talos-status-success-solid-bg: #16a34a;
+    --talos-status-success-solid-text: #ffffff;
+
+    --talos-status-completed-color: #2dd4bf;
+    --talos-status-completed-bg: rgba(20, 184, 166, 0.15);
+    --talos-status-completed-border: rgba(20, 184, 166, 0.35);
+    --talos-status-completed-solid-bg: #0d9488;
+    --talos-status-completed-solid-text: #ffffff;
+
+    --talos-status-error-color: #f87171;
+    --talos-status-error-bg: rgba(239, 68, 68, 0.16);
+    --talos-status-error-border: rgba(239, 68, 68, 0.35);
+    --talos-status-error-solid-bg: #dc2626;
+    --talos-status-error-solid-text: #ffffff;
+
+    --talos-status-terminated-color: #cbd5e1;
+    --talos-status-terminated-bg: rgba(71, 85, 105, 0.25);
+    --talos-status-terminated-border: rgba(100, 116, 139, 0.4);
+    --talos-status-terminated-solid-bg: #334155;
+    --talos-status-terminated-solid-text: #f8fafc;
+
+    --talos-status-expired-color: #c084fc;
+    --talos-status-expired-bg: rgba(168, 85, 247, 0.15);
+    --talos-status-expired-border: rgba(168, 85, 247, 0.35);
+    --talos-status-expired-solid-bg: #7e22ce;
+    --talos-status-expired-solid-text: #ffffff;
+  }
+}

@@ -1,0 +1,337 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+  font-family: var(--talos-status-font-family, inherit);
+  font-weight: var(--talos-status-font-weight, 600);
+  line-height: 1;
+  text-decoration: none;
+  letter-spacing: 0.015em;
+  user-select: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  /* Default CSS Variable Mappings (Resolves from global or local tokens) */
+  --_status-color: var(--talos-status-color, var(--talos-status-pending-color, #d97706));
+  --_status-bg: var(--talos-status-bg, var(--talos-status-pending-bg, #fffbeb));
+  --_status-border: var(--talos-status-border, var(--talos-status-pending-border, #fde68a));
+  --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-pending-solid-bg, #d97706));
+  --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-pending-solid-text, #ffffff));
+  --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+
+  /* Status Themes */
+  &.talos-status-tag--new {
+    --_status-color: var(--talos-status-color, var(--talos-status-new-color, #0284c7));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-new-bg, #f0f9ff));
+    --_status-border: var(--talos-status-border, var(--talos-status-new-border, #bae6fd));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-new-solid-bg, #0284c7));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-new-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--pending {
+    --_status-color: var(--talos-status-color, var(--talos-status-pending-color, #d97706));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-pending-bg, #fffbeb));
+    --_status-border: var(--talos-status-border, var(--talos-status-pending-border, #fde68a));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-pending-solid-bg, #d97706));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-pending-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--inprogress {
+    --_status-color: var(--talos-status-color, var(--talos-status-inprogress-color, #2563eb));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-inprogress-bg, #eff6ff));
+    --_status-border: var(--talos-status-border, var(--talos-status-inprogress-border, #bfdbfe));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-inprogress-solid-bg, #2563eb));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-inprogress-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--paused {
+    --_status-color: var(--talos-status-color, var(--talos-status-paused-color, #b45309));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-paused-bg, #fff7ed));
+    --_status-border: var(--talos-status-border, var(--talos-status-paused-border, #fed7aa));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-paused-solid-bg, #ea580c));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-paused-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--retrying {
+    --_status-color: var(--talos-status-color, var(--talos-status-retrying-color, #c2410c));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-retrying-bg, #fff7ed));
+    --_status-border: var(--talos-status-border, var(--talos-status-retrying-border, #ffedd5));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-retrying-solid-bg, #ea580c));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-retrying-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--skipped {
+    --_status-color: var(--talos-status-color, var(--talos-status-skipped-color, #475569));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-skipped-bg, #f8fafc));
+    --_status-border: var(--talos-status-border, var(--talos-status-skipped-border, #e2e8f0));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-skipped-solid-bg, #64748b));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-skipped-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--success {
+    --_status-color: var(--talos-status-color, var(--talos-status-success-color, #16a34a));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-success-bg, #f0fdf4));
+    --_status-border: var(--talos-status-border, var(--talos-status-success-border, #bbf7d0));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-success-solid-bg, #16a34a));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-success-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--completed {
+    --_status-color: var(--talos-status-color, var(--talos-status-completed-color, #0f766e));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-completed-bg, #f0fdfa));
+    --_status-border: var(--talos-status-border, var(--talos-status-completed-border, #99f6e4));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-completed-solid-bg, #0d9488));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-completed-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--error {
+    --_status-color: var(--talos-status-color, var(--talos-status-error-color, #dc2626));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-error-bg, #fef2f2));
+    --_status-border: var(--talos-status-border, var(--talos-status-error-border, #fecaca));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-error-solid-bg, #dc2626));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-error-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--terminated {
+    --_status-color: var(--talos-status-color, var(--talos-status-terminated-color, #334155));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-terminated-bg, #f1f5f9));
+    --_status-border: var(--talos-status-border, var(--talos-status-terminated-border, #cbd5e1));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-terminated-solid-bg, #334155));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-terminated-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  &.talos-status-tag--expired {
+    --_status-color: var(--talos-status-color, var(--talos-status-expired-color, #7e22ce));
+    --_status-bg: var(--talos-status-bg, var(--talos-status-expired-bg, #faf5ff));
+    --_status-border: var(--talos-status-border, var(--talos-status-expired-border, #e9d5ff));
+    --_status-solid-bg: var(--talos-status-solid-bg, var(--talos-status-expired-solid-bg, #7e22ce));
+    --_status-solid-text: var(--talos-status-solid-text, var(--talos-status-expired-solid-text, #ffffff));
+    --_status-dot-color: var(--talos-status-dot-color, var(--_status-color));
+  }
+
+  /* Variants */
+  &.talos-status-tag--subtle {
+    color: var(--_status-color);
+    background-color: var(--_status-bg);
+    border: 1px solid var(--_status-border);
+  }
+
+  &.talos-status-tag--solid {
+    color: var(--_status-solid-text);
+    background-color: var(--_status-solid-bg);
+    border: 1px solid transparent;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  &.talos-status-tag--outline {
+    color: var(--_status-color);
+    background-color: transparent;
+    border: 1px solid var(--_status-color);
+  }
+
+  &.talos-status-tag--dot {
+    color: var(--talos-text-color, #0f172a);
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Sizes */
+  &.talos-status-tag--xs {
+    height: 1.25rem;
+    font-size: 0.6875rem;
+    padding: 0 0.375rem;
+    gap: 0.25rem;
+
+    &.talos-status-tag--icon-only {
+      width: 1.25rem;
+      padding: 0;
+    }
+
+    .talos-status-tag__dot {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  &.talos-status-tag--sm {
+    height: 1.5rem;
+    font-size: 0.75rem;
+    padding: 0 0.5rem;
+    gap: 0.3125rem;
+
+    &.talos-status-tag--icon-only {
+      width: 1.5rem;
+      padding: 0;
+    }
+
+    .talos-status-tag__dot {
+      width: 7px;
+      height: 7px;
+    }
+  }
+
+  &.talos-status-tag--md {
+    height: 1.75rem;
+    font-size: 0.8125rem;
+    padding: 0 0.625rem;
+    gap: 0.375rem;
+
+    &.talos-status-tag--icon-only {
+      width: 1.75rem;
+      padding: 0;
+    }
+
+    .talos-status-tag__dot {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  &.talos-status-tag--lg {
+    height: 2rem;
+    font-size: 0.875rem;
+    padding: 0 0.75rem;
+    gap: 0.4375rem;
+
+    &.talos-status-tag--icon-only {
+      width: 2rem;
+      padding: 0;
+    }
+
+    .talos-status-tag__dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  /* Shapes */
+  &.talos-status-tag--rounded {
+    border-radius: var(--talos-status-radius-rounded, 0.375rem);
+  }
+
+  &.talos-status-tag--pill {
+    border-radius: var(--talos-status-radius-pill, 9999px);
+  }
+
+  &.talos-status-tag--square {
+    border-radius: var(--talos-status-radius-square, 0.25rem);
+  }
+
+  /* Pulse modifier on tag container */
+  &.talos-status-tag--pulse:not(.talos-status-tag--dot) {
+    animation: talos-status-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+/* Icon Container */
+.talos-status-tag__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+
+  &--spin {
+    animation: talos-status-spin 1.4s linear infinite;
+  }
+
+  &--pulse {
+    animation: talos-status-icon-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+/* Label Container */
+.talos-status-tag__label {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Status Indicator Dot */
+.talos-status-tag__dot {
+  position: relative;
+  display: inline-block;
+  border-radius: 9999px;
+  background-color: var(--_status-dot-color);
+  flex-shrink: 0;
+
+  .talos-status-tag__dot-ping {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background-color: var(--_status-dot-color);
+    opacity: 0.75;
+    animation: talos-status-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+/* Visually Hidden Screen Reader text */
+.talos-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Animations */
+@keyframes talos-status-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes talos-status-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@keyframes talos-status-icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes talos-status-ping {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}

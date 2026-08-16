@@ -1,6 +1,11 @@
 <div class="side-nav-inner">
   <!-- Header -->
   <div class="side-nav-header">
+    @if (headerComponent(); as comp) {
+    <ng-container *ngComponentOutlet="comp; inputs: headerComponentInputs()" />
+    } @else if (headerTemplate(); as tmpl) {
+    <ng-container *ngTemplateOutlet="tmpl" />
+    } @else {
     <ng-content select="[side-nav-header]">
       <div class="default-nav-header">
         <ng-content select="[side-nav-brand]">
@@ -26,66 +31,67 @@
         }
       </div>
     </ng-content>
+    }
   </div>
 
   <!-- Body Navigation Items -->
   <div class="side-nav-body">
-    @if (navGroups().length > 0) {
+    @if (bodyComponent(); as comp) {
+    <ng-container *ngComponentOutlet="comp; inputs: bodyComponentInputs()" />
+    } @else if (bodyTemplate(); as tmpl) {
+    <ng-container *ngTemplateOutlet="tmpl" />
+    } @else if (navGroups().length > 0) {
     <nav class="nav-groups-container" aria-label="Sidebar Navigation">
       @for (group of navGroups(); track group.title || $index) {
-      <div class="nav-group">
-        @if (group.title) {
-        <div class="nav-group-title">{{ group.title }}</div>
+      <talos-nav-group
+        [title]="group.title"
+        [collapsible]="group.collapsible ?? false"
+        [collapsed]="group.collapsed ?? false">
+        @for (item of group.items; track item.id || item.label) {
+        <talos-nav-item
+          [label]="item.label"
+          [icon]="item.icon"
+          [badge]="item.badge"
+          [disabled]="item.disabled ?? false"
+          [active]="(item.id && activeItemId() === item.id) || !!item.active"
+          (itemClick)="selectItem(item)" />
         }
-        <ul class="nav-item-list">
-          @for (item of group.items; track item.id || item.label) {
-          <li class="nav-item">
-            <button type="button" class="nav-link"
-              [class.active]="(item.id && activeItemId() === item.id) || item.active" (click)="selectItem(item)"
-              [attr.aria-current]="((item.id && activeItemId() === item.id) || item.active) ? 'page' : null"
-              [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
-              @if (item.icon) {
-              <span class="nav-icon">
-                <ng-container *ngComponentOutlet="item.icon" />
-              </span>
-              }
-              <span class="nav-label">{{ item.label }}</span>
-              @if (item.badge) {
-              <span class="nav-badge">{{ item.badge }}</span>
-              }
-            </button>
-          </li>
-          }
-        </ul>
-      </div>
+      </talos-nav-group>
       }
     </nav>
-    }
-
+    } @else {
     <!-- Projected content slot for custom body content -->
+    <ng-content select="[side-nav-body]" />
     <ng-content />
+    }
   </div>
 
   <!-- Footer -->
   <div class="side-nav-footer">
+    @if (footerComponent(); as comp) {
+    <ng-container *ngComponentOutlet="comp; inputs: footerComponentInputs()" />
+    } @else if (footerTemplate(); as tmpl) {
+    <ng-container *ngTemplateOutlet="tmpl" />
+    } @else {
     <ng-content select="[side-nav-footer]">
       <div class="default-nav-footer">
         @if (footerItems().length > 0) {
         <ul class="footer-nav-list">
           @for (item of footerItems(); track item.id || item.label) {
-          <li class="footer-nav-item">
-            <button type="button" class="nav-link" [class.active]="item.id && activeItemId() === item.id"
-              (click)="selectItem(item)" [attr.data-tooltip]="layoutService.isLeftNavCollapsed() ? item.label : null">
-              @if (item.icon) {
-              <span class="nav-icon">
-                <ng-container *ngComponentOutlet="item.icon" />
-              </span>
-              }
-              <span class="nav-label">{{ item.label }}</span>
-            </button>
-          </li>
+          <talos-nav-item
+            [label]="item.label"
+            [icon]="item.icon"
+            [disabled]="item.disabled ?? false"
+            [active]="item.id ? activeItemId() === item.id : !!item.active"
+            (itemClick)="selectItem(item)" />
           }
         </ul>
+        }
+
+        @if (showThemeToggle()) {
+        <talos-nav-theme-toggle
+          [isDarkMode]="isDarkMode()"
+          (themeToggle)="themeToggle.emit()" />
         }
 
         @if (userProfile(); as profile) {
@@ -125,5 +131,6 @@
         </button>
       </div>
     </ng-content>
+    }
   </div>
 </div>
