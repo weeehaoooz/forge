@@ -14,7 +14,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--select-group-label-color, #64748b);
+  color: var(--select-group-label-color, var(--talos-text-muted, #64748b));
   user-select: none;
 }
 

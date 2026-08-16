@@ -23,8 +23,8 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  background: var(--header-bg, #ffffff);
-  border-bottom: 1px solid var(--header-border-color, #e2e8f0);
+  background: var(--talos-header-bg, var(--header-bg, #ffffff));
+  border-bottom: 1px solid var(--talos-header-border-color, var(--header-border-color, #e2e8f0));
   z-index: 20;
 }
 

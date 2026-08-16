@@ -28,3 +28,62 @@
     white-space: nowrap;
   }
 }
+
+.demo-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--border-radius, 0.5rem);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .demo-brand-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .talos-version-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background-color: var(--primary-light, #eff6ff);
+      color: var(--primary-color, #2563eb);
+    }
+
+    .talos-tagline {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted, #64748b);
+    }
+  }
+
+  .demo-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-color, #0f172a);
+    background-color: var(--bg-color, #f8fafc);
+    border: 1px solid var(--border-color, #cbd5e1);
+    border-radius: var(--border-radius, 0.375rem);
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background-color: var(--primary-light, #eff6ff);
+      color: var(--primary-color, #2563eb);
+      border-color: var(--primary-color, #2563eb);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.2));
+    }
+  }
+}

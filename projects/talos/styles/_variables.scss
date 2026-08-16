@@ -1,4 +1,5 @@
 /* Talos UI Design System Tokens & CSS Variables */
+
 :root {
   /* Core & Brand Colors (Reads user-defined --primary-color etc. with defaults) */
   --talos-primary-color: var(--primary-color, #2563eb);
@@ -13,6 +14,8 @@
   --talos-text-color: var(--text-color, #0f172a);
   --talos-text-muted: var(--text-muted, #64748b);
   --talos-error-color: var(--error-color, #ef4444);
+  --talos-warning-color: var(--warning-color, #d97706);
+  --talos-success-color: var(--success-color, #16a34a);
 
   /* Form Control Base Tokens */
   --talos-border-radius: var(--border-radius, 0.375rem);
@@ -21,11 +24,41 @@
   --talos-control-font-size: var(--control-font-size, 0.8125rem);
   --talos-focus-ring: var(--focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
 
+  --talos-input-bg: var(--input-bg, var(--talos-card-bg));
+  --talos-input-border: var(--input-border, var(--talos-border-color));
+  --talos-input-border-hover: var(--input-border-hover, var(--talos-border-hover));
+  --talos-input-border-focus: var(--input-border-focus, var(--talos-border-focus));
+  --talos-input-color: var(--input-color, var(--talos-text-color));
+  --talos-input-placeholder-color: var(--input-placeholder-color, #94a3b8);
+  --talos-input-disabled-bg: var(--input-disabled-bg, var(--talos-bg-color));
+  --talos-input-disabled-border: var(--input-disabled-border, #e2e8f0);
+  --talos-input-disabled-color: var(--input-disabled-color, #94a3b8);
+
   /* Navigation & Sidebar Tokens */
   --talos-sidebar-width: var(--sidebar-width, 260px);
   --talos-sidebar-collapsed-width: var(--sidebar-collapsed-width, 68px);
   --talos-nav-bg: var(--nav-bg, #ffffff);
   --talos-nav-border-color: var(--nav-border-color, #f1f5f9);
+  --talos-active-nav-bg: var(--active-nav-bg, #edf2fe);
+  --talos-active-nav-text: var(--active-nav-text, var(--talos-primary-color));
+  --talos-avatar-bg: var(--avatar-bg, #e0f2fe);
+  --talos-avatar-text: var(--avatar-text, #0369a1);
+  --talos-badge-bg: var(--badge-bg, #eff6ff);
+  --talos-badge-text: var(--badge-text, var(--talos-primary-color));
+
+  /* Header & Panel Tokens */
+  --talos-header-bg: var(--header-bg, #ffffff);
+  --talos-header-border-color: var(--header-border-color, #e2e8f0);
+  --talos-right-panel-bg: var(--right-panel-bg, #ffffff);
+  --talos-right-panel-border: var(--right-panel-border, #e2e8f0);
+  --talos-loading-overlay-bg: rgba(255, 255, 255, 0.75);
+
+  /* Dropdown & Popover Tokens */
+  --talos-dropdown-bg: var(--dropdown-bg, var(--talos-card-bg));
+  --talos-dropdown-border: var(--dropdown-border, #e2e8f0);
+  --talos-dropdown-shadow: var(--dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04));
+  --talos-dropdown-hover-bg: var(--dropdown-hover-bg, var(--talos-primary-light));
+  --talos-dropdown-selected-bg: var(--dropdown-selected-bg, var(--talos-primary-light-hover));
 
   /* Button Specific Tokens */
   --talos-btn-font-family: inherit;
@@ -80,7 +113,7 @@
 
   /* Category Bar Specific Tokens */
   --talos-category-bar-gap: var(--category-bar-gap, 2px);
-  --talos-category-bar-track-bg: var(--category-bar-track-bg, rgba(0, 0, 0, 0.08));
+  --talos-category-bar-track-bg: var(--category-bar-track-bg, #f1f5f9);
   --talos-category-bar-border-radius: var(--category-bar-radius, var(--talos-border-radius));
   --talos-category-bar-height-xs: var(--category-bar-height-xs, 0.25rem);
   --talos-category-bar-height-sm: var(--category-bar-height-sm, 0.375rem);
@@ -109,4 +142,252 @@
   --talos-range-tick-label-color: var(--range-tick-label-color, var(--talos-text-muted));
   --talos-range-tooltip-bg: var(--range-tooltip-bg, #1e293b);
   --talos-range-tooltip-text: var(--range-tooltip-text, #ffffff);
+
+  /* Slide Toggle Specific Tokens */
+  --talos-toggle-track-bg: var(--toggle-track-bg, #cbd5e1);
+  --talos-toggle-track-bg-hover: var(--toggle-track-bg-hover, #94a3b8);
+  --talos-toggle-thumb-bg: var(--toggle-thumb-bg, #ffffff);
+
+  /* Snackbar Specific Tokens */
+  --talos-snackbar-bg: var(--snackbar-bg, var(--talos-card-bg));
+  --talos-snackbar-text: var(--snackbar-text, var(--talos-text-color));
+  --talos-snackbar-border: var(--snackbar-border, var(--talos-border-color));
+
+  /* Tooltip Specific Tokens */
+  --talos-tooltip-bg: var(--tooltip-bg, #0f172a);
+  --talos-tooltip-text: var(--tooltip-text, #ffffff);
+}
+
+/* ==========================================================================
+   Dark Mode Tokens (Active via data-theme="dark", class="dark", etc.)
+   ========================================================================== */
+:root[data-theme="dark"],
+:root.dark,
+[data-theme="dark"],
+[data-mode="dark"],
+.dark,
+.dark-theme {
+  /* Core & Brand Colors */
+  --talos-primary-color: var(--primary-color, #3b82f6);
+  --talos-primary-hover: var(--primary-hover, #60a5fa);
+  --talos-primary-light: var(--primary-light, rgba(59, 130, 246, 0.18));
+  --talos-primary-light-hover: var(--primary-light-hover, rgba(59, 130, 246, 0.28));
+  --talos-bg-color: var(--bg-color, #0b0f19);
+  --talos-card-bg: var(--card-bg, #111827);
+  --talos-border-color: var(--border-color, #1f2937);
+  --talos-border-hover: var(--border-hover, #374151);
+  --talos-border-focus: var(--border-focus, #3b82f6);
+  --talos-text-color: var(--text-color, #f9fafb);
+  --talos-text-muted: var(--text-muted, #9ca3af);
+  --talos-error-color: var(--error-color, #f87171);
+  --talos-warning-color: var(--warning-color, #fbbf24);
+  --talos-success-color: var(--success-color, #34d399);
+
+  --talos-focus-ring: var(--focus-ring, 0 0 0 3px rgba(59, 130, 246, 0.3));
+
+  /* Form Control Tokens */
+  --talos-input-bg: var(--input-bg, #111827);
+  --talos-input-border: var(--input-border, #374151);
+  --talos-input-border-hover: var(--input-border-hover, #4b5563);
+  --talos-input-border-focus: var(--input-border-focus, #3b82f6);
+  --talos-input-color: var(--input-color, #f9fafb);
+  --talos-input-placeholder-color: var(--input-placeholder-color, #6b7280);
+  --talos-input-disabled-bg: var(--input-disabled-bg, #1f2937);
+  --talos-input-disabled-border: var(--input-disabled-border, #374151);
+  --talos-input-disabled-color: var(--input-disabled-color, #6b7280);
+
+  /* Navigation & Sidebar Tokens */
+  --talos-nav-bg: var(--nav-bg, #111827);
+  --talos-nav-border-color: var(--nav-border-color, #1f2937);
+  --talos-active-nav-bg: var(--active-nav-bg, rgba(59, 130, 246, 0.16));
+  --talos-active-nav-text: var(--active-nav-text, #60a5fa);
+  --talos-avatar-bg: var(--avatar-bg, rgba(59, 130, 246, 0.25));
+  --talos-avatar-text: var(--avatar-text, #93c5fd);
+  --talos-badge-bg: var(--badge-bg, rgba(59, 130, 246, 0.2));
+  --talos-badge-text: var(--badge-text, #93c5fd);
+
+  /* Header & Panel Tokens */
+  --talos-header-bg: var(--header-bg, #111827);
+  --talos-header-border-color: var(--header-border-color, #1f2937);
+  --talos-right-panel-bg: var(--right-panel-bg, #111827);
+  --talos-right-panel-border: var(--right-panel-border, #1f2937);
+  --talos-loading-overlay-bg: rgba(11, 15, 25, 0.8);
+
+  /* Dropdown & Popover Tokens */
+  --talos-dropdown-bg: var(--dropdown-bg, #1e293b);
+  --talos-dropdown-border: var(--dropdown-border, #334155);
+  --talos-dropdown-shadow: var(--dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3));
+  --talos-dropdown-hover-bg: var(--dropdown-hover-bg, rgba(59, 130, 246, 0.15));
+  --talos-dropdown-selected-bg: var(--dropdown-selected-bg, rgba(59, 130, 246, 0.25));
+
+  /* Button Tokens in Dark Mode */
+  --talos-btn-primary-bg: var(--btn-primary-bg, var(--talos-primary-color));
+  --talos-btn-primary-hover: var(--btn-primary-hover, #2563eb);
+  --talos-btn-primary-active: var(--btn-primary-active, #1d4ed8);
+  --talos-btn-primary-text: var(--btn-primary-text, #ffffff);
+
+  --talos-btn-secondary-bg: var(--btn-secondary-bg, #334155);
+  --talos-btn-secondary-hover: var(--btn-secondary-hover, #475569);
+  --talos-btn-secondary-active: var(--btn-secondary-active, #64748b);
+  --talos-btn-secondary-text: var(--btn-secondary-text, #f8fafc);
+
+  --talos-btn-outline-bg: var(--btn-outline-bg, transparent);
+  --talos-btn-outline-border: var(--btn-outline-border, #374151);
+  --talos-btn-outline-hover-bg: var(--btn-outline-hover-bg, #1e293b);
+  --talos-btn-outline-hover-border: var(--btn-outline-hover-border, #4b5563);
+  --talos-btn-outline-text: var(--btn-outline-text, #f3f4f6);
+
+  --talos-btn-ghost-bg: var(--btn-ghost-bg, transparent);
+  --talos-btn-ghost-text: var(--btn-ghost-text, #9ca3af);
+  --talos-btn-ghost-hover-bg: var(--btn-ghost-hover-bg, #1e293b);
+  --talos-btn-ghost-hover-text: var(--btn-ghost-hover-text, #f9fafb);
+  --talos-btn-ghost-active-bg: var(--btn-ghost-active-bg, #334155);
+
+  --talos-btn-danger-bg: var(--btn-danger-bg, #dc2626);
+  --talos-btn-danger-hover: var(--btn-danger-hover, #ef4444);
+  --talos-btn-danger-active: var(--btn-danger-active, #b91c1c);
+  --talos-btn-danger-text: var(--btn-danger-text, #ffffff);
+
+  --talos-btn-success-bg: var(--btn-success-bg, #15803d);
+  --talos-btn-success-hover: var(--btn-success-hover, #16a34a);
+  --talos-btn-success-active: var(--btn-success-active, #166534);
+  --talos-btn-success-text: var(--btn-success-text, #ffffff);
+
+  /* Category Bar Tokens */
+  --talos-category-bar-track-bg: var(--category-bar-track-bg, #1f2937);
+  --talos-category-bar-marker-ring: var(--category-bar-marker-ring, #111827);
+
+  /* Range Input Tokens */
+  --talos-range-track-bg: var(--range-track-bg, #1f2937);
+  --talos-range-track-disabled-bg: var(--range-track-disabled-bg, #374151);
+  --talos-range-track-disabled-fill: var(--range-track-disabled-fill, #4b5563);
+  --talos-range-thumb-bg: var(--range-thumb-bg, #111827);
+  --talos-range-thumb-shadow: var(--range-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.4));
+  --talos-range-tick-color: var(--range-tick-color, #4b5563);
+  --talos-range-tick-active-color: var(--range-tick-active-color, #f9fafb);
+  --talos-range-tooltip-bg: var(--range-tooltip-bg, #1e293b);
+  --talos-range-tooltip-text: var(--range-tooltip-text, #f9fafb);
+
+  /* Slide Toggle Tokens */
+  --talos-toggle-track-bg: var(--toggle-track-bg, #374151);
+  --talos-toggle-track-bg-hover: var(--toggle-track-bg-hover, #4b5563);
+  --talos-toggle-thumb-bg: var(--toggle-thumb-bg, #f9fafb);
+
+  /* Snackbar Tokens */
+  --talos-snackbar-bg: var(--snackbar-bg, #1e293b);
+  --talos-snackbar-text: var(--snackbar-text, #f9fafb);
+  --talos-snackbar-border: var(--snackbar-border, #334155);
+
+  /* Tooltip Tokens */
+  --talos-tooltip-bg: var(--tooltip-bg, #1e293b);
+  --talos-tooltip-text: var(--tooltip-text, #f9fafb);
+}
+
+/* System dark mode preference fallback when not explicitly forced */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    --talos-primary-color: var(--primary-color, #3b82f6);
+    --talos-primary-hover: var(--primary-hover, #60a5fa);
+    --talos-primary-light: var(--primary-light, rgba(59, 130, 246, 0.18));
+    --talos-primary-light-hover: var(--primary-light-hover, rgba(59, 130, 246, 0.28));
+    --talos-bg-color: var(--bg-color, #0b0f19);
+    --talos-card-bg: var(--card-bg, #111827);
+    --talos-border-color: var(--border-color, #1f2937);
+    --talos-border-hover: var(--border-hover, #374151);
+    --talos-border-focus: var(--border-focus, #3b82f6);
+    --talos-text-color: var(--text-color, #f9fafb);
+    --talos-text-muted: var(--text-muted, #9ca3af);
+    --talos-error-color: var(--error-color, #f87171);
+    --talos-warning-color: var(--warning-color, #fbbf24);
+    --talos-success-color: var(--success-color, #34d399);
+
+    --talos-focus-ring: var(--focus-ring, 0 0 0 3px rgba(59, 130, 246, 0.3));
+
+    --talos-input-bg: var(--input-bg, #111827);
+    --talos-input-border: var(--input-border, #374151);
+    --talos-input-border-hover: var(--input-border-hover, #4b5563);
+    --talos-input-border-focus: var(--input-border-focus, #3b82f6);
+    --talos-input-color: var(--input-color, #f9fafb);
+    --talos-input-placeholder-color: var(--input-placeholder-color, #6b7280);
+    --talos-input-disabled-bg: var(--input-disabled-bg, #1f2937);
+    --talos-input-disabled-border: var(--input-disabled-border, #374151);
+    --talos-input-disabled-color: var(--input-disabled-color, #6b7280);
+
+    --talos-nav-bg: var(--nav-bg, #111827);
+    --talos-nav-border-color: var(--nav-border-color, #1f2937);
+    --talos-active-nav-bg: var(--active-nav-bg, rgba(59, 130, 246, 0.16));
+    --talos-active-nav-text: var(--active-nav-text, #60a5fa);
+    --talos-avatar-bg: var(--avatar-bg, rgba(59, 130, 246, 0.25));
+    --talos-avatar-text: var(--avatar-text, #93c5fd);
+    --talos-badge-bg: var(--badge-bg, rgba(59, 130, 246, 0.2));
+    --talos-badge-text: var(--badge-text, #93c5fd);
+
+    --talos-header-bg: var(--header-bg, #111827);
+    --talos-header-border-color: var(--header-border-color, #1f2937);
+    --talos-right-panel-bg: var(--right-panel-bg, #111827);
+    --talos-right-panel-border: var(--right-panel-border, #1f2937);
+    --talos-loading-overlay-bg: rgba(11, 15, 25, 0.8);
+
+    --talos-dropdown-bg: var(--dropdown-bg, #1e293b);
+    --talos-dropdown-border: var(--dropdown-border, #334155);
+    --talos-dropdown-shadow: var(--dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3));
+    --talos-dropdown-hover-bg: var(--dropdown-hover-bg, rgba(59, 130, 246, 0.15));
+    --talos-dropdown-selected-bg: var(--dropdown-selected-bg, rgba(59, 130, 246, 0.25));
+
+    --talos-btn-primary-bg: var(--btn-primary-bg, var(--talos-primary-color));
+    --talos-btn-primary-hover: var(--btn-primary-hover, #2563eb);
+    --talos-btn-primary-active: var(--btn-primary-active, #1d4ed8);
+    --talos-btn-primary-text: var(--btn-primary-text, #ffffff);
+
+    --talos-btn-secondary-bg: var(--btn-secondary-bg, #334155);
+    --talos-btn-secondary-hover: var(--btn-secondary-hover, #475569);
+    --talos-btn-secondary-active: var(--btn-secondary-active, #64748b);
+    --talos-btn-secondary-text: var(--btn-secondary-text, #f8fafc);
+
+    --talos-btn-outline-bg: var(--btn-outline-bg, transparent);
+    --talos-btn-outline-border: var(--btn-outline-border, #374151);
+    --talos-btn-outline-hover-bg: var(--btn-outline-hover-bg, #1e293b);
+    --talos-btn-outline-hover-border: var(--btn-outline-hover-border, #4b5563);
+    --talos-btn-outline-text: var(--btn-outline-text, #f3f4f6);
+
+    --talos-btn-ghost-bg: var(--btn-ghost-bg, transparent);
+    --talos-btn-ghost-text: var(--btn-ghost-text, #9ca3af);
+    --talos-btn-ghost-hover-bg: var(--btn-ghost-hover-bg, #1e293b);
+    --talos-btn-ghost-hover-text: var(--btn-ghost-hover-text, #f9fafb);
+    --talos-btn-ghost-active-bg: var(--btn-ghost-active-bg, #334155);
+
+    --talos-btn-danger-bg: var(--btn-danger-bg, #dc2626);
+    --talos-btn-danger-hover: var(--btn-danger-hover, #ef4444);
+    --talos-btn-danger-active: var(--btn-danger-active, #b91c1c);
+    --talos-btn-danger-text: var(--btn-danger-text, #ffffff);
+
+    --talos-btn-success-bg: var(--btn-success-bg, #15803d);
+    --talos-btn-success-hover: var(--btn-success-hover, #16a34a);
+    --talos-btn-success-active: var(--btn-success-active, #166534);
+    --talos-btn-success-text: var(--btn-success-text, #ffffff);
+
+    --talos-category-bar-track-bg: var(--category-bar-track-bg, #1f2937);
+    --talos-category-bar-marker-ring: var(--category-bar-marker-ring, #111827);
+
+    --talos-range-track-bg: var(--range-track-bg, #1f2937);
+    --talos-range-track-disabled-bg: var(--range-track-disabled-bg, #374151);
+    --talos-range-track-disabled-fill: var(--range-track-disabled-fill, #4b5563);
+    --talos-range-thumb-bg: var(--range-thumb-bg, #111827);
+    --talos-range-thumb-shadow: var(--range-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.4));
+    --talos-range-tick-color: var(--range-tick-color, #4b5563);
+    --talos-range-tick-active-color: var(--range-tick-active-color, #f9fafb);
+    --talos-range-tooltip-bg: var(--range-tooltip-bg, #1e293b);
+    --talos-range-tooltip-text: var(--range-tooltip-text, #f9fafb);
+
+    --talos-toggle-track-bg: var(--toggle-track-bg, #374151);
+    --talos-toggle-track-bg-hover: var(--toggle-track-bg-hover, #4b5563);
+    --talos-toggle-thumb-bg: var(--toggle-thumb-bg, #f9fafb);
+
+    --talos-snackbar-bg: var(--snackbar-bg, #1e293b);
+    --talos-snackbar-text: var(--snackbar-text, #f9fafb);
+    --talos-snackbar-border: var(--snackbar-border, #334155);
+
+    --talos-tooltip-bg: var(--tooltip-bg, #1e293b);
+    --talos-tooltip-text: var(--tooltip-text, #f9fafb);
+  }
 }

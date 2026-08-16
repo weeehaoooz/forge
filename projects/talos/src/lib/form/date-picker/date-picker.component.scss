@@ -5,13 +5,13 @@
   box-sizing: border-box;
   font-family: inherit;
 
-  --datepicker-bg: var(--talos-card-bg, #ffffff);
-  --datepicker-border: var(--talos-border-color, #cbd5e1);
-  --datepicker-border-hover: var(--talos-border-hover, #64748b);
-  --datepicker-border-focus: var(--talos-border-focus, #2563eb);
+  --datepicker-bg: var(--talos-input-bg, var(--talos-card-bg, #ffffff));
+  --datepicker-border: var(--talos-input-border, var(--talos-border-color, #cbd5e1));
+  --datepicker-border-hover: var(--talos-input-border-hover, var(--talos-border-hover, #64748b));
+  --datepicker-border-focus: var(--talos-input-border-focus, var(--talos-border-focus, #2563eb));
   --datepicker-shadow-focus: var(--talos-focus-ring, 0 0 0 3px rgba(37, 99, 235, 0.15));
-  --datepicker-color: var(--talos-text-color, #0f172a);
-  --datepicker-placeholder-color: #94a3b8;
+  --datepicker-color: var(--talos-input-color, var(--talos-text-color, #0f172a));
+  --datepicker-placeholder-color: var(--talos-input-placeholder-color, #94a3b8);
   --datepicker-radius: var(--talos-border-radius, 0.375rem);
 
   /* Sizing */
@@ -19,12 +19,12 @@
   --datepicker-padding-x: var(--talos-control-padding-x, 0.625rem);
   --datepicker-font-size: var(--talos-control-font-size, 0.8125rem);
 
-  --datepicker-dropdown-bg: var(--talos-card-bg, #ffffff);
-  --datepicker-dropdown-border: #e2e8f0;
-  --datepicker-dropdown-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --datepicker-dropdown-bg: var(--talos-dropdown-bg, var(--talos-card-bg, #ffffff));
+  --datepicker-dropdown-border: var(--talos-dropdown-border, var(--talos-border-color, #e2e8f0));
+  --datepicker-dropdown-shadow: var(--talos-dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
 
-  --datepicker-primary: #2563eb;
-  --datepicker-primary-hover: #1d4ed8;
+  --datepicker-primary: var(--talos-primary-color, var(--primary-color, #2563eb));
+  --datepicker-primary-hover: var(--talos-primary-hover, var(--primary-hover, #1d4ed8));
   --datepicker-primary-light: var(--talos-primary-light, var(--primary-light, #eff6ff));
   --datepicker-primary-light-hover: var(--talos-primary-light-hover, var(--primary-light-hover, #dbeafe));
 
@@ -54,8 +54,8 @@
     pointer-events: none;
 
     .datepicker-trigger {
-      background-color: var(--talos-bg-color, #f8fafc);
-      border-color: #e2e8f0;
+      background-color: var(--talos-input-disabled-bg, var(--talos-bg-color, #f8fafc));
+      border-color: var(--talos-input-disabled-border, #e2e8f0);
       cursor: not-allowed;
     }
   }
@@ -103,7 +103,7 @@
 .datepicker-icon {
   width: 1rem;
   height: 1rem;
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
   flex-shrink: 0;
   cursor: pointer;
 }
@@ -152,13 +152,13 @@
   background: transparent;
   border: none;
   border-radius: 50%;
-  color: #94a3b8;
+  color: var(--talos-text-muted, #94a3b8);
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
 
   &:hover {
-    color: #ef4444;
-    background-color: #fee2e2;
+    color: var(--talos-error-color, #ef4444);
+    background-color: rgba(239, 68, 68, 0.15);
   }
 
   svg {
@@ -169,9 +169,9 @@
 
 /* Calendar Dropdown Panel */
 .datepicker-dropdown-panel {
-  --datepicker-dropdown-bg: var(--talos-card-bg, var(--card-bg, #ffffff));
-  --datepicker-dropdown-border: #e2e8f0;
-  --datepicker-dropdown-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --datepicker-dropdown-bg: var(--talos-dropdown-bg, var(--talos-card-bg, var(--card-bg, #ffffff)));
+  --datepicker-dropdown-border: var(--talos-dropdown-border, var(--talos-border-color, #e2e8f0));
+  --datepicker-dropdown-shadow: var(--talos-dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
   --datepicker-radius: var(--talos-border-radius, var(--border-radius, 0.375rem));
   --datepicker-color: var(--talos-text-color, var(--text-color, #0f172a));
   --datepicker-primary: var(--talos-primary-color, var(--primary-color, #2563eb));
@@ -224,7 +224,7 @@
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: #f1f5f9;
+    background-color: var(--datepicker-primary-light, #f1f5f9);
   }
 }
 
@@ -237,13 +237,13 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background-color: #f1f5f9;
-    color: #0f172a;
+    background-color: var(--datepicker-primary-light, #f1f5f9);
+    color: var(--datepicker-color);
   }
 
   svg {
@@ -266,7 +266,7 @@
   .weekday-cell {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--talos-text-muted, #94a3b8);
     padding: 0.25rem 0;
     text-transform: uppercase;
   }
@@ -295,17 +295,18 @@
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover:not(:disabled) {
-    background-color: #f1f5f9;
+    background-color: var(--datepicker-primary-light, #f1f5f9);
   }
 
   &.is-other-month {
-    color: #cbd5e1;
+    color: var(--talos-text-muted, #cbd5e1);
+    opacity: 0.5;
   }
 
   &.is-today {
     font-weight: 700;
     color: var(--datepicker-primary);
-    border-color: #bfdbfe;
+    border-color: var(--datepicker-primary-hover, #bfdbfe);
   }
 
   &.is-selected {
@@ -316,15 +317,15 @@
 
   &.is-focused:not(.is-selected) {
     background-color: var(--datepicker-primary-light);
-    border-color: #93c5fd;
+    border-color: var(--datepicker-primary);
   }
 
   &:disabled,
   &.is-disabled {
-    color: #cbd5e1;
+    color: var(--talos-text-muted, #cbd5e1);
     cursor: not-allowed;
     background-color: transparent;
-    opacity: 0.4;
+    opacity: 0.35;
   }
 }
 
@@ -346,20 +347,20 @@
   font-weight: 500;
   color: var(--datepicker-color);
   background: transparent;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--talos-border-color, #e2e8f0);
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
+    background-color: var(--datepicker-primary-light, #f1f5f9);
+    border-color: var(--talos-border-hover, #cbd5e1);
   }
 
   &.is-current {
     font-weight: 700;
     color: var(--datepicker-primary);
-    border-color: #bfdbfe;
+    border-color: var(--datepicker-primary-hover, #bfdbfe);
   }
 
   &.is-selected {
@@ -376,13 +377,13 @@
   justify-content: space-between;
   margin-top: 0.625rem;
   padding-top: 0.625rem;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--talos-border-color, #f1f5f9);
 }
 
 .time-picker-label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
 }
 
 .time-picker-controls {
@@ -396,8 +397,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background-color: var(--talos-bg-color, #f8fafc);
+  border: 1px solid var(--talos-border-color, #e2e8f0);
   border-radius: 0.25rem;
   padding: 0.125rem;
   width: 2.25rem;
@@ -407,7 +408,7 @@
   background: transparent;
   border: none;
   font-size: 0.625rem;
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -435,14 +436,14 @@
   transition: background-color 0.15s ease, box-shadow 0.15s ease;
 
   &:focus {
-    background-color: #ffffff;
+    background-color: var(--talos-card-bg, #ffffff);
     box-shadow: 0 0 0 1px var(--datepicker-primary);
   }
 }
 
 .time-separator {
   font-weight: 700;
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
   font-size: 0.875rem;
 }
 
@@ -453,13 +454,13 @@
   font-weight: 600;
   color: var(--datepicker-primary);
   background-color: var(--datepicker-primary-light);
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--talos-border-color, #bfdbfe);
   border-radius: 0.25rem;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background-color: #dbeafe;
+    background-color: var(--datepicker-primary-light-hover, #dbeafe);
   }
 }
 
@@ -469,7 +470,7 @@
   justify-content: flex-end;
   margin-top: 0.625rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--talos-border-color, #f1f5f9);
 
   &.datetime-footer {
     justify-content: space-between;
@@ -493,11 +494,11 @@
 }
 
 .datepicker-now-btn {
-  color: #64748b;
+  color: var(--talos-text-muted, #64748b);
 
   &:hover {
-    background-color: #f1f5f9;
-    color: #0f172a;
+    background-color: var(--datepicker-primary-light, #f1f5f9);
+    color: var(--datepicker-color);
   }
 }
 

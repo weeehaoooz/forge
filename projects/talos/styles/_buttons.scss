@@ -146,12 +146,12 @@
 .btn-outline {
   background-color: var(--talos-btn-outline-bg, var(--talos-card-bg, #ffffff));
   border-color: var(--talos-btn-outline-border, var(--talos-border-color, #cbd5e1));
-  color: var(--talos-btn-outline-text, #334155);
+  color: var(--talos-btn-outline-text, var(--talos-text-color, #334155));
 
   --talos-btn-ripple-color: rgba(37, 99, 235, 0.15);
 
   &:hover:not(:disabled):not(.is-disabled):not(.is-loading) {
-    background-color: var(--talos-btn-outline-hover-bg, #f8fafc);
+    background-color: var(--talos-btn-outline-hover-bg, var(--talos-bg-color, #f8fafc));
     border-color: var(--talos-btn-outline-hover-border, var(--talos-border-hover, #64748b));
     color: var(--talos-text-color, #0f172a);
   }
@@ -163,17 +163,17 @@
 .btn-subtle {
   background-color: var(--talos-btn-ghost-bg, transparent);
   border-color: transparent;
-  color: var(--talos-btn-ghost-text, #64748b);
+  color: var(--talos-btn-ghost-text, var(--talos-text-muted, #64748b));
 
   --talos-btn-ripple-color: rgba(15, 23, 42, 0.12);
 
   &:hover:not(:disabled):not(.is-disabled):not(.is-loading) {
-    background-color: var(--talos-btn-ghost-hover-bg, #f1f5f9);
-    color: var(--talos-btn-ghost-hover-text, #0f172a);
+    background-color: var(--talos-btn-ghost-hover-bg, var(--talos-primary-light, #f1f5f9));
+    color: var(--talos-btn-ghost-hover-text, var(--talos-text-color, #0f172a));
   }
 
   &:active:not(:disabled):not(.is-disabled):not(.is-loading) {
-    background-color: var(--talos-btn-ghost-active-bg, #e2e8f0);
+    background-color: var(--talos-btn-ghost-active-bg, var(--talos-primary-light-hover, #e2e8f0));
   }
 }
 

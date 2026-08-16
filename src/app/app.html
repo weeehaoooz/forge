@@ -5,12 +5,30 @@
       <div class="logo-icon-badge">
         <svg lucideHexagon [size]="20"></svg>
       </div>
-      <span class="logo-text">Talos</span>
+      <span class="logo-text">TalosUI</span>
     </div>
   </talos-side-nav>
 
   <!-- Main Content Area -->
   <div class="demo-page-wrapper">
+    <header class="demo-top-bar" aria-label="Demo Bar">
+      <div class="demo-brand-meta">
+        <span class="talos-version-badge">v0.1.0</span>
+        <span class="talos-tagline">Angular Enterprise Component Library</span>
+      </div>
+
+      <button type="button" class="demo-theme-btn" (click)="toggleTheme()"
+        [attr.aria-label]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        @if (isDarkMode()) {
+          <svg lucideSun [size]="16"></svg>
+          <span class="theme-label">Light Mode</span>
+        } @else {
+          <svg lucideMoon [size]="16"></svg>
+          <span class="theme-label">Dark Mode</span>
+        }
+      </button>
+    </header>
+
     <router-outlet />
   </div>
 </talos-main-layout>

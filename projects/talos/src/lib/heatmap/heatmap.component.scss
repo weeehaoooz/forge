@@ -1,11 +1,11 @@
 :host {
   display: block;
   font-family: inherit;
-  --talos-heatmap-bg: var(--talos-bg-surface, #ffffff);
+  --talos-heatmap-bg: var(--talos-card-bg, var(--talos-bg-surface, #ffffff));
   --talos-heatmap-text: var(--talos-text-color, #0f172a);
   --talos-heatmap-muted: var(--talos-text-muted, #64748b);
   --talos-heatmap-border: var(--talos-border-color, #e2e8f0);
-  --talos-heatmap-hover-bg: #f1f5f9;
+  --talos-heatmap-hover-bg: var(--talos-primary-light, #f1f5f9);
 
   // Fit to Width defaults (pill / rounded)
   --talos-heatmap-cell-height: 28px;
@@ -108,7 +108,7 @@
   display: inline-flex;
   align-items: center;
   padding: 2px;
-  background: #f1f5f9;
+  background: var(--talos-bg-color, #f1f5f9);
   border-radius: 8px;
   border: 1px solid var(--talos-heatmap-border);
   gap: 2px;
@@ -134,8 +134,8 @@
   }
 
   &.is-active {
-    background: #ffffff;
-    color: #4338ca;
+    background: var(--talos-card-bg, #ffffff);
+    color: var(--talos-primary-color, #4338ca);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
 }
@@ -156,7 +156,7 @@
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--talos-heatmap-text);
-  background: #f8fafc;
+  background: var(--talos-bg-color, #f8fafc);
   border: 1px solid var(--talos-heatmap-border);
   border-radius: 8px;
   cursor: pointer;
@@ -164,13 +164,13 @@
   transition: all 0.15s ease;
 
   &:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+    background: var(--talos-primary-light, #f1f5f9);
+    border-color: var(--talos-border-hover, #cbd5e1);
   }
 
   &.is-open {
-    background: #e2e8f0;
-    border-color: #94a3b8;
+    background: var(--talos-primary-light-hover, #e2e8f0);
+    border-color: var(--talos-border-hover, #94a3b8);
   }
 
   .talos-heatmap-dropdown-icon {
@@ -200,9 +200,9 @@
   }
 
   &.is-active {
-    background: #e0e7ff;
-    color: #4338ca;
-    border-color: #c7d2fe;
+    background: var(--talos-primary-light, #e0e7ff);
+    color: var(--talos-primary-color, #4338ca);
+    border-color: var(--talos-border-color, #c7d2fe);
   }
 
   &:active {
@@ -236,10 +236,10 @@
   right: 0;
   z-index: 50;
   min-width: 170px;
-  background: #ffffff;
-  border: 1px solid var(--talos-heatmap-border);
+  background: var(--talos-dropdown-bg, var(--talos-card-bg, #ffffff));
+  border: 1px solid var(--talos-dropdown-border, var(--talos-heatmap-border));
   border-radius: 10px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--talos-dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08));
   padding: 4px;
   display: flex;
   flex-direction: column;
@@ -277,18 +277,18 @@
   transition: background 0.12s ease;
 
   &:hover {
-    background: #f1f5f9;
+    background: var(--talos-dropdown-hover-bg, #f1f5f9);
   }
 
   &.is-selected {
     font-weight: 600;
-    color: #4338ca;
+    color: var(--talos-primary-color, #4338ca);
   }
 
   .talos-heatmap-check-icon {
     width: 14px;
     height: 14px;
-    color: #4338ca;
+    color: var(--talos-primary-color, #4338ca);
   }
 
   .talos-heatmap-menu-icon {
@@ -470,7 +470,7 @@
 .talos-heatmap-loading-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--talos-loading-overlay-bg, rgba(255, 255, 255, 0.75));
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -495,7 +495,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #ffffff;
+  background: var(--talos-card-bg, #ffffff);
   border: 1px solid var(--talos-heatmap-border);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -506,7 +506,7 @@
   .talos-heatmap-loading-spinner {
     width: 16px;
     height: 16px;
-    color: #4338ca;
+    color: var(--talos-primary-color, #4338ca);
     animation: talos-heatmap-spin 0.8s linear infinite;
   }
 }

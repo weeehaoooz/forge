@@ -17,7 +17,9 @@ import {
   LucideBell,
   LucideFlame,
   LucideSliders,
-  LucideSlidersHorizontal
+  LucideSlidersHorizontal,
+  LucideSun,
+  LucideMoon
 } from '@lucide/angular';
 
 @Component({
@@ -26,7 +28,9 @@ import {
     RouterOutlet,
     MainLayoutComponent,
     SideNavComponent,
-    LucideHexagon
+    LucideHexagon,
+    LucideSun,
+    LucideMoon
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -34,6 +38,8 @@ import {
 export class App {
   protected readonly layoutService = inject(LayoutService);
   private readonly router = inject(Router);
+
+  protected readonly isDarkMode = signal<boolean>(false);
 
   protected readonly navGroups = signal<SideNavGroup[]>([
     {
@@ -76,8 +82,16 @@ export class App {
     }
   ]);
 
-
   constructor() {
+    // Check initial system preference or attribute
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if (currentTheme === 'dark' || (!currentTheme && prefersDark)) {
+      this.isDarkMode.set(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    }
+
     // Sync active nav item with current route
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
@@ -90,6 +104,18 @@ export class App {
     // Set initial active item from current URL
     const initialSegment = this.router.url.split('/')[1];
     this._setActiveItem(initialSegment);
+  }
+
+  toggleTheme(): void {
+    this.isDarkMode.update(dark => !dark);
+    const isDark = this.isDarkMode();
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
+    }
   }
 
   private _setActiveItem(segment: string): void {

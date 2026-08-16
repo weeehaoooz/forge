@@ -25,9 +25,9 @@
   --auto-font-size: var(--talos-control-font-size, var(--control-font-size, 0.8125rem));
   --auto-icon-size: 1rem;
 
-  --auto-dropdown-bg: var(--talos-card-bg, var(--card-bg, #ffffff));
-  --auto-dropdown-border: #e2e8f0;
-  --auto-dropdown-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --auto-dropdown-bg: var(--talos-dropdown-bg, var(--talos-card-bg, var(--card-bg, #ffffff)));
+  --auto-dropdown-border: var(--talos-dropdown-border, var(--talos-border-color, #e2e8f0));
+  --auto-dropdown-shadow: var(--talos-dropdown-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04));
 
   &.autocomplete-sm {
     --auto-height: 2rem;
@@ -58,13 +58,13 @@
     pointer-events: none;
 
     .autocomplete-control {
-      background-color: var(--talos-bg-color, var(--bg-color, #f8fafc));
-      border-color: #e2e8f0;
+      background-color: var(--talos-input-disabled-bg, var(--talos-bg-color, var(--bg-color, #f8fafc)));
+      border-color: var(--talos-input-disabled-border, #e2e8f0);
       cursor: not-allowed;
     }
 
     .autocomplete-input {
-      color: #94a3b8;
+      color: var(--talos-input-disabled-color, #94a3b8);
       cursor: not-allowed;
     }
   }
@@ -191,7 +191,7 @@
 
   &:hover {
     color: var(--auto-color);
-    background-color: #f1f5f9;
+    background-color: var(--auto-primary-light, #f1f5f9);
   }
 
   &:focus-visible {
@@ -257,11 +257,11 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--talos-border-color, #cbd5e1);
     border-radius: 4px;
 
     &:hover {
-      background: #94a3b8;
+      background: var(--talos-border-hover, #94a3b8);
     }
   }
 }
@@ -275,7 +275,7 @@
   font-size: var(--auto-font-size);
   color: var(--auto-muted);
   background-color: var(--auto-primary-light);
-  border-bottom: 1px solid #dbeafe;
+  border-bottom: 1px solid var(--talos-border-color, #dbeafe);
   margin-bottom: 0.25rem;
 
   .dropdown-spinner {
