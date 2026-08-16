@@ -16,7 +16,7 @@ import {
   TalosSnackbarRef,
   TalosSnackbarVariant
 } from './snackbar.types';
-import { TalosSnackbarContainerComponent } from './snackbar-container.component';
+import { TalosSnackbarContainerComponent } from './snackbar-container/snackbar-container.component';
 
 @Injectable({
   providedIn: 'root'

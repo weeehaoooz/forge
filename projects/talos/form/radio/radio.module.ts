@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { TalosRadioDirective } from './radio.directive';
-import { TalosRadioGroupComponent } from './radio-group.component';
-import { TalosRadioComponent } from './radio.component';
+import { TalosRadioDirective } from './radio/radio.directive';
+import { TalosRadioGroupComponent } from './radio-group/radio-group.component';
+import { TalosRadioComponent } from './radio/radio.component';
 
 /**
  * Convenience NgModule wrapping the standalone radio components and directive.

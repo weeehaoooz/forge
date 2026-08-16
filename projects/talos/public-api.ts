@@ -8,18 +8,18 @@
 
 // Layout components & services
 export * from './layout/layout.service';
-export * from './layout/main-layout.component';
+export * from './layout/main-layout/main-layout.component';
 export * from './layout/side-panel/side-panel.component';
 
 // Nav components & models
-export * from './nav/side-nav.component';
-export * from './nav/nav-group.component';
-export * from './nav/nav-item.component';
-export * from './nav/theme-toggle.component';
+export * from './nav/side-nav/side-nav.component';
+export * from './nav/nav-group/nav-group.component';
+export * from './nav/nav-item/nav-item.component';
+export * from './nav/theme-toggle/theme-toggle.component';
 export * from './nav/side-nav.module';
 
 // Select input components & module
-export * from './form/select-input/select-input.component';
+export * from './form/select-input/select-input/select-input.component';
 export * from './form/select-input/option/option.component';
 export * from './form/select-input/option-group/option-group.component';
 export * from './form/select-input/select-input.module';
@@ -28,8 +28,8 @@ export * from './form/select-input/select-input.module';
 export * from './button/button.directive';
 
 // Button group component, directive & module
-export * from './button-group/button-group.component';
-export * from './button-group/button-group-item.directive';
+export * from './button-group/button-group/button-group.component';
+export * from './button-group/button-group-item/button-group-item.directive';
 export * from './button-group/button-group.module';
 
 // Tooltip directive
@@ -43,11 +43,11 @@ export * from './form/form-field/form-field.component';
 export * from './form/form-field/form-field.module';
 
 // Checkbox directive, group, parent directive, component & module
-export * from './form/checkbox/checkbox.directive';
-export * from './form/checkbox/checkbox-group.directive';
-export * from './form/checkbox/checkbox-group.component';
-export * from './form/checkbox/checkbox-parent.directive';
-export * from './form/checkbox/checkbox.component';
+export * from './form/checkbox/checkbox/checkbox.directive';
+export * from './form/checkbox/checkbox-group/checkbox-group.directive';
+export * from './form/checkbox/checkbox-group/checkbox-group.component';
+export * from './form/checkbox/checkbox-parent/checkbox-parent.directive';
+export * from './form/checkbox/checkbox/checkbox.component';
 export * from './form/checkbox/checkbox.module';
 
 // DatePicker, DateTimePicker & Range Picker components
@@ -59,16 +59,16 @@ export * from './form/date-range-picker/date-range-types';
 export * from './form/date-time-range-picker/date-time-range-picker.component';
 
 // Radio directive, group, component & module
-export * from './form/radio/radio.directive';
-export * from './form/radio/radio-group.component';
-export * from './form/radio/radio.component';
+export * from './form/radio/radio/radio.directive';
+export * from './form/radio/radio-group/radio-group.component';
+export * from './form/radio/radio/radio.component';
 export * from './form/radio/radio.module';
 
 // Snackbar service, components & module
 export * from './snackbar/snackbar.types';
 export * from './snackbar/snackbar.service';
-export * from './snackbar/snackbar.component';
-export * from './snackbar/snackbar-container.component';
+export * from './snackbar/snackbar/snackbar.component';
+export * from './snackbar/snackbar-container/snackbar-container.component';
 export * from './snackbar/snackbar.module';
 
 // Slide toggle directive, component & module
@@ -104,6 +104,6 @@ export * from './status-tag/status-tag.module';
 
 // Chips component, module & types
 export * from './form/chips/chips.types';
-export * from './form/chips/chip.component';
-export * from './form/chips/chips.component';
+export * from './form/chips/chip/chip.component';
+export * from './form/chips/chips/chips.component';
 export * from './form/chips/chips.module';

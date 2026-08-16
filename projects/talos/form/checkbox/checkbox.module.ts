@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { TalosCheckboxDirective } from './checkbox.directive';
-import { TalosCheckboxGroupDirective } from './checkbox-group.directive';
-import { TalosCheckboxGroupComponent } from './checkbox-group.component';
-import { TalosCheckboxParentDirective } from './checkbox-parent.directive';
-import { TalosCheckboxComponent } from './checkbox.component';
+import { TalosCheckboxDirective } from './checkbox/checkbox.directive';
+import { TalosCheckboxGroupDirective } from './checkbox-group/checkbox-group.directive';
+import { TalosCheckboxGroupComponent } from './checkbox-group/checkbox-group.component';
+import { TalosCheckboxParentDirective } from './checkbox-parent/checkbox-parent.directive';
+import { TalosCheckboxComponent } from './checkbox/checkbox.component';
 
 /**
  * Convenience NgModule wrapping standalone checkbox directives and components.

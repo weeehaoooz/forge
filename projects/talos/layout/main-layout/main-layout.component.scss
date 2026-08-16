@@ -1,0 +1,81 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+  --right-panel-default-width: 380px;
+  --main-padding: 24px;
+  --main-padding-expanded: 8px;
+
+  &.main-content-expanded {
+    --main-padding: var(--main-padding-expanded);
+  }
+}
+
+.top-nav-bar {
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: var(--talos-header-bg, var(--header-bg, #ffffff));
+  border-bottom: 1px solid var(--talos-header-border-color, var(--header-border-color, #e2e8f0));
+  z-index: 20;
+}
+
+.layout-body-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.main-content-wrapper {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content-container {
+  flex: 1;
+  padding: var(--main-padding);
+  transition: padding 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+/* Blur Backdrop Filter effect when right panel requests main content blur */
+:host.blur-backdrop {
+  .main-content-container {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.main-backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(2px);
+  z-index: 30;
+  cursor: pointer;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

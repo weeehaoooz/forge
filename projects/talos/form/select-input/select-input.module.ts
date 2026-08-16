@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SelectInputComponent } from './select-input.component';
+import { SelectInputComponent } from './select-input/select-input.component';
 import { OptionComponent } from './option/option.component';
 import { OptionGroupComponent } from './option-group/option-group.component';
 
