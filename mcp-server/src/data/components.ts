@@ -473,16 +473,16 @@ Supports standalone boolean bindings, parent indeterminate logic, and grouped ar
     category: 'Navigation',
     kind: 'component',
     selector: 'talos-side-nav',
-    exportName: 'SideNavComponent',
+    exportName: 'SideNavComponent, TalosNavGroupComponent, TalosNavItemComponent, TalosNavThemeToggleComponent, TalosSideNavModule, TalosNavModule',
     secondaryEntrypoint: '@talos/components/nav',
     rootExport: '@talos/components',
-    description: 'Collapsible side navigation bar with nested navigation items, icon badges, and active route detection.',
-    tags: ['nav', 'sidebar', 'navigation', 'menu', 'side-nav'],
+    description: 'Collapsible side navigation bar with nested navigation items, icon badges, theme toggle, and active route detection.',
+    tags: ['nav', 'sidebar', 'navigation', 'menu', 'side-nav', 'nav-group', 'nav-item', 'theme-toggle'],
     docs: `
 ### SideNavComponent (\`talos-side-nav\`)
 **Usage:**
 \`\`\`html
-<talos-side-nav [navItems]="navConfig"></talos-side-nav>
+<talos-side-nav [navGroups]="navConfig" [isDarkMode]="isDarkMode()" (themeToggle)="toggleTheme()"></talos-side-nav>
 \`\`\`
 `
   },
@@ -491,7 +491,7 @@ Supports standalone boolean bindings, parent indeterminate logic, and grouped ar
     name: 'Snackbar & Toast Service',
     category: 'Feedback',
     kind: 'service',
-    exportName: 'TalosSnackbarService, TalosSnackbarComponent, TalosSnackbarModule',
+    exportName: 'TalosSnackbarService, TalosSnackbarComponent, TalosSnackbarContainerComponent, TalosSnackbarModule',
     secondaryEntrypoint: '@talos/components/snackbar',
     rootExport: '@talos/components',
     description: 'Global notification toast system supporting success, error, warning, info variants, auto-dismiss progress bar, action buttons, and custom templates.',
@@ -618,6 +618,52 @@ Standardized visual indicator for workflow orchestration systems and tasks.
 <!-- Custom text via input or projected content -->
 <talos-status-tag status="IN-PROGRESS" label="Executing Batch 3/10" />
 <talos-status-tag status="TERMINATED">Cancelled by user</talos-status-tag>
+\`\`\`
+`
+  },
+  {
+    id: 'chips',
+    name: 'Chips & Multi-Select Filter Chips',
+    category: 'Form',
+    kind: 'component',
+    selector: 'talos-chips, talos-chip',
+    exportName: 'TalosChipsComponent, TalosChipComponent, TalosChipsModule',
+    secondaryEntrypoint: '@talos/components/form/chips',
+    rootExport: '@talos/components',
+    description: 'Multi-select chips input component with dropdown suggestions, search filtering, custom chip creation, avatar badges, removable tags, and ControlValueAccessor support.',
+    inputs: [
+      { name: 'options', type: 'unknown[]', default: '[]', description: 'Available suggestions or predefined list of chip options.' },
+      { name: 'placeholder', type: 'string', default: "''", description: 'Input placeholder text.' },
+      { name: 'label', type: 'string', default: "''", description: 'Field label text.' },
+      { name: 'floating', type: 'boolean', default: 'false', description: 'Floating label behavior.' },
+      { name: 'allowCustom', type: 'boolean', default: 'true', description: 'Allows users to add custom chips by typing and pressing Enter.' },
+      { name: 'maxChips', type: 'number | null', default: 'null', description: 'Maximum allowed number of chips.' },
+      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'sm'", description: 'Chip sizing variant.' },
+      { name: 'variant', type: "'subtle' | 'filled' | 'outline'", default: "'subtle'", description: 'Visual presentation style.' },
+      { name: 'color', type: 'ChipColor', default: "'primary'", description: 'Color scheme for chips.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables chips input and chip removal.' }
+    ],
+    outputs: [
+      { name: 'search', type: 'output<string>()', description: 'Emitted when user types into the chips input field.' },
+      { name: 'searchChange', type: 'output<string>()', description: 'Two-way search input query change.' },
+      { name: 'chipRemoved', type: 'output<unknown>()', description: 'Emitted when a chip is removed.' }
+    ],
+    formsIntegration: 'ControlValueAccessor',
+    tags: ['chips', 'tags', 'multi-select', 'badges', 'filter-chips', 'tokens', 'form'],
+    docs: `
+### TalosChipsComponent (\`talos-chips\`) & TalosChipComponent (\`talos-chip\`)
+Interactive multi-select chips input supporting custom tags and suggestion dropdowns.
+
+**Usage:**
+\`\`\`html
+<talos-chips
+  [formControl]="skillsControl"
+  [options]="['Angular', 'TypeScript', 'RxJS', 'Signals', 'Tailwind']"
+  placeholder="Add framework..."
+  [allowCustom]="true"
+  size="sm"
+  color="primary">
+</talos-chips>
 \`\`\`
 `
   }

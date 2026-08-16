@@ -359,5 +359,116 @@ export class NotificationsDemoComponent {
 }`
     ,
     htmlCode: ``
+  },
+  {
+    id: 'chips-skills-selector',
+    componentId: 'chips',
+    title: 'Multi-Select Framework Chips',
+    description: 'Dynamic chips input with autocomplete suggestions, custom tag creation, and reactive form integration.',
+    tsCode: `import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TalosChipsComponent } from '@talos/components';
+
+@Component({
+  selector: 'app-skills-picker',
+  imports: [TalosChipsComponent, ReactiveFormsModule],
+  template: \`
+    <div class="w-80">
+      <talos-chips
+        [formControl]="skillsControl"
+        [options]="availableSkills"
+        placeholder="Add framework..."
+        [allowCustom]="true"
+        size="sm"
+        color="primary">
+      </talos-chips>
+    </div>
+  \`
+})
+export class SkillsPickerComponent {
+  readonly skillsControl = new FormControl<string[]>(['Angular', 'TypeScript']);
+  readonly availableSkills = ['Angular', 'TypeScript', 'RxJS', 'Signals', 'Tailwind', 'Node.js', 'GraphQL'];
+}`,
+    htmlCode: ``
+  },
+  {
+    id: 'layout-shell-example',
+    componentId: 'layout',
+    title: 'Main Layout with Side Panel Drawer',
+    description: 'Application scaffolding with collapsible side nav and dynamic side panel drawer.',
+    tsCode: `import { Component, inject } from '@angular/core';
+import { MainLayoutComponent, LayoutService } from '@talos/components/layout';
+import { TalosButtonDirective } from '@talos/components/button';
+
+@Component({
+  selector: 'app-shell',
+  imports: [MainLayoutComponent, TalosButtonDirective],
+  template: \`
+    <talos-main-layout>
+      <div class="p-6">
+        <h1 class="text-2xl font-bold">Dashboard</h1>
+        <button talosButton (click)="openDrawer()">Open Details Panel</button>
+      </div>
+    </talos-main-layout>
+  \`
+})
+export class AppShellComponent {
+  private readonly layoutService = inject(LayoutService);
+
+  openDrawer(): void {
+    this.layoutService.openRightPanel({
+      title: 'Quick Details',
+      width: '400px',
+      mode: 'overlay'
+    });
+  }
+}`,
+    htmlCode: ``
+  },
+  {
+    id: 'nav-sidebar-example',
+    componentId: 'nav',
+    title: 'Side Navigation with Groups and Theme Toggle',
+    description: 'Collapsible sidebar navigation with nested items, badge counters, and dark mode toggle.',
+    tsCode: `import { Component, signal } from '@angular/core';
+import { SideNavComponent, SideNavGroup } from '@talos/components/nav';
+import { LucideLayoutDashboard, LucideUsers, LucideSettings } from '@lucide/angular';
+
+@Component({
+  selector: 'app-sidebar-nav',
+  imports: [SideNavComponent],
+  template: \`
+    <talos-side-nav
+      [navGroups]="navGroups"
+      [isDarkMode]="isDarkMode()"
+      (themeToggle)="toggleDarkMode()"
+    />
+  \`
+})
+export class SidebarNavComponent {
+  readonly isDarkMode = signal<boolean>(false);
+
+  readonly navGroups: SideNavGroup[] = [
+    {
+      title: 'MAIN',
+      items: [
+        { id: 'dashboards', label: 'Dashboards', icon: LucideLayoutDashboard, active: true },
+        { id: 'customers', label: 'Customers', icon: LucideUsers, badge: 12 }
+      ]
+    },
+    {
+      title: 'SYSTEM',
+      collapsible: true,
+      items: [
+        { id: 'settings', label: 'Settings', icon: LucideSettings }
+      ]
+    }
+  ];
+
+  toggleDarkMode(): void {
+    this.isDarkMode.update(d => !d);
+  }
+}`,
+    htmlCode: ``
   }
 ];
