@@ -1,8 +1,8 @@
 <div class="demo-page-content">
   <!-- Page Header -->
   <header class="page-header">
-    <div class="badge">talos/components · TalosAutocompleteComponent</div>
-    <h1>Autocomplete Field Showcase</h1>
+    <div class="badge">talos/components · Auto-Complete Field</div>
+    <h1>Auto-Complete Field Showcase</h1>
     <p class="subtitle">
       Configurable autocomplete typeahead inputs supporting local or asynchronous search results,
       custom item templates, keyboard navigation, and reactive "searching" spinner signals.
@@ -19,10 +19,11 @@
             spinners</span>
         </div>
         <div class="actions">
-          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="floatingLabels() ? 'floating' : 'static'"
+          <talos-button-group size="sm" variant="segmented" selectionMode="single"
+            [value]="floatingLabels() ? 'floating' : 'static'"
             (valueChange)="floatingLabels.set($event === 'floating')">
-            <button type="button" talosButton talosButtonGroupItem value="static"
-              tooltip="Static Top Labels">Static Label</button>
+            <button type="button" talosButton talosButtonGroupItem value="static" tooltip="Static Top Labels">Static
+              Label</button>
             <button type="button" talosButton talosButtonGroupItem value="floating"
               tooltip="Floating Inline Labels">Floating Label</button>
           </talos-button-group>
@@ -78,35 +79,20 @@
         <div class="form-group">
           <span class="field-help">Filters locally across string array with automatic match highlighting.</span>
 
-          <talos-autocomplete
-            id="country-autocomplete"
-            formControlName="localCountry"
-            label="Local Dataset with Substring Match Highlighting"
-            [floating]="floatingLabels()"
-            [options]="countries()"
-            [size]="inputSize()"
-            placeholder="Search country..."
-            (selectionChange)="onSelection($event)"
-          />
+          <talos-autocomplete id="country-autocomplete" formControlName="localCountry"
+            label="Local Dataset with Substring Match Highlighting" [floating]="floatingLabels()"
+            [options]="countries()" [size]="inputSize()" placeholder="Search country..."
+            (selectionChange)="onSelection($event)" />
         </div>
 
         <!-- 3. Custom Rich User Profile Template -->
         <div class="form-group">
           <span class="field-help">Demonstrates rich template projection with avatar circles and roles.</span>
 
-          <talos-autocomplete
-            id="user-autocomplete"
-            formControlName="customUser"
-            label="Custom Item Template (Team Members)"
-            [floating]="floatingLabels()"
-            [options]="users()"
-            [size]="inputSize()"
-            placeholder="Search team member..."
-            displayWith="name"
-            valueWith="id"
-            (selectionChange)="onSelection($event)"
-            [itemTemplate]="userCardTemplate"
-          />
+          <talos-autocomplete id="user-autocomplete" formControlName="customUser"
+            label="Custom Item Template (Team Members)" [floating]="floatingLabels()" [options]="users()"
+            [size]="inputSize()" placeholder="Search team member..." displayWith="name" valueWith="id"
+            (selectionChange)="onSelection($event)" [itemTemplate]="userCardTemplate" />
 
           <!-- Custom Template for User Items -->
           <ng-template #userCardTemplate let-user let-selected="selected">

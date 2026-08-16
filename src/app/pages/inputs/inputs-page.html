@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">talos/components · TalosInputDirective</div>
+    <div class="badge">talos/components · Input Fields</div>
     <h1>Inputs Showcase</h1>
     <p class="subtitle">
       Styled text input and textarea components matching design system variables,
@@ -16,10 +16,11 @@
           <span class="card-subtitle">Standardized styling matching _variables.scss</span>
         </div>
         <div class="actions">
-          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="floatingLabels() ? 'floating' : 'static'"
+          <talos-button-group size="sm" variant="segmented" selectionMode="single"
+            [value]="floatingLabels() ? 'floating' : 'static'"
             (valueChange)="floatingLabels.set($event === 'floating')">
-            <button type="button" talosButton talosButtonGroupItem value="static"
-              tooltip="Static Top Labels">Static Label</button>
+            <button type="button" talosButton talosButtonGroupItem value="static" tooltip="Static Top Labels">Static
+              Label</button>
             <button type="button" talosButton talosButtonGroupItem value="floating"
               tooltip="Floating Inline Labels">Floating Label</button>
           </talos-button-group>
@@ -41,38 +42,17 @@
 
       <div class="form-fields">
         <!-- Text Input with Form Field -->
-        <talos-form-field
-          label="Project Name"
-          [floating]="floatingLabels()"
-          [required]="true"
-          [size]="inputSize()"
-          [error]="inputsForm.controls.projectName.touched && inputsForm.controls.projectName.hasError('required') ? 'Project name is required.' : ''"
-        >
-          <input
-            id="project-name"
-            type="text"
-            talosInput
-            formControlName="projectName"
-            placeholder="e.g. NextGen Dashboard"
-            [size]="inputSize()"
-          />
+        <talos-form-field label="Project Name" [floating]="floatingLabels()" [required]="true" [size]="inputSize()"
+          [error]="inputsForm.controls.projectName.touched && inputsForm.controls.projectName.hasError('required') ? 'Project name is required.' : ''">
+          <input id="project-name" type="text" talosInput formControlName="projectName"
+            placeholder="e.g. NextGen Dashboard" [size]="inputSize()" />
         </talos-form-field>
 
         <!-- Textarea with Form Field -->
-        <talos-form-field
-          label="Project Description"
-          [floating]="floatingLabels()"
-          [size]="inputSize()"
-          hint="Optional. Supports multi-line input and resizing."
-        >
-          <textarea
-            id="project-desc"
-            talosTextarea
-            formControlName="projectDescription"
-            placeholder="Enter detailed project scope or comments..."
-            [size]="inputSize()"
-            rows="3"
-          ></textarea>
+        <talos-form-field label="Project Description" [floating]="floatingLabels()" [size]="inputSize()"
+          hint="Optional. Supports multi-line input and resizing.">
+          <textarea id="project-desc" talosTextarea formControlName="projectDescription"
+            placeholder="Enter detailed project scope or comments..." [size]="inputSize()" rows="3"></textarea>
         </talos-form-field>
       </div>
     </form>

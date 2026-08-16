@@ -28,14 +28,19 @@
           (itemClick)="navigate('/inputs')" />
         <talos-nav-item label="Select" [icon]="LucideChevronDown" [active]="activeSegment() === 'select'"
           (itemClick)="navigate('/select')" />
-        <talos-nav-item label="Autocomplete" [icon]="LucideSearch" [active]="activeSegment() === 'autocomplete'"
+        <talos-nav-item label="Auto-Complete" [icon]="LucideSearch" [active]="activeSegment() === 'autocomplete'"
           (itemClick)="navigate('/autocomplete')" />
         <talos-nav-item label="Date Pickers" [icon]="LucideCalendarDays" [active]="activeSegment() === 'date-pickers'"
           (itemClick)="navigate('/date-pickers')" />
         <talos-nav-item label="Range Input" [icon]="LucideSlidersHorizontal"
           [active]="activeSegment() === 'range-input'" (itemClick)="navigate('/range-input')" />
-        <talos-nav-item label="Chips / Multi-Select" [icon]="LucideTags" [active]="activeSegment() === 'chips'"
+        <talos-nav-item label="Chips" [icon]="LucideTags" [active]="activeSegment() === 'chips'"
           (itemClick)="navigate('/chips')" />
+      </talos-nav-group>
+
+      <talos-nav-group title="DATA DISPLAY" [collapsible]="true">
+        <talos-nav-item label="Status Tag & Indicators" [icon]="LucideTag" [active]="activeSegment() === 'status-tag'"
+          (itemClick)="navigate('/status-tag')" />
       </talos-nav-group>
 
       <talos-nav-group title="DATA VISUALIZATION" [collapsible]="true">
@@ -43,8 +48,6 @@
           (itemClick)="navigate('/heatmap')" />
         <talos-nav-item label="Category Bar" [icon]="LucideSliders" [active]="activeSegment() === 'category-bar'"
           (itemClick)="navigate('/category-bar')" />
-        <talos-nav-item label="Status Tag & Indicators" [icon]="LucideTag" [active]="activeSegment() === 'status-tag'"
-          (itemClick)="navigate('/status-tag')" />
       </talos-nav-group>
 
       <talos-nav-group title="NOTIFICATIONS" [collapsible]="true">

@@ -1,6 +1,6 @@
 <div class="demo-page-content">
   <header class="page-header">
-    <div class="badge">talos/components · Form Controls</div>
+    <div class="badge">talos/components · Chips</div>
     <h1>Chips &amp; Multi-Select Inputs</h1>
     <p class="subtitle">
       Comprehensive multi-select chips input component featuring live substring filtering, keyboard navigation, freeform
@@ -214,20 +214,13 @@
               <svg lucidePackage [size]="16" class="scenario-icon"></svg>
               <h3>Async Remote Search</h3>
             </div>
-            <p class="scenario-desc">Debounced server query via <code>(search)</code> with spinner and <code>[filterFn]="null"</code>.</p>
-            <talos-chips
-              [options]="asyncPackageResults()"
-              [displayWith]="displayPackage"
-              [valueWith]="valuePackage"
-              [searching]="isSearchingPackages()"
-              [filterFn]="null"
-              (search)="onPackageSearch($event)"
-              label="NPM Dependencies"
-              placeholder="Search packages (e.g. 'rxjs', 'zod')..."
-              [chipColor]="'cyan'"
-              [chipVariant]="'subtle'"
-              [formControl]="demoForm.controls.asyncPackages"
-            />
+            <p class="scenario-desc">Debounced server query via <code>(search)</code> with spinner and
+              <code>[filterFn]="null"</code>.
+            </p>
+            <talos-chips [options]="asyncPackageResults()" [displayWith]="displayPackage" [valueWith]="valuePackage"
+              [searching]="isSearchingPackages()" [filterFn]="null" (search)="onPackageSearch($event)"
+              label="NPM Dependencies" placeholder="Search packages (e.g. 'rxjs', 'zod')..." [chipColor]="'cyan'"
+              [chipVariant]="'subtle'" [formControl]="demoForm.controls.asyncPackages" />
           </div>
         </div>
       </div>
