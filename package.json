@@ -7,7 +7,9 @@
     "build": "ng build",
     "build:lib": "ng build talos",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "mcp:build": "npm run --prefix mcp-server build",
+    "mcp:start": "npm run --prefix mcp-server start"
   },
   "prettier": {
     "printWidth": 100,

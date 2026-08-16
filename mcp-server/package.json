@@ -1,0 +1,30 @@
+{
+  "name": "talos-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server for @talos/components Angular UI Library",
+  "main": "dist/index.js",
+  "bin": {
+    "talos-mcp": "./dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "angular",
+    "talos",
+    "ui-components"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}
