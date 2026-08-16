@@ -164,6 +164,20 @@
   --talos-dialog-backdrop-blur-bg: var(--dialog-backdrop-blur-bg, rgba(15, 23, 42, 0.35));
   --talos-dialog-title-color: var(--dialog-title-color, var(--talos-text-color, #0f172a));
   --talos-dialog-subtitle-color: var(--dialog-subtitle-color, var(--talos-text-muted, #64748b));
+
+  /* Drop Zone / File Upload Tokens */
+  --talos-dropzone-bg: var(--dropzone-bg, var(--talos-card-bg));
+  --talos-dropzone-hover-bg: var(--dropzone-hover-bg, var(--talos-bg-subtle));
+  --talos-dropzone-drag-bg: var(--dropzone-drag-bg, var(--talos-primary-light));
+  --talos-dropzone-border: var(--dropzone-border, var(--talos-border-color));
+  --talos-dropzone-hover-border: var(--dropzone-hover-border, var(--talos-border-hover));
+  --talos-dropzone-drag-border: var(--dropzone-drag-border, var(--talos-primary-color));
+  --talos-dropzone-radius: var(--dropzone-radius, 0.625rem);
+  --talos-dropzone-text: var(--dropzone-text, var(--talos-text-color));
+  --talos-dropzone-subtext: var(--dropzone-subtext, var(--talos-text-muted));
+  --talos-dropzone-icon-color: var(--dropzone-icon-color, var(--talos-primary-color));
+  --talos-dropzone-file-bg: var(--dropzone-file-bg, var(--talos-card-bg));
+  --talos-dropzone-file-border: var(--dropzone-file-border, var(--talos-border-color));
 }
 
 /* ==========================================================================
@@ -291,6 +305,19 @@
   /* Tooltip Tokens */
   --talos-tooltip-bg: var(--tooltip-bg, #1e293b);
   --talos-tooltip-text: var(--tooltip-text, #f9fafb);
+
+  /* Drop Zone Tokens */
+  --talos-dropzone-bg: var(--dropzone-bg, #111827);
+  --talos-dropzone-hover-bg: var(--dropzone-hover-bg, #1f2937);
+  --talos-dropzone-drag-bg: var(--dropzone-drag-bg, rgba(59, 130, 246, 0.15));
+  --talos-dropzone-border: var(--dropzone-border, #374151);
+  --talos-dropzone-hover-border: var(--dropzone-hover-border, #4b5563);
+  --talos-dropzone-drag-border: var(--dropzone-drag-border, #3b82f6);
+  --talos-dropzone-text: var(--dropzone-text, #f9fafb);
+  --talos-dropzone-subtext: var(--dropzone-subtext, #9ca3af);
+  --talos-dropzone-icon-color: var(--dropzone-icon-color, #60a5fa);
+  --talos-dropzone-file-bg: var(--dropzone-file-bg, #1e293b);
+  --talos-dropzone-file-border: var(--dropzone-file-border, #334155);
 }
 
 /* System dark mode preference fallback when not explicitly forced */
@@ -408,5 +435,18 @@
     --talos-dialog-backdrop-blur-bg: var(--dialog-backdrop-blur-bg, rgba(0, 0, 0, 0.45));
     --talos-dialog-title-color: var(--dialog-title-color, #f9fafb);
     --talos-dialog-subtitle-color: var(--dialog-subtitle-color, #9ca3af);
+
+    /* Drop Zone Tokens in Dark Mode */
+    --talos-dropzone-bg: var(--dropzone-bg, #111827);
+    --talos-dropzone-hover-bg: var(--dropzone-hover-bg, #1f2937);
+    --talos-dropzone-drag-bg: var(--dropzone-drag-bg, rgba(59, 130, 246, 0.15));
+    --talos-dropzone-border: var(--dropzone-border, #334155);
+    --talos-dropzone-hover-border: var(--dropzone-hover-border, #4b5563);
+    --talos-dropzone-drag-border: var(--dropzone-drag-border, #3b82f6);
+    --talos-dropzone-text: var(--dropzone-text, #f9fafb);
+    --talos-dropzone-subtext: var(--dropzone-subtext, #9ca3af);
+    --talos-dropzone-icon-color: var(--dropzone-icon-color, #60a5fa);
+    --talos-dropzone-file-bg: var(--dropzone-file-bg, #1e293b);
+    --talos-dropzone-file-border: var(--dropzone-file-border, #334155);
   }
 }

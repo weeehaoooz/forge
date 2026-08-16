@@ -30,7 +30,8 @@ import {
   LucidePanelLeftOpen,
   LucidePanelLeftClose,
   LucideCreditCard,
-  LucideLayers
+  LucideLayers,
+  LucideUploadCloud
 } from '@lucide/angular';
 
 @Component({
@@ -75,6 +76,8 @@ export class App {
   protected readonly LucideLayout = LucideLayout;
   protected readonly LucideCreditCard = LucideCreditCard;
   protected readonly LucideLayers = LucideLayers;
+  protected readonly LucideUploadCloud = LucideUploadCloud;
+
 
   constructor() {
     // Check initial system preference or attribute

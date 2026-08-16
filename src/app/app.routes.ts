@@ -69,6 +69,11 @@ export const routes: Routes = [
   {
     path: 'dialog',
     loadComponent: () => import('./pages/dialog/dialog-page').then(m => m.DialogPage)
+  },
+  {
+    path: 'drop-zone',
+    loadComponent: () => import('./pages/drop-zone/drop-zone-page').then(m => m.DropZonePage)
   }
 ];
+
 

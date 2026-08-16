@@ -36,6 +36,8 @@
           [active]="activeSegment() === 'range-input'" (itemClick)="navigate('/range-input')" />
         <talos-nav-item label="Chips" [icon]="LucideTags" [active]="activeSegment() === 'chips'"
           (itemClick)="navigate('/chips')" />
+        <talos-nav-item label="Drop Zone" [icon]="LucideUploadCloud" [active]="activeSegment() === 'drop-zone'"
+          (itemClick)="navigate('/drop-zone')" />
       </talos-nav-group>
 
       <talos-nav-group title="DATA DISPLAY" [collapsible]="true">

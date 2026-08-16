@@ -1,0 +1,238 @@
+<div
+  class="talos-drop-zone-area"
+  talosFileDrop
+  [disabled]="effectiveDisabled() || isMaxFilesReached()"
+  (fileDrop)="onDropFiles($event)"
+  (dragOver)="onDragState(true)"
+  (dragLeave)="onDragState(false)"
+  (click)="openFileDialog()"
+  (keydown)="onKeyDown($event)"
+  tabindex="0"
+  role="button"
+  [attr.aria-disabled]="effectiveDisabled() ? 'true' : null"
+  [attr.aria-label]="title()"
+  [attr.id]="componentId()"
+>
+  <!-- Hidden Native File Input -->
+  <input
+    #fileInput
+    type="file"
+    class="talos-drop-zone-native-input"
+    [attr.id]="inputId()"
+    [attr.name]="name() || null"
+    [accept]="accept()"
+    [multiple]="multiple()"
+    [disabled]="effectiveDisabled() || isMaxFilesReached()"
+    (change)="onNativeInputChange($event)"
+    tabindex="-1"
+    aria-hidden="true"
+  />
+
+  <!-- Loading Overlay -->
+  @if (loading()) {
+    <div class="talos-drop-zone-loading-overlay" aria-live="polite" aria-busy="true">
+      <div class="talos-drop-zone-spinner" aria-hidden="true"></div>
+      <span class="talos-drop-zone-loading-text">Processing files...</span>
+    </div>
+  }
+
+  <!-- Drop Zone Inner Content -->
+  @if (contentTemplate()) {
+    <ng-container [ngTemplateOutlet]="contentTemplate()!" />
+  } @else {
+    <div class="talos-drop-zone-content">
+      <div class="talos-drop-zone-icon-wrapper" aria-hidden="true">
+        <svg
+          class="talos-drop-zone-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="M12 12v9" />
+          <path d="m16 16-4-4-4 4" />
+        </svg>
+      </div>
+
+      <div class="talos-drop-zone-text-group">
+        <div class="talos-drop-zone-title">
+          <span>{{ title() }}</span>
+          @if (browseLabel()) {
+            <span class="talos-drop-zone-browse-link"> {{ browseLabel() }}</span>
+          }
+        </div>
+
+        @if (subTitle()) {
+          <p class="talos-drop-zone-subtitle">{{ subTitle() }}</p>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Helper / Error Hint -->
+@if (hint()) {
+  <div class="talos-drop-zone-hint">
+    {{ hint() }}
+  </div>
+}
+
+<!-- Attached / Staged Files List Preview -->
+@if (showFileList() && hasFiles()) {
+  <div class="talos-drop-zone-file-list" aria-label="Attached files">
+    <div class="talos-drop-zone-file-list-header">
+      <span class="talos-drop-zone-file-list-title">
+        Attached files ({{ files().length }}{{ maxFiles() ? ' / ' + maxFiles() : '' }})
+      </span>
+      @if (removable() && !effectiveDisabled()) {
+        <button
+          type="button"
+          class="talos-drop-zone-clear-all-btn"
+          (click)="clearFiles()"
+          aria-label="Clear all attached files"
+        >
+          Clear all
+        </button>
+      }
+    </div>
+
+    <div class="talos-drop-zone-files-grid">
+      @for (file of files(); track file.id; let idx = $index) {
+        @if (itemTemplate()) {
+          <ng-container
+            [ngTemplateOutlet]="itemTemplate()!"
+            [ngTemplateOutletContext]="{
+              $implicit: file,
+              index: idx,
+              remove: removeFile.bind(this, file),
+              retry: retryFile.bind(this, file)
+            }"
+          />
+        } @else {
+          <div
+            class="talos-drop-zone-file-item"
+            [class.status-pending]="file.status === 'pending'"
+            [class.status-uploading]="file.status === 'uploading'"
+            [class.status-success]="file.status === 'success'"
+            [class.status-error]="file.status === 'error'"
+          >
+            <!-- Thumbnail or Icon -->
+            <div class="talos-drop-zone-file-preview" aria-hidden="true">
+              @if (file.previewUrl) {
+                <img [src]="file.previewUrl" [alt]="file.name" class="talos-drop-zone-img-preview" />
+              } @else {
+                @switch (getFileTypeCategory(file)) {
+                  @case ('pdf') {
+                    <div class="talos-drop-zone-type-badge type-pdf">
+                      <span>PDF</span>
+                    </div>
+                  }
+                  @case ('doc') {
+                    <div class="talos-drop-zone-type-badge type-doc">
+                      <span>DOC</span>
+                    </div>
+                  }
+                  @case ('archive') {
+                    <div class="talos-drop-zone-type-badge type-archive">
+                      <span>ZIP</span>
+                    </div>
+                  }
+                  @case ('audio') {
+                    <div class="talos-drop-zone-type-badge type-audio">
+                      <span>AUD</span>
+                    </div>
+                  }
+                  @case ('video') {
+                    <div class="talos-drop-zone-type-badge type-video">
+                      <span>VID</span>
+                    </div>
+                  }
+                  @case ('code') {
+                    <div class="talos-drop-zone-type-badge type-code">
+                      <span>&lt;/&gt;</span>
+                    </div>
+                  }
+                  @default {
+                    <div class="talos-drop-zone-type-badge type-generic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                      </svg>
+                    </div>
+                  }
+                }
+              }
+            </div>
+
+            <!-- File Info & Progress -->
+            <div class="talos-drop-zone-file-meta">
+              <div class="talos-drop-zone-file-header">
+                <span class="talos-drop-zone-file-name" [title]="file.name">{{ file.name }}</span>
+                <span class="talos-drop-zone-file-size">{{ formatBytes(file.size) }}</span>
+              </div>
+
+              @if (file.status === 'uploading' && file.progress !== undefined) {
+                <div class="talos-drop-zone-file-progress-bar" role="progressbar" [attr.aria-valuenow]="file.progress" aria-valuemin="0" aria-valuemax="100">
+                  <div class="talos-drop-zone-file-progress-fill" [style.width.%]="file.progress"></div>
+                </div>
+              }
+
+              @if (file.status === 'error' && file.errorMessage) {
+                <div class="talos-drop-zone-file-error-msg">
+                  {{ file.errorMessage }}
+                </div>
+              }
+            </div>
+
+            <!-- Status Indicator / Actions -->
+            <div class="talos-drop-zone-file-actions">
+              @if (file.status === 'uploading') {
+                <span class="talos-drop-zone-file-percent">{{ file.progress }}%</span>
+              }
+
+              @if (file.status === 'success') {
+                <span class="talos-drop-zone-status-icon status-success" title="Uploaded successfully">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
+              }
+
+              @if (file.status === 'error' && allowRetry()) {
+                <button
+                  type="button"
+                  class="talos-drop-zone-action-btn btn-retry"
+                  [attr.aria-label]="'Retry upload for ' + file.name"
+                  (click)="retryFile(file, $event)"
+                  title="Retry upload"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                  </svg>
+                </button>
+              }
+
+              @if (removable() && !effectiveDisabled()) {
+                <button
+                  type="button"
+                  class="talos-drop-zone-action-btn btn-remove"
+                  [attr.aria-label]="'Remove ' + file.name"
+                  (click)="removeFile(file, $event)"
+                  title="Remove file"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

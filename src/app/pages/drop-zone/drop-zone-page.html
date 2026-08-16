@@ -1,0 +1,406 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Drop Zone</div>
+    <h1>Drop Zone &amp; File Upload</h1>
+    <p class="subtitle">
+      Enterprise drag-and-drop file upload component featuring active drop animations, file format and size validation,
+      live image previews, simulated or real upload progress tracking, reactive forms integration, and customizable templates.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- 1. Interactive Playground Configurator Card -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Interactive Playground</span>
+          <h2>DROP ZONE CONFIGURATOR</h2>
+        </div>
+
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </talos-button-group>
+      </div>
+
+      @if (activeTab() === 'preview') {
+        <div class="interactive-stage-layout">
+          <!-- Live Preview Canvas -->
+          <div class="preview-stage">
+            <div class="preview-hero-box">
+              <talos-drop-zone
+                [title]="customTitle()"
+                [subTitle]="customSubtitle()"
+                [size]="selectedSize()"
+                [variant]="selectedVariant()"
+                [multiple]="isMultiple()"
+                [disabled]="isDisabled()"
+                [readonly]="isReadonly()"
+                [loading]="isLoading()"
+                [showFileList]="showFileList()"
+                [maxFiles]="maxFiles()"
+                [maxFileSize]="maxFileSizeStr()"
+                [accept]="acceptStr()"
+                [(ngModel)]="playgroundFiles"
+                (rejected)="onPlaygroundRejections($event)"
+              />
+            </div>
+
+            @if (playgroundRejections().length > 0) {
+              <div class="rejection-alert-banner">
+                <svg lucideShieldAlert [size]="16" class="alert-icon"></svg>
+                <div class="alert-content">
+                  <span class="alert-title">Files Rejected ({{ playgroundRejections().length }}):</span>
+                  <ul class="alert-list">
+                    @for (rej of playgroundRejections(); track $index) {
+                      <li><strong>{{ rej.file.name }}</strong>: {{ rej.message }}</li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            }
+
+            <div class="stage-metadata">
+              <span class="meta-item">Size: <code>{{ selectedSize() }}</code></span>
+              <span class="meta-item">Variant: <code>{{ selectedVariant() }}</code></span>
+              <span class="meta-item">Multiple: <code>{{ isMultiple() }}</code></span>
+              <span class="meta-item">Max Files: <code>{{ maxFiles() ?? 'Unlimited' }}</code></span>
+              <span class="meta-item">Max Size: <code>{{ maxFileSizeStr() }}</code></span>
+              <span class="meta-item">Attached: <code>{{ playgroundFiles().length }} files</code></span>
+            </div>
+          </div>
+
+          <!-- Interactive Controls Panel -->
+          <div class="playground-controls-panel">
+            <!-- Variant & Size Pickers -->
+            <div class="control-two-col">
+              <div class="control-group">
+                <label class="control-label">Layout Variant</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedVariant()">
+                    <button type="button" talosButton talosButtonGroupItem value="default" (click)="selectedVariant.set('default')">Default</button>
+                    <button type="button" talosButton talosButtonGroupItem value="compact" (click)="selectedVariant.set('compact')">Compact</button>
+                    <button type="button" talosButton talosButtonGroupItem value="mini" (click)="selectedVariant.set('mini')">Mini</button>
+                    <button type="button" talosButton talosButtonGroupItem value="card" (click)="selectedVariant.set('card')">Card</button>
+                  </talos-button-group>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Dropzone Size</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedSize()">
+                    <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedSize.set('sm')">SM</button>
+                    <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedSize.set('md')">MD</button>
+                    <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedSize.set('lg')">LG</button>
+                  </talos-button-group>
+                </div>
+              </div>
+            </div>
+
+            <!-- Max Files & Size Limit Pickers -->
+            <div class="control-two-col">
+              <div class="control-group">
+                <label class="control-label">Max Allowed Files</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="maxFiles()">
+                    <button type="button" talosButton talosButtonGroupItem [value]="1" (click)="maxFiles.set(1)">1</button>
+                    <button type="button" talosButton talosButtonGroupItem [value]="3" (click)="maxFiles.set(3)">3</button>
+                    <button type="button" talosButton talosButtonGroupItem [value]="5" (click)="maxFiles.set(5)">5</button>
+                    <button type="button" talosButton talosButtonGroupItem [value]="null" (click)="maxFiles.set(null)">&infin;</button>
+                  </talos-button-group>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Max File Size</label>
+                <div class="segmented-wrapper">
+                  <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="maxFileSizeStr()">
+                    <button type="button" talosButton talosButtonGroupItem value="2MB" (click)="maxFileSizeStr.set('2MB')">2MB</button>
+                    <button type="button" talosButton talosButtonGroupItem value="10MB" (click)="maxFileSizeStr.set('10MB')">10MB</button>
+                    <button type="button" talosButton talosButtonGroupItem value="25MB" (click)="maxFileSizeStr.set('25MB')">25MB</button>
+                    <button type="button" talosButton talosButtonGroupItem value="100MB" (click)="maxFileSizeStr.set('100MB')">100MB</button>
+                  </talos-button-group>
+                </div>
+              </div>
+            </div>
+
+            <!-- Toggles List -->
+            <div class="control-group toggle-group">
+              <label class="control-label">Dropzone States &amp; Options</label>
+              <div class="toggle-list">
+                <talos-slide-toggle [checked]="isMultiple()" (checkedChange)="isMultiple.set($event)" label="Allow Multiple Files" />
+                <talos-slide-toggle [checked]="showFileList()" (checkedChange)="showFileList.set($event)" label="Show Attached Files List" />
+                <talos-slide-toggle [checked]="isDisabled()" (checkedChange)="isDisabled.set($event)" label="Disabled State" />
+                <talos-slide-toggle [checked]="isReadonly()" (checkedChange)="isReadonly.set($event)" label="Read-only Mode" />
+                <talos-slide-toggle [checked]="isLoading()" (checkedChange)="isLoading.set($event)" label="Loading Overlay" />
+              </div>
+            </div>
+
+            <!-- Reset Actions -->
+            <div class="action-btn-group">
+              <button
+                type="button"
+                talosButton
+                variant="outline"
+                size="sm"
+                (click)="playgroundFiles.set([])"
+                [disabled]="playgroundFiles().length === 0"
+              >
+                <svg lucideRotateCcw [size]="14"></svg>
+                <span>Clear Staged Files</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <!-- Code Tab -->
+        <div class="code-preview-block">
+          <div class="code-header">
+            <span class="code-lang">HTML</span>
+            <button type="button" class="copy-btn" (click)="copyCode()">
+              @if (copied()) {
+                <svg lucideCheck [size]="14"></svg>
+                <span>Copied!</span>
+              } @else {
+                <svg lucideCopy [size]="14"></svg>
+                <span>Copy</span>
+              }
+            </button>
+          </div>
+          <pre class="code-content"><code>{{ codeSnippet() }}</code></pre>
+        </div>
+      }
+    </div>
+
+    <!-- 2. Simulated Async Upload & Progress Tracking Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Live Simulation</span>
+          <h2>ASYNC UPLOAD WITH PROGRESS TRACKING</h2>
+          <p class="card-desc">
+            Demonstrates real-time progress bars, success confirmations, error handling, and file retry flows when dropping files.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <talos-drop-zone
+          #simulatedDropZone
+          title="Upload project assets or drop here"
+          subTitle="Simulated upload will automatically initiate upon drop (Try naming a file with 'error' to see retry handling)"
+          browseLabel="Select files"
+          [multiple]="true"
+          maxFileSize="20MB"
+          [files]="simulatedFiles()"
+          (filesChange)="onSimulatedFilesChange($event)"
+          (fileRetry)="onSimulatedRetry($event)"
+          (rejected)="onRejections($event)"
+        />
+
+        @if (lastRejections().length > 0) {
+          <div class="rejection-alert-banner">
+            <svg lucideShieldAlert [size]="16" class="alert-icon"></svg>
+            <div class="alert-content">
+              <span class="alert-title">Files Rejected:</span>
+              <ul class="alert-list">
+                @for (rej of lastRejections(); track $index) {
+                  <li><strong>{{ rej.file.name }}</strong>: {{ rej.message }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- 3. Image / Media Upload with Live Thumbnail Previews -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Image Upload</span>
+          <h2>IMAGE &amp; AVATAR DROP ZONE</h2>
+          <p class="card-desc">
+            Restricted to image formats (<code>image/*</code>) with instant client-side thumbnail rendering.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <talos-drop-zone
+          title="Upload profile avatar or cover photo"
+          subTitle="Supports PNG, JPG, GIF, SVG, or WEBP up to 5 MB"
+          browseLabel="Browse image"
+          accept="image/*"
+          [multiple]="false"
+          maxFileSize="5MB"
+          [(ngModel)]="avatarFile"
+        />
+      </div>
+    </div>
+
+    <!-- 4. Document Upload with Restrictions -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Document Filter</span>
+          <h2>PDF &amp; OFFICE DOCUMENT UPLOADER</h2>
+          <p class="card-desc">
+            Restricted to <code>.pdf, .docx, .xlsx, .csv</code> files with max 10MB per file and a limit of 3 files.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <talos-drop-zone
+          title="Attach contracts and spreadsheets"
+          subTitle="Only PDF, DOCX, XLSX, and CSV files accepted (Max 3 files, up to 10 MB)"
+          browseLabel="Upload documents"
+          accept=".pdf,.docx,.xlsx,.csv"
+          [maxFiles]="3"
+          maxFileSize="10MB"
+          [(ngModel)]="documentFiles"
+        />
+      </div>
+    </div>
+
+    <!-- 5. Compact & Mini Layout Variants -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Layout Variants</span>
+          <h2>COMPACT &amp; MINI DROP ZONES</h2>
+          <p class="card-desc">
+            Space-efficient horizontal bars and slim inline dropzones designed for dialogs, sidebars, and dense table rows.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body variants-stack">
+        <div class="variant-example-group">
+          <label class="example-label">Compact Variant (Horizontal Bar)</label>
+          <talos-drop-zone
+            variant="compact"
+            title="Drop invoices here or"
+            browseLabel="browse"
+            subTitle="PDF &amp; scans up to 10MB"
+            [showFileList]="false"
+          />
+        </div>
+
+        <div class="variant-example-group">
+          <label class="example-label">Mini Variant (Inline Streamlined)</label>
+          <talos-drop-zone
+            variant="mini"
+            title="Drag attachments or"
+            browseLabel="browse"
+            [showFileList]="false"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Reactive Forms Integration -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Angular Forms</span>
+          <h2>REACTIVE FORMS INTEGRATION</h2>
+          <p class="card-desc">
+            Fully compatible with Angular Reactive Forms, <code>formControlName</code>, and validation states.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="uploadForm" (ngSubmit)="submitForm()" class="reactive-form-layout">
+          <div class="form-field-wrapper">
+            <label class="form-label">
+              <span>Required Verification Documents</span>
+              <span class="required-star">*</span>
+            </label>
+            <talos-drop-zone
+              formControlName="attachments"
+              title="Upload ID or Company Registration"
+              subTitle="PDF, JPG, or PNG (Required field)"
+              accept=".pdf,image/*"
+              maxFileSize="15MB"
+              [maxFiles]="2"
+            />
+            @if (uploadForm.get('attachments')?.touched && uploadForm.get('attachments')?.invalid) {
+              <div class="field-error-msg">Please attach at least one verification document.</div>
+            }
+          </div>
+
+          <div class="form-actions-bar">
+            <button type="submit" talosButton variant="primary" size="md">
+              <svg lucideUpload [size]="14"></svg>
+              <span>Submit Form</span>
+            </button>
+            <button type="button" talosButton variant="outline" size="md" (click)="resetForm()">
+              <svg lucideRotateCcw [size]="14"></svg>
+              <span>Reset</span>
+            </button>
+            <button type="button" talosButton variant="secondary" size="md" (click)="toggleFormDisabled()">
+              <svg lucideBan [size]="14"></svg>
+              <span>{{ uploadForm.disabled ? 'Enable Form' : 'Disable Form' }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 7. Custom Drag Target Directive -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Directive Usage</span>
+          <h2>CUSTOM ELEMENT DRAG TARGET (<code>[talosFileDrop]</code>)</h2>
+          <p class="card-desc">
+            Transform any custom DOM element into a drag-and-drop file target using the standalone directive.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div
+          class="custom-drop-card-box"
+          talosFileDrop
+          (fileDrop)="onCustomDrop($event)"
+          (dragOver)="isCustomDragOver.set(true)"
+          (dragLeave)="isCustomDragOver.set(false)"
+          [class.is-active-drop]="isCustomDragOver()"
+        >
+          <div class="custom-drop-icon-badge">
+            <svg lucideFolderArchive [size]="28"></svg>
+          </div>
+          <h3 class="custom-drop-title">Custom Container Drop Target</h3>
+          <p class="custom-drop-subtitle">
+            Drop files directly anywhere inside this custom designed box!
+          </p>
+
+          @if (customDroppedFiles().length > 0) {
+            <div class="custom-dropped-results">
+              <span class="results-header">Captured via Directive ({{ customDroppedFiles().length }} files):</span>
+              <div class="results-chips">
+                @for (file of customDroppedFiles(); track $index) {
+                  <span class="custom-file-tag">
+                    <svg lucideFileText [size]="12"></svg>
+                    <span>{{ file.name }} ({{ file.size }} bytes)</span>
+                  </span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

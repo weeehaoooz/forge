@@ -89,6 +89,9 @@
       ],
       "@talos/components/dialog": [
         "./projects/talos/dialog/index.ts"
+      ],
+      "@talos/components/form/drop-zone": [
+        "./projects/talos/form/drop-zone/index.ts"
       ]
     }
   },

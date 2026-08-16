@@ -120,3 +120,10 @@ export * from './dialog/dialog-footer/dialog-footer.component';
 export * from './dialog/confirm-dialog/confirm-dialog.component';
 export * from './dialog/dialog.module';
 
+// Drop Zone component, directive, module & types
+export * from './form/drop-zone/drop-zone.types';
+export * from './form/drop-zone/drop-zone.directive';
+export * from './form/drop-zone/drop-zone.component';
+export * from './form/drop-zone/drop-zone.module';
+
+

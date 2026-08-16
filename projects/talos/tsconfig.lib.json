@@ -78,6 +78,9 @@
       ],
       "@talos/components/dialog": [
         "./dialog/index.ts"
+      ],
+      "@talos/components/form/drop-zone": [
+        "./form/drop-zone/index.ts"
       ]
     }
   },

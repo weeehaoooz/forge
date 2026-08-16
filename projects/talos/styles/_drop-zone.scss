@@ -1,0 +1,19 @@
+/* Talos UI Drop Zone / File Upload Component Styles */
+
+.talos-drop-zone-host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.talos-file-drop-target {
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-drag-over {
+    border-color: var(--talos-dropzone-drag-border, var(--talos-primary-color)) !important;
+    background-color: var(--talos-dropzone-drag-bg, var(--talos-primary-light)) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+  }
+}
