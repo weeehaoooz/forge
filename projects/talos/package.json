@@ -12,6 +12,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
+  "schematics": "./schematics/collection.json",
   "dependencies": {
     "tslib": "^2.3.0"
   }

@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "TalosNgAddSchema",
+  "title": "Talos ng-add Schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project."
+    },
+    "addStyles": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically configure Talos global SCSS styles and design tokens.",
+      "x-prompt": "Would you like to automatically add Talos global styles and design tokens to your project?"
+    },
+    "theme": {
+      "type": "string",
+      "enum": ["light", "dark", "system"],
+      "default": "light",
+      "description": "Default theme mode for the application.",
+      "x-prompt": {
+        "message": "Which default color theme would you like to configure?",
+        "type": "list",
+        "items": [
+          { "value": "light", "label": "Light Theme (Default)" },
+          { "value": "dark", "label": "Dark Theme (data-theme=\"dark\")" },
+          { "value": "system", "label": "System / Custom" }
+        ]
+      }
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not automatically add peer dependencies to package.json."
+    }
+  },
+  "additionalProperties": false
+}
