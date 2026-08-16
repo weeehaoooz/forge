@@ -40,6 +40,7 @@ interface UserProfile {
 export class AutocompletePage {
   // Sizing State
   protected readonly inputSize = signal<AutocompleteSize>('sm');
+  protected readonly floatingLabels = signal<boolean>(false);
 
   // Form Controls
   readonly demoForm = new FormGroup({

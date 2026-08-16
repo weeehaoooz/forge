@@ -21,6 +21,7 @@ export class SelectPage {
   });
 
   protected readonly inputSize = signal<'sm' | 'md' | 'lg'>('sm');
+  protected readonly floatingLabels = signal<boolean>(false);
   protected readonly searchLog = signal<string[]>([]);
 
   readonly frameworks = signal<FrameworkOption[]>([

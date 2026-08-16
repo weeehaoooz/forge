@@ -4,8 +4,12 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 0.875rem;
+  position: relative;
 
-  .form-label {
+  .form-label,
+  .talos-field-label {
+    display: inline-flex;
+    align-items: center;
     font-size: var(--talos-control-font-size, 0.8125rem);
     font-weight: 600;
     color: var(--talos-text-color, #0f172a);
@@ -28,6 +32,87 @@
     font-size: 0.75rem;
     color: var(--talos-text-muted, #64748b);
     margin-top: 0.25rem;
+  }
+}
+
+/* Floating Label Wrapper Styles */
+.talos-floating-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .talos-floating-label {
+    position: absolute;
+    left: var(--talos-control-padding-x, 0.625rem);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--talos-control-font-size, 0.8125rem);
+    font-weight: 500;
+    color: var(--talos-input-placeholder-color, #94a3b8);
+    pointer-events: none;
+    user-select: none;
+    background-color: var(--talos-input-bg, var(--talos-card-bg, #ffffff));
+    padding: 0 0.25rem;
+    border-radius: 0.25rem;
+    line-height: 1;
+    z-index: 2;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+      font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+      top 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .required-star {
+      color: var(--talos-error-color, #ef4444);
+      margin-left: 0.125rem;
+    }
+  }
+
+  &:has(textarea) .talos-floating-label:not(.is-floated) {
+    top: 0.5rem;
+    transform: none;
+  }
+
+  &.is-floated .talos-floating-label,
+  &:focus-within .talos-floating-label {
+    top: 0 !important;
+    transform: translateY(-50%) scale(0.85) !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--talos-primary-color, #2563eb);
+  }
+
+  &.is-invalid .talos-floating-label {
+    color: var(--talos-error-color, #ef4444);
+  }
+}
+
+/* Hide placeholder when inside an unfloated floating-label container */
+.talos-floating-field:not(.is-floated):not(:focus-within),
+talos-form-field.is-floating:not(.is-floated),
+.talos-form-field-host.is-floating:not(.is-floated) {
+
+  .talos-input::placeholder,
+  input::placeholder,
+  textarea::placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.talos-floating-field.is-floated,
+.talos-floating-field:focus-within,
+talos-form-field.is-floating.is-floated,
+.talos-form-field-host.is-floating.is-floated {
+
+  .talos-input::placeholder,
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--talos-input-placeholder-color, #94a3b8);
+    opacity: 1;
+    -webkit-text-fill-color: initial;
+    transition: opacity 0.15s ease, color 0.15s ease;
   }
 }
 

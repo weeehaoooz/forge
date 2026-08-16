@@ -39,9 +39,9 @@ export class OptionComponent {
   readonly isActive = signal<boolean>(false);
   readonly hidden = signal<boolean>(false);
 
-  readonly displayText = computed<string>(() => {
+  displayText(): string {
     const customLabel = this.label();
-    if (customLabel !== undefined && customLabel !== null) {
+    if (customLabel !== undefined && customLabel !== null && customLabel !== '') {
       return customLabel;
     }
     const nativeText = this.elementRef.nativeElement.textContent?.trim();
@@ -50,7 +50,7 @@ export class OptionComponent {
     }
     const val = this.value();
     return val !== null && val !== undefined ? String(val) : '';
-  });
+  }
 
   onClick(event: MouseEvent): void {
     event.stopPropagation();

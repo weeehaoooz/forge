@@ -32,6 +32,9 @@ let uniqueIdCounter = 0;
     'class': 'talos-select-host',
     '[class.is-open]': 'isOpen()',
     '[class.is-disabled]': 'effectiveDisabled()',
+    '[class.has-label]': '!!label()',
+    '[class.is-floating]': 'isFloatingMode()',
+    '[class.is-floated]': 'isFloated()',
     '[class.select-sm]': 'size() === "sm"',
     '[class.select-md]': 'size() === "md"',
     '[class.select-lg]': 'size() === "lg"',
@@ -44,6 +47,10 @@ export class SelectInputComponent implements ControlValueAccessor {
 
   // Signal Inputs
   readonly placeholder = input<string>('Select an option');
+  readonly label = input<string>('');
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly searchable = input<boolean>(false);
   readonly searchPlaceholder = input<string>('Search options...');
   readonly disabled = input<boolean>(false);
@@ -78,6 +85,12 @@ export class SelectInputComponent implements ControlValueAccessor {
   readonly isTouched = signal<boolean>(false);
 
   // Computed state
+  readonly isFloatingMode = computed(() => this.floatingLabel() || this.floating());
+  readonly isFloated = computed(() => {
+    if (!this.isFloatingMode()) return false;
+    return this.isOpen() || this.selectedOption() !== null || (this.searchable() && !!this.searchValue());
+  });
+
   readonly effectiveDisabled = computed(() => this.disabled() || this.isDisabled());
 
   readonly selectedOption = computed(() => {

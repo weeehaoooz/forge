@@ -72,7 +72,7 @@ describe('TalosButtonDirective', () => {
 
     hostComponent.variant.set('subtle');
     fixture.detectChanges();
-    expect(buttonEl.classList.contains('talos-btn-subtle')).toBe(true);
+    expect(buttonEl.classList.contains('talos-btn-ghost')).toBe(true);
 
     hostComponent.variant.set('success');
     fixture.detectChanges();

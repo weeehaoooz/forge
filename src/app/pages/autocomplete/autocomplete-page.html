@@ -19,6 +19,14 @@
             spinners</span>
         </div>
         <div class="actions">
+          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="floatingLabels() ? 'floating' : 'static'"
+            (valueChange)="floatingLabels.set($event === 'floating')">
+            <button type="button" talosButton talosButtonGroupItem value="static"
+              tooltip="Static Top Labels">Static Label</button>
+            <button type="button" talosButton talosButtonGroupItem value="floating"
+              tooltip="Floating Inline Labels">Floating Label</button>
+          </talos-button-group>
+
           <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
             (valueChange)="setInputSize($event)">
             <button type="button" talosButton talosButtonGroupItem value="sm" tooltip="Compact (32px)">Compact</button>
@@ -32,9 +40,6 @@
         <!-- 1. Async Search with Searching Spinner -->
         <div class="form-group">
           <div class="field-header">
-            <label class="form-label" for="async-tech-autocomplete">
-              Async Remote Search with Spinner <span class="required-star">*</span>
-            </label>
             <button type="button" talosButton variant="outline" size="sm" class="spinner-toggle-btn"
               (click)="toggleSearchingManual()">
               Toggle Searching Spinner ({{ isSearching() ? 'Active' : 'Off' }})
@@ -44,6 +49,7 @@
             loading spinner.</span>
 
           <talos-autocomplete id="async-tech-autocomplete" formControlName="asyncTech" [options]="asyncResults()"
+            label="Async Remote Search with Spinner" [floating]="floatingLabels()" [required]="true"
             [searching]="isSearching()" [size]="inputSize()" [filterFn]="null"
             placeholder="Type to search tech stack (e.g. 'angular', 'rust', 'react')..." displayWith="name"
             valueWith="id" (searchChange)="onAsyncSearch($event)" (selectionChange)="onSelection($event)"
@@ -68,27 +74,39 @@
           </ng-template>
         </div>
 
-        <!-- 2. Local Country Autocomplete with Substring Highlighting -->
+        <!-- 2. Local Dataset Autocomplete -->
         <div class="form-group">
-          <label class="form-label" for="country-autocomplete">
-            Local Dataset with Substring Match Highlighting
-          </label>
           <span class="field-help">Filters locally across string array with automatic match highlighting.</span>
 
-          <talos-autocomplete id="country-autocomplete" formControlName="localCountry" [options]="countries()"
-            [size]="inputSize()" placeholder="Search country..." (selectionChange)="onSelection($event)" />
+          <talos-autocomplete
+            id="country-autocomplete"
+            formControlName="localCountry"
+            label="Local Dataset with Substring Match Highlighting"
+            [floating]="floatingLabels()"
+            [options]="countries()"
+            [size]="inputSize()"
+            placeholder="Search country..."
+            (selectionChange)="onSelection($event)"
+          />
         </div>
 
         <!-- 3. Custom Rich User Profile Template -->
         <div class="form-group">
-          <label class="form-label" for="user-autocomplete">
-            Custom Item Template (Team Members)
-          </label>
           <span class="field-help">Demonstrates rich template projection with avatar circles and roles.</span>
 
-          <talos-autocomplete id="user-autocomplete" formControlName="customUser" [options]="users()"
-            [size]="inputSize()" placeholder="Search team member..." displayWith="name" valueWith="id"
-            (selectionChange)="onSelection($event)" [itemTemplate]="userCardTemplate" />
+          <talos-autocomplete
+            id="user-autocomplete"
+            formControlName="customUser"
+            label="Custom Item Template (Team Members)"
+            [floating]="floatingLabels()"
+            [options]="users()"
+            [size]="inputSize()"
+            placeholder="Search team member..."
+            displayWith="name"
+            valueWith="id"
+            (selectionChange)="onSelection($event)"
+            [itemTemplate]="userCardTemplate"
+          />
 
           <!-- Custom Template for User Items -->
           <ng-template #userCardTemplate let-user let-selected="selected">

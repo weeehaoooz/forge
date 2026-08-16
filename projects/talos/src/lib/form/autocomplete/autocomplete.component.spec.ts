@@ -16,6 +16,8 @@ interface Country {
   template: `
     <talos-autocomplete
       [formControl]="control"
+      [label]="label()"
+      [floating]="floating()"
       [options]="countries()"
       [searching]="searching()"
       [placeholder]="placeholder()"
@@ -30,6 +32,8 @@ interface Country {
 })
 class TestHostComponent {
   control = new FormControl<string | null>(null, Validators.required);
+  label = signal('');
+  floating = signal(false);
   countries = signal<Country[]>([
     { code: 'US', name: 'United States', region: 'Americas' },
     { code: 'CA', name: 'Canada', region: 'Americas' },
@@ -189,5 +193,26 @@ describe('TalosAutocompleteComponent Suite', () => {
     const options = fixture.nativeElement.querySelectorAll('.autocomplete-option');
     expect(options.length).toBe(1);
     expect(options[0].textContent).toContain('Singapore');
+  });
+
+  it('should render static label when label is set', () => {
+    hostComponent.label.set('Select Country');
+    fixture.detectChanges();
+
+    const labelEl = fixture.nativeElement.querySelector('.talos-field-label');
+    expect(labelEl).toBeTruthy();
+    expect(labelEl.textContent).toContain('Select Country');
+    expect(fixture.nativeElement.querySelector('.talos-floating-label')).toBeFalsy();
+  });
+
+  it('should render floating label when floating is toggled', () => {
+    hostComponent.label.set('Select Country');
+    hostComponent.floating.set(true);
+    fixture.detectChanges();
+
+    const floatingLabelEl = fixture.nativeElement.querySelector('.talos-floating-label');
+    expect(floatingLabelEl).toBeTruthy();
+    expect(floatingLabelEl.textContent).toContain('Select Country');
+    expect(fixture.nativeElement.querySelector('.talos-field-label')).toBeFalsy();
   });
 });

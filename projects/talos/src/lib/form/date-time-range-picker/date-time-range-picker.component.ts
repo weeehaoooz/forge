@@ -33,6 +33,10 @@ let uniqueDateTimeRangePickerId = 0;
 export class DateTimeRangePickerComponent implements ControlValueAccessor {
   // Signal Inputs
   readonly placeholder = input<string>('Select date & time range');
+  readonly label = input<string>('');
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly clearable = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg'>('md');

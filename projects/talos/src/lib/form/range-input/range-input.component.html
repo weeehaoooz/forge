@@ -7,9 +7,9 @@
   <!-- Header: Label, Hint & Optional Value Display / Synchronized Number Inputs -->
   @if (label() || hint() || showValueBadge() || showInputs()) {
   <div class="talos-range-header">
-    <div class="talos-range-label-group">
+    <div class="talos-range-label-group" [class.is-floating-label]="isFloatingMode()">
       @if (label()) {
-      <label class="talos-range-label" [attr.for]="elementId() + '-thumb-0'">
+      <label class="talos-range-label" [class.is-floated]="isFloatingMode()" [attr.for]="elementId() + '-thumb-0'">
         {{ label() }}
       </label>
       }

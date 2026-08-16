@@ -1,33 +1,52 @@
-<!-- Select Control Trigger -->
-<div #triggerEl class="select-trigger" role="combobox" [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'listbox'"
-  [attr.aria-controls]="listboxId" [attr.aria-disabled]="effectiveDisabled()"
-  [attr.tabindex]="effectiveDisabled() ? -1 : 0" (click)="toggleOpen()">
-  <div class="select-value-container">
-    @if (selectedOption()) {
-    <span class="select-value-label">{{ displayLabel() }}</span>
-    } @else {
-    <span class="select-placeholder">{{ placeholder() }}</span>
+@if (label() && !isFloatingMode()) {
+  <label class="talos-field-label" (click)="toggleOpen()">
+    {{ label() }}
+    @if (required()) {
+      <span class="required-star" aria-hidden="true">*</span>
     }
+  </label>
+}
+
+<div class="select-control-container">
+  <!-- Select Control Trigger -->
+  <div #triggerEl class="select-trigger" role="combobox" [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'listbox'"
+    [attr.aria-controls]="listboxId" [attr.aria-disabled]="effectiveDisabled()"
+    [attr.tabindex]="effectiveDisabled() ? -1 : 0" (click)="toggleOpen()">
+    <div class="select-value-container">
+      @if (selectedOption()) {
+      <span class="select-value-label">{{ displayLabel() }}</span>
+      } @else if (!isFloatingMode() || isFloated()) {
+      <span class="select-placeholder">{{ placeholder() }}</span>
+      }
+    </div>
+
+    <div class="select-actions">
+      @if (clearable() && selectedOption() && !effectiveDisabled()) {
+      <button type="button" class="select-clear-btn" aria-label="Clear selection" title="Clear selection"
+        (click)="onClear($event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      }
+
+      <span class="select-arrow" [class.is-open]="isOpen()" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </div>
   </div>
 
-  <div class="select-actions">
-    @if (clearable() && selectedOption() && !effectiveDisabled()) {
-    <button type="button" class="select-clear-btn" aria-label="Clear selection" title="Clear selection"
-      (click)="onClear($event)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-    }
-
-    <span class="select-arrow" [class.is-open]="isOpen()" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </span>
-  </div>
-</div>
+  @if (label() && isFloatingMode()) {
+    <label class="talos-floating-label" [class.is-floated]="isFloated()" (click)="toggleOpen()">
+      {{ label() }}
+      @if (required()) {
+        <span class="required-star" aria-hidden="true">*</span>
+      }
+    </label>
+  }
 
 <!-- Dropdown Panel -->
 @if (isOpen()) {
@@ -61,3 +80,4 @@
   </div>
 </div>
 }
+</div>

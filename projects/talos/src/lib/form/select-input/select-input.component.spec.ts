@@ -11,6 +11,8 @@ import { OptionGroupComponent } from './option-group/option-group.component';
   template: `
     <talos-select-input
       [formControl]="control"
+      [label]="label()"
+      [floating]="floating()"
       [placeholder]="placeholder()"
       [searchable]="searchable()"
       [clearable]="clearable()"
@@ -27,6 +29,8 @@ import { OptionGroupComponent } from './option-group/option-group.component';
 })
 class TestHostComponent {
   control = new FormControl<string | null>(null, Validators.required);
+  label = signal('');
+  floating = signal(false);
   placeholder = signal('Choose a fruit');
   searchable = signal(false);
   clearable = signal(false);
@@ -79,7 +83,7 @@ describe('SelectInputComponent Suite', () => {
     triggerEl.click();
     fixture.detectChanges();
 
-    const options = fixture.nativeElement.querySelectorAll('app-option');
+    const options = fixture.nativeElement.querySelectorAll('talos-option');
     options[1].click(); // Select Banana
     fixture.detectChanges();
 
@@ -102,7 +106,7 @@ describe('SelectInputComponent Suite', () => {
     searchInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const visibleOptions = fixture.nativeElement.querySelectorAll('app-option:not(.is-hidden)');
+    const visibleOptions = fixture.nativeElement.querySelectorAll('talos-option:not(.is-hidden)');
 
     expect(visibleOptions.length).toBe(1);
     expect(visibleOptions[0].textContent).toContain('Lemon');
@@ -123,7 +127,7 @@ describe('SelectInputComponent Suite', () => {
   });
 
   it('should handle keyboard navigation (ArrowDown, Enter)', () => {
-    const hostEl = fixture.nativeElement.querySelector('.app-select-host');
+    const hostEl = fixture.nativeElement.querySelector('.talos-select-host');
 
     // Press ArrowDown to open dropdown
     hostEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
@@ -145,7 +149,7 @@ describe('SelectInputComponent Suite', () => {
     hostComponent.control.disable();
     fixture.detectChanges();
 
-    const hostEl = fixture.nativeElement.querySelector('.app-select-host');
+    const hostEl = fixture.nativeElement.querySelector('.talos-select-host');
     expect(hostEl.classList.contains('is-disabled')).toBe(true);
 
     const triggerEl = fixture.nativeElement.querySelector('.select-trigger');
@@ -156,7 +160,28 @@ describe('SelectInputComponent Suite', () => {
   });
 
   it('should apply size classes to host element', () => {
-    const hostEl = fixture.nativeElement.querySelector('.app-select-host');
+    const hostEl = fixture.nativeElement.querySelector('.talos-select-host');
     expect(hostEl.classList.contains('select-sm')).toBe(true);
+  });
+
+  it('should render static label when label input is provided', () => {
+    hostComponent.label.set('Fruit Choice');
+    fixture.detectChanges();
+
+    const labelEl = fixture.nativeElement.querySelector('.talos-field-label');
+    expect(labelEl).toBeTruthy();
+    expect(labelEl.textContent).toContain('Fruit Choice');
+    expect(fixture.nativeElement.querySelector('.talos-floating-label')).toBeFalsy();
+  });
+
+  it('should render floating label when floating is toggled true', () => {
+    hostComponent.label.set('Fruit Choice');
+    hostComponent.floating.set(true);
+    fixture.detectChanges();
+
+    const floatingLabelEl = fixture.nativeElement.querySelector('.talos-floating-label');
+    expect(floatingLabelEl).toBeTruthy();
+    expect(floatingLabelEl.textContent).toContain('Fruit Choice');
+    expect(fixture.nativeElement.querySelector('.talos-field-label')).toBeFalsy();
   });
 });

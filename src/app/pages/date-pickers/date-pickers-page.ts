@@ -37,6 +37,7 @@ export class DatePickersPage {
   });
 
   protected readonly inputSize = signal<'sm' | 'md' | 'lg'>('sm');
+  protected readonly floatingLabels = signal<boolean>(false);
 
   readonly minDateDemo = '2026-08-05';
   readonly maxDateDemo = '2026-08-25';

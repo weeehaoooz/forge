@@ -68,6 +68,9 @@ let uniqueDateRangePickerId = 0;
     'class': 'talos-daterangepicker-host',
     '[class.is-open]': 'isOpen()',
     '[class.is-disabled]': 'effectiveDisabled()',
+    '[class.has-label]': '!!label()',
+    '[class.is-floating]': 'isFloatingMode()',
+    '[class.is-floated]': 'isFloated()',
     '[class.datepicker-sm]': 'size() === "sm"',
     '[class.datepicker-md]': 'size() === "md"',
     '[class.datepicker-lg]': 'size() === "lg"',
@@ -80,6 +83,10 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   // Signal Inputs
   readonly placeholder = input<string>('Select date range');
+  readonly label = input<string>('');
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly clearable = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg'>('md');
@@ -174,6 +181,11 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   readonly endInputText = signal<string>('');
 
   // Computeds
+  readonly isFloatingMode = computed(() => this.floatingLabel() || this.floating());
+  readonly isFloated = computed(() => {
+    if (!this.isFloatingMode()) return false;
+    return this.isOpen() || !!this.formattedTriggerValue();
+  });
   readonly effectiveDisabled = computed(() => this.disabled() || this.isDisabledSignal());
 
   readonly effectiveDisplayFormat = computed(() => {

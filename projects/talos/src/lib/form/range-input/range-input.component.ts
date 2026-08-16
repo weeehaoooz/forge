@@ -36,7 +36,8 @@ let rangeInputCounter = 0;
   host: {
     'class': 'talos-range-input-host',
     '[class.talos-range-disabled]': 'effectiveDisabled()',
-    '[class.talos-range-invalid]': 'effectiveInvalid()'
+    '[class.talos-range-invalid]': 'effectiveInvalid()',
+    '[class.is-floating]': 'isFloatingMode()'
   }
 })
 export class TalosRangeInputComponent implements ControlValueAccessor {
@@ -99,6 +100,10 @@ export class TalosRangeInputComponent implements ControlValueAccessor {
   /** Top label text */
   readonly label = input<string>('');
 
+  /** Floating label mode toggle */
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+
   /** Helper hint text */
   readonly hint = input<string>('');
 
@@ -158,6 +163,7 @@ export class TalosRangeInputComponent implements ControlValueAccessor {
   readonly draggingThumb = signal<number | null>(null);
 
   // Effective state computations
+  readonly isFloatingMode = computed(() => this.floatingLabel() || this.floating());
   readonly effectiveDisabled = computed(() => this.disabled() || this.isCvaDisabled());
   readonly effectiveInvalid = computed(() => this.invalid());
 

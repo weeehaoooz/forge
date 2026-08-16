@@ -34,6 +34,10 @@ export * from './lib/tooltip/tooltip.directive';
 // Input & Textarea directive
 export * from './lib/form/input/input.directive';
 
+// Form Field wrapper component & module
+export * from './lib/form/form-field/form-field.component';
+export * from './lib/form/form-field/form-field.module';
+
 // Checkbox directive, group, parent directive, component & module
 export * from './lib/form/checkbox/checkbox.directive';
 export * from './lib/form/checkbox/checkbox-group.directive';

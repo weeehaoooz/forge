@@ -42,6 +42,9 @@ let uniqueAutocompleteIdCounter = 0;
     '[class.is-open]': 'isOpen()',
     '[class.is-disabled]': 'effectiveDisabled()',
     '[class.is-searching]': 'effectiveSearching()',
+    '[class.has-label]': '!!label()',
+    '[class.is-floating]': 'isFloatingMode()',
+    '[class.is-floated]': 'isFloated()',
     '[class.autocomplete-sm]': 'size() === "sm"',
     '[class.autocomplete-md]': 'size() === "md"',
     '[class.autocomplete-lg]': 'size() === "lg"',
@@ -53,6 +56,10 @@ export class TalosAutocompleteComponent<T = unknown> implements ControlValueAcce
 
   // Signal Inputs
   readonly options = input<readonly T[] | T[]>([]);
+  readonly label = input<string>('');
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly searching = input<boolean>(false);
   readonly loading = input<boolean>(false);
   readonly placeholder = input<string>('Search...');
@@ -91,11 +98,17 @@ export class TalosAutocompleteComponent<T = unknown> implements ControlValueAcce
   readonly inputValue = signal<string>('');
   readonly selectedItem = signal<T | null>(null);
   readonly isOpen = signal<boolean>(false);
+  readonly isFocused = signal<boolean>(false);
   readonly focusedIndex = signal<number>(-1);
   readonly isCvaDisabled = signal<boolean>(false);
   readonly isTouched = signal<boolean>(false);
 
   // Computed state
+  readonly isFloatingMode = computed(() => this.floatingLabel() || this.floating());
+  readonly isFloated = computed(() => {
+    if (!this.isFloatingMode()) return false;
+    return this.isOpen() || this.isFocused() || !!this.inputValue() || !!this.selectedItem();
+  });
   readonly effectiveDisabled = computed(() => this.disabled() || this.isCvaDisabled());
   readonly effectiveSearching = computed(() => this.searching() || this.loading());
 
@@ -267,6 +280,7 @@ export class TalosAutocompleteComponent<T = unknown> implements ControlValueAcce
   }
 
   onFocus(): void {
+    this.isFocused.set(true);
     if (this.effectiveDisabled()) return;
 
     if (this.openOnFocus() && this.inputValue().length >= this.minChars()) {
@@ -275,6 +289,7 @@ export class TalosAutocompleteComponent<T = unknown> implements ControlValueAcce
   }
 
   onBlur(): void {
+    this.isFocused.set(false);
     this.markAsTouched();
   }
 

@@ -1,16 +1,12 @@
-import { Component, Type, TemplateRef, inject, input, output, signal } from '@angular/core';
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
+import { Component, TemplateRef, Type, inject, input, output, signal } from '@angular/core';
 import {
-  LucidePanelLeft,
-  LucideLayoutDashboard,
-  LucideUsers,
-  LucidePackage,
-  LucideTrendingUp,
-  LucideCircleHelp,
-  LucideSettings,
   LucideChevronsUpDown,
+  LucideCircleHelp,
+  LucidePanelLeft,
+  LucidePanelLeftClose,
   LucidePanelLeftOpen,
-  LucidePanelLeftClose
+  LucideSettings
 } from '@lucide/angular';
 import { LayoutService } from '@talos/components/layout';
 
@@ -78,22 +74,7 @@ export class SideNavComponent {
   readonly activeItemId = signal<string>('dashboards');
 
   /** Concise Navigation Groups for clean sidebar UI */
-  readonly navGroups = input<SideNavGroup[]>([
-    {
-      title: 'MAIN NAVIGATION',
-      items: [
-        { id: 'dashboards', label: 'Dashboards', icon: LucideLayoutDashboard, active: true },
-        { id: 'products', label: 'Products', icon: LucidePackage },
-        { id: 'customers', label: 'Customers', icon: LucideUsers }
-      ]
-    },
-    {
-      title: 'GROWTH TOOLS',
-      items: [
-        { id: 'sales', label: 'Sales Performance', icon: LucideTrendingUp }
-      ]
-    }
-  ]);
+  readonly navGroups = input<SideNavGroup[]>([]);
 
   /** Secondary / Footer Navigation Items */
   readonly footerItems = input<SideNavItem[]>([

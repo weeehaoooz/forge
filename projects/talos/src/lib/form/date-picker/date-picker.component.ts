@@ -86,6 +86,9 @@ let uniqueDatePickerId = 0;
     'class': 'talos-datepicker-host',
     '[class.is-open]': 'isOpen()',
     '[class.is-disabled]': 'effectiveDisabled()',
+    '[class.has-label]': '!!label()',
+    '[class.is-floating]': 'isFloatingMode()',
+    '[class.is-floated]': 'isFloated()',
     '[class.datepicker-sm]': 'size() === "sm"',
     '[class.datepicker-md]': 'size() === "md"',
     '[class.datepicker-lg]': 'size() === "lg"',
@@ -98,6 +101,10 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   // Signal Inputs
   readonly placeholder = input<string>('Select date');
+  readonly label = input<string>('');
+  readonly floatingLabel = input<boolean>(false);
+  readonly floating = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly clearable = input<boolean>(true);
   readonly size = input<'sm' | 'md' | 'lg'>('md');
@@ -162,6 +169,7 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly viewDate = signal<Date>(new Date());
   readonly viewMode = signal<'day' | 'month' | 'year'>('day');
   readonly isOpen = signal<boolean>(false);
+  readonly isFocused = signal<boolean>(false);
   readonly isDisabledSignal = signal<boolean>(false);
   readonly isTouched = signal<boolean>(false);
   readonly focusedDate = signal<Date | null>(null);
@@ -173,6 +181,11 @@ export class DatePickerComponent implements ControlValueAccessor {
   readonly draftSecond = signal<number>(new Date().getSeconds());
 
   // Computed state
+  readonly isFloatingMode = computed(() => this.floatingLabel() || this.floating());
+  readonly isFloated = computed(() => {
+    if (!this.isFloatingMode()) return false;
+    return this.isOpen() || this.isFocused() || !!this.inputText() || this.selectedDate() !== null;
+  });
   readonly effectiveDisabled = computed(() => this.disabled() || this.isDisabledSignal());
 
   readonly effectiveDisplayFormat = computed(() => {
@@ -751,7 +764,12 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
+  onInputFocus(): void {
+    this.isFocused.set(true);
+  }
+
   onInputBlur(event: FocusEvent): void {
+    this.isFocused.set(false);
     const sel = this.selectedDate();
     if (sel && isValid(sel)) {
       this.inputText.set(formatDate(sel, this.effectiveDisplayFormat()));

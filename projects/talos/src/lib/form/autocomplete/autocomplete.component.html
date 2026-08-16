@@ -1,38 +1,62 @@
-<!-- Autocomplete Input Container -->
-<div class="autocomplete-control" [class.is-focused]="isOpen()">
-  <!-- Leading Search Icon -->
-  <span class="autocomplete-icon leading-icon" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"></circle>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-  </span>
+@if (label() && !isFloatingMode()) {
+  <label class="talos-field-label" [attr.for]="inputId()" (click)="onTriggerClick()">
+    {{ label() }}
+    @if (required()) {
+      <span class="required-star" aria-hidden="true">*</span>
+    }
+  </label>
+}
 
-  <!-- Editable Input Field -->
-  <input
-    #inputEl
-    type="text"
-    class="autocomplete-input"
-    [id]="inputId()"
-    [placeholder]="placeholder()"
-    [value]="inputValue()"
-    [disabled]="effectiveDisabled()"
-    (input)="onInput($event)"
-    (focus)="onFocus()"
-    (blur)="onBlur()"
-    (click)="onInputClick()"
-    (keydown)="onKeyDown($event)"
-    role="combobox"
-    aria-autocomplete="list"
-    [attr.aria-expanded]="isOpen()"
-    [attr.aria-haspopup]="'listbox'"
-    [attr.aria-controls]="listboxId()"
-    [attr.aria-activedescendant]="activeOptionId()"
-    [attr.aria-disabled]="effectiveDisabled()"
-    autocomplete="off"
-    autocapitalize="off"
-    spellcheck="false"
-  />
+<div class="autocomplete-wrapper" [class.has-floating-label]="isFloatingMode()">
+  <!-- Autocomplete Input Container -->
+  <div class="autocomplete-control" [class.is-focused]="isOpen()">
+    <!-- Leading Search Icon -->
+    <span class="autocomplete-icon leading-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </span>
+
+    <!-- Editable Input Field -->
+    <input
+      #inputEl
+      type="text"
+      class="autocomplete-input"
+      [id]="inputId()"
+      [placeholder]="isFloatingMode() && !isFloated() ? '' : placeholder()"
+      [value]="inputValue()"
+      [disabled]="effectiveDisabled()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (click)="onInputClick()"
+      (keydown)="onKeyDown($event)"
+      role="combobox"
+      aria-autocomplete="list"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-haspopup]="'listbox'"
+      [attr.aria-controls]="listboxId()"
+      [attr.aria-activedescendant]="activeOptionId()"
+      [attr.aria-disabled]="effectiveDisabled()"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+
+    @if (label() && isFloatingMode()) {
+      <label
+        class="talos-floating-label"
+        [class.is-floated]="isFloated()"
+        [attr.for]="inputId()"
+        (click)="onTriggerClick()"
+      >
+        {{ label() }}
+        @if (required()) {
+          <span class="required-star" aria-hidden="true">*</span>
+        }
+      </label>
+    }
 
   <!-- Trailing Actions Container -->
   <div class="autocomplete-actions">
@@ -151,3 +175,4 @@
     </div>
   </div>
 }
+</div>

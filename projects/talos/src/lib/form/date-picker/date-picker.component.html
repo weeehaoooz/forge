@@ -1,23 +1,42 @@
-<!-- DatePicker Input Trigger -->
-<div #triggerEl cdkOverlayOrigin #origin="cdkOverlayOrigin" class="datepicker-trigger" role="combobox"
-  [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'dialog'" [attr.aria-controls]="dialogId"
-  [attr.aria-disabled]="effectiveDisabled()">
-  <div class="datepicker-value-container">
-    <svg class="datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-      aria-hidden="true" (click)="toggleOpen()">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8" y1="2" x2="8" y2="6"></line>
-      <line x1="3" y1="10" x2="21" y2="10"></line>
-      @if (showTime()) {
-      <circle cx="12" cy="15" r="2.5"></circle>
-      <path d="M12 14v1.5l1 0.5"></path>
-      }
-    </svg>
-    <input #inputEl type="text" class="datepicker-input" [value]="inputText()" [placeholder]="placeholder()"
-      [disabled]="effectiveDisabled()" (input)="onInputChange($event)" (blur)="onInputBlur($event)"
-      (keydown)="onInputKeyDown($event)" aria-label="Date input" />
-  </div>
+@if (label() && !isFloatingMode()) {
+  <label class="talos-field-label" (click)="toggleOpen()">
+    {{ label() }}
+    @if (required()) {
+      <span class="required-star" aria-hidden="true">*</span>
+    }
+  </label>
+}
+
+<div class="datepicker-control-container">
+  <!-- DatePicker Input Trigger -->
+  <div #triggerEl cdkOverlayOrigin #origin="cdkOverlayOrigin" class="datepicker-trigger" role="combobox"
+    [attr.aria-expanded]="isOpen()" [attr.aria-haspopup]="'dialog'" [attr.aria-controls]="dialogId"
+    [attr.aria-disabled]="effectiveDisabled()">
+    <div class="datepicker-value-container">
+      <svg class="datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true" (click)="toggleOpen()">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+        @if (showTime()) {
+        <circle cx="12" cy="15" r="2.5"></circle>
+        <path d="M12 14v1.5l1 0.5"></path>
+        }
+      </svg>
+      <input #inputEl type="text" class="datepicker-input" [value]="inputText()" [placeholder]="isFloatingMode() && !isFloated() ? '' : placeholder()"
+        [disabled]="effectiveDisabled()" (input)="onInputChange($event)" (focus)="onInputFocus()" (blur)="onInputBlur($event)"
+        (keydown)="onInputKeyDown($event)" aria-label="Date input" />
+    </div>
+
+    @if (label() && isFloatingMode()) {
+      <label class="talos-floating-label" [class.is-floated]="isFloated()" (click)="toggleOpen()">
+        {{ label() }}
+        @if (required()) {
+          <span class="required-star" aria-hidden="true">*</span>
+        }
+      </label>
+    }
 
   <div class="datepicker-actions">
     @if (clearable() && inputText() && !effectiveDisabled()) {
@@ -176,3 +195,4 @@
     </div>
   </div>
 </ng-template>
+</div>

@@ -55,10 +55,10 @@ export class App {
       title: 'FIELDS',
       items: [
         { id: 'inputs', label: 'Inputs', icon: LucideTextCursorInput, route: '/inputs' },
-        { id: 'range-input', label: 'Range Input', icon: LucideSlidersHorizontal, route: '/range-input' },
         { id: 'select', label: 'Select', icon: LucideChevronDown, route: '/select' },
         { id: 'autocomplete', label: 'Autocomplete', icon: LucideSearch, route: '/autocomplete' },
-        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' }
+        { id: 'date-pickers', label: 'Date Pickers', icon: LucideCalendarDays, route: '/date-pickers' },
+        { id: 'range-input', label: 'Range Input', icon: LucideSlidersHorizontal, route: '/range-input' },
       ]
     },
     {

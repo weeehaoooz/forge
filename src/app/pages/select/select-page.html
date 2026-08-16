@@ -16,6 +16,14 @@
           <span class="card-subtitle">Standard Select and Searchable Autocomplete with TalosSelectInput</span>
         </div>
         <div class="actions">
+          <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="floatingLabels() ? 'floating' : 'static'"
+            (valueChange)="floatingLabels.set($event === 'floating')">
+            <button type="button" talosButton talosButtonGroupItem value="static"
+              tooltip="Static Top Labels">Static Label</button>
+            <button type="button" talosButton talosButtonGroupItem value="floating"
+              tooltip="Floating Inline Labels">Floating Label</button>
+          </talos-button-group>
+
           <talos-button-group size="sm" variant="segmented" selectionMode="single" [value]="inputSize()"
             (valueChange)="setInputSize($event)">
             <button type="button" talosButton talosButtonGroupItem value="sm"
@@ -30,11 +38,15 @@
       <div class="form-fields">
         <!-- Standard Select -->
         <div class="form-group">
-          <label class="form-label" for="fruit-select">
-            Standard Select <span class="required-star">*</span>
-          </label>
-          <talos-select-input id="fruit-select" formControlName="singleFruit" placeholder="Select a fruit..."
-            [size]="inputSize()">
+          <talos-select-input
+            id="fruit-select"
+            formControlName="singleFruit"
+            label="Standard Select"
+            [floating]="floatingLabels()"
+            [required]="true"
+            placeholder="Select a fruit..."
+            [size]="inputSize()"
+          >
             <talos-option value="apple">🍎 Apple</talos-option>
             <talos-option value="banana">🍌 Banana</talos-option>
             <talos-option value="cherry">🍒 Cherry</talos-option>
@@ -48,12 +60,18 @@
 
         <!-- Searchable Autocomplete Select -->
         <div class="form-group">
-          <label class="form-label" for="tech-select">
-            Searchable Autocomplete Select <span class="required-star">*</span>
-          </label>
-          <talos-select-input id="tech-select" formControlName="searchableFramework" placeholder="Search technology..."
-            searchPlaceholder="Type to filter..." [searchable]="true" [size]="inputSize()"
-            (searchChange)="onSearchChange($event)">
+          <talos-select-input
+            id="tech-select"
+            formControlName="searchableFramework"
+            label="Searchable Framework Select"
+            [floating]="floatingLabels()"
+            [required]="true"
+            placeholder="Search technology..."
+            searchPlaceholder="Type to filter..."
+            [searchable]="true"
+            [size]="inputSize()"
+            (searchChange)="onSearchChange($event)"
+          >
             @for (fw of frameworks(); track fw.id) {
             <talos-option [value]="fw.id" [label]="fw.name">
               <div class="option-custom-content">

@@ -1,0 +1,34 @@
+<div class="form-field-wrapper" [class.has-floating-label]="isFloatingMode()">
+  @if (label() && !isFloatingMode()) {
+    <label class="talos-field-label" [attr.for]="inputId()" (click)="onLabelClick()">
+      {{ label() }}
+      @if (required()) {
+        <span class="required-star" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="form-field-control-container">
+    <ng-content></ng-content>
+
+    @if (label() && isFloatingMode()) {
+      <label
+        class="talos-floating-label"
+        [class.is-floated]="isFloated()"
+        [attr.for]="inputId()"
+        (click)="onLabelClick()"
+      >
+        {{ label() }}
+        @if (required()) {
+          <span class="required-star" aria-hidden="true">*</span>
+        }
+      </label>
+    }
+  </div>
+
+  @if (error()) {
+    <span class="field-error" role="alert">{{ error() }}</span>
+  } @else if (hint()) {
+    <span class="field-help">{{ hint() }}</span>
+  }
+</div>
