@@ -80,6 +80,9 @@
       ],
       "@talos/components/status-tag": [
         "./projects/talos/src/lib/status-tag/index.ts"
+      ],
+      "@talos/components/form/chips": [
+        "./projects/talos/src/lib/form/chips/index.ts"
       ]
     }
   },

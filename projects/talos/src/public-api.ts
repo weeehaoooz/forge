@@ -102,3 +102,9 @@ export * from './lib/status-tag/status-tag.types';
 export * from './lib/status-tag/status-tag.component';
 export * from './lib/status-tag/status-tag.module';
 
+// Chips component, module & types
+export * from './lib/form/chips/chips.types';
+export * from './lib/form/chips/chip.component';
+export * from './lib/form/chips/chips.component';
+export * from './lib/form/chips/chips.module';
+

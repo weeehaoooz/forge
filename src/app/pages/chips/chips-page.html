@@ -1,0 +1,375 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Form Controls</div>
+    <h1>Chips &amp; Multi-Select Inputs</h1>
+    <p class="subtitle">
+      Comprehensive multi-select chips input component featuring live substring filtering, keyboard navigation, freeform
+      tag creation, custom item templates, removable badges, and reactive form integration.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- 1. Interactive Playground Configurator Card -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Interactive Playground</span>
+          <h2>CHIPS &amp; MULTI-SELECT CONFIGURATOR</h2>
+        </div>
+
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </talos-button-group>
+      </div>
+
+      @if (activeTab() === 'preview') {
+      <div class="interactive-stage-layout">
+        <!-- Live Preview Canvas -->
+        <div class="preview-stage">
+          <div class="preview-hero-box">
+            <talos-chips [options]="techOptions()" [displayWith]="displayTech" [valueWith]="valueTech"
+              [label]="customLabel()" [floating]="floatingLabel()" [placeholder]="customPlaceholder()"
+              [size]="selectedSize()" [chipVariant]="selectedVariant()" [chipColor]="selectedColor()"
+              [allowCustom]="allowCustom()" [clearable]="clearable()" [disabled]="disabled()" [maxChips]="maxChips()"
+              [(ngModel)]="playgroundValues" />
+          </div>
+
+          <div class="stage-metadata">
+            <span class="meta-item">Size: <code>{{ selectedSize() }}</code></span>
+            <span class="meta-item">Variant: <code>{{ selectedVariant() }}</code></span>
+            <span class="meta-item">Color: <code>{{ selectedColor() }}</code></span>
+            <span class="meta-item">Selected: <code>{{ playgroundValues().length }} items</code></span>
+          </div>
+        </div>
+
+        <!-- Interactive Controls Panel -->
+        <div class="playground-controls-panel">
+          <!-- Color Picker Row -->
+          <div class="control-row">
+            <label class="control-label">Chip Theme Color</label>
+            <div class="status-chip-grid">
+              @for (c of allColors; track c) {
+              <button type="button" class="status-chip-btn" [class.is-selected]="selectedColor() === c"
+                (click)="selectedColor.set(c)">
+                <talos-chip [label]="c" [color]="c" [variant]="'filled'" [removable]="false" size="sm" />
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- Variant & Size Pickers -->
+          <div class="control-two-col">
+            <div class="control-group">
+              <label class="control-label">Chip Variant</label>
+              <div class="segmented-wrapper">
+                <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedVariant()">
+                  <button type="button" talosButton talosButtonGroupItem value="subtle"
+                    (click)="selectedVariant.set('subtle')">Subtle</button>
+                  <button type="button" talosButton talosButtonGroupItem value="filled"
+                    (click)="selectedVariant.set('filled')">Filled</button>
+                  <button type="button" talosButton talosButtonGroupItem value="outline"
+                    (click)="selectedVariant.set('outline')">Outline</button>
+                </talos-button-group>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Input Size</label>
+              <div class="segmented-wrapper">
+                <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedSize()">
+                  <button type="button" talosButton talosButtonGroupItem value="sm"
+                    (click)="selectedSize.set('sm')">SM</button>
+                  <button type="button" talosButton talosButtonGroupItem value="md"
+                    (click)="selectedSize.set('md')">MD</button>
+                  <button type="button" talosButton talosButtonGroupItem value="lg"
+                    (click)="selectedSize.set('lg')">LG</button>
+                </talos-button-group>
+              </div>
+            </div>
+          </div>
+
+          <!-- Toggles List -->
+          <div class="control-group toggle-group">
+            <label class="control-label">Control Options</label>
+            <div class="toggle-list">
+              <talos-slide-toggle [checked]="floatingLabel()" (checkedChange)="floatingLabel.set($event)" size="sm">
+                Floating Label
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="allowCustom()" (checkedChange)="allowCustom.set($event)" size="sm">
+                Allow Custom Tags
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="clearable()" (checkedChange)="clearable.set($event)" size="sm">
+                Clearable Action
+              </talos-slide-toggle>
+              <talos-slide-toggle [checked]="disabled()" (checkedChange)="disabled.set($event)" size="sm">
+                Disabled State
+              </talos-slide-toggle>
+            </div>
+          </div>
+
+          <!-- Custom Inputs -->
+          <div class="control-two-col">
+            <div class="control-group">
+              <label class="control-label" for="customLabelInput">Field Label</label>
+              <input id="customLabelInput" type="text" class="talos-input" placeholder="e.g. Technologies..."
+                [value]="customLabel()" (input)="customLabel.set($any($event.target).value)" />
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="maxChipsInput">Max Chips Limit (optional)</label>
+              <input id="maxChipsInput" type="number" class="talos-input" placeholder="e.g. 3 or leave empty"
+                [value]="maxChips() ?? ''"
+                (input)="maxChips.set($any($event.target).value ? +$any($event.target).value : null)" />
+            </div>
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="code-view-container">
+        <div class="code-toolbar">
+          <span class="code-lang">HTML</span>
+          <button type="button" class="copy-btn" (click)="copyCode()">
+            @if (copied()) {
+            <svg lucideCheck [size]="14"></svg>
+            <span>Copied!</span>
+            } @else {
+            <svg lucideCopy [size]="14"></svg>
+            <span>Copy</span>
+            }
+          </button>
+        </div>
+        <pre class="code-block"><code>{{ codeSnippet() }}</code></pre>
+      </div>
+      }
+    </div>
+
+    <!-- 2. Real-World Use Cases Grid -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Production Patterns</span>
+          <h2>SEARCH &amp; SELECTION SCENARIOS</h2>
+        </div>
+      </div>
+
+      <div class="pipeline-table-container">
+        <div class="scenarios-grid">
+          <!-- Scenario 1: Predefined Filter -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <svg lucideCode [size]="16" class="scenario-icon"></svg>
+              <h3>Searchable Tech Filter</h3>
+            </div>
+            <p class="scenario-desc">Real-time substring search with match highlights and active selections.</p>
+            <talos-chips [options]="techOptions()" [displayWith]="displayTech" [valueWith]="valueTech"
+              label="Frameworks" placeholder="Search frameworks..." [chipColor]="'indigo'" [chipVariant]="'subtle'"
+              [formControl]="demoForm.controls.techStack" />
+          </div>
+
+          <!-- Scenario 2: Freeform Tags -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <svg lucideSparkles [size]="16" class="scenario-icon"></svg>
+              <h3>Free-form Tags Creator</h3>
+            </div>
+            <p class="scenario-desc">Type arbitrary text and hit <kbd>↵ Enter</kbd> or <kbd>,</kbd> to generate chips.
+            </p>
+            <talos-chips [allowCustom]="true" label="Article Tags" placeholder="Type tag and hit Enter..."
+              [chipColor]="'success'" [chipVariant]="'subtle'" [formControl]="demoForm.controls.tags" />
+          </div>
+
+          <!-- Scenario 3: Assignees with Avatar Template -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <svg lucideUserCheck [size]="16" class="scenario-icon"></svg>
+              <h3>Assignees with Template</h3>
+            </div>
+            <p class="scenario-desc">Custom option listbox template with user avatars, roles, and checkmarks.</p>
+            <talos-chips [options]="teamMembers()" [displayWith]="displayUser" [valueWith]="valueUser"
+              [itemTemplate]="userItemTpl" label="Assigned Reviewers" placeholder="Select reviewers..."
+              [chipColor]="'purple'" [chipVariant]="'subtle'" [formControl]="demoForm.controls.assignees" />
+
+            <!-- User Template -->
+            <ng-template #userItemTpl let-user let-selected="selected">
+              <div class="custom-user-option">
+                <img [src]="user.avatar" alt="" class="user-avatar-small" />
+                <div class="user-meta">
+                  <span class="user-name">{{ user.name }}</span>
+                  <span class="user-role">{{ user.role }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- Scenario 4: Async Server-side Package Search -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <svg lucidePackage [size]="16" class="scenario-icon"></svg>
+              <h3>Async Remote Search</h3>
+            </div>
+            <p class="scenario-desc">Debounced server query via <code>(search)</code> with spinner and <code>[filterFn]="null"</code>.</p>
+            <talos-chips
+              [options]="asyncPackageResults()"
+              [displayWith]="displayPackage"
+              [valueWith]="valuePackage"
+              [searching]="isSearchingPackages()"
+              [filterFn]="null"
+              (search)="onPackageSearch($event)"
+              label="NPM Dependencies"
+              placeholder="Search packages (e.g. 'rxjs', 'zod')..."
+              [chipColor]="'cyan'"
+              [chipVariant]="'subtle'"
+              [formControl]="demoForm.controls.asyncPackages"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Reference Matrix Table for Standalone Chips -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Component Reference</span>
+          <h2>STANDALONE CHIP BADGES (<code>&lt;talos-chip&gt;</code>)</h2>
+        </div>
+      </div>
+
+      <div class="status-catalog-table-wrapper">
+        <table class="status-catalog-table" aria-label="Chip Variations Catalog">
+          <thead>
+            <tr>
+              <th>Color</th>
+              <th>Subtle (Default)</th>
+              <th>Filled</th>
+              <th>Outline</th>
+              <th>Removable</th>
+              <th>Disabled</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>primary</code></td>
+              <td><talos-chip label="Primary" color="primary" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Primary" color="primary" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Primary" color="primary" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Primary" color="primary" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="primary" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>indigo</code></td>
+              <td><talos-chip label="Indigo" color="indigo" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Indigo" color="indigo" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Indigo" color="indigo" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Indigo" color="indigo" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="indigo" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>purple</code></td>
+              <td><talos-chip label="Purple" color="purple" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Purple" color="purple" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Purple" color="purple" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Purple" color="purple" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="purple" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>success</code></td>
+              <td><talos-chip label="Success" color="success" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Success" color="success" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Success" color="success" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Success" color="success" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="success" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>warning</code></td>
+              <td><talos-chip label="Warning" color="warning" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Warning" color="warning" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Warning" color="warning" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Warning" color="warning" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="warning" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>error</code></td>
+              <td><talos-chip label="Error" color="error" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Error" color="error" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Error" color="error" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Error" color="error" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="error" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>cyan</code></td>
+              <td><talos-chip label="Cyan" color="cyan" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Cyan" color="cyan" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Cyan" color="cyan" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Cyan" color="cyan" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="cyan" [disabled]="true" /></td>
+            </tr>
+            <tr>
+              <td><code>neutral</code></td>
+              <td><talos-chip label="Neutral" color="neutral" variant="subtle" [removable]="false" /></td>
+              <td><talos-chip label="Neutral" color="neutral" variant="filled" [removable]="false" /></td>
+              <td><talos-chip label="Neutral" color="neutral" variant="outline" [removable]="false" /></td>
+              <td><talos-chip label="Neutral" color="neutral" variant="subtle" [removable]="true" /></td>
+              <td><talos-chip label="Disabled" color="neutral" [disabled]="true" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. Reactive Forms & State Diagnostics Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Form Integration</span>
+          <h2>REACTIVE FORMS STATE &amp; DIAGNOSTICS</h2>
+        </div>
+
+        <div class="header-action-buttons">
+          <button type="button" talosButton variant="secondary" size="sm" (click)="patchSample()">
+            <svg lucidePlus [size]="14"></svg>
+            <span>Patch Data</span>
+          </button>
+          <button type="button" talosButton variant="outline" size="sm" (click)="toggleDisabled()">
+            <svg lucideBan [size]="14"></svg>
+            <span>{{ demoForm.disabled ? 'Enable' : 'Disable' }}</span>
+          </button>
+          <button type="button" talosButton variant="outline" size="sm" (click)="resetForm()">
+            <svg lucideRotateCcw [size]="14"></svg>
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-diagnostics-layout">
+        <div class="diagnostics-summary">
+          <div class="meta-row">
+            <span class="diag-label">Status:</span>
+            <span class="status-pill" [class.is-valid]="demoForm.valid" [class.is-invalid]="demoForm.invalid">{{
+              demoForm.status }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="diag-label">Pristine / Dirty:</span>
+            <code>{{ demoForm.dirty ? 'DIRTY' : 'PRISTINE' }}</code>
+          </div>
+          <div class="meta-row">
+            <span class="diag-label">Touched:</span>
+            <code>{{ demoForm.touched ? 'TRUE' : 'FALSE' }}</code>
+          </div>
+        </div>
+
+        <div class="json-output-box">
+          <span class="json-title">Current Form Value Payload</span>
+          <pre><code>{{ demoForm.value | json }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

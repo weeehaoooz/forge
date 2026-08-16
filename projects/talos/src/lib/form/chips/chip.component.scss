@@ -1,0 +1,604 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: inherit;
+  font-weight: 500;
+  border-radius: var(--talos-chip-radius, 9999px);
+  user-select: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+  max-width: 100%;
+  line-height: 1;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+
+  /* Size Variants */
+  &.talos-chip-sm {
+    height: 1.5rem;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+
+    &.is-removable {
+      padding-right: 0.25rem;
+    }
+
+    .talos-chip-avatar {
+      width: 1rem;
+      height: 1rem;
+      margin-left: -0.25rem;
+    }
+
+    .talos-chip-remove-btn {
+      width: 1rem;
+      height: 1rem;
+
+      svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+  }
+
+  &.talos-chip-md {
+    height: 1.875rem;
+    padding: 0 0.625rem;
+    font-size: 0.8125rem;
+
+    &.is-removable {
+      padding-right: 0.375rem;
+    }
+
+    .talos-chip-avatar {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-left: -0.375rem;
+    }
+
+    .talos-chip-remove-btn {
+      width: 1.125rem;
+      height: 1.125rem;
+
+      svg {
+        width: 0.75rem;
+        height: 0.75rem;
+      }
+    }
+  }
+
+  &.talos-chip-lg {
+    height: 2.25rem;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+
+    &.is-removable {
+      padding-right: 0.5rem;
+    }
+
+    .talos-chip-avatar {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: -0.5rem;
+    }
+
+    .talos-chip-remove-btn {
+      width: 1.25rem;
+      height: 1.25rem;
+
+      svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+
+  /* Color: Primary (Blue) */
+  &.talos-chip-primary {
+    &.talos-chip-subtle {
+      background-color: var(--talos-primary-50, rgba(37, 99, 235, 0.08));
+      color: var(--talos-primary-700, #1d4ed8);
+      border: 1px solid var(--talos-primary-200, rgba(37, 99, 235, 0.2));
+
+      .talos-chip-remove-btn {
+        color: var(--talos-primary-600, #2563eb);
+        &:hover {
+          background-color: var(--talos-primary-100, rgba(37, 99, 235, 0.18));
+          color: var(--talos-primary-800, #1e40af);
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: var(--talos-primary-600, #2563eb);
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: var(--talos-primary-600, #2563eb);
+      border: 1px solid var(--talos-primary-400, #60a5fa);
+
+      .talos-chip-remove-btn {
+        color: var(--talos-primary-600, #2563eb);
+        &:hover {
+          background-color: var(--talos-primary-50, rgba(37, 99, 235, 0.1));
+        }
+      }
+    }
+  }
+
+  /* Color: Neutral */
+  &.talos-chip-neutral {
+    &.talos-chip-subtle {
+      background-color: var(--talos-gray-100, #f1f5f9);
+      color: var(--talos-gray-800, #1e293b);
+      border: 1px solid var(--talos-gray-200, #e2e8f0);
+
+      .talos-chip-remove-btn {
+        color: var(--talos-gray-500, #64748b);
+        &:hover {
+          background-color: var(--talos-gray-200, #e2e8f0);
+          color: var(--talos-gray-800, #1e293b);
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: var(--talos-gray-700, #334155);
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: var(--talos-gray-700, #334155);
+      border: 1px solid var(--talos-gray-300, #cbd5e1);
+
+      .talos-chip-remove-btn {
+        color: var(--talos-gray-500, #64748b);
+        &:hover {
+          background-color: var(--talos-gray-100, #f1f5f9);
+        }
+      }
+    }
+  }
+
+  /* Color: Success */
+  &.talos-chip-success {
+    &.talos-chip-subtle {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: #065f46;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #059669;
+        &:hover {
+          background-color: rgba(16, 185, 129, 0.2);
+          color: #064e3b;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #10b981;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #10b981;
+      border: 1px solid #34d399;
+
+      .talos-chip-remove-btn {
+        color: #10b981;
+        &:hover {
+          background-color: rgba(16, 185, 129, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Color: Warning */
+  &.talos-chip-warning {
+    &.talos-chip-subtle {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: #92400e;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #d97706;
+        &:hover {
+          background-color: rgba(245, 158, 11, 0.2);
+          color: #78350f;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #f59e0b;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #d97706;
+      border: 1px solid #fbbf24;
+
+      .talos-chip-remove-btn {
+        color: #d97706;
+        &:hover {
+          background-color: rgba(245, 158, 11, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Color: Error */
+  &.talos-chip-error {
+    &.talos-chip-subtle {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: #991b1b;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #ef4444;
+        &:hover {
+          background-color: rgba(239, 68, 68, 0.2);
+          color: #7f1d1d;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #ef4444;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #ef4444;
+      border: 1px solid #f87171;
+
+      .talos-chip-remove-btn {
+        color: #ef4444;
+        &:hover {
+          background-color: rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Color: Indigo */
+  &.talos-chip-indigo {
+    &.talos-chip-subtle {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: #3730a3;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #6366f1;
+        &:hover {
+          background-color: rgba(99, 102, 241, 0.2);
+          color: #312e81;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #6366f1;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #6366f1;
+      border: 1px solid #818cf8;
+
+      .talos-chip-remove-btn {
+        color: #6366f1;
+        &:hover {
+          background-color: rgba(99, 102, 241, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Color: Purple */
+  &.talos-chip-purple {
+    &.talos-chip-subtle {
+      background-color: rgba(168, 85, 247, 0.1);
+      color: #6b21a8;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #a855f7;
+        &:hover {
+          background-color: rgba(168, 85, 247, 0.2);
+          color: #581c87;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #a855f7;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #a855f7;
+      border: 1px solid #c084fc;
+
+      .talos-chip-remove-btn {
+        color: #a855f7;
+        &:hover {
+          background-color: rgba(168, 85, 247, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Color: Cyan */
+  &.talos-chip-cyan {
+    &.talos-chip-subtle {
+      background-color: rgba(6, 182, 212, 0.1);
+      color: #155e75;
+      border: 1px solid rgba(6, 182, 212, 0.25);
+
+      .talos-chip-remove-btn {
+        color: #0891b2;
+        &:hover {
+          background-color: rgba(6, 182, 212, 0.2);
+          color: #164e63;
+        }
+      }
+    }
+
+    &.talos-chip-filled {
+      background-color: #06b6d4;
+      color: #ffffff;
+      border: 1px solid transparent;
+
+      .talos-chip-remove-btn {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &.talos-chip-outline {
+      background-color: transparent;
+      color: #0891b2;
+      border: 1px solid #22d3ee;
+
+      .talos-chip-remove-btn {
+        color: #0891b2;
+        &:hover {
+          background-color: rgba(6, 182, 212, 0.1);
+        }
+      }
+    }
+  }
+
+  /* Disabled State */
+  &.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.talos-chip-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.talos-chip-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.talos-chip-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--talos-primary-400, #60a5fa);
+  }
+}
+
+/* Dark mode adjustments */
+:host-context([data-theme='dark']),
+:host-context(.dark) {
+  &.talos-chip-neutral.talos-chip-subtle {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.12);
+
+    .talos-chip-remove-btn {
+      color: #94a3b8;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-primary.talos-chip-subtle {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #93c5fd;
+      &:hover {
+        background-color: rgba(59, 130, 246, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-success.talos-chip-subtle {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #6ee7b7;
+      &:hover {
+        background-color: rgba(16, 185, 129, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-warning.talos-chip-subtle {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #fcd34d;
+      &:hover {
+        background-color: rgba(245, 158, 11, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-error.talos-chip-subtle {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #fca5a5;
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-indigo.talos-chip-subtle {
+    background-color: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+    border-color: rgba(99, 102, 241, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #a5b4fc;
+      &:hover {
+        background-color: rgba(99, 102, 241, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-purple.talos-chip-subtle {
+    background-color: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+    border-color: rgba(168, 85, 247, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #d8b4fe;
+      &:hover {
+        background-color: rgba(168, 85, 247, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.talos-chip-cyan.talos-chip-subtle {
+    background-color: rgba(6, 182, 212, 0.15);
+    color: #67e8f9;
+    border-color: rgba(6, 182, 212, 0.3);
+
+    .talos-chip-remove-btn {
+      color: #67e8f9;
+      &:hover {
+        background-color: rgba(6, 182, 212, 0.25);
+        color: #ffffff;
+      }
+    }
+  }
+}

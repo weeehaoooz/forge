@@ -1,0 +1,210 @@
+@if (label() && !isFloatingMode()) {
+  <label class="talos-field-label" [attr.for]="inputId()" (click)="onContainerClick($event)">
+    {{ label() }}
+    @if (required()) {
+      <span class="required-star" aria-hidden="true">*</span>
+    }
+  </label>
+}
+
+<div class="chips-wrapper" [class.has-floating-label]="isFloatingMode()">
+  <!-- Main Interactive Input Box -->
+  <div
+    class="chips-control"
+    [class.is-focused]="isInputFocused() || isOpen()"
+    [class.is-empty]="selectedChips().length === 0 && !inputValue()"
+    (click)="onContainerClick($event)"
+  >
+    <!-- Selected Chips Pills Container -->
+    <div class="chips-pills-container">
+      @for (chip of selectedChips(); track chip.value) {
+        <talos-chip
+          [label]="chip.display"
+          [value]="chip.value"
+          [size]="size()"
+          [variant]="chipVariant()"
+          [color]="chipColor()"
+          [removable]="removable() && !effectiveDisabled()"
+          [disabled]="effectiveDisabled()"
+          (removed)="removeChip(chip)"
+        />
+      }
+
+      <!-- Inline Search / Input Field -->
+      @if (!isMaxReached()) {
+        <input
+          #inputEl
+          type="text"
+          class="chips-input"
+          [id]="inputId()"
+          [placeholder]="effectivePlaceholder()"
+          [value]="inputValue()"
+          [disabled]="effectiveDisabled()"
+          (input)="onInput($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+          (keydown)="onKeyDown($event)"
+          role="combobox"
+          aria-autocomplete="list"
+          [attr.aria-expanded]="isOpen()"
+          [attr.aria-haspopup]="'listbox'"
+          [attr.aria-controls]="listboxId()"
+          [attr.aria-activedescendant]="activeOptionId()"
+          [attr.aria-disabled]="effectiveDisabled()"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+      }
+    </div>
+
+    @if (label() && isFloatingMode()) {
+      <label
+        class="talos-floating-label"
+        [class.is-floated]="isFloated()"
+        [attr.for]="inputId()"
+        (click)="onContainerClick($event)"
+      >
+        {{ label() }}
+        @if (required()) {
+          <span class="required-star" aria-hidden="true">*</span>
+        }
+      </label>
+    }
+
+    <!-- Trailing Action Icons -->
+    <div class="chips-actions" (click)="$event.stopPropagation()">
+      <!-- Searching / Loading Spinner -->
+      @if (effectiveSearching()) {
+        <span class="chips-spinner" aria-label="Searching..." title="Searching...">
+          <svg class="spinner-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle class="spinner-track" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity="0.25"></circle>
+            <path class="spinner-head" d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+          </svg>
+        </span>
+      }
+
+      <!-- Clear All Chips Button -->
+      @if (clearable() && (selectedChips().length > 0 || inputValue()) && !effectiveDisabled() && !effectiveSearching()) {
+        <button
+          type="button"
+          class="chips-clear-btn"
+          aria-label="Clear all selections"
+          title="Clear all"
+          (click)="clearAll($event)"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      }
+
+      <!-- Dropdown Toggle Arrow -->
+      @if (options().length > 0) {
+        <button
+          type="button"
+          class="chips-arrow-btn"
+          [class.is-open]="isOpen()"
+          [disabled]="effectiveDisabled()"
+          aria-label="Toggle options menu"
+          tabindex="-1"
+          (click)="toggleDropdown($event)"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Dropdown Menu / Listbox -->
+  @if (isOpen() && !effectiveDisabled()) {
+    <div
+      #dropdownEl
+      class="chips-dropdown"
+      [id]="listboxId()"
+      role="listbox"
+      aria-multiselectable="true"
+      [attr.aria-label]="label() || 'Options'"
+      (mousedown)="$event.preventDefault()"
+    >
+      @if (effectiveSearching()) {
+        <div class="chips-status-message">
+          <svg class="spinner-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle class="spinner-track" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity="0.25"></circle>
+            <path class="spinner-head" d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+          </svg>
+          <span>{{ searchingText() }}</span>
+        </div>
+      } @else if (filteredOptions().length > 0) {
+        <ul class="chips-options-list" role="presentation">
+          @for (option of filteredOptions(); track option.value; let idx = $index) {
+            <li
+              class="chips-option-item"
+              [id]="componentId() + '-option-' + idx"
+              role="option"
+              [attr.aria-selected]="option.selected"
+              [attr.aria-disabled]="option.disabled"
+              [class.is-selected]="option.selected"
+              [class.is-active]="activeIndex() === idx"
+              [class.is-disabled]="option.disabled"
+              (click)="toggleOption(option)"
+              (mouseenter)="activeIndex.set(idx)"
+            >
+              <!-- Option Checkbox Indicator -->
+              <span class="option-checkbox" [class.is-checked]="option.selected" aria-hidden="true">
+                @if (option.selected) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                }
+              </span>
+
+              <!-- Content / Template Outlet -->
+              @if (itemTemplate()) {
+                <ng-container
+                  [ngTemplateOutlet]="itemTemplate()!"
+                  [ngTemplateOutletContext]="{
+                    $implicit: option.item,
+                    display: option.display,
+                    selected: option.selected,
+                    disabled: option.disabled
+                  }"
+                />
+              } @else {
+                <span class="option-label">
+                  @for (part of option.parts; track $index) {
+                    @if (part.matched) {
+                      <strong class="highlight-match">{{ part.text }}</strong>
+                    } @else {
+                      <span>{{ part.text }}</span>
+                    }
+                  }
+                </span>
+              }
+            </li>
+          }
+        </ul>
+      } @else {
+        <!-- Empty / No Results -->
+        <div class="chips-empty-message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+          <span>{{ noResultsText() }}</span>
+        </div>
+
+        @if (allowCustom() && inputValue().trim()) {
+          <div class="chips-create-tag-action" (click)="addCustomChip(inputValue().trim()); inputValue.set('')">
+            <span>Add "<strong>{{ inputValue().trim() }}</strong>"</span>
+            <kbd>↵ Enter</kbd>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

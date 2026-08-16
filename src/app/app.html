@@ -34,6 +34,8 @@
           (itemClick)="navigate('/date-pickers')" />
         <talos-nav-item label="Range Input" [icon]="LucideSlidersHorizontal"
           [active]="activeSegment() === 'range-input'" (itemClick)="navigate('/range-input')" />
+        <talos-nav-item label="Chips / Multi-Select" [icon]="LucideTags" [active]="activeSegment() === 'chips'"
+          (itemClick)="navigate('/chips')" />
       </talos-nav-group>
 
       <talos-nav-group title="DATA VISUALIZATION" [collapsible]="true">

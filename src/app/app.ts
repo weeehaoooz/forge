@@ -25,6 +25,7 @@ import {
   LucideSliders,
   LucideSlidersHorizontal,
   LucideTag,
+  LucideTags,
   LucideChevronsUpDown,
   LucidePanelLeftOpen,
   LucidePanelLeftClose
@@ -67,6 +68,7 @@ export class App {
   protected readonly LucideFlame = LucideFlame;
   protected readonly LucideSliders = LucideSliders;
   protected readonly LucideTag = LucideTag;
+  protected readonly LucideTags = LucideTags;
   protected readonly LucideBell = LucideBell;
   protected readonly LucideLayout = LucideLayout;
 

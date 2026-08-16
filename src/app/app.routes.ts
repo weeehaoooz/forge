@@ -57,6 +57,10 @@ export const routes: Routes = [
   {
     path: 'status-tag',
     loadComponent: () => import('./pages/status-tag/status-tag-page').then(m => m.StatusTagPage)
+  },
+  {
+    path: 'chips',
+    loadComponent: () => import('./pages/chips/chips-page').then(m => m.ChipsPage)
   }
 ];
 
