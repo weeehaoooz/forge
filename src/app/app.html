@@ -60,6 +60,8 @@
           (itemClick)="navigate('/layout')" />
         <talos-nav-item label="Cards" [icon]="LucideCreditCard" [active]="activeSegment() === 'cards'"
           (itemClick)="navigate('/cards')" />
+        <talos-nav-item label="Modals & Dialogs" [icon]="LucideLayers" [active]="activeSegment() === 'dialog'"
+          (itemClick)="navigate('/dialog')" />
       </talos-nav-group>
     </nav>
   </ng-template>

@@ -1,0 +1,116 @@
+/* Talos Dialog / Modal Styles */
+
+/* Base Overlay Panel */
+.cdk-overlay-pane:has(.talos-dialog-panel) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.talos-dialog-panel {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--talos-dialog-bg, var(--talos-card-bg, #ffffff));
+  border: 1px solid var(--talos-dialog-border, var(--talos-border-color, #e2e8f0));
+  border-radius: var(--talos-dialog-radius, 0.75rem);
+  box-shadow: var(--talos-dialog-shadow, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1));
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  animation: talos-dialog-enter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  /* Sizing Presets */
+  &.talos-dialog-size-auto {
+    width: auto;
+    min-width: 20rem;
+    max-width: min(90vw, 1200px);
+    max-height: calc(100vh - 3rem);
+  }
+
+  &.talos-dialog-size-sm {
+    width: 100%;
+    max-width: 26.25rem; /* ~420px */
+    max-height: calc(100vh - 3rem);
+  }
+
+  &.talos-dialog-size-md {
+    width: 100%;
+    max-width: 35rem; /* ~560px */
+    max-height: calc(100vh - 3rem);
+  }
+
+  &.talos-dialog-size-lg {
+    width: 100%;
+    max-width: 48rem; /* ~768px */
+    max-height: calc(100vh - 3rem);
+  }
+
+  &.talos-dialog-size-xl {
+    width: 100%;
+    max-width: 64rem; /* ~1024px */
+    max-height: calc(100vh - 3rem);
+  }
+
+  &.talos-dialog-size-fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+}
+
+.cdk-overlay-pane:has(.talos-dialog-size-fullscreen) {
+  padding: 0 !important;
+}
+
+/* Backdrop Styles */
+.talos-dialog-backdrop {
+  background-color: var(--talos-dialog-backdrop-bg, rgba(15, 23, 42, 0.45));
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.talos-dialog-backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background-color: var(--talos-dialog-backdrop-blur-bg, rgba(15, 23, 42, 0.3));
+  }
+
+  &.talos-dialog-backdrop-blur-md {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: var(--talos-dialog-backdrop-blur-bg, rgba(15, 23, 42, 0.35));
+  }
+
+  &.talos-dialog-backdrop-blur-lg {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: var(--talos-dialog-backdrop-blur-bg, rgba(15, 23, 42, 0.4));
+  }
+}
+
+/* Micro Animations */
+@keyframes talos-dialog-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes talos-dialog-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+}

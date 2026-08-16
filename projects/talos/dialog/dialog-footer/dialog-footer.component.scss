@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+  padding: 1rem 1.5rem;
+  box-sizing: border-box;
+  background-color: var(--talos-dialog-footer-bg, transparent);
+
+  &.has-divider {
+    border-top: 1px solid var(--talos-dialog-border, var(--talos-border-color, #e2e8f0));
+  }
+
+  &.is-sticky {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background-color: var(--talos-dialog-bg, var(--talos-card-bg, #ffffff));
+  }
+}
+
+.talos-dialog-footer-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+:host(.align-start) .talos-dialog-footer-inner {
+  justify-content: flex-start;
+}
+
+:host(.align-center) .talos-dialog-footer-inner {
+  justify-content: center;
+}
+
+:host(.align-end) .talos-dialog-footer-inner {
+  justify-content: flex-end;
+}
+
+:host(.align-space-between) .talos-dialog-footer-inner {
+  justify-content: space-between;
+}

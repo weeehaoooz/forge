@@ -86,6 +86,9 @@
       ],
       "@talos/components/status-tag": [
         "./projects/talos/status-tag/index.ts"
+      ],
+      "@talos/components/dialog": [
+        "./projects/talos/dialog/index.ts"
       ]
     }
   },

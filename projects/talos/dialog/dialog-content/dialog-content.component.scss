@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  color: var(--talos-text-color, #0f172a);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+
+  /* Sleek custom scrollbars */
+  scrollbar-width: thin;
+  scrollbar-color: var(--talos-border-color, #cbd5e1) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--talos-border-color, #cbd5e1);
+    border-radius: 9999px;
+
+    &:hover {
+      background-color: var(--talos-border-hover, #64748b);
+    }
+  }
+
+  &.padding-none {
+    padding: 0;
+  }
+
+  &.padding-sm {
+    padding: 1rem 1.25rem;
+  }
+
+  &.padding-md {
+    padding: 1.5rem;
+  }
+
+  &.padding-lg {
+    padding: 2rem;
+  }
+}

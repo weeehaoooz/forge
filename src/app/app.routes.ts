@@ -65,6 +65,10 @@ export const routes: Routes = [
   {
     path: 'cards',
     loadComponent: () => import('./pages/cards/cards-page').then(m => m.CardsPage)
+  },
+  {
+    path: 'dialog',
+    loadComponent: () => import('./pages/dialog/dialog-page').then(m => m.DialogPage)
   }
 ];
 

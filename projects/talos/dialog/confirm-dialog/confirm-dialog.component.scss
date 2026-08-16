@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.confirm-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+
+  &.variant-default,
+  &.variant-primary,
+  &.variant-info {
+    background-color: var(--talos-primary-light, #eff6ff);
+    color: var(--talos-primary-color, #2563eb);
+  }
+
+  &.variant-danger {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: var(--talos-error-color, #ef4444);
+  }
+
+  &.variant-warning {
+    background-color: rgba(217, 119, 6, 0.12);
+    color: var(--talos-warning-color, #d97706);
+  }
+
+  &.variant-success {
+    background-color: rgba(22, 163, 74, 0.12);
+    color: var(--talos-success-color, #16a34a);
+  }
+}
+
+.confirm-message-text {
+  margin: 0;
+  color: var(--talos-text-muted, #64748b);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}

@@ -108,3 +108,15 @@ export * from './form/chips/chips.types';
 export * from './form/chips/chip/chip.component';
 export * from './form/chips/chips/chips.component';
 export * from './form/chips/chips.module';
+
+// Dialog / Modal service, components, directives, module & types
+export * from './dialog/dialog.types';
+export * from './dialog/dialog-ref';
+export * from './dialog/dialog.service';
+export * from './dialog/dialog.directives';
+export * from './dialog/dialog-header/dialog-header.component';
+export * from './dialog/dialog-content/dialog-content.component';
+export * from './dialog/dialog-footer/dialog-footer.component';
+export * from './dialog/confirm-dialog/confirm-dialog.component';
+export * from './dialog/dialog.module';
+

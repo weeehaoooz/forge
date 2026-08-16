@@ -1,0 +1,36 @@
+<div class="talos-dialog-header-inner">
+  <div class="talos-dialog-header-left">
+    <div class="talos-dialog-header-icon-slot">
+      <ng-content select="[talos-dialog-icon], [dialog-icon], lucide-icon, svg"></ng-content>
+    </div>
+
+    <div class="talos-dialog-header-text">
+      @if (title()) {
+        <h2 talosDialogTitle class="talos-dialog-header-title">{{ title() }}</h2>
+      } @else {
+        <ng-content select="[talosDialogTitle], h2, h3"></ng-content>
+      }
+
+      @if (subtitle()) {
+        <p talosDialogDescription class="talos-dialog-header-subtitle">{{ subtitle() }}</p>
+      } @else {
+        <ng-content select="[talosDialogDescription], p"></ng-content>
+      }
+    </div>
+  </div>
+
+  <div class="talos-dialog-header-actions">
+    <ng-content select="[talos-dialog-header-actions]"></ng-content>
+
+    @if (showCloseButton()) {
+      <button
+        type="button"
+        class="talos-dialog-header-close-btn"
+        [attr.aria-label]="closeButtonAriaLabel()"
+        (click)="handleClose($event)"
+      >
+        <svg lucideX [size]="18" aria-hidden="true"></svg>
+      </button>
+    }
+  </div>
+</div>

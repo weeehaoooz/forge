@@ -714,5 +714,61 @@ Modular card surface with header, body, footer, and action slots.
 </talos-card>
 \`\`\`
 `
+  },
+  {
+    id: 'dialog',
+    name: 'Modal & Dialog',
+    category: 'Layout',
+    kind: 'service',
+    selector: 'talos-dialog-header, talos-dialog-content, talos-dialog-footer, [talosDialogTitle], [talosDialogDescription], [talosDialogClose]',
+    exportName: 'TalosDialogService, TalosDialogModule, TalosDialogRef, TALOS_DIALOG_DATA',
+    secondaryEntrypoint: '@talos/components/dialog',
+    rootExport: '@talos/components',
+    description: 'Accessible modal and dialog system powered by Angular CDK with background blur options, content-hugging (auto) or multi-column form sizing presets, and 1-line confirm/alert shortcuts.',
+    inputs: [
+      { name: 'size', type: "'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen'", default: "'md'", description: 'Sizing preset for the modal panel.' },
+      { name: 'backdropBlur', type: "boolean | 'none' | 'sm' | 'md' | 'lg'", default: 'false', description: 'Applies frosted glass backdrop blur behind the modal.' },
+      { name: 'disableClose', type: 'boolean', default: 'false', description: 'Prevents closing on backdrop click or ESC key.' },
+      { name: 'data', type: 'unknown', description: 'Payload passed to dialog and injectable via TALOS_DIALOG_DATA.' }
+    ],
+    tags: ['dialog', 'modal', 'popup', 'confirm', 'alert', 'overlay', 'cdk', 'backdrop', 'blur', 'form'],
+    docs: `
+### TalosDialogService (\`@talos/components/dialog\`)
+Open accessible modal dialogs with customizable background blur and form sizing presets.
+
+**Usage:**
+\`\`\`typescript
+import { Component, inject } from '@angular/core';
+import { TalosDialogService } from '@talos/components/dialog';
+import { UserEditModalComponent } from './user-edit-modal.component';
+
+@Component({ ... })
+export class MyComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  openModal(): void {
+    const ref = this.dialog.open(UserEditModalComponent, {
+      size: 'lg',
+      backdropBlur: 'md',
+      data: { userId: 42 }
+    });
+
+    ref.closed.subscribe(result => {
+      console.log('Dialog result:', result);
+    });
+  }
+
+  confirmAction(): void {
+    this.dialog.confirm({
+      title: 'Delete Resource?',
+      message: 'This will permanently remove the item.',
+      variant: 'danger'
+    }).closed.subscribe(confirmed => {
+      if (confirmed) { ... }
+    });
+  }
+}
+\`\`\`
+`
   }
 ];

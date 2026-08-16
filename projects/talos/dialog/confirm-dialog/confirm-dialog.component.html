@@ -1,0 +1,37 @@
+<talos-dialog-header [title]="title" [variant]="variant" [divider]="false">
+  <div class="confirm-icon-wrapper" [class]="'variant-' + variant" talos-dialog-icon>
+    @switch (variant) {
+      @case ('danger') {
+        <svg lucideAlertCircle [size]="22"></svg>
+      }
+      @case ('warning') {
+        <svg lucideAlertTriangle [size]="22"></svg>
+      }
+      @case ('success') {
+        <svg lucideCheckCircle2 [size]="22"></svg>
+      }
+      @default {
+        <svg lucideInfo [size]="22"></svg>
+      }
+    }
+  </div>
+</talos-dialog-header>
+
+<talos-dialog-content padding="sm">
+  @if (isTemplateMessage) {
+    <ng-container [ngTemplateOutlet]="$any(message)"></ng-container>
+  } @else {
+    <p class="confirm-message-text">{{ message }}</p>
+  }
+</talos-dialog-content>
+
+<talos-dialog-footer [divider]="false" align="end">
+  @if (showCancel) {
+    <button talosButton variant="secondary" size="md" (click)="onCancel()">
+      {{ cancelText }}
+    </button>
+  }
+  <button talosButton [variant]="confirmButtonVariant" size="md" (click)="onConfirm()">
+    {{ confirmText }}
+  </button>
+</talos-dialog-footer>

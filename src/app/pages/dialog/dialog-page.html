@@ -1,0 +1,249 @@
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Overlays</div>
+    <h1>Modal &amp; Dialog Component</h1>
+    <p class="subtitle">
+      Comprehensive, accessible modal and dialog system built on Angular CDK. Supports customizable glassmorphic background blurring, content-hugging ('auto'), compact alerts, standard forms, and large multi-column enterprise workflows.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- 1. Interactive Playground Configurator Card -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Interactive Playground</span>
+          <h2>DIALOG CONFIGURATOR &amp; PREVIEW</h2>
+        </div>
+
+        <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="activeTab()">
+          <button type="button" talosButton talosButtonGroupItem value="preview" (click)="activeTab.set('preview')">
+            <svg lucideEye [size]="14"></svg>
+            <span>Preview</span>
+          </button>
+          <button type="button" talosButton talosButtonGroupItem value="code" (click)="activeTab.set('code')">
+            <svg lucideCode [size]="14"></svg>
+            <span>Code</span>
+          </button>
+        </talos-button-group>
+      </div>
+
+      @if (activeTab() === 'preview') {
+        <div class="interactive-stage-layout">
+          <!-- Live Preview Canvas -->
+          <div class="preview-stage">
+            <div class="stage-backdrop-visualizer">
+              <div class="visualizer-header">
+                <span class="visualizer-title">Backdrop Blur Visual Simulator</span>
+                <span class="visualizer-hint">Background cards below illustrate the blur contrast when opening dialogs</span>
+              </div>
+              <div class="sample-bg-grid">
+                <div class="sample-bg-card metric-card">
+                  <span class="metric-label">Active Deployments</span>
+                  <span class="metric-val">128</span>
+                </div>
+                <div class="sample-bg-card metric-card">
+                  <span class="metric-label">CPU Utilization</span>
+                  <span class="metric-val">42.8%</span>
+                </div>
+                <div class="sample-bg-card metric-card">
+                  <span class="metric-label">Global Regions</span>
+                  <span class="metric-val">8 Nodes</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="preview-hero-box">
+              <button talosButton variant="primary" size="lg" (click)="openConfiguredModal()">
+                <svg lucideSparkles [size]="18"></svg>
+                Launch Configured Modal ({{ selectedSize() }})
+              </button>
+            </div>
+
+            <div class="preview-status-bar">
+              <span class="status-label">Last Dialog Event:</span>
+              <code class="status-value">{{ lastDialogResult() }}</code>
+            </div>
+          </div>
+
+          <!-- Controls Sidebar -->
+          <div class="controls-panel">
+            <h3 class="controls-title">Configuration Options</h3>
+
+            <!-- Size Preset -->
+            <div class="control-group">
+              <label class="control-label">Modal Sizing Preset</label>
+              <div class="control-description">
+                Choose between content-hugging ('auto') or fixed form sizes ('sm', 'md', 'lg', 'xl', 'fullscreen')
+              </div>
+              <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedSize()">
+                <button type="button" talosButton talosButtonGroupItem value="auto" (click)="selectedSize.set('auto')">Auto</button>
+                <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedSize.set('sm')">SM</button>
+                <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedSize.set('md')">MD</button>
+                <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedSize.set('lg')">LG</button>
+                <button type="button" talosButton talosButtonGroupItem value="xl" (click)="selectedSize.set('xl')">XL</button>
+                <button type="button" talosButton talosButtonGroupItem value="fullscreen" (click)="selectedSize.set('fullscreen')">Full</button>
+              </talos-button-group>
+            </div>
+
+            <!-- Backdrop Blur -->
+            <div class="control-group">
+              <label class="control-label">Backdrop Blur (Frosted Glass)</label>
+              <div class="control-description">
+                Applies high-performance CSS backdrop-filter blur over the background
+              </div>
+              <talos-button-group variant="segmented" size="sm" selectionMode="single" [value]="selectedBlur().toString()">
+                <button type="button" talosButton talosButtonGroupItem value="none" (click)="selectedBlur.set('none')">None</button>
+                <button type="button" talosButton talosButtonGroupItem value="sm" (click)="selectedBlur.set('sm')">Light (4px)</button>
+                <button type="button" talosButton talosButtonGroupItem value="md" (click)="selectedBlur.set('md')">Medium (8px)</button>
+                <button type="button" talosButton talosButtonGroupItem value="lg" (click)="selectedBlur.set('lg')">Heavy (16px)</button>
+              </talos-button-group>
+            </div>
+
+            <!-- Disable Close -->
+            <div class="toggle-control-item">
+              <div>
+                <span class="toggle-label">Disable Backdrop &amp; ESC Close</span>
+                <p class="toggle-sub">Forces user to interact with explicit action buttons</p>
+              </div>
+              <talos-slide-toggle [checked]="disableClose()" (checkedChange)="disableClose.set($event)" />
+            </div>
+          </div>
+        </div>
+      } @else {
+        <!-- Code Tab -->
+        <div class="code-stage">
+          <div class="code-header">
+            <span class="code-lang">TypeScript / HTML Usage</span>
+            <button type="button" talosButton variant="secondary" size="sm" (click)="copyCode()">
+              @if (copied()) {
+                <svg lucideCheck [size]="14"></svg>
+                <span>Copied!</span>
+              } @else {
+                <svg lucideCopy [size]="14"></svg>
+                <span>Copy Code</span>
+              }
+            </button>
+          </div>
+          <pre class="code-block"><code>{{ generatedCode }}</code></pre>
+        </div>
+      }
+    </div>
+
+    <!-- 2. Sizing Presets Showcase Cards -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Form Sizing Showcase</span>
+          <h2>CONTENT-HUGGING VS COMPACT VS LARGE ENTERPRISE FORMS</h2>
+        </div>
+      </div>
+
+      <div class="presets-gallery-grid">
+        <!-- Content Hug / Auto -->
+        <div class="preset-card">
+          <div class="preset-icon-badge">
+            <svg lucideSparkles [size]="20"></svg>
+          </div>
+          <h3 class="preset-title">Content-Hugging (size: 'auto')</h3>
+          <p class="preset-desc">
+            Perfect when modal content is dynamic. Wraps tightly around children and animates naturally as items are added or removed.
+          </p>
+          <button talosButton variant="outline" size="md" (click)="openContentHugModal()">
+            Open Auto-Sized Modal
+          </button>
+        </div>
+
+        <!-- Medium Standard Form -->
+        <div class="preset-card">
+          <div class="preset-icon-badge">
+            <svg lucideUserCheck [size]="20"></svg>
+          </div>
+          <h3 class="preset-title">Standard Form (size: 'md' ~560px)</h3>
+          <p class="preset-desc">
+            Standard width for user profiles, setting edits, and standard single-column forms with clear validation.
+          </p>
+          <button talosButton variant="primary" size="md" (click)="openConfiguredModal()">
+            Open Standard Form
+          </button>
+        </div>
+
+        <!-- Large Enterprise Multi-column -->
+        <div class="preset-card">
+          <div class="preset-icon-badge">
+            <svg lucideSettings [size]="20"></svg>
+          </div>
+          <h3 class="preset-title">Large Form (size: 'lg' / 'xl' ~768-1024px)</h3>
+          <p class="preset-desc">
+            Multi-column grid inputs for complex infrastructure provisioning, nested grids, and resource management.
+          </p>
+          <button talosButton variant="primary" size="md" (click)="openLargeWorkflowModal()">
+            Open Large Form
+          </button>
+        </div>
+
+        <!-- Fullscreen Mode -->
+        <div class="preset-card">
+          <div class="preset-icon-badge">
+            <svg lucideMaximize2 [size]="20"></svg>
+          </div>
+          <h3 class="preset-title">Fullscreen Immersive (size: 'fullscreen')</h3>
+          <p class="preset-desc">
+            Full 100vw x 100vh modal layout for comprehensive wizards, data editors, and immersive workflows.
+          </p>
+          <button talosButton variant="secondary" size="md" (click)="openFullscreenModal()">
+            Open Fullscreen Modal
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Confirmation & Alert Dialog Shortcuts -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">1-Line Convenience Methods</span>
+          <h2>SERVICE CONFIRM &amp; ALERT DIALOGS</h2>
+        </div>
+      </div>
+
+      <div class="convenience-buttons-row">
+        <button talosButton variant="danger" size="md" (click)="openConfirmDialog('danger')">
+          <svg lucideTrash2 [size]="16"></svg>
+          Delete Confirmation (Danger)
+        </button>
+
+        <button talosButton variant="primary" size="md" (click)="openConfirmDialog('primary')">
+          <svg lucideCheckCircle2 [size]="16"></svg>
+          Publish Confirmation (Primary)
+        </button>
+
+        <button talosButton variant="outline" size="md" (click)="openConfirmDialog('warning')">
+          <svg lucideAlertTriangle [size]="16"></svg>
+          Warning Prompt
+        </button>
+
+        <button talosButton variant="secondary" size="md" (click)="openAlertDialog()">
+          Success Alert Notice
+        </button>
+
+        <button talosButton variant="ghost" size="md" (click)="openTemplateDialog(simpleTemplate)">
+          TemplateRef Dialog
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Template-based dialog sample -->
+<ng-template #simpleTemplate let-dialogRef>
+  <talos-dialog-header title="Template-Driven Dialog" subtitle="Instantiated directly from an ng-template reference." />
+  <talos-dialog-content padding="md">
+    <p>This dialog was rendered from an inline <code>&lt;ng-template&gt;</code> without requiring a separate Angular component class.</p>
+  </talos-dialog-content>
+  <talos-dialog-footer align="end">
+    <button talosButton variant="primary" size="md" [talosDialogClose]="'template_saved'">
+      Done
+    </button>
+  </talos-dialog-footer>
+</ng-template>

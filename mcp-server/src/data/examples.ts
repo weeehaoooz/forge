@@ -527,5 +527,55 @@ import {
 })
 export class CardDemoComponent {}`,
     htmlCode: ``
+  },
+  {
+    id: 'dialog-overview',
+    componentId: 'dialog',
+    title: 'CDK Modal with Backdrop Blur and Form Sizing',
+    description: 'Demonstrates opening modals using TalosDialogService with customizable backdrop blur and form sizing presets.',
+    tsCode: `import { Component, inject } from '@angular/core';
+import { TalosDialogService, TalosDialogModule, TalosDialogRef, TALOS_DIALOG_DATA } from '@talos/components/dialog';
+import { TalosButtonDirective } from '@talos/components/button';
+
+@Component({
+  selector: 'app-user-dialog',
+  imports: [TalosDialogModule, TalosButtonDirective],
+  template: \`
+    <talos-dialog-header title="Edit User" subtitle="Update user credentials and permissions." />
+    <talos-dialog-content padding="md">
+      <p>Configure account details and access roles.</p>
+    </talos-dialog-content>
+    <talos-dialog-footer align="end">
+      <button talosButton variant="secondary" [talosDialogClose]="null">Cancel</button>
+      <button talosButton variant="primary" [talosDialogClose]="{ saved: true }">Save Changes</button>
+    </talos-dialog-footer>
+  \`
+})
+export class UserDialogComponent {}
+
+@Component({
+  selector: 'app-dialog-demo',
+  imports: [TalosButtonDirective],
+  template: \`
+    <button talosButton variant="primary" (click)="openDialog()">
+      Open Modal (Frosted Glass Blur)
+    </button>
+  \`
+})
+export class DialogDemoComponent {
+  private readonly dialog = inject(TalosDialogService);
+
+  openDialog(): void {
+    const ref = this.dialog.open(UserDialogComponent, {
+      size: 'md',
+      backdropBlur: 'md'
+    });
+
+    ref.closed.subscribe(result => {
+      console.log('Result:', result);
+    });
+  }
+}`,
+    htmlCode: ``
   }
 ];

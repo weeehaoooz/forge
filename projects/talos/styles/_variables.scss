@@ -155,9 +155,15 @@
   --talos-snackbar-text: var(--snackbar-text, var(--talos-text-color));
   --talos-snackbar-border: var(--snackbar-border, var(--talos-border-color));
 
-  /* Tooltip Specific Tokens */
-  --talos-tooltip-bg: var(--tooltip-bg, #0f172a);
-  --talos-tooltip-text: var(--tooltip-text, #ffffff);
+  /* Dialog / Modal Specific Tokens */
+  --talos-dialog-bg: var(--dialog-bg, var(--talos-card-bg, #ffffff));
+  --talos-dialog-border: var(--dialog-border, var(--talos-border-color, #e2e8f0));
+  --talos-dialog-radius: var(--dialog-radius, 0.75rem);
+  --talos-dialog-shadow: var(--dialog-shadow, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1));
+  --talos-dialog-backdrop-bg: var(--dialog-backdrop-bg, rgba(15, 23, 42, 0.5));
+  --talos-dialog-backdrop-blur-bg: var(--dialog-backdrop-blur-bg, rgba(15, 23, 42, 0.35));
+  --talos-dialog-title-color: var(--dialog-title-color, var(--talos-text-color, #0f172a));
+  --talos-dialog-subtitle-color: var(--dialog-subtitle-color, var(--talos-text-muted, #64748b));
 }
 
 /* ==========================================================================
@@ -393,5 +399,14 @@
 
     --talos-tooltip-bg: var(--tooltip-bg, #1e293b);
     --talos-tooltip-text: var(--tooltip-text, #f9fafb);
+
+    /* Dialog / Modal Tokens in Dark Mode */
+    --talos-dialog-bg: var(--dialog-bg, #1e293b);
+    --talos-dialog-border: var(--dialog-border, #334155);
+    --talos-dialog-shadow: var(--dialog-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05));
+    --talos-dialog-backdrop-bg: var(--dialog-backdrop-bg, rgba(0, 0, 0, 0.65));
+    --talos-dialog-backdrop-blur-bg: var(--dialog-backdrop-blur-bg, rgba(0, 0, 0, 0.45));
+    --talos-dialog-title-color: var(--dialog-title-color, #f9fafb);
+    --talos-dialog-subtitle-color: var(--dialog-subtitle-color, #9ca3af);
   }
 }
