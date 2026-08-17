@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { DateRangePickerComponent } from '@talos/components/form/date-range-picker';
-import { DateRangePreset, DateRangeValue } from '@talos/components/form/date-range-picker';
+import { DateRangePickerComponent } from '@daedal-dev/talos-ui/form/date-range-picker';
+import { DateRangePreset, DateRangeValue } from '@daedal-dev/talos-ui/form/date-range-picker';
 
 let uniqueDateTimeRangePickerId = 0;
 

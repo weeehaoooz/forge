@@ -1,9 +1,9 @@
 /*
- * Public API Surface of @talos/components
+ * Public API Surface of @daedal-dev/talos-ui
  *
  * This root barrel re-exports everything for backward compatibility.
- * For optimal tree-shaking, consumers should import directly from the
- * secondary entry points (e.g. '@talos/components/button').
+ * Each feature module is also individually accessible via its own
+ * secondary entry points (e.g. '@daedal-dev/talos-ui/button').
  */
 
 // Layout components & services

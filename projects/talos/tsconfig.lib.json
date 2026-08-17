@@ -7,79 +7,79 @@
     "inlineSources": true,
     "types": [],
     "paths": {
-      "@talos/components/core": [
+      "@daedal-dev/talos-ui/core": [
         "./core/index.ts"
       ],
-      "@talos/components/button": [
+      "@daedal-dev/talos-ui/button": [
         "./button/index.ts"
       ],
-      "@talos/components/tooltip": [
+      "@daedal-dev/talos-ui/tooltip": [
         "./tooltip/index.ts"
       ],
-      "@talos/components/button-group": [
+      "@daedal-dev/talos-ui/button-group": [
         "./button-group/index.ts"
       ],
-      "@talos/components/form/input": [
+      "@daedal-dev/talos-ui/form/input": [
         "./form/input/index.ts"
       ],
-      "@talos/components/form/checkbox": [
+      "@daedal-dev/talos-ui/form/checkbox": [
         "./form/checkbox/index.ts"
       ],
-      "@talos/components/form/radio": [
+      "@daedal-dev/talos-ui/form/radio": [
         "./form/radio/index.ts"
       ],
-      "@talos/components/form/slide-toggle": [
+      "@daedal-dev/talos-ui/form/slide-toggle": [
         "./form/slide-toggle/index.ts"
       ],
-      "@talos/components/form/select-input": [
+      "@daedal-dev/talos-ui/form/select-input": [
         "./form/select-input/index.ts"
       ],
-      "@talos/components/form/date-picker": [
+      "@daedal-dev/talos-ui/form/date-picker": [
         "./form/date-picker/index.ts"
       ],
-      "@talos/components/form/date-range-picker": [
+      "@daedal-dev/talos-ui/form/date-range-picker": [
         "./form/date-range-picker/index.ts"
       ],
-      "@talos/components/form/date-time-picker": [
+      "@daedal-dev/talos-ui/form/date-time-picker": [
         "./form/date-time-picker/index.ts"
       ],
-      "@talos/components/form/date-time-range-picker": [
+      "@daedal-dev/talos-ui/form/date-time-range-picker": [
         "./form/date-time-range-picker/index.ts"
       ],
-      "@talos/components/form/autocomplete": [
+      "@daedal-dev/talos-ui/form/autocomplete": [
         "./form/autocomplete/index.ts"
       ],
-      "@talos/components/form/range-input": [
+      "@daedal-dev/talos-ui/form/range-input": [
         "./form/range-input/index.ts"
       ],
-      "@talos/components/form/chips": [
+      "@daedal-dev/talos-ui/form/chips": [
         "./form/chips/index.ts"
       ],
-      "@talos/components/form/form-field": [
+      "@daedal-dev/talos-ui/form/form-field": [
         "./form/form-field/index.ts"
       ],
-      "@talos/components/snackbar": [
+      "@daedal-dev/talos-ui/snackbar": [
         "./snackbar/index.ts"
       ],
-      "@talos/components/category-bar": [
+      "@daedal-dev/talos-ui/category-bar": [
         "./category-bar/index.ts"
       ],
-      "@talos/components/layout": [
+      "@daedal-dev/talos-ui/layout": [
         "./layout/index.ts"
       ],
-      "@talos/components/nav": [
+      "@daedal-dev/talos-ui/nav": [
         "./nav/index.ts"
       ],
-      "@talos/components/heatmap": [
+      "@daedal-dev/talos-ui/heatmap": [
         "./heatmap/index.ts"
       ],
-      "@talos/components/status-tag": [
+      "@daedal-dev/talos-ui/status-tag": [
         "./status-tag/index.ts"
       ],
-      "@talos/components/dialog": [
+      "@daedal-dev/talos-ui/dialog": [
         "./dialog/index.ts"
       ],
-      "@talos/components/form/drop-zone": [
+      "@daedal-dev/talos-ui/form/drop-zone": [
         "./form/drop-zone/index.ts"
       ]
     }
@@ -88,6 +88,7 @@
     "**/*.spec.ts"
   ],
   "angularCompilerOptions": {
+    "compilationMode": "partial",
     "extendedDiagnostics": {
       "checks": {
         "nullishCoalescingNotNullable": "suppress",

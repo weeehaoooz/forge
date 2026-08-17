@@ -41,7 +41,7 @@ import {
   subWeeks,
   subYears
 } from 'date-fns';
-import { formatDate, parseFlexibleDate } from '@talos/components/core';
+import { formatDate, parseFlexibleDate } from '@daedal-dev/talos-ui/core';
 
 export interface CalendarDay {
   date: Date;

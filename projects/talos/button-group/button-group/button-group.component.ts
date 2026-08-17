@@ -9,7 +9,7 @@ import {
   HostListener
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TalosButtonDirective, ButtonSize } from '@talos/components/button';
+import { TalosButtonDirective, ButtonSize } from '@daedal-dev/talos-ui/button';
 
 import { TalosButtonGroupItemDirective } from '../button-group-item/button-group-item.directive';
 

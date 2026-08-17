@@ -1,6 +1,6 @@
 import { NgComponentOutlet } from '@angular/common';
 import { Component, Type, computed, inject, input, output } from '@angular/core';
-import { LayoutService } from '@talos/components/layout';
+import { LayoutService } from '@daedal-dev/talos-ui/layout';
 
 @Component({
   selector: 'talos-nav-item',

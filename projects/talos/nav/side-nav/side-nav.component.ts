@@ -8,7 +8,7 @@ import {
   LucidePanelLeftOpen,
   LucideSettings
 } from '@lucide/angular';
-import { LayoutService } from '@talos/components/layout';
+import { LayoutService } from '@daedal-dev/talos-ui/layout';
 import { TalosNavGroupComponent } from '../nav-group/nav-group.component';
 import { TalosNavItemComponent } from '../nav-item/nav-item.component';
 import { TalosNavThemeToggleComponent } from '../theme-toggle/theme-toggle.component';

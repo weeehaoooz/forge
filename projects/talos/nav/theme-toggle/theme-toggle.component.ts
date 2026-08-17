@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { LucideMoon, LucideSun } from '@lucide/angular';
-import { LayoutService } from '@talos/components/layout';
+import { LayoutService } from '@daedal-dev/talos-ui/layout';
 
 @Component({
   selector: 'talos-nav-theme-toggle',

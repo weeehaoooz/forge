@@ -35,10 +35,10 @@ import {
   startOfISOWeek,
   subWeeks
 } from 'date-fns';
-import { formatDate } from '@talos/components/core';
-import { DateRangePickerComponent } from '@talos/components/form/date-range-picker';
-import type { DateRangePreset, DateRangeValue } from '@talos/components/form/date-range-picker';
-import { TalosTooltipDirective } from '@talos/components/tooltip';
+import { formatDate } from '@daedal-dev/talos-ui/core';
+import { DateRangePickerComponent } from '@daedal-dev/talos-ui/form/date-range-picker';
+import type { DateRangePreset, DateRangeValue } from '@daedal-dev/talos-ui/form/date-range-picker';
+import { TalosTooltipDirective } from '@daedal-dev/talos-ui/tooltip';
 import {
   HeatmapCell,
   HeatmapCellClickEvent,

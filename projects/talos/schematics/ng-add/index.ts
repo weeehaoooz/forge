@@ -53,18 +53,18 @@ function addStyles(options: Schema): Rule {
 
     const scssPath = 'src/styles.scss';
     const cssPath = 'src/styles.css';
-    const scssImport = "@use '@talos/components/styles/index';\n";
-    const cssImport = "@import '@talos/components/styles/index.scss';\n";
+    const scssImport = "@use '@daedal-dev/talos-ui/styles/index';\n";
+    const cssImport = "@import '@daedal-dev/talos-ui/styles/index.scss';\n";
 
     if (tree.exists(scssPath)) {
       const content = tree.readText(scssPath);
-      if (!content.includes('@talos/components/styles')) {
+      if (!content.includes('@daedal-dev/talos-ui/styles') && !content.includes('@talos/components/styles')) {
         tree.overwrite(scssPath, `${scssImport}${content}`);
         context.logger.info(`  ✔ Added Talos SCSS import to ${scssPath}`);
       }
     } else if (tree.exists(cssPath)) {
       const content = tree.readText(cssPath);
-      if (!content.includes('@talos/components/styles')) {
+      if (!content.includes('@daedal-dev/talos-ui/styles') && !content.includes('@talos/components/styles')) {
         tree.overwrite(cssPath, `${cssImport}${content}`);
         context.logger.info(`  ✔ Added Talos styles import to ${cssPath}`);
       }
@@ -97,8 +97,8 @@ function applyTheme(options: Schema): Rule {
 function logSummary(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('');
-    context.logger.info('✨ @talos/components has been successfully configured!');
-    context.logger.info('   You can now import any component from @talos/components (e.g. TalosButtonDirective).');
+    context.logger.info('✨ @daedal-dev/talos-ui has been successfully configured!');
+    context.logger.info('   You can now import any component from @daedal-dev/talos-ui (e.g. TalosButtonDirective).');
     context.logger.info('   For documentation & AI tooling, run: npm run mcp:build');
     context.logger.info('');
     return tree;

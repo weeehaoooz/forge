@@ -48,7 +48,7 @@ import {
   InternalDateRange,
   RangeCalendarDay
 } from './date-range-types';
-import { formatDate, parseFlexibleDate } from '@talos/components/core';
+import { formatDate, parseFlexibleDate } from '@daedal-dev/talos-ui/core';
 
 let uniqueDateRangePickerId = 0;
 

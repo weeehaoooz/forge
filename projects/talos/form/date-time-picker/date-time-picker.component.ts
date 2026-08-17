@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { DatePickerComponent } from '@talos/components/form/date-picker';
+import { DatePickerComponent } from '@daedal-dev/talos-ui/form/date-picker';
 
 let uniqueDateTimePickerId = 0;
 

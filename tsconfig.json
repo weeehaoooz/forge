@@ -15,6 +15,84 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
+      "@daedal-dev/talos-ui": [
+        "./projects/talos/public-api.ts"
+      ],
+      "@daedal-dev/talos-ui/core": [
+        "./projects/talos/core/index.ts"
+      ],
+      "@daedal-dev/talos-ui/button": [
+        "./projects/talos/button/index.ts"
+      ],
+      "@daedal-dev/talos-ui/tooltip": [
+        "./projects/talos/tooltip/index.ts"
+      ],
+      "@daedal-dev/talos-ui/button-group": [
+        "./projects/talos/button-group/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/input": [
+        "./projects/talos/form/input/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/checkbox": [
+        "./projects/talos/form/checkbox/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/radio": [
+        "./projects/talos/form/radio/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/slide-toggle": [
+        "./projects/talos/form/slide-toggle/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/select-input": [
+        "./projects/talos/form/select-input/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/date-picker": [
+        "./projects/talos/form/date-picker/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/date-range-picker": [
+        "./projects/talos/form/date-range-picker/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/date-time-picker": [
+        "./projects/talos/form/date-time-picker/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/date-time-range-picker": [
+        "./projects/talos/form/date-time-range-picker/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/autocomplete": [
+        "./projects/talos/form/autocomplete/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/range-input": [
+        "./projects/talos/form/range-input/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/chips": [
+        "./projects/talos/form/chips/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/form-field": [
+        "./projects/talos/form/form-field/index.ts"
+      ],
+      "@daedal-dev/talos-ui/snackbar": [
+        "./projects/talos/snackbar/index.ts"
+      ],
+      "@daedal-dev/talos-ui/category-bar": [
+        "./projects/talos/category-bar/index.ts"
+      ],
+      "@daedal-dev/talos-ui/layout": [
+        "./projects/talos/layout/index.ts"
+      ],
+      "@daedal-dev/talos-ui/nav": [
+        "./projects/talos/nav/index.ts"
+      ],
+      "@daedal-dev/talos-ui/heatmap": [
+        "./projects/talos/heatmap/index.ts"
+      ],
+      "@daedal-dev/talos-ui/status-tag": [
+        "./projects/talos/status-tag/index.ts"
+      ],
+      "@daedal-dev/talos-ui/dialog": [
+        "./projects/talos/dialog/index.ts"
+      ],
+      "@daedal-dev/talos-ui/form/drop-zone": [
+        "./projects/talos/form/drop-zone/index.ts"
+      ],
       "@talos/components": [
         "./projects/talos/public-api.ts"
       ],

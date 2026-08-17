@@ -1,4 +1,4 @@
-import type { DateRangeValue } from '@talos/components/form/date-range-picker';
+import type { DateRangeValue } from '@daedal-dev/talos-ui/form/date-range-picker';
 
 
 /**
