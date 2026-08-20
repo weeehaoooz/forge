@@ -7,7 +7,7 @@ import {
   output,
   signal
 } from '@angular/core';
-import { TalosTooltipDirective } from '@daedal-dev/talos-ui/tooltip';
+import { TalosTooltipDirective } from '@daedal-dev/talos-ui/feedback/tooltip';
 
 import {
   CategoryBarColorScheme,

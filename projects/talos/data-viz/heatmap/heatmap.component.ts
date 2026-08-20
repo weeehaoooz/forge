@@ -38,7 +38,7 @@ import {
 import { formatDate } from '@daedal-dev/talos-ui/core';
 import { DateRangePickerComponent } from '@daedal-dev/talos-ui/form/date-range-picker';
 import type { DateRangePreset, DateRangeValue } from '@daedal-dev/talos-ui/form/date-range-picker';
-import { TalosTooltipDirective } from '@daedal-dev/talos-ui/tooltip';
+import { TalosTooltipDirective } from '@daedal-dev/talos-ui/feedback/tooltip';
 import {
   HeatmapCell,
   HeatmapCellClickEvent,

@@ -11,13 +11,34 @@
         "./core/index.ts"
       ],
       "@daedal-dev/talos-ui/button": [
-        "./button/index.ts"
+        "./button/button/index.ts"
       ],
-      "@daedal-dev/talos-ui/tooltip": [
-        "./tooltip/index.ts"
+      "@daedal-dev/talos-ui/button/button": [
+        "./button/button/index.ts"
       ],
       "@daedal-dev/talos-ui/button-group": [
-        "./button-group/index.ts"
+        "./button/button-group/index.ts"
+      ],
+      "@daedal-dev/talos-ui/button/button-group": [
+        "./button/button-group/index.ts"
+      ],
+      "@daedal-dev/talos-ui/tooltip": [
+        "./feedback/tooltip/index.ts"
+      ],
+      "@daedal-dev/talos-ui/feedback/tooltip": [
+        "./feedback/tooltip/index.ts"
+      ],
+      "@daedal-dev/talos-ui/dialog": [
+        "./feedback/dialog/index.ts"
+      ],
+      "@daedal-dev/talos-ui/feedback/dialog": [
+        "./feedback/dialog/index.ts"
+      ],
+      "@daedal-dev/talos-ui/snackbar": [
+        "./feedback/snackbar/index.ts"
+      ],
+      "@daedal-dev/talos-ui/feedback/snackbar": [
+        "./feedback/snackbar/index.ts"
       ],
       "@daedal-dev/talos-ui/form/input": [
         "./form/input/index.ts"
@@ -58,29 +79,32 @@
       "@daedal-dev/talos-ui/form/form-field": [
         "./form/form-field/index.ts"
       ],
-      "@daedal-dev/talos-ui/snackbar": [
-        "./snackbar/index.ts"
+      "@daedal-dev/talos-ui/form/drop-zone": [
+        "./form/drop-zone/index.ts"
       ],
       "@daedal-dev/talos-ui/category-bar": [
-        "./category-bar/index.ts"
+        "./data-viz/category-bar/index.ts"
+      ],
+      "@daedal-dev/talos-ui/data-viz/category-bar": [
+        "./data-viz/category-bar/index.ts"
+      ],
+      "@daedal-dev/talos-ui/heatmap": [
+        "./data-viz/heatmap/index.ts"
+      ],
+      "@daedal-dev/talos-ui/data-viz/heatmap": [
+        "./data-viz/heatmap/index.ts"
+      ],
+      "@daedal-dev/talos-ui/status-tag": [
+        "./data-display/status-tag/index.ts"
+      ],
+      "@daedal-dev/talos-ui/data-display/status-tag": [
+        "./data-display/status-tag/index.ts"
       ],
       "@daedal-dev/talos-ui/layout": [
         "./layout/index.ts"
       ],
       "@daedal-dev/talos-ui/nav": [
         "./nav/index.ts"
-      ],
-      "@daedal-dev/talos-ui/heatmap": [
-        "./heatmap/index.ts"
-      ],
-      "@daedal-dev/talos-ui/status-tag": [
-        "./status-tag/index.ts"
-      ],
-      "@daedal-dev/talos-ui/dialog": [
-        "./dialog/index.ts"
-      ],
-      "@daedal-dev/talos-ui/form/drop-zone": [
-        "./form/drop-zone/index.ts"
       ]
     }
   },

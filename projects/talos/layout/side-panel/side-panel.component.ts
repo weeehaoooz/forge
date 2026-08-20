@@ -1,6 +1,6 @@
 import { Component, Type, input, output } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import { TalosButtonDirective } from '@daedal-dev/talos-ui/button';
+import { TalosButtonDirective } from '@daedal-dev/talos-ui/button/button';
 
 import { LucideX } from '@lucide/angular';
 

@@ -26,15 +26,15 @@ export * from './form/select-input/option-group/option-group.component';
 export * from './form/select-input/select-input.module';
 
 // Button directive & types
-export * from './button/button.directive';
+export * from './button/button/button.directive';
 
 // Button group component, directive & module
-export * from './button-group/button-group/button-group.component';
-export * from './button-group/button-group-item/button-group-item.directive';
-export * from './button-group/button-group.module';
+export * from './button/button-group/button-group/button-group.component';
+export * from './button/button-group/button-group-item/button-group-item.directive';
+export * from './button/button-group/button-group.module';
 
 // Tooltip directive
-export * from './tooltip/tooltip.directive';
+export * from './feedback/tooltip/tooltip.directive';
 
 // Input & Textarea directive
 export * from './form/input/input.directive';
@@ -66,11 +66,11 @@ export * from './form/radio/radio/radio.component';
 export * from './form/radio/radio.module';
 
 // Snackbar service, components & module
-export * from './snackbar/snackbar.types';
-export * from './snackbar/snackbar.service';
-export * from './snackbar/snackbar/snackbar.component';
-export * from './snackbar/snackbar-container/snackbar-container.component';
-export * from './snackbar/snackbar.module';
+export * from './feedback/snackbar/snackbar.types';
+export * from './feedback/snackbar/snackbar.service';
+export * from './feedback/snackbar/snackbar/snackbar.component';
+export * from './feedback/snackbar/snackbar-container/snackbar-container.component';
+export * from './feedback/snackbar/snackbar.module';
 
 // Slide toggle directive, component & module
 export * from './form/slide-toggle/slide-toggle.directive';
@@ -83,14 +83,14 @@ export * from './form/autocomplete/autocomplete.component';
 export * from './form/autocomplete/autocomplete.module';
 
 // Heatmap component, module & types
-export * from './heatmap/heatmap.types';
-export * from './heatmap/heatmap.component';
-export * from './heatmap/heatmap.module';
+export * from './data-viz/heatmap/heatmap.types';
+export * from './data-viz/heatmap/heatmap.component';
+export * from './data-viz/heatmap/heatmap.module';
 
 // Category Bar component, module & types
-export * from './category-bar/category-bar.types';
-export * from './category-bar/category-bar.component';
-export * from './category-bar/category-bar.module';
+export * from './data-viz/category-bar/category-bar.types';
+export * from './data-viz/category-bar/category-bar.component';
+export * from './data-viz/category-bar/category-bar.module';
 
 // Range Input component, directive, module & types
 export * from './form/range-input/range-input.types';
@@ -99,9 +99,9 @@ export * from './form/range-input/range-input.component';
 export * from './form/range-input/range-input.module';
 
 // Status Tag component, module & types
-export * from './status-tag/status-tag.types';
-export * from './status-tag/status-tag.component';
-export * from './status-tag/status-tag.module';
+export * from './data-display/status-tag/status-tag.types';
+export * from './data-display/status-tag/status-tag.component';
+export * from './data-display/status-tag/status-tag.module';
 
 // Chips component, module & types
 export * from './form/chips/chips.types';
@@ -110,20 +110,21 @@ export * from './form/chips/chips/chips.component';
 export * from './form/chips/chips.module';
 
 // Dialog / Modal service, components, directives, module & types
-export * from './dialog/dialog.types';
-export * from './dialog/dialog-ref';
-export * from './dialog/dialog.service';
-export * from './dialog/dialog.directives';
-export * from './dialog/dialog-header/dialog-header.component';
-export * from './dialog/dialog-content/dialog-content.component';
-export * from './dialog/dialog-footer/dialog-footer.component';
-export * from './dialog/confirm-dialog/confirm-dialog.component';
-export * from './dialog/dialog.module';
+export * from './feedback/dialog/dialog.types';
+export * from './feedback/dialog/dialog-ref';
+export * from './feedback/dialog/dialog.service';
+export * from './feedback/dialog/dialog.directives';
+export * from './feedback/dialog/dialog-header/dialog-header.component';
+export * from './feedback/dialog/dialog-content/dialog-content.component';
+export * from './feedback/dialog/dialog-footer/dialog-footer.component';
+export * from './feedback/dialog/confirm-dialog/confirm-dialog.component';
+export * from './feedback/dialog/dialog.module';
 
 // Drop Zone component, directive, module & types
 export * from './form/drop-zone/drop-zone.types';
 export * from './form/drop-zone/drop-zone.directive';
 export * from './form/drop-zone/drop-zone.component';
 export * from './form/drop-zone/drop-zone.module';
+
 
 

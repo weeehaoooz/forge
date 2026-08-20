@@ -8,7 +8,7 @@ import {
   LucideAlertCircle,
   LucideHelpCircle
 } from '@lucide/angular';
-import { TalosButtonDirective } from '@daedal-dev/talos-ui/button';
+import { TalosButtonDirective } from '@daedal-dev/talos-ui/button/button';
 import { TALOS_DIALOG_DATA, TalosConfirmDialogOptions } from '../dialog.types';
 import { TalosDialogHeaderComponent } from '../dialog-header/dialog-header.component';
 import { TalosDialogContentComponent } from '../dialog-content/dialog-content.component';
