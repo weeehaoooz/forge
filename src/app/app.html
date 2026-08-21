@@ -43,6 +43,8 @@
       <talos-nav-group title="DATA DISPLAY" [collapsible]="true">
         <talos-nav-item label="Status Tag & Indicators" [icon]="LucideTag" [active]="activeSegment() === 'status-tag'"
           (itemClick)="navigate('/status-tag')" />
+        <talos-nav-item label="Badges" [icon]="LucideBellDot" [active]="activeSegment() === 'badges'"
+          (itemClick)="navigate('/badges')" />
       </talos-nav-group>
 
       <talos-nav-group title="DATA VISUALIZATION" [collapsible]="true">

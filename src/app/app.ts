@@ -31,7 +31,8 @@ import {
   LucidePanelLeftClose,
   LucideCreditCard,
   LucideLayers,
-  LucideUploadCloud
+  LucideUploadCloud,
+  LucideBellDot
 } from '@lucide/angular';
 
 @Component({
@@ -77,6 +78,7 @@ export class App {
   protected readonly LucideCreditCard = LucideCreditCard;
   protected readonly LucideLayers = LucideLayers;
   protected readonly LucideUploadCloud = LucideUploadCloud;
+  protected readonly LucideBellDot = LucideBellDot;
 
 
   constructor() {

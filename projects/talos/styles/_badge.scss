@@ -1,0 +1,280 @@
+/* Talos UI Badge Styles */
+
+.talos-badge-host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+
+  &,
+  &.talos-badge-host--has-badge,
+  &.talos-btn,
+  &.btn {
+    overflow: visible;
+  }
+}
+
+.talos-badge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+  border-radius: 9999px;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 0 0 2px var(--talos-badge-border-color, var(--talos-card-bg, #ffffff));
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease,
+              background-color 0.2s ease,
+              color 0.2s ease;
+
+  /* Hidden State */
+  &--hidden {
+    display: none !important;
+  }
+
+  /* Size Scales */
+  &--xs {
+    height: 14px;
+    min-width: 14px;
+    padding: 0 3.5px;
+    font-size: 9px;
+    letter-spacing: -0.02em;
+  }
+
+  &--sm {
+    height: 18px;
+    min-width: 18px;
+    padding: 0 5px;
+    font-size: 10.5px;
+    letter-spacing: -0.01em;
+  }
+
+  &--md {
+    height: 22px;
+    min-width: 22px;
+    padding: 0 6.5px;
+    font-size: 12px;
+  }
+
+  &--lg {
+    height: 26px;
+    min-width: 26px;
+    padding: 0 8px;
+    font-size: 13.5px;
+  }
+
+  /* Dot Mode Indicator */
+  &--dot {
+    padding: 0 !important;
+    min-width: 0 !important;
+    border-radius: 50% !important;
+
+    &.talos-badge--xs {
+      width: 6px;
+      height: 6px;
+    }
+
+    &.talos-badge--sm {
+      width: 8px;
+      height: 8px;
+    }
+
+    &.talos-badge--md {
+      width: 10px;
+      height: 10px;
+    }
+
+    &.talos-badge--lg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  /* Shapes */
+  &--circle {
+    border-radius: 9999px;
+  }
+
+  &--pill {
+    border-radius: 9999px;
+  }
+
+  &--square {
+    border-radius: var(--talos-border-radius, 4px);
+  }
+
+  /* Placement Positions (with default overlap) */
+  &--top-right {
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+
+  &--top-left {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  &--bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+  }
+
+  &--bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 50%);
+  }
+
+  &--top {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &--bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+
+  &--inline {
+    position: static;
+    transform: none;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    box-shadow: none;
+  }
+
+  /* Non-overlapping placements */
+  &:not(.talos-badge--overlap) {
+    &.talos-badge--top-right {
+      top: 0;
+      right: 0;
+      transform: translate(0, 0);
+    }
+
+    &.talos-badge--top-left {
+      top: 0;
+      left: 0;
+      transform: translate(0, 0);
+    }
+
+    &.talos-badge--bottom-right {
+      bottom: 0;
+      right: 0;
+      transform: translate(0, 0);
+    }
+
+    &.talos-badge--bottom-left {
+      bottom: 0;
+      left: 0;
+      transform: translate(0, 0);
+    }
+  }
+
+  /* Visual Color Variants */
+  &--primary {
+    background-color: var(--talos-primary-color, #2563eb);
+    color: #ffffff;
+  }
+
+  &--secondary,
+  &--neutral {
+    background-color: var(--talos-btn-secondary-bg, #475569);
+    color: #ffffff;
+  }
+
+  &--danger,
+  &--error {
+    background-color: var(--talos-error-color, #ef4444);
+    color: #ffffff;
+  }
+
+  &--success {
+    background-color: var(--talos-success-color, #16a34a);
+    color: #ffffff;
+  }
+
+  &--warning {
+    background-color: var(--talos-warning-color, #d97706);
+    color: #ffffff;
+  }
+
+  &--info {
+    background-color: #0284c7;
+    color: #ffffff;
+  }
+
+  &--subtle {
+    background-color: var(--talos-primary-light, #eff6ff);
+    color: var(--talos-primary-color, #2563eb);
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2), 0 0 0 2px var(--talos-badge-border-color, var(--talos-card-bg, #ffffff));
+  }
+
+  &--outline {
+    background-color: var(--talos-card-bg, #ffffff);
+    color: var(--talos-primary-color, #2563eb);
+    border: 1px solid var(--talos-primary-color, #2563eb);
+  }
+
+  /* Pulse Animation */
+  &--pulse {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background-color: inherit;
+      opacity: 0.75;
+      animation: talos-badge-pulse-animation 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes talos-badge-pulse-animation {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+/* Dark theme specific adjustments */
+[data-theme='dark'] .talos-badge,
+.dark .talos-badge {
+  --talos-badge-border-color: #1e293b;
+
+  &--subtle {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #60a5fa;
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.3), 0 0 0 2px var(--talos-badge-border-color, #1e293b);
+  }
+
+  &--outline {
+    background-color: #1e293b;
+    color: #60a5fa;
+    border-color: #3b82f6;
+  }
+}

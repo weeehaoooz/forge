@@ -1,0 +1,458 @@
+<div class="badge-page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-badge">Data Display</div>
+      <h1 class="page-title">Badge Directive</h1>
+      <p class="page-description">
+        Badges are small status descriptors and numerical counters for UI elements. They appear in proximity to host
+        elements (such as buttons, avatars, icons, and cards) and support configurable sizes, threshold clamping (e.g. <code>99+</code>),
+        dot notification indicators, and live pulse animations.
+      </p>
+    </div>
+  </div>
+
+  <!-- Interactive Playground -->
+  <talos-card class="section-card playground-card">
+    <talos-card-header>
+      <h2 talosCardTitle>Interactive Playground</h2>
+      <p talosCardSubtitle>
+        Dynamically customize the badge parameters and test how threshold clamping, sizes, and positioning react.
+      </p>
+    </talos-card-header>
+    <talos-card-body>
+      <div class="playground-layout">
+        <!-- Controls -->
+        <div class="playground-controls">
+          <div class="control-row">
+            <label class="control-label" for="val-input">Count Value</label>
+            <div class="counter-input-group">
+              <input
+                id="val-input"
+                type="number"
+                class="demo-input"
+                [ngModel]="playgroundValue()"
+                (ngModelChange)="playgroundValue.set($event)"
+              />
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" (click)="playgroundValue.set(5)">5</button>
+                <button type="button" class="quick-chip" (click)="playgroundValue.set(99)">99</button>
+                <button type="button" class="quick-chip" (click)="playgroundValue.set(120)">120</button>
+                <button type="button" class="quick-chip" (click)="playgroundValue.set(1500)">1.5k</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <label class="control-label" for="max-input">Max Threshold (clamps with +)</label>
+            <div class="counter-input-group">
+              <input
+                id="max-input"
+                type="number"
+                class="demo-input"
+                [ngModel]="playgroundMax()"
+                (ngModelChange)="playgroundMax.set($event)"
+              />
+              <div class="quick-chips">
+                <button type="button" class="quick-chip" (click)="playgroundMax.set(9)">9</button>
+                <button type="button" class="quick-chip" (click)="playgroundMax.set(99)">99</button>
+                <button type="button" class="quick-chip" (click)="playgroundMax.set(999)">999</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-grid-2">
+            <div class="control-row">
+              <label class="control-label">Size Scale</label>
+              <div class="segmented-control">
+                @for (s of sizes; track s) {
+                  <button
+                    type="button"
+                    class="seg-btn"
+                    [class.active]="playgroundSize() === s"
+                    (click)="playgroundSize.set(s)"
+                  >
+                    {{ s.toUpperCase() }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="control-row">
+              <label class="control-label">Position</label>
+              <select
+                class="demo-select"
+                [ngModel]="playgroundPosition()"
+                (ngModelChange)="playgroundPosition.set($event)"
+              >
+                @for (p of positions; track p) {
+                  <option [value]="p">{{ p }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <label class="control-label">Color Variant</label>
+            <div class="variant-chips">
+              @for (v of variants; track v) {
+                <button
+                  type="button"
+                  class="variant-chip"
+                  [class.active]="playgroundVariant() === v"
+                  [class.chip-primary]="v === 'primary'"
+                  [class.chip-danger]="v === 'danger'"
+                  [class.chip-success]="v === 'success'"
+                  [class.chip-warning]="v === 'warning'"
+                  [class.chip-info]="v === 'info'"
+                  [class.chip-neutral]="v === 'neutral'"
+                  [class.chip-subtle]="v === 'subtle'"
+                  [class.chip-outline]="v === 'outline'"
+                  (click)="playgroundVariant.set(v)"
+                >
+                  {{ v }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="toggles-row">
+            <label class="toggle-checkbox">
+              <input
+                type="checkbox"
+                [checked]="playgroundDot()"
+                (change)="playgroundDot.set($any($event.target).checked)"
+              />
+              <span>Dot mode</span>
+            </label>
+            <label class="toggle-checkbox">
+              <input
+                type="checkbox"
+                [checked]="playgroundPulse()"
+                (change)="playgroundPulse.set($any($event.target).checked)"
+              />
+              <span>Pulse animation</span>
+            </label>
+            <label class="toggle-checkbox">
+              <input
+                type="checkbox"
+                [checked]="playgroundOverlap()"
+                (change)="playgroundOverlap.set($any($event.target).checked)"
+              />
+              <span>Overlap boundary</span>
+            </label>
+            <label class="toggle-checkbox">
+              <input
+                type="checkbox"
+                [checked]="playgroundHidden()"
+                (change)="playgroundHidden.set($any($event.target).checked)"
+              />
+              <span>Hidden</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Preview Stage -->
+        <div class="playground-preview">
+          <div class="preview-stage">
+            <div class="preview-item">
+              <button
+                type="button"
+                talosButton
+                variant="primary"
+                [talosBadge]="playgroundValue()"
+                [talosBadgeMax]="playgroundMax()"
+                [talosBadgeSize]="playgroundSize()"
+                [talosBadgePosition]="playgroundPosition()"
+                [talosBadgeVariant]="playgroundVariant()"
+                [talosBadgeDot]="playgroundDot()"
+                [talosBadgePulse]="playgroundPulse()"
+                [talosBadgeHidden]="playgroundHidden()"
+                [talosBadgeOverlap]="playgroundOverlap()"
+              >
+                <svg lucideMail [size]="18"></svg>
+                <span>Inbox Messages</span>
+              </button>
+            </div>
+
+            <div class="preview-item">
+              <div
+                class="avatar-demo"
+                [talosBadge]="playgroundValue()"
+                [talosBadgeMax]="playgroundMax()"
+                [talosBadgeSize]="playgroundSize()"
+                [talosBadgePosition]="playgroundPosition()"
+                [talosBadgeVariant]="playgroundVariant()"
+                [talosBadgeDot]="playgroundDot()"
+                [talosBadgePulse]="playgroundPulse()"
+                [talosBadgeHidden]="playgroundHidden()"
+                [talosBadgeOverlap]="playgroundOverlap()"
+              >
+                <svg lucideUser [size]="24"></svg>
+              </div>
+            </div>
+
+            <div class="preview-item">
+              <div
+                class="icon-button-demo"
+                [talosBadge]="playgroundValue()"
+                [talosBadgeMax]="playgroundMax()"
+                [talosBadgeSize]="playgroundSize()"
+                [talosBadgePosition]="playgroundPosition()"
+                [talosBadgeVariant]="playgroundVariant()"
+                [talosBadgeDot]="playgroundDot()"
+                [talosBadgePulse]="playgroundPulse()"
+                [talosBadgeHidden]="playgroundHidden()"
+                [talosBadgeOverlap]="playgroundOverlap()"
+              >
+                <svg lucideBell [size]="22"></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-snippet-box">
+            <pre class="code-block"><code>&lt;button
+  talosButton
+  [talosBadge]="{{ playgroundValue() }}"
+  [talosBadgeMax]="{{ playgroundMax() }}"
+  [talosBadgeSize]="'{{ playgroundSize() }}'"
+  [talosBadgePosition]="'{{ playgroundPosition() }}'"
+  [talosBadgeVariant]="'{{ playgroundVariant() }}'"@if (playgroundDot()) {
+  [talosBadgeDot]="true"}@if (playgroundPulse()) {
+  [talosBadgePulse]="true"}
+&gt;
+  Inbox
+&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </talos-card-body>
+  </talos-card>
+
+  <!-- Max Threshold / Clamping Feature Showcase -->
+  <talos-card class="section-card">
+    <talos-card-header>
+      <h2 talosCardTitle>Maximum Threshold Clamping (e.g. 99+)</h2>
+      <p talosCardSubtitle>
+        When numerical counts exceed the configured <code>talosBadgeMax</code>, the badge automatically displays the threshold value with a <code>+</code> post-script.
+      </p>
+    </talos-card-header>
+    <talos-card-body>
+      <div class="threshold-showcase-grid">
+        <!-- Live Step Counter -->
+        <div class="threshold-card">
+          <div class="threshold-title">Interactive Step Counter</div>
+          <p class="threshold-desc">Threshold is set to <strong>{{ counterMax() }}</strong>. Increment to see <code>{{ counterMax() }}+</code> in real-time.</p>
+          <div class="counter-display-row">
+            <button
+              type="button"
+              class="icon-button-demo"
+              [talosBadge]="counterValue()"
+              [talosBadgeMax]="counterMax()"
+              talosBadgeVariant="danger"
+              [talosBadgePulse]="counterValue() > counterMax()"
+            >
+              <svg lucideBell [size]="24"></svg>
+            </button>
+            <div class="stepper-controls">
+              <button type="button" class="step-btn" (click)="decrementCounter()">
+                <svg lucideMinus [size]="16"></svg>
+              </button>
+              <span class="step-value">{{ counterValue() }}</span>
+              <button type="button" class="step-btn" (click)="incrementCounter()">
+                <svg lucidePlus [size]="16"></svg>
+              </button>
+              <button type="button" class="reset-btn" (click)="resetCounter()">
+                <svg lucideRotateCcw [size]="14"></svg>
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static Threshold Examples -->
+        <div class="threshold-card">
+          <div class="threshold-title">Common Threshold Presets</div>
+          <div class="preset-items">
+            <div class="preset-item">
+              <span class="preset-label">Max = 9 (value: 14)</span>
+              <button type="button" talosButton variant="outline" [talosBadge]="14" [talosBadgeMax]="9" talosBadgeVariant="danger">
+                <svg lucideMail [size]="16"></svg>
+                <span>Unread</span>
+              </button>
+            </div>
+            <div class="preset-item">
+              <span class="preset-label">Max = 99 (value: 142)</span>
+              <button type="button" talosButton variant="outline" [talosBadge]="142" [talosBadgeMax]="99" talosBadgeVariant="danger">
+                <svg lucideShoppingCart [size]="16"></svg>
+                <span>Cart</span>
+              </button>
+            </div>
+            <div class="preset-item">
+              <span class="preset-label">Max = 999 (value: 2450)</span>
+              <button type="button" talosButton variant="outline" [talosBadge]="2450" [talosBadgeMax]="999" talosBadgeVariant="primary">
+                <svg lucideMessageSquare [size]="16"></svg>
+                <span>Chat</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </talos-card-body>
+  </talos-card>
+
+  <!-- Size Scales -->
+  <talos-card class="section-card">
+    <talos-card-header>
+      <h2 talosCardTitle>Size Scales</h2>
+      <p talosCardSubtitle>
+        Choose from four distinct size scales (<code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code>) tailored for compact tables, standard toolbars, and hero headers.
+      </p>
+    </talos-card-header>
+    <talos-card-body>
+      <div class="sizes-demo-grid">
+        <div class="size-col">
+          <span class="size-name">XS (14px)</span>
+          <div class="size-demo-item">
+            <button type="button" talosButton size="sm" variant="outline" [talosBadge]="3" talosBadgeSize="xs">
+              Filter
+            </button>
+          </div>
+          <div class="size-demo-item">
+            <button type="button" talosButton size="sm" variant="outline" [talosBadge]="99" [talosBadgeMax]="9" talosBadgeSize="xs" talosBadgeVariant="danger">
+              Alerts
+            </button>
+          </div>
+        </div>
+
+        <div class="size-col">
+          <span class="size-name">SM (18px)</span>
+          <div class="size-demo-item">
+            <button type="button" talosButton variant="outline" [talosBadge]="8" talosBadgeSize="sm">
+              Inbox
+            </button>
+          </div>
+          <div class="size-demo-item">
+            <button type="button" talosButton variant="outline" [talosBadge]="120" [talosBadgeMax]="99" talosBadgeSize="sm" talosBadgeVariant="danger">
+              Messages
+            </button>
+          </div>
+        </div>
+
+        <div class="size-col">
+          <span class="size-name">MD (22px - Default)</span>
+          <div class="size-demo-item">
+            <button type="button" talosButton variant="primary" [talosBadge]="5" talosBadgeSize="md">
+              <svg lucideMail [size]="16"></svg>
+              <span>Inbox</span>
+            </button>
+          </div>
+          <div class="size-demo-item">
+            <button type="button" talosButton variant="primary" [talosBadge]="150" [talosBadgeMax]="99" talosBadgeSize="md" talosBadgeVariant="danger">
+              <svg lucideBell [size]="16"></svg>
+              <span>Notifications</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="size-col">
+          <span class="size-name">LG (26px)</span>
+          <div class="size-demo-item">
+            <button type="button" talosButton size="lg" variant="secondary" [talosBadge]="12" talosBadgeSize="lg">
+              Tasks
+            </button>
+          </div>
+          <div class="size-demo-item">
+            <button type="button" talosButton size="lg" variant="secondary" [talosBadge]="99" [talosBadgeMax]="50" talosBadgeSize="lg" talosBadgeVariant="warning">
+              Pending
+            </button>
+          </div>
+        </div>
+      </div>
+    </talos-card-body>
+  </talos-card>
+
+  <!-- Component Attachment Matrix -->
+  <talos-card class="section-card">
+    <talos-card-header>
+      <h2 talosCardTitle>Component Attachment Matrix</h2>
+      <p talosCardSubtitle>
+        The <code>talosBadge</code> directive seamlessly attaches to any host component or HTML element without modifying the host layout.
+      </p>
+    </talos-card-header>
+    <talos-card-body>
+      <div class="matrix-grid">
+        <!-- Buttons -->
+        <div class="matrix-card">
+          <h3 class="matrix-title">Buttons & Actions</h3>
+          <div class="matrix-items">
+            <button type="button" talosButton variant="primary" [talosBadge]="3" talosBadgeVariant="danger">
+              <svg lucideShoppingCart [size]="16"></svg>
+              <span>Checkout</span>
+            </button>
+            <button type="button" talosButton variant="outline" [talosBadge]="'NEW'" talosBadgeVariant="success">
+              AI Assistant
+            </button>
+            <button type="button" talosButton variant="ghost" [talosBadge]="12" talosBadgeVariant="subtle">
+              Updates
+            </button>
+          </div>
+        </div>
+
+        <!-- Avatars / Status Dots -->
+        <div class="matrix-card">
+          <h3 class="matrix-title">Avatars & Status Dots</h3>
+          <div class="matrix-items">
+            <div class="avatar-demo" talosBadge="" [talosBadgeDot]="true" talosBadgeVariant="success" [talosBadgePulse]="true" talosBadgePosition="bottom-right">
+              <span>JD</span>
+            </div>
+            <div class="avatar-demo" talosBadge="" [talosBadgeDot]="true" talosBadgeVariant="warning" talosBadgePosition="bottom-right">
+              <span>EL</span>
+            </div>
+            <div class="avatar-demo" talosBadge="" [talosBadgeDot]="true" talosBadgeVariant="danger" talosBadgePosition="bottom-right">
+              <span>AK</span>
+            </div>
+            <div class="avatar-demo" [talosBadge]="5" talosBadgeSize="xs" talosBadgeVariant="danger" talosBadgePosition="top-right">
+              <span>MC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Icon Badges -->
+        <div class="matrix-card">
+          <h3 class="matrix-title">Standalone Icon Badges</h3>
+          <div class="matrix-items">
+            <div class="icon-button-demo" [talosBadge]="4" talosBadgeVariant="danger" [talosBadgePulse]="true">
+              <svg lucideBell [size]="22"></svg>
+            </div>
+            <div class="icon-button-demo" [talosBadge]="28" [talosBadgeMax]="9" talosBadgeVariant="primary">
+              <svg lucideMail [size]="22"></svg>
+            </div>
+            <div class="icon-button-demo" talosBadge="" [talosBadgeDot]="true" talosBadgeVariant="success">
+              <svg lucideMessageSquare [size]="22"></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline Badges -->
+        <div class="matrix-card">
+          <h3 class="matrix-title">Inline Text Descriptors</h3>
+          <div class="inline-demo-list">
+            <div class="inline-row">
+              <span>Unread Notifications</span>
+              <span class="inline-badge-wrap" [talosBadge]="12" talosBadgePosition="inline" talosBadgeVariant="danger"></span>
+            </div>
+            <div class="inline-row">
+              <span>Completed Reviews</span>
+              <span class="inline-badge-wrap" [talosBadge]="45" talosBadgePosition="inline" talosBadgeVariant="success"></span>
+            </div>
+            <div class="inline-row">
+              <span>Pending Tasks</span>
+              <span class="inline-badge-wrap" [talosBadge]="3" talosBadgePosition="inline" talosBadgeVariant="warning"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </talos-card-body>
+  </talos-card>
+</div>

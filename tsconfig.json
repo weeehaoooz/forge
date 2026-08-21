@@ -111,6 +111,12 @@
       "@daedal-dev/talos-ui/data-display/status-tag": [
         "./projects/talos/data-display/status-tag/index.ts"
       ],
+      "@daedal-dev/talos-ui/badge": [
+        "./projects/talos/data-display/badge/index.ts"
+      ],
+      "@daedal-dev/talos-ui/data-display/badge": [
+        "./projects/talos/data-display/badge/index.ts"
+      ],
       "@daedal-dev/talos-ui/layout": [
         "./projects/talos/layout/index.ts"
       ],
@@ -212,6 +218,12 @@
       ],
       "@talos/components/data-display/status-tag": [
         "./projects/talos/data-display/status-tag/index.ts"
+      ],
+      "@talos/components/badge": [
+        "./projects/talos/data-display/badge/index.ts"
+      ],
+      "@talos/components/data-display/badge": [
+        "./projects/talos/data-display/badge/index.ts"
       ],
       "@talos/components/layout": [
         "./projects/talos/layout/index.ts"

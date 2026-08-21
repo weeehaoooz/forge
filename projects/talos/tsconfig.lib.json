@@ -100,6 +100,12 @@
       "@daedal-dev/talos-ui/data-display/status-tag": [
         "./data-display/status-tag/index.ts"
       ],
+      "@daedal-dev/talos-ui/badge": [
+        "./data-display/badge/index.ts"
+      ],
+      "@daedal-dev/talos-ui/data-display/badge": [
+        "./data-display/badge/index.ts"
+      ],
       "@daedal-dev/talos-ui/layout": [
         "./layout/index.ts"
       ],

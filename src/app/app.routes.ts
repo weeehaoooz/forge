@@ -59,6 +59,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/status-tag/status-tag-page').then(m => m.StatusTagPage)
   },
   {
+    path: 'badges',
+    loadComponent: () => import('./pages/badge/badge-page').then(m => m.BadgePage)
+  },
+  {
     path: 'chips',
     loadComponent: () => import('./pages/chips/chips-page').then(m => m.ChipsPage)
   },

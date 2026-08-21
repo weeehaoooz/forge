@@ -28,6 +28,10 @@
 .btn {
   position: relative;
   overflow: hidden;
+
+  &.talos-badge-host {
+    overflow: visible;
+  }
   display: inline-flex;
   align-items: center;
   justify-content: center;

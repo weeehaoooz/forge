@@ -126,5 +126,7 @@ export * from './form/drop-zone/drop-zone.directive';
 export * from './form/drop-zone/drop-zone.component';
 export * from './form/drop-zone/drop-zone.module';
 
-
-
+// Badge directive, module & types
+export * from './data-display/badge/badge.types';
+export * from './data-display/badge/badge.directive';
+export * from './data-display/badge/badge.module';
