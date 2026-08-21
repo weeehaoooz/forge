@@ -32,7 +32,8 @@ import {
   LucideCreditCard,
   LucideLayers,
   LucideUploadCloud,
-  LucideBellDot
+  LucideBellDot,
+  LucideAlertTriangle
 } from '@lucide/angular';
 
 @Component({
@@ -79,6 +80,7 @@ export class App {
   protected readonly LucideLayers = LucideLayers;
   protected readonly LucideUploadCloud = LucideUploadCloud;
   protected readonly LucideBellDot = LucideBellDot;
+  protected readonly LucideAlertTriangle = LucideAlertTriangle;
 
 
   constructor() {

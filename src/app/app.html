@@ -55,6 +55,8 @@
       </talos-nav-group>
 
       <talos-nav-group title="NOTIFICATIONS" [collapsible]="true">
+        <talos-nav-item label="Alerts" [icon]="LucideAlertTriangle" [active]="activeSegment() === 'alert'"
+          (itemClick)="navigate('/alert')" />
         <talos-nav-item label="Snackbar / Toast" [icon]="LucideBell" [active]="activeSegment() === 'snackbar'"
           (itemClick)="navigate('/snackbar')" />
       </talos-nav-group>

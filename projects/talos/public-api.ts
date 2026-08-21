@@ -130,3 +130,12 @@ export * from './form/drop-zone/drop-zone.module';
 export * from './data-display/badge/badge.types';
 export * from './data-display/badge/badge.directive';
 export * from './data-display/badge/badge.module';
+
+// Alert service, components, directives, module & types
+export * from './feedback/alert/alert.types';
+export * from './feedback/alert/alert.service';
+export * from './feedback/alert/alert.directives';
+export * from './feedback/alert/alert/alert.component';
+export * from './feedback/alert/alert-container/alert-container.component';
+export * from './feedback/alert/alert.module';
+

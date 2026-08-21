@@ -1,0 +1,731 @@
+<!-- Top Banner Stream Container -->
+<talos-alert-container type="banner" />
+
+<div class="demo-page-content">
+  <header class="page-header">
+    <div class="badge">talos/components · Alert</div>
+    <h1>Alert &amp; Feedback Notice Showcase</h1>
+    <p class="subtitle">
+      Configurable, accessible, signal-driven contextual alerts and banners supporting four core severities (Success, Info, Warning, Error),
+      appearances, actions, timers, and programmatic dispatch.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <!-- Active Alerts Live Feed (Rendered when buttons are clicked) -->
+    @if (alertService.alerts().length > 0 || alertService.bannerAlerts().length > 0) {
+      <div class="active-alerts-live-box">
+        <div class="live-box-header">
+          <div class="live-badge-row">
+            <span class="live-pulse-dot"></span>
+            <strong>Active Programmatic Alert Stream ({{ alertService.alerts().length + alertService.bannerAlerts().length }})</strong>
+          </div>
+          <button type="button" talosButton variant="ghost" size="sm" (click)="dismissAll()">
+            Dismiss All
+          </button>
+        </div>
+        <div class="live-stream-alerts-list">
+          <talos-alert-container type="all" />
+        </div>
+      </div>
+    }
+
+    <!-- Comparison Card: Alert vs Snackbar vs Dialog -->
+    <div class="card comparison-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Architecture Guide</span>
+          <h2>When to Use: Alert vs. Snackbar vs. Dialog</h2>
+          <span class="card-subtitle">Understand when each feedback component fits best in enterprise UX</span>
+        </div>
+      </div>
+
+      <div class="comparison-grid">
+        <!-- Alert Card -->
+        <div class="comparison-item is-highlighted">
+          <div class="comparison-header">
+            <span class="component-pill alert-pill">TalosAlert &amp; Service</span>
+            <h3>Contextual Alert</h3>
+          </div>
+          <p class="comparison-desc">
+            <strong>In-page flow / persistent banner:</strong> Stays visible until user dismisses or condition is resolved. Ideal for quota warnings, validation summaries, or system outages.
+          </p>
+          <div class="comparison-action-row">
+            <button type="button" talosButton variant="primary" (click)="triggerSimpleAlert()">
+              Trigger Simple Alert
+            </button>
+            <button type="button" talosButton variant="ghost" (click)="triggerBanner()">
+              Trigger Top Banner
+            </button>
+          </div>
+        </div>
+
+        <!-- Snackbar Card -->
+        <div class="comparison-item">
+          <div class="comparison-header">
+            <span class="component-pill snackbar-pill">TalosSnackbarService</span>
+            <h3>Toast / Snackbar</h3>
+          </div>
+          <p class="comparison-desc">
+            <strong>Floating overlay:</strong> Ephemeral (auto-closes in 3-4s) for background operations that don't disrupt user focus (e.g., "Saved", "Synced", "Email sent").
+          </p>
+          <div class="comparison-action-row">
+            <button type="button" talosButton variant="secondary" (click)="triggerSnackbarDemo()">
+              Trigger Toast (Snackbar)
+            </button>
+          </div>
+        </div>
+
+        <!-- Dialog Card -->
+        <div class="comparison-item">
+          <div class="comparison-header">
+            <span class="component-pill dialog-pill">TalosDialogService</span>
+            <h3>Dialog Alert Modal</h3>
+          </div>
+          <p class="comparison-desc">
+            <strong>Blocking modal backdrop:</strong> Completely halts workflow and forces explicit acknowledgement before proceeding (e.g. "Session Expired", "Data Loss Warning").
+          </p>
+          <div class="comparison-action-row">
+            <button type="button" talosButton variant="outline" (click)="triggerDialogAlertDemo()">
+              Trigger Modal Dialog
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Presets Triggers for the 4 Severities -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Quick Preset Triggers (4 Severity States)</h2>
+          <span class="card-subtitle">Dispatch pre-configured alerts representing the four core severity states</span>
+        </div>
+      </div>
+      <div class="button-group">
+        <button type="button" talosButton variant="primary" (click)="triggerSuccess()">
+          Success (Default)
+        </button>
+        <button type="button" talosButton variant="outline" (click)="triggerInfo()">
+          Info State
+        </button>
+        <button type="button" talosButton variant="secondary" (click)="triggerWarning()">
+          Warning State
+        </button>
+        <button type="button" talosButton variant="danger" (click)="triggerError()">
+          Error State
+        </button>
+        <button type="button" talosButton variant="ghost" (click)="triggerBanner()">
+          Global Banner Alert
+        </button>
+        <button type="button" talosButton variant="danger" (click)="dismissAll()">
+          Dismiss All Active
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Interactive Configurator & Stage -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Live Sandbox</span>
+          <h2>Interactive Alert Playground</h2>
+          <span class="card-subtitle">Customize and test real-time configurations of TalosAlertComponent</span>
+        </div>
+      </div>
+
+      <div class="interactive-stage-layout">
+        <!-- Live Preview Box (Left Column) -->
+        <div class="preview-stage">
+          <div class="stage-header">
+            <span class="preview-label">Live Component Preview</span>
+            <button type="button" talosButton variant="outline" size="sm" (click)="dispatchPlaygroundAlert()">
+              + Dispatch to Stream
+            </button>
+          </div>
+
+          <div class="preview-hero-box">
+            <talos-alert
+              [severity]="selectedSeverity()"
+              [appearance]="selectedAppearance()"
+              [size]="selectedSize()"
+              [title]="titleText()"
+              [message]="messageText()"
+              [showIcon]="showIcon()"
+              [showSeverityBadge]="showSeverityBadge()"
+              [dismissible]="isDismissible()"
+              [bordered]="isBordered()"
+              [actionLabel]="actionText() || undefined"
+              (action)="onPlaygroundAction()"
+              (dismiss)="onPlaygroundDismiss()"
+            />
+          </div>
+
+          <!-- Live Generated Code -->
+          <div class="code-stage">
+            <div class="code-header">
+              <span class="code-lang">HTML &amp; Angular Signals</span>
+            </div>
+            <pre class="code-block"><code>{{ playgroundCode() }}</code></pre>
+          </div>
+        </div>
+
+        <!-- Playground Controls (Right Column) -->
+        <div class="controls-panel">
+          <h3 class="controls-title">Configuration Properties</h3>
+
+          <div class="field-group">
+            <label class="field-label">Header Title</label>
+            <input
+              talosInput
+              type="text"
+              [ngModel]="titleText()"
+              (ngModelChange)="titleText.set($event)"
+              placeholder="Alert headline"
+            />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Message Content</label>
+            <input
+              talosInput
+              type="text"
+              [ngModel]="messageText()"
+              (ngModelChange)="messageText.set($event)"
+              placeholder="Detailed description"
+            />
+          </div>
+
+          <!-- Severity Level (4 Values: success, info, warning, error) -->
+          <div class="field-group">
+            <label class="field-label">Severity State (4 Core Combinations)</label>
+            <div class="pill-selectors-row">
+              <button
+                type="button"
+                class="pill-select-btn sev-success"
+                [class.is-active]="selectedSeverity() === 'success'"
+                (click)="selectedSeverity.set('success')"
+              >
+                ✓ Success (Default)
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn sev-info"
+                [class.is-active]="selectedSeverity() === 'info'"
+                (click)="selectedSeverity.set('info')"
+              >
+                ℹ Info
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn sev-warning"
+                [class.is-active]="selectedSeverity() === 'warning'"
+                (click)="selectedSeverity.set('warning')"
+              >
+                ⚠ Warning
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn sev-error"
+                [class.is-active]="selectedSeverity() === 'error'"
+                (click)="selectedSeverity.set('error')"
+              >
+                ✕ Error
+              </button>
+            </div>
+          </div>
+
+          <!-- Appearance Style -->
+          <div class="field-group">
+            <label class="field-label">Surface Appearance</label>
+            <div class="pill-selectors-row">
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedAppearance() === 'subtle'"
+                (click)="selectedAppearance.set('subtle')"
+              >
+                Subtle (Default)
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedAppearance() === 'outline'"
+                (click)="selectedAppearance.set('outline')"
+              >
+                Outline
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedAppearance() === 'filled'"
+                (click)="selectedAppearance.set('filled')"
+              >
+                Filled
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedAppearance() === 'accent'"
+                (click)="selectedAppearance.set('accent')"
+              >
+                Left Accent
+              </button>
+            </div>
+          </div>
+
+          <!-- Sizing -->
+          <div class="field-group">
+            <label class="field-label">Size</label>
+            <div class="pill-selectors-row">
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedSize() === 'sm'"
+                (click)="selectedSize.set('sm')"
+              >
+                Small
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedSize() === 'md'"
+                (click)="selectedSize.set('md')"
+              >
+                Medium
+              </button>
+              <button
+                type="button"
+                class="pill-select-btn"
+                [class.is-active]="selectedSize() === 'lg'"
+                (click)="selectedSize.set('lg')"
+              >
+                Large
+              </button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Action Button Text</label>
+            <input
+              talosInput
+              type="text"
+              [ngModel]="actionText()"
+              (ngModelChange)="actionText.set($event)"
+              placeholder="e.g. View Status, Retry"
+            />
+          </div>
+
+          <!-- Feature Toggles (Clean Grid) -->
+          <div class="toggles-grid-2x2">
+            <div class="toggle-control-item">
+              <div>
+                <div class="toggle-label">Severity Badge</div>
+                <div class="toggle-sub">Show indicator pill</div>
+              </div>
+              <talos-slide-toggle
+                [checked]="showSeverityBadge()"
+                (checkedChange)="showSeverityBadge.set($event)"
+              />
+            </div>
+
+            <div class="toggle-control-item">
+              <div>
+                <div class="toggle-label">Dismissible</div>
+                <div class="toggle-sub">Show close 'X'</div>
+              </div>
+              <talos-slide-toggle
+                [checked]="isDismissible()"
+                (checkedChange)="isDismissible.set($event)"
+              />
+            </div>
+
+            <div class="toggle-control-item">
+              <div>
+                <div class="toggle-label">Show Icon</div>
+                <div class="toggle-sub">Contextual SVG icon</div>
+              </div>
+              <talos-slide-toggle
+                [checked]="showIcon()"
+                (checkedChange)="showIcon.set($event)"
+              />
+            </div>
+
+            <div class="toggle-control-item">
+              <div>
+                <div class="toggle-label">Border Outline</div>
+                <div class="toggle-sub">1px crisp border</div>
+              </div>
+              <talos-slide-toggle
+                [checked]="isBordered()"
+                (checkedChange)="isBordered.set($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unified Pattern Explorer -->
+    <div class="card showcase-card">
+      <div class="card-header">
+        <div>
+          <span class="sub-badge">Architecture &amp; Patterns</span>
+          <h2>Enterprise Alert Patterns</h2>
+          <span class="card-subtitle">Comprehensive examples of the 4 severities, visual appearances, actions, and service integration</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="pattern-switcher-nav">
+        <talos-button-group
+          [value]="selectedPattern()"
+          (valueChange)="selectedPattern.set($event)"
+        >
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="severityLevels"
+          >
+            1. Four Severity States
+          </button>
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="simpleVsComplex"
+          >
+            2. Simple vs Complex
+          </button>
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="appearances"
+          >
+            3. Visual Appearances
+          </button>
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="actionable"
+          >
+            4. Actionable Alerts
+          </button>
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="serviceStack"
+          >
+            5. Alert Service Stream
+          </button>
+          <button
+            type="button"
+            talosButton
+            talosButtonGroupItem
+            value="customSlots"
+          >
+            6. Rich Custom Slots
+          </button>
+        </talos-button-group>
+      </div>
+
+      <div class="pattern-stage mt-3">
+        <!-- PATTERN 1: The 4 Severity States (Success, Info, Warning, Error) -->
+        @if (selectedPattern() === 'severityLevels') {
+          <talos-preview-code-card
+            title="Four Severity States with Icons &amp; Colors"
+            subtitle="Four distinct states: Success (the default), Info, Warning, and Error with corresponding icon and color combinations."
+            badge="Severity Engine"
+            [htmlCode]="severityPatternHtml"
+            [tsCode]="severityPatternTs"
+          >
+            <div class="pattern-stack">
+              <!-- 1. Success (Default) -->
+              <div>
+                <span class="sub-badge" style="color: #16a34a; background: rgba(22, 163, 74, 0.1);">1. Success (Default Severity)</span>
+                <talos-alert
+                  severity="success"
+                  [showSeverityBadge]="true"
+                  title="Deployment Succeeded"
+                  message="Production deployment pipeline passed 142 integration tests and rolled out seamlessly."
+                  actionLabel="View Logs"
+                  [dismissible]="true"
+                />
+              </div>
+
+              <!-- 2. Info -->
+              <div>
+                <span class="sub-badge" style="color: #0284c7; background: rgba(2, 132, 199, 0.1);">2. Info</span>
+                <talos-alert
+                  severity="info"
+                  [showSeverityBadge]="true"
+                  title="Scheduled Maintenance"
+                  message="Planned maintenance window is scheduled for Saturday 02:00 UTC. Zero downtime expected."
+                  actionLabel="Details"
+                  [dismissible]="true"
+                />
+              </div>
+
+              <!-- 3. Warning -->
+              <div>
+                <span class="sub-badge" style="color: #d97706; background: rgba(217, 119, 6, 0.1);">3. Warning</span>
+                <talos-alert
+                  severity="warning"
+                  [showSeverityBadge]="true"
+                  title="Storage Threshold Warning"
+                  message="Allocated PostgreSQL disk space is at 88% capacity. Auto-scaling threshold is 90%."
+                  actionLabel="Increase Quota"
+                  [dismissible]="true"
+                />
+              </div>
+
+              <!-- 4. Error -->
+              <div>
+                <span class="sub-badge" style="color: #dc2626; background: rgba(220, 38, 38, 0.1);">4. Error</span>
+                <talos-alert
+                  severity="error"
+                  [showSeverityBadge]="true"
+                  title="Authentication Outage Detected"
+                  message="Primary auth cluster disconnected. Fallback tokens active in read-only mode."
+                  actionLabel="Failover"
+                  [dismissible]="true"
+                />
+              </div>
+            </div>
+          </talos-preview-code-card>
+        }
+
+        <!-- PATTERN 2: Simple 1-Line vs Complex Alerts -->
+        @if (selectedPattern() === 'simpleVsComplex') {
+          <talos-preview-code-card
+            title="Simple 1-Line Alerts vs Complex Contextual Alerts"
+            subtitle="Alerts can be as simple as a 1-line message, or as rich as a multi-action diagnostic notice with severity badges."
+            badge="Zero Boilerplate"
+            [htmlCode]="simpleVsComplexPatternHtml"
+            [tsCode]="simpleVsComplexPatternTs"
+          >
+            <div class="pattern-stack">
+              <div>
+                <span class="sub-badge">Simple 1-Line Alerts (Defaults to Success)</span>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
+                  <talos-alert message="Profile changes saved successfully." />
+                  <talos-alert severity="error" message="Database connection lost. Retrying in 5s..." />
+                  <talos-alert severity="warning" message="Your quota limit is reaching 90%." />
+                  <talos-alert severity="info" message="New feature release v0.2.0 is live." />
+                </div>
+              </div>
+
+              <div style="margin-top: 1rem;">
+                <span class="sub-badge">Complex Contextual Alert (With Title, Severity Badge &amp; Action)</span>
+                <div style="margin-top: 0.5rem;">
+                  <talos-alert
+                    severity="error"
+                    appearance="accent"
+                    [showSeverityBadge]="true"
+                    title="Payment Method Update Required"
+                    message="Your primary billing credit card ending in 4242 failed to process. Update billing to maintain active API endpoints."
+                    actionLabel="Update Billing"
+                    [dismissible]="true"
+                    (action)="onPlaygroundAction()"
+                    (dismiss)="onPlaygroundDismiss()"
+                  />
+                </div>
+              </div>
+            </div>
+          </talos-preview-code-card>
+        }
+
+        <!-- PATTERN 3: Visual Appearances -->
+        @if (selectedPattern() === 'appearances') {
+          <talos-preview-code-card
+            title="Visual Appearances &amp; Themes"
+            subtitle="Choose between Subtle (soft tint), Outline, Filled (high-impact contrast), and Left Accent Border."
+            badge="Styling Engine"
+            [htmlCode]="appearancesPatternHtml"
+            [tsCode]="appearancesPatternTs"
+          >
+            <div class="pattern-stack">
+              <!-- Subtle -->
+              <div>
+                <span class="sub-badge">Subtle (Default)</span>
+                <talos-alert
+                  severity="info"
+                  appearance="subtle"
+                  title="Subtle Appearance"
+                  message="Ideal for embedded form notices, card warnings, and gentle feedback."
+                />
+              </div>
+
+              <!-- Left Accent -->
+              <div>
+                <span class="sub-badge">Left Accent Border</span>
+                <talos-alert
+                  severity="warning"
+                  appearance="accent"
+                  title="Accent Border Appearance"
+                  message="Card-like white/dark surface with a bold colored left accent stripe."
+                />
+              </div>
+
+              <!-- Outline -->
+              <div>
+                <span class="sub-badge">Outline</span>
+                <talos-alert
+                  severity="success"
+                  appearance="outline"
+                  title="Outline Appearance"
+                  message="Crisp transparent background with a colored 1px border outline."
+                />
+              </div>
+
+              <!-- Filled -->
+              <div>
+                <span class="sub-badge">Filled (High Impact)</span>
+                <talos-alert
+                  severity="error"
+                  appearance="filled"
+                  title="Filled Appearance"
+                  message="High contrast solid background for critical announcements and severe errors."
+                />
+              </div>
+            </div>
+          </talos-preview-code-card>
+        }
+
+        <!-- PATTERN 4: Actionable Alerts -->
+        @if (selectedPattern() === 'actionable') {
+          <talos-preview-code-card
+            title="Actionable Alerts &amp; Interactions"
+            subtitle="Seamlessly bind action buttons and dismiss events for immediate user resolution."
+            badge="Interactive"
+            [htmlCode]="actionablePatternHtml"
+            [tsCode]="actionablePatternTs"
+          >
+            <div class="pattern-stack">
+              <talos-alert
+                severity="warning"
+                appearance="accent"
+                title="Unsaved Architectural Changes"
+                message="You have unsaved route guards and security token policies."
+                actionLabel="Save Now"
+                [dismissible]="true"
+                (action)="onPlaygroundAction()"
+                (dismiss)="onPlaygroundDismiss()"
+              />
+
+              <talos-alert
+                severity="error"
+                appearance="subtle"
+                title="Payment Method Required"
+                message="Your billing invoice has failed to process. Update card details to prevent service freeze."
+                actionLabel="Update Billing"
+                [dismissible]="true"
+              />
+            </div>
+          </talos-preview-code-card>
+        }
+
+        <!-- PATTERN 5: Service Stack -->
+        @if (selectedPattern() === 'serviceStack') {
+          <talos-preview-code-card
+            title="Programmatic Alert Service (TalosAlertService)"
+            subtitle="Trigger, manage, and auto-dismiss alerts programmatically from any Angular service or component."
+            badge="TalosAlertService"
+            [htmlCode]="servicePatternHtml"
+            [tsCode]="servicePatternTs"
+          >
+            <div class="pattern-stack">
+              <div class="button-group">
+                <button type="button" talosButton variant="primary" (click)="triggerSuccess()">
+                  + Push Success
+                </button>
+                <button type="button" talosButton variant="outline" (click)="triggerInfo()">
+                  + Push Info
+                </button>
+                <button type="button" talosButton variant="secondary" (click)="triggerWarning()">
+                  + Push Warning
+                </button>
+                <button type="button" talosButton variant="danger" (click)="triggerError()">
+                  + Push Error
+                </button>
+                <button type="button" talosButton variant="outline" (click)="dismissAll()">
+                  Clear Stream
+                </button>
+              </div>
+
+              <!-- Container rendering programmatic alerts -->
+              <div class="stream-container-box">
+                <div class="stream-header">Active Alert Stream:</div>
+                <talos-alert-container type="inline" />
+                @if (alertService.alerts().length === 0) {
+                  <div class="empty-stream-text">No active alerts in stream. Click buttons above to push alerts.</div>
+                }
+              </div>
+            </div>
+          </talos-preview-code-card>
+        }
+
+        <!-- PATTERN 6: Custom Slots -->
+        @if (selectedPattern() === 'customSlots') {
+          <talos-preview-code-card
+            title="Rich Custom Slots &amp; Template Projection"
+            subtitle="Compose complex alert UIs using custom title, description, actions, and icon directives."
+            badge="Content Projection"
+            [htmlCode]="slotsPatternHtml"
+            [tsCode]="slotsPatternTs"
+          >
+            <div class="pattern-stack">
+              <talos-alert severity="info" appearance="accent">
+                <div talosAlertTitle class="custom-title-row">
+                  <span>🚀 Enterprise Feature Activated: Global Edge CDN</span>
+                  <span class="talos-alert-severity-badge" data-severity="info">NEW</span>
+                </div>
+
+                <div talosAlertDescription>
+                  <p style="margin: 0.25rem 0 0.5rem 0;">
+                    Your account has been upgraded to utilize anycast edge routing across 42 global datacenters.
+                  </p>
+                  <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.8125rem;">
+                    <li>Average TTFB reduced by 64%</li>
+                    <li>Zero-config HTTPS SSL termination</li>
+                    <li>Built-in DDoS rate limiting</li>
+                  </ul>
+                </div>
+
+                <div talosAlertActions class="custom-actions-row">
+                  <button type="button" talosButton variant="primary" size="sm">
+                    Configure CDN
+                  </button>
+                  <button type="button" talosButton variant="ghost" size="sm">
+                    Documentation
+                  </button>
+                </div>
+              </talos-alert>
+            </div>
+          </talos-preview-code-card>
+        }
+      </div>
+    </div>
+
+    <!-- Event Activity Log -->
+    @if (actionLog().length > 0) {
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2>Event Activity Log</h2>
+            <span class="card-subtitle">Real-time callbacks captured from alerts and service dispatchers</span>
+          </div>
+        </div>
+        <ul class="log-list">
+          @for (log of actionLog(); track log) {
+            <li class="log-item">{{ log }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </main>
+</div>

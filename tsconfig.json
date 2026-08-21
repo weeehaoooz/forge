@@ -51,6 +51,12 @@
       "@daedal-dev/talos-ui/feedback/snackbar": [
         "./projects/talos/feedback/snackbar/index.ts"
       ],
+      "@daedal-dev/talos-ui/alert": [
+        "./projects/talos/feedback/alert/index.ts"
+      ],
+      "@daedal-dev/talos-ui/feedback/alert": [
+        "./projects/talos/feedback/alert/index.ts"
+      ],
       "@daedal-dev/talos-ui/form/input": [
         "./projects/talos/form/input/index.ts"
       ],
@@ -158,6 +164,12 @@
       ],
       "@talos/components/feedback/snackbar": [
         "./projects/talos/feedback/snackbar/index.ts"
+      ],
+      "@talos/components/alert": [
+        "./projects/talos/feedback/alert/index.ts"
+      ],
+      "@talos/components/feedback/alert": [
+        "./projects/talos/feedback/alert/index.ts"
       ],
       "@talos/components/form/input": [
         "./projects/talos/form/input/index.ts"

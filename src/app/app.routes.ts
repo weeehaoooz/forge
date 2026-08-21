@@ -43,6 +43,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/snackbar/snackbar-page').then(m => m.SnackbarPage)
   },
   {
+    path: 'alert',
+    loadComponent: () => import('./pages/alert/alert-page').then(m => m.AlertPage)
+  },
+  {
     path: 'heatmap',
     loadComponent: () => import('./pages/heatmap/heatmap-page').then(m => m.HeatmapPage)
   },

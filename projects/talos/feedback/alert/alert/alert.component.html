@@ -1,0 +1,116 @@
+@if (!isDismissed()) {
+<div
+  class="talos-alert"
+  [class.variant-default]="resolvedVariant() === 'default'"
+  [class.variant-info]="resolvedVariant() === 'info'"
+  [class.variant-success]="resolvedVariant() === 'success'"
+  [class.variant-warning]="resolvedVariant() === 'warning'"
+  [class.variant-error]="resolvedVariant() === 'error'"
+  [class.variant-primary]="resolvedVariant() === 'primary'"
+  [class.variant-critical]="resolvedVariant() === 'critical'"
+  [class.appearance-subtle]="appearance() === 'subtle'"
+  [class.appearance-outline]="appearance() === 'outline'"
+  [class.appearance-filled]="appearance() === 'filled'"
+  [class.appearance-accent]="appearance() === 'accent'"
+  [class.appearance-left-border]="appearance() === 'left-border'"
+  [class.size-sm]="size() === 'sm'"
+  [class.size-md]="size() === 'md'"
+  [class.size-lg]="size() === 'lg'"
+  [class.is-bordered]="bordered()"
+  [class.is-dismissing]="isDismissing()"
+  [class]="customClass()"
+  [attr.role]="ariaRole()"
+  [attr.aria-live]="ariaLive()"
+>
+  <!-- Icon Section -->
+  @if (showIcon() && icon() !== false) {
+  <div class="talos-alert-icon" aria-hidden="true">
+    @if (isIconTemplate()) {
+      <ng-container *ngTemplateOutlet="iconTemplate()"></ng-container>
+    } @else if (customIconComponent()) {
+      <ng-container *ngComponentOutlet="customIconComponent()"></ng-container>
+    } @else {
+      <ng-content select="[talosAlertIcon], talos-alert-icon"></ng-content>
+      @switch (resolvedVariant()) {
+        @case ('critical') {
+          <svg lucideAlertOctagon [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+        @case ('error') {
+          <svg lucideCircleAlert [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+        @case ('warning') {
+          <svg lucideAlertTriangle [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+        @case ('success') {
+          <svg lucideCheckCircle2 [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+        @case ('primary') {
+          <svg lucideShieldAlert [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+        @default {
+          <svg lucideInfo [size]="size() === 'sm' ? 16 : size() === 'lg' ? 24 : 20"></svg>
+        }
+      }
+    }
+  </div>
+  }
+
+  <!-- Main Alert Body & Details -->
+  <div class="talos-alert-body">
+    <!-- Header: Title & Severity Badge -->
+    <div class="talos-alert-header">
+      @if (title()) {
+        @if (isTitleTemplate()) {
+          <div class="talos-alert-title">
+            <ng-container *ngTemplateOutlet="titleTemplate()"></ng-container>
+          </div>
+        } @else {
+          <h4 class="talos-alert-title">{{ title() }}</h4>
+        }
+      }
+      <ng-content select="[talosAlertTitle], talos-alert-title"></ng-content>
+
+      @if (showSeverityBadge() && severityLabel()) {
+        <span class="talos-alert-severity-badge" [attr.data-severity]="resolvedVariant()">
+          {{ severityLabel() }}
+        </span>
+      }
+    </div>
+
+    <!-- Message Description Content -->
+    <div class="talos-alert-message">
+      @if (message()) {
+        @if (isMessageTemplate()) {
+          <ng-container *ngTemplateOutlet="messageTemplate()"></ng-container>
+        } @else {
+          <span>{{ message() }}</span>
+        }
+      }
+      <ng-content select="[talosAlertDescription], talos-alert-description"></ng-content>
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <!-- Actions & Close Button -->
+  <div class="talos-alert-actions">
+    <ng-content select="[talosAlertActions], talos-alert-actions"></ng-content>
+
+    @if (actionLabel()) {
+      <button type="button" class="talos-alert-action-btn" (click)="onActionClick()">
+        {{ actionLabel() }}
+      </button>
+    }
+
+    @if (dismissible()) {
+      <button
+        type="button"
+        class="talos-alert-close-btn"
+        aria-label="Dismiss alert"
+        (click)="onCloseClick()"
+      >
+        <svg lucideX [size]="size() === 'sm' ? 14 : 16"></svg>
+      </button>
+    }
+  </div>
+</div>
+}

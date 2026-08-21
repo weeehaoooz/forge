@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Talos UI Alert Tokens & Styles
+   ========================================================================== */
+
+:root {
+  --talos-alert-radius: var(--border-radius, 0.5rem);
+  --talos-alert-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+
+  /* Alert Sizing */
+  --talos-alert-padding-sm: 0.5rem 0.75rem;
+  --talos-alert-padding-md: 0.75rem 1rem;
+  --talos-alert-padding-lg: 1rem 1.25rem;
+  --talos-alert-gap: 0.75rem;
+
+  /* Default Variant */
+  --talos-alert-default-bg: #f8fafc;
+  --talos-alert-default-border: #e2e8f0;
+  --talos-alert-default-text: #1e293b;
+  --talos-alert-default-icon: #64748b;
+
+  /* Info Variant */
+  --talos-alert-info-bg: #eff6ff;
+  --talos-alert-info-border: #bfdbfe;
+  --talos-alert-info-text: #1e40af;
+  --talos-alert-info-icon: #3b82f6;
+
+  /* Success Variant */
+  --talos-alert-success-bg: #f0fdf4;
+  --talos-alert-success-border: #bbf7d0;
+  --talos-alert-success-text: #166534;
+  --talos-alert-success-icon: #22c55e;
+
+  /* Warning Variant */
+  --talos-alert-warning-bg: #fffbeb;
+  --talos-alert-warning-border: #fde68a;
+  --talos-alert-warning-text: #92400e;
+  --talos-alert-warning-icon: #f59e0b;
+
+  /* Error / High Variant */
+  --talos-alert-error-bg: #fef2f2;
+  --talos-alert-error-border: #fecaca;
+  --talos-alert-error-text: #991b1b;
+  --talos-alert-error-icon: #ef4444;
+
+  /* Critical Variant */
+  --talos-alert-critical-bg: #450a0a;
+  --talos-alert-critical-border: #b91c1c;
+  --talos-alert-critical-text: #fef2f2;
+  --talos-alert-critical-icon: #f87171;
+
+  /* Primary Variant */
+  --talos-alert-primary-bg: #eff6ff;
+  --talos-alert-primary-border: #93c5fd;
+  --talos-alert-primary-text: #1e3a8a;
+  --talos-alert-primary-icon: #2563eb;
+}
+
+/* Dark Mode Tokens */
+:root[data-theme="dark"],
+:root.dark,
+[data-theme="dark"],
+[data-mode="dark"],
+.dark,
+.dark-theme {
+  --talos-alert-default-bg: #1e293b;
+  --talos-alert-default-border: #334155;
+  --talos-alert-default-text: #f1f5f9;
+  --talos-alert-default-icon: #94a3b8;
+
+  --talos-alert-info-bg: rgba(30, 58, 138, 0.25);
+  --talos-alert-info-border: rgba(59, 130, 246, 0.4);
+  --talos-alert-info-text: #dbeafe;
+  --talos-alert-info-icon: #60a5fa;
+
+  --talos-alert-success-bg: rgba(20, 83, 45, 0.25);
+  --talos-alert-success-border: rgba(34, 197, 94, 0.4);
+  --talos-alert-success-text: #dcfce7;
+  --talos-alert-success-icon: #4ade80;
+
+  --talos-alert-warning-bg: rgba(120, 53, 15, 0.25);
+  --talos-alert-warning-border: rgba(245, 158, 11, 0.4);
+  --talos-alert-warning-text: #fef3c7;
+  --talos-alert-warning-icon: #fbbf24;
+
+  --talos-alert-error-bg: rgba(127, 29, 29, 0.25);
+  --talos-alert-error-border: rgba(239, 68, 68, 0.4);
+  --talos-alert-error-text: #fee2e2;
+  --talos-alert-error-icon: #f87171;
+
+  --talos-alert-critical-bg: rgba(153, 27, 27, 0.4);
+  --talos-alert-critical-border: #ef4444;
+  --talos-alert-critical-text: #ffffff;
+  --talos-alert-critical-icon: #fca5a5;
+
+  --talos-alert-primary-bg: rgba(37, 99, 235, 0.2);
+  --talos-alert-primary-border: rgba(59, 130, 246, 0.45);
+  --talos-alert-primary-text: #eff6ff;
+  --talos-alert-primary-icon: #3b82f6;
+}

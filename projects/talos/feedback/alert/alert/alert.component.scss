@@ -1,0 +1,411 @@
+:host {
+  display: block;
+  width: 100%;
+  transition: opacity 0.2s ease, transform 0.2s ease, max-height 0.2s ease, margin 0.2s ease;
+
+  &.is-dismissing {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    pointer-events: none;
+  }
+
+  &.is-dismissed {
+    display: none !important;
+  }
+}
+
+.talos-alert {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--talos-alert-gap, 0.75rem);
+  width: 100%;
+  border-radius: var(--talos-alert-radius, 0.5rem);
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: all 0.2s ease-in-out;
+
+  /* Sizing */
+  &.size-sm {
+    padding: var(--talos-alert-padding-sm, 0.5rem 0.75rem);
+    font-size: 0.8125rem;
+
+    .talos-alert-title {
+      font-size: 0.875rem;
+    }
+  }
+
+  &.size-md {
+    padding: var(--talos-alert-padding-md, 0.75rem 1rem);
+    font-size: 0.875rem;
+
+    .talos-alert-title {
+      font-size: 0.9375rem;
+    }
+  }
+
+  &.size-lg {
+    padding: var(--talos-alert-padding-lg, 1rem 1.25rem);
+    font-size: 0.9375rem;
+
+    .talos-alert-title {
+      font-size: 1.0625rem;
+    }
+  }
+
+  &.is-bordered {
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  /* -------------------------------------------------------------
+     APPEARANCES & VARIANTS
+     ------------------------------------------------------------- */
+
+  /* SUBTLE APPEARANCE (Default) */
+  &.appearance-subtle {
+    border: 1px solid transparent;
+
+    &.variant-default {
+      background-color: var(--talos-alert-default-bg);
+      border-color: var(--talos-alert-default-border);
+      color: var(--talos-alert-default-text);
+      .talos-alert-icon { color: var(--talos-alert-default-icon); }
+    }
+
+    &.variant-info {
+      background-color: var(--talos-alert-info-bg);
+      border-color: var(--talos-alert-info-border);
+      color: var(--talos-alert-info-text);
+      .talos-alert-icon { color: var(--talos-alert-info-icon); }
+    }
+
+    &.variant-success {
+      background-color: var(--talos-alert-success-bg);
+      border-color: var(--talos-alert-success-border);
+      color: var(--talos-alert-success-text);
+      .talos-alert-icon { color: var(--talos-alert-success-icon); }
+    }
+
+    &.variant-warning {
+      background-color: var(--talos-alert-warning-bg);
+      border-color: var(--talos-alert-warning-border);
+      color: var(--talos-alert-warning-text);
+      .talos-alert-icon { color: var(--talos-alert-warning-icon); }
+    }
+
+    &.variant-error {
+      background-color: var(--talos-alert-error-bg);
+      border-color: var(--talos-alert-error-border);
+      color: var(--talos-alert-error-text);
+      .talos-alert-icon { color: var(--talos-alert-error-icon); }
+    }
+
+    &.variant-critical {
+      background-color: var(--talos-alert-critical-bg);
+      border-color: var(--talos-alert-critical-border);
+      color: var(--talos-alert-critical-text);
+      .talos-alert-icon { color: var(--talos-alert-critical-icon); }
+    }
+
+    &.variant-primary {
+      background-color: var(--talos-alert-primary-bg);
+      border-color: var(--talos-alert-primary-border);
+      color: var(--talos-alert-primary-text);
+      .talos-alert-icon { color: var(--talos-alert-primary-icon); }
+    }
+  }
+
+  /* OUTLINE APPEARANCE */
+  &.appearance-outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+
+    &.variant-default {
+      border-color: var(--talos-alert-default-border);
+      color: var(--talos-alert-default-text);
+      .talos-alert-icon { color: var(--talos-alert-default-icon); }
+    }
+
+    &.variant-info {
+      border-color: var(--talos-alert-info-icon);
+      color: var(--talos-alert-info-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-info-icon); }
+    }
+
+    &.variant-success {
+      border-color: var(--talos-alert-success-icon);
+      color: var(--talos-alert-success-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-success-icon); }
+    }
+
+    &.variant-warning {
+      border-color: var(--talos-alert-warning-icon);
+      color: var(--talos-alert-warning-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-warning-icon); }
+    }
+
+    &.variant-error {
+      border-color: var(--talos-alert-error-icon);
+      color: var(--talos-alert-error-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-error-icon); }
+    }
+
+    &.variant-critical {
+      border-color: var(--talos-alert-critical-border);
+      color: var(--talos-alert-critical-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-critical-icon); }
+    }
+
+    &.variant-primary {
+      border-color: var(--talos-alert-primary-icon);
+      color: var(--talos-alert-primary-icon);
+      .talos-alert-body { color: var(--talos-text-color, #0f172a); }
+      .talos-alert-icon { color: var(--talos-alert-primary-icon); }
+    }
+  }
+
+  /* FILLED APPEARANCE */
+  &.appearance-filled {
+    border: 1px solid transparent;
+    color: #ffffff;
+
+    .talos-alert-icon { color: #ffffff; }
+    .talos-alert-title { color: #ffffff; }
+    .talos-alert-message { color: rgba(255, 255, 255, 0.92); }
+
+    &.variant-default {
+      background-color: #475569;
+    }
+
+    &.variant-info {
+      background-color: #2563eb;
+    }
+
+    &.variant-success {
+      background-color: #16a34a;
+    }
+
+    &.variant-warning {
+      background-color: #d97706;
+    }
+
+    &.variant-error {
+      background-color: #dc2626;
+    }
+
+    &.variant-critical {
+      background-color: #991b1b;
+      box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+    }
+
+    &.variant-primary {
+      background-color: #2563eb;
+    }
+
+    .talos-alert-action-btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .talos-alert-close-btn {
+      color: rgba(255, 255, 255, 0.8);
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+      }
+    }
+  }
+
+  /* ACCENT / LEFT-BORDER APPEARANCE */
+  &.appearance-accent,
+  &.appearance-left-border {
+    background-color: var(--talos-card-bg, #ffffff);
+    border: 1px solid var(--talos-border-color, #e2e8f0);
+    border-left-width: 4px;
+    box-shadow: var(--talos-alert-shadow);
+    color: var(--talos-text-color, #0f172a);
+
+    &.variant-default {
+      border-left-color: var(--talos-alert-default-icon);
+      .talos-alert-icon { color: var(--talos-alert-default-icon); }
+    }
+
+    &.variant-info {
+      border-left-color: var(--talos-alert-info-icon);
+      .talos-alert-icon { color: var(--talos-alert-info-icon); }
+    }
+
+    &.variant-success {
+      border-left-color: var(--talos-alert-success-icon);
+      .talos-alert-icon { color: var(--talos-alert-success-icon); }
+    }
+
+    &.variant-warning {
+      border-left-color: var(--talos-alert-warning-icon);
+      .talos-alert-icon { color: var(--talos-alert-warning-icon); }
+    }
+
+    &.variant-error {
+      border-left-color: var(--talos-alert-error-icon);
+      .talos-alert-icon { color: var(--talos-alert-error-icon); }
+    }
+
+    &.variant-critical {
+      border-left-color: #ef4444;
+      .talos-alert-icon { color: #ef4444; }
+    }
+
+    &.variant-primary {
+      border-left-color: var(--talos-alert-primary-icon);
+      .talos-alert-icon { color: var(--talos-alert-primary-icon); }
+    }
+  }
+}
+
+/* Icon Container */
+.talos-alert-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  line-height: 1;
+
+  svg {
+    display: block;
+  }
+}
+
+/* Body & Details */
+.talos-alert-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.talos-alert-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.talos-alert-title {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.35;
+  color: inherit;
+}
+
+.talos-alert-message {
+  line-height: 1.45;
+  color: inherit;
+  opacity: 0.95;
+}
+
+/* Severity Pill Badge */
+.talos-alert-severity-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.4375rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: inherit;
+
+  &[data-severity="critical"] {
+    background-color: #ef4444;
+    color: #ffffff;
+  }
+
+  &[data-severity="error"] {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+  }
+
+  &[data-severity="warning"] {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #b45309;
+  }
+
+  &[data-severity="info"] {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #1d4ed8;
+  }
+
+  &[data-severity="success"] {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #15803d;
+  }
+}
+
+/* Actions Area */
+.talos-alert-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.talos-alert-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--talos-border-radius, 0.375rem);
+  border: 1px solid currentColor;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.talos-alert-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+  border-radius: var(--talos-border-radius, 0.375rem);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
