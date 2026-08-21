@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  LucideCheckCircle2,
+  LucideComponent,
+  LucideLayers,
+  LucideMousePointerClick,
+  LucideRadio,
+  LucideSparkles
+} from '@lucide/angular';
 import { TalosButtonDirective } from '@talos/components/button';
 import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
 import {
@@ -36,7 +44,13 @@ export type AlertPatternKey =
     TalosButtonGroupItemDirective,
     TalosInputDirective,
     TalosSlideToggleComponent,
-    TalosPreviewCodeCardComponent
+    TalosPreviewCodeCardComponent,
+    LucideCheckCircle2,
+    LucideComponent,
+    LucideLayers,
+    LucideMousePointerClick,
+    LucideRadio,
+    LucideSparkles
   ],
   templateUrl: './alert-page.html',
   styleUrl: './alert-page.scss'

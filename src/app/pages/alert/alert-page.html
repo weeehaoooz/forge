@@ -379,56 +379,70 @@
       <!-- Navigation Tabs -->
       <div class="pattern-switcher-nav">
         <talos-button-group
+          variant="segmented"
+          size="sm"
+          selectionMode="single"
           [value]="selectedPattern()"
-          (valueChange)="selectedPattern.set($event)"
         >
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="severityLevels"
+            (click)="selectedPattern.set('severityLevels')"
           >
-            1. Four Severity States
+            <svg lucideCheckCircle2 [size]="14"></svg>
+            <span>1. Four Severities</span>
           </button>
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="simpleVsComplex"
+            (click)="selectedPattern.set('simpleVsComplex')"
           >
-            2. Simple vs Complex
+            <svg lucideSparkles [size]="14"></svg>
+            <span>2. Simple vs Complex</span>
           </button>
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="appearances"
+            (click)="selectedPattern.set('appearances')"
           >
-            3. Visual Appearances
+            <svg lucideLayers [size]="14"></svg>
+            <span>3. Appearances</span>
           </button>
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="actionable"
+            (click)="selectedPattern.set('actionable')"
           >
-            4. Actionable Alerts
+            <svg lucideMousePointerClick [size]="14"></svg>
+            <span>4. Actionable</span>
           </button>
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="serviceStack"
+            (click)="selectedPattern.set('serviceStack')"
           >
-            5. Alert Service Stream
+            <svg lucideRadio [size]="14"></svg>
+            <span>5. Service Stream</span>
           </button>
           <button
             type="button"
             talosButton
             talosButtonGroupItem
             value="customSlots"
+            (click)="selectedPattern.set('customSlots')"
           >
-            6. Rich Custom Slots
+            <svg lucideComponent [size]="14"></svg>
+            <span>6. Custom Slots</span>
           </button>
         </talos-button-group>
       </div>
