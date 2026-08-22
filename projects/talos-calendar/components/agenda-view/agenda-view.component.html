@@ -1,0 +1,71 @@
+<div class="agenda-view-container">
+  @if (groups().length === 0) {
+    <div class="empty-agenda-state">
+      <svg lucideCalendar [size]="48" class="empty-icon"></svg>
+      <h3 class="empty-title">No Upcoming Events</h3>
+      <p class="empty-subtitle">There are no events or appointments scheduled in this period.</p>
+    </div>
+  } @else {
+    <div class="agenda-groups-list">
+      @for (group of groups(); track group.dateKey) {
+        <div class="agenda-group-section">
+          <!-- Day Header -->
+          <div class="group-header" [class.is-today]="group.isToday">
+            <span class="group-title">{{ group.dayLabel }}</span>
+            <span class="group-count">{{ group.events.length }} events</span>
+          </div>
+
+          <!-- Events List -->
+          <div class="group-events-list">
+            @for (ev of group.events; track ev.id) {
+              <div
+                class="agenda-event-row"
+                [class]="getEventColorClass(ev.color)"
+                (click)="onEventClick(ev)"
+              >
+                <!-- Color Indicator Bar -->
+                <div class="color-accent-stripe"></div>
+
+                <!-- Time Column -->
+                <div class="event-time-col">
+                  @if (ev.allDay) {
+                    <span class="all-day-badge">All Day</span>
+                  } @else {
+                    <span class="start-time">{{ formatTime(ev.start) }}</span>
+                    <span class="end-time">{{ formatTime(ev.end) }}</span>
+                  }
+                </div>
+
+                <!-- Event Details -->
+                <div class="event-info-col">
+                  <div class="title-and-category">
+                    <span class="event-title">{{ ev.title }}</span>
+                    @if (ev.category) {
+                      <span class="category-badge">{{ ev.category }}</span>
+                    }
+                  </div>
+
+                  @if (ev.description) {
+                    <p class="event-description">{{ ev.description }}</p>
+                  }
+
+                  @if (ev.location) {
+                    <div class="event-location-tag">
+                      <svg lucideMapPin [size]="12"></svg>
+                      <span>{{ ev.location }}</span>
+                    </div>
+                  }
+                </div>
+
+                <!-- Right Arrow -->
+                <div class="arrow-col">
+                  <svg lucideChevronRight [size]="18" class="row-arrow"></svg>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

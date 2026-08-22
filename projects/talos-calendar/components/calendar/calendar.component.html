@@ -1,0 +1,55 @@
+<div class="calendar-wrapper">
+  <!-- Calendar Top Header Bar -->
+  <talos-calendar-header
+    [currentDate]="currentDate()"
+    [view]="view()"
+    [showNewEventButton]="allowEventCreation()"
+    (prev)="onPrev()"
+    (next)="onNext()"
+    (today)="onToday()"
+    (viewChange)="onViewChange($event)"
+    (newEvent)="onNewEventClick()"
+  />
+
+  <!-- Active Calendar View Body -->
+  <div class="calendar-view-container">
+    @switch (view()) {
+      @case ('month') {
+        <talos-calendar-month-view
+          [currentDate]="currentDate()"
+          [events]="events()"
+          [selectedDate]="selectedDate()"
+          (eventClick)="onEventClick($event)"
+          (dateSelect)="onDateSelect($event)"
+        />
+      }
+      @case ('week') {
+        <talos-calendar-week-view
+          [currentDate]="currentDate()"
+          [events]="events()"
+          [startHour]="startHour()"
+          [endHour]="endHour()"
+          (eventClick)="onEventClick($event)"
+          (dateSelect)="onDateSelect($event)"
+        />
+      }
+      @case ('day') {
+        <talos-calendar-day-view
+          [currentDate]="currentDate()"
+          [events]="events()"
+          [startHour]="startHour()"
+          [endHour]="endHour()"
+          (eventClick)="onEventClick($event)"
+          (dateSelect)="onDateSelect($event)"
+        />
+      }
+      @case ('agenda') {
+        <talos-calendar-agenda-view
+          [currentDate]="currentDate()"
+          [events]="events()"
+          (eventClick)="onEventClick($event)"
+        />
+      }
+    }
+  </div>
+</div>

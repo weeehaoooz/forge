@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "talos-ui": {
+    "talos-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "talos-ui:build:production"
+              "buildTarget": "talos-demo:build:production"
             },
             "development": {
-              "buildTarget": "talos-ui:build:development"
+              "buildTarget": "talos-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,29 +74,53 @@
           "options": {
             "include": [
               "**/*.spec.ts",
-              "../projects/talos/**/*.spec.ts"
+              "../projects/talos-ui/**/*.spec.ts",
+              "../projects/talos-calendar/**/*.spec.ts"
             ]
           }
         }
       }
     },
-    "talos": {
+    "talos-ui": {
       "projectType": "library",
-      "root": "projects/talos",
-      "sourceRoot": "projects/talos",
+      "root": "projects/talos-ui",
+      "sourceRoot": "projects/talos-ui",
       "prefix": "talos",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/talos/ng-package.json"
+            "project": "projects/talos-ui/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/talos/tsconfig.lib.json"
+              "tsConfig": "projects/talos-ui/tsconfig.lib.json"
             },
             "development": {
-              "tsConfig": "projects/talos/tsconfig.lib.json"
+              "tsConfig": "projects/talos-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "talos-calendar": {
+      "projectType": "library",
+      "root": "projects/talos-calendar",
+      "sourceRoot": "projects/talos-calendar",
+      "prefix": "talos-cal",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/talos-calendar/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/talos-calendar/tsconfig.lib.json"
+            },
+            "development": {
+              "tsConfig": "projects/talos-calendar/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"

@@ -1,0 +1,126 @@
+<div class="week-view-container">
+  <!-- Top Header Row with Day Names & Date numbers -->
+  <div class="week-header-row">
+    <div class="time-gutter-header">
+      <span class="timezone-label">GMT</span>
+    </div>
+    <div class="days-header-grid">
+      @for (col of weekColumns(); track col.date.toISOString()) {
+        <div class="day-col-header" [class.is-today]="col.isToday">
+          <span class="day-name">{{ col.dayName }}</span>
+          <span class="day-badge" [class.today-badge]="col.isToday">
+            {{ col.dayNumber }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- All-Day Events Section (if any all-day or multi-day events exist) -->
+  @if (allDayData().segments.length > 0) {
+    <div class="all-day-section">
+      <div class="time-gutter-label">
+        <span>All-day</span>
+      </div>
+      <div class="all-day-grid" [style.height.px]="28 + allDayData().maxTracks * 24">
+        <!-- 7 Column background lines -->
+        <div class="all-day-col-backgrounds">
+          @for (col of weekColumns(); track col.date.toISOString()) {
+            <div class="all-day-col-bg" [class.is-today]="col.isToday"></div>
+          }
+        </div>
+
+        <!-- Spanning Bars Layer -->
+        <div class="all-day-bars-layer">
+          @for (seg of allDayData().segments; track seg.event.id + '_' + seg.startCol) {
+            <div
+              class="event-item all-day-bar"
+              [class]="getEventColorClass(seg.event.color)"
+              [class.is-start]="seg.isStart"
+              [class.is-end]="seg.isEnd"
+              [style.left]="'calc(' + (seg.startCol / 7) * 100 + '% + 3px)'"
+              [style.width]="'calc(' + (seg.span / 7) * 100 + '% - 6px)'"
+              [style.top.px]="4 + seg.trackIndex * 24"
+              (click)="onEventClick(seg.event, $event)"
+              [title]="seg.event.title"
+            >
+              <span class="bar-title">{{ seg.event.title }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Time Grid Body (Scrollable) -->
+  <div class="time-grid-scroll-area">
+    <div class="time-grid-body">
+      <!-- Left Time Labels Column -->
+      <div class="time-gutter">
+        @for (hour of hours(); track hour) {
+          <div class="time-label-slot">
+            <span class="time-text">{{ formatHourLabel(hour) }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- 7 Columns for Days of the Week -->
+      <div class="days-columns-grid">
+        @for (col of weekColumns(); track col.date.toISOString()) {
+          <div class="day-time-column" [class.is-today]="col.isToday">
+            <!-- Hourly Background Slots -->
+            @for (hour of hours(); track hour) {
+              <div
+                class="hour-slot-row"
+                (click)="onSlotClick(col.date, hour)"
+              >
+                <div class="half-hour-line"></div>
+              </div>
+            }
+
+            <!-- Current Time Indicator line on Today's Column -->
+            @if (col.isToday && currentTimeIndicator() !== null) {
+              <div
+                class="current-time-line"
+                [style.top.%]="currentTimeIndicator()"
+              >
+                <div class="time-dot"></div>
+              </div>
+            }
+
+            <!-- Timed Event Cards Layer -->
+            <div class="events-layer">
+              @for (item of col.timedEvents; track item.event.id) {
+                <div
+                  class="event-item timed-event-card"
+                  [class]="getEventColorClass(item.event.color)"
+                  [style.top.%]="item.topPercent"
+                  [style.height.%]="item.heightPercent"
+                  [style.left.%]="item.leftPercent"
+                  [style.width.%]="item.widthPercent"
+                  (click)="onEventClick(item.event, $event)"
+                  [title]="item.event.title + ' (' + formatTime(item.event.start) + ' - ' + formatTime(item.event.end) + ')'"
+                >
+                  <div class="event-header">
+                    <span class="event-title">{{ item.event.title }}</span>
+                  </div>
+                  <div class="event-meta">
+                    <span class="event-time">
+                      {{ formatTime(item.event.start) }} - {{ formatTime(item.event.end) }}
+                    </span>
+                  </div>
+                  @if (item.event.location && item.heightPercent > 4) {
+                    <div class="event-location">
+                      <svg lucideMapPin [size]="11"></svg>
+                      <span>{{ item.event.location }}</span>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

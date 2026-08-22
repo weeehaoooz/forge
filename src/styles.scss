@@ -1,5 +1,6 @@
 @use './styles/variables';
-@use '../projects/talos/styles/index';
+@use '../projects/talos-ui/styles/index';
+@use '../projects/talos-calendar/styles/calendar';
 @import '@angular/cdk/overlay-prebuilt.css';
 
 *,

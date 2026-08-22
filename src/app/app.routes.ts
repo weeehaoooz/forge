@@ -81,6 +81,10 @@ export const routes: Routes = [
   {
     path: 'drop-zone',
     loadComponent: () => import('./pages/drop-zone/drop-zone-page').then(m => m.DropZonePage)
+  },
+  {
+    path: 'calendar',
+    loadComponent: () => import('./pages/calendar/calendar-page').then(m => m.CalendarPageComponent)
   }
 ];
 

@@ -1,0 +1,78 @@
+<div class="header-container">
+  <!-- Left: Navigation & Date Title -->
+  <div class="nav-section">
+    <div class="nav-controls">
+      <button
+        talosButton
+        variant="outline"
+        size="sm"
+        type="button"
+        (click)="onToday()"
+        title="Jump to today"
+      >
+        <svg lucideCalendar [size]="14"></svg>
+        <span>Today</span>
+      </button>
+
+      <div class="arrow-group">
+        <button
+          talosButton
+          variant="outline"
+          size="sm"
+          [iconOnly]="true"
+          type="button"
+          (click)="onPrev()"
+          title="Previous period"
+          aria-label="Previous period"
+        >
+          <svg lucideChevronLeft [size]="16"></svg>
+        </button>
+        <button
+          talosButton
+          variant="outline"
+          size="sm"
+          [iconOnly]="true"
+          type="button"
+          (click)="onNext()"
+          title="Next period"
+          aria-label="Next period"
+        >
+          <svg lucideChevronRight [size]="16"></svg>
+        </button>
+      </div>
+    </div>
+
+    <h2 class="current-title">{{ formattedTitle() }}</h2>
+  </div>
+
+  <!-- Right: View Switcher & New Event Action -->
+  <div class="actions-section">
+    <div class="view-segmented-control" role="tablist" aria-label="Calendar views">
+      @for (v of views; track v.id) {
+        <button
+          type="button"
+          role="tab"
+          class="view-btn"
+          [class.is-active]="view() === v.id"
+          [attr.aria-selected]="view() === v.id"
+          (click)="onSelectView(v.id)"
+        >
+          {{ v.label }}
+        </button>
+      }
+    </div>
+
+    @if (showNewEventButton()) {
+      <button
+        talosButton
+        variant="primary"
+        size="sm"
+        type="button"
+        (click)="onNewEvent()"
+      >
+        <svg lucidePlus [size]="15"></svg>
+        <span>New Event</span>
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,125 @@
+/* Talos Calendar Design System Tokens & Base Styles */
+
+:root {
+  --talos-cal-bg: var(--talos-card-bg, #ffffff);
+  --talos-cal-surface: var(--talos-bg-subtle, #f8fafc);
+  --talos-cal-border: var(--talos-border-color, #e2e8f0);
+  --talos-cal-border-subtle: rgba(226, 232, 240, 0.6);
+  --talos-cal-text: var(--talos-text-color, #0f172a);
+  --talos-cal-text-muted: var(--talos-text-muted, #64748b);
+  --talos-cal-primary: var(--talos-primary-color, #2563eb);
+  --talos-cal-primary-light: var(--talos-primary-light, rgba(37, 99, 235, 0.12));
+  --talos-cal-today-bg: rgba(37, 99, 235, 0.04);
+  --talos-cal-hover-bg: rgba(241, 245, 249, 0.6);
+  --talos-cal-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  --talos-cal-radius: 0.75rem;
+
+  /* Event Color Presets (Light Mode) */
+  --talos-cal-blue-bg: #dbeafe;
+  --talos-cal-blue-text: #1e40af;
+  --talos-cal-blue-border: #93c5fd;
+
+  --talos-cal-indigo-bg: #e0e7ff;
+  --talos-cal-indigo-text: #3730a3;
+  --talos-cal-indigo-border: #a5b4fc;
+
+  --talos-cal-purple-bg: #f3e8ff;
+  --talos-cal-purple-text: #6b21a8;
+  --talos-cal-purple-border: #d8b4fe;
+
+  --talos-cal-pink-bg: #fce7f3;
+  --talos-cal-pink-text: #9d174d;
+  --talos-cal-pink-border: #f9a8d4;
+
+  --talos-cal-rose-bg: #ffe4e6;
+  --talos-cal-rose-text: #9f1239;
+  --talos-cal-rose-border: #fca5a5;
+
+  --talos-cal-red-bg: #fee2e2;
+  --talos-cal-red-text: #991b1b;
+  --talos-cal-red-border: #fca5a5;
+
+  --talos-cal-orange-bg: #ffedd5;
+  --talos-cal-orange-text: #9a3412;
+  --talos-cal-orange-border: #fdba74;
+
+  --talos-cal-amber-bg: #fef3c7;
+  --talos-cal-amber-text: #92400e;
+  --talos-cal-amber-border: #fcd34d;
+
+  --talos-cal-emerald-bg: #d1fae5;
+  --talos-cal-emerald-text: #065f46;
+  --talos-cal-emerald-border: #6ee7b7;
+
+  --talos-cal-teal-bg: #ccfbf1;
+  --talos-cal-teal-text: #115e59;
+  --talos-cal-teal-border: #5eead4;
+
+  --talos-cal-cyan-bg: #cffafe;
+  --talos-cal-cyan-text: #155e75;
+  --talos-cal-cyan-border: #67e8f9;
+}
+
+:root[data-theme='dark'],
+:root.dark,
+[data-theme='dark'],
+[data-mode='dark'],
+.dark,
+.dark-theme,
+:host-context([data-theme='dark']),
+:host-context(.dark) {
+  --talos-cal-bg: var(--talos-card-bg, #1e293b);
+  --talos-cal-surface: var(--talos-bg-subtle, #0f172a);
+  --talos-cal-border: var(--talos-border-color, #334155);
+  --talos-cal-border-subtle: rgba(51, 65, 85, 0.6);
+  --talos-cal-text: var(--talos-text-color, #f8fafc);
+  --talos-cal-text-muted: var(--talos-text-muted, #94a3b8);
+  --talos-cal-primary: var(--talos-primary-color, #3b82f6);
+  --talos-cal-primary-light: var(--talos-primary-light, rgba(59, 130, 246, 0.2));
+  --talos-cal-today-bg: rgba(59, 130, 246, 0.12);
+  --talos-cal-hover-bg: rgba(51, 65, 85, 0.5);
+
+  --talos-cal-blue-bg: rgba(30, 58, 138, 0.55);
+  --talos-cal-blue-text: #93c5fd;
+  --talos-cal-blue-border: rgba(147, 197, 253, 0.4);
+
+  --talos-cal-indigo-bg: rgba(49, 46, 129, 0.55);
+  --talos-cal-indigo-text: #a5b4fc;
+  --talos-cal-indigo-border: rgba(165, 180, 252, 0.4);
+
+  --talos-cal-purple-bg: rgba(88, 28, 135, 0.55);
+  --talos-cal-purple-text: #d8b4fe;
+  --talos-cal-purple-border: rgba(216, 180, 254, 0.4);
+
+  --talos-cal-pink-bg: rgba(131, 24, 67, 0.55);
+  --talos-cal-pink-text: #f9a8d4;
+  --talos-cal-pink-border: rgba(249, 168, 212, 0.4);
+
+  --talos-cal-rose-bg: rgba(136, 19, 55, 0.55);
+  --talos-cal-rose-text: #fca5a5;
+  --talos-cal-rose-border: rgba(252, 165, 165, 0.4);
+
+  --talos-cal-red-bg: rgba(127, 29, 29, 0.55);
+  --talos-cal-red-text: #fca5a5;
+  --talos-cal-red-border: rgba(252, 165, 165, 0.4);
+
+  --talos-cal-orange-bg: rgba(124, 45, 18, 0.55);
+  --talos-cal-orange-text: #fdba74;
+  --talos-cal-orange-border: rgba(253, 186, 116, 0.4);
+
+  --talos-cal-amber-bg: rgba(120, 53, 15, 0.55);
+  --talos-cal-amber-text: #fcd34d;
+  --talos-cal-amber-border: rgba(252, 211, 77, 0.4);
+
+  --talos-cal-emerald-bg: rgba(6, 78, 59, 0.55);
+  --talos-cal-emerald-text: #6ee7b7;
+  --talos-cal-emerald-border: rgba(110, 231, 183, 0.4);
+
+  --talos-cal-teal-bg: rgba(19, 78, 74, 0.55);
+  --talos-cal-teal-text: #5eead4;
+  --talos-cal-teal-border: rgba(94, 234, 212, 0.4);
+
+  --talos-cal-cyan-bg: rgba(22, 78, 99, 0.55);
+  --talos-cal-cyan-text: #67e8f9;
+  --talos-cal-cyan-border: rgba(103, 232, 249, 0.4);
+}

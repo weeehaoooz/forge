@@ -1,0 +1,111 @@
+<div class="day-view-container">
+  <!-- Day Header -->
+  <div class="day-header-banner" [class.is-today]="isCurrentDateToday()">
+    <div class="date-badge-col">
+      <span class="day-name">{{ currentDate() | date: 'EEEE' }}</span>
+      <span class="day-number" [class.today-badge]="isCurrentDateToday()">
+        {{ currentDate() | date: 'd' }}
+      </span>
+    </div>
+    <div class="date-summary">
+      <span class="full-month-year">{{ currentDate() | date: 'MMMM yyyy' }}</span>
+      <span class="events-count-badge">
+        {{ timedEvents().length + allDayEvents().length }} events scheduled
+      </span>
+    </div>
+  </div>
+
+  <!-- All-Day Events Section -->
+  @if (allDayEvents().length > 0) {
+    <div class="all-day-box">
+      <div class="gutter-col">
+        <span class="gutter-text">All-day</span>
+      </div>
+      <div class="all-day-list">
+        @for (ev of allDayEvents(); track ev.id) {
+          <div
+            class="event-item all-day-pill"
+            [class]="getEventColorClass(ev.color)"
+            (click)="onEventClick(ev, $event)"
+          >
+            <span class="pill-title">{{ ev.title }}</span>
+            @if (ev.category) {
+              <span class="pill-category">{{ ev.category }}</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Time Grid Scroll Area -->
+  <div class="day-scroll-area">
+    <div class="day-grid-body">
+      <!-- Time Gutter -->
+      <div class="time-gutter">
+        @for (hour of hours(); track hour) {
+          <div class="time-label-slot">
+            <span class="time-text">{{ formatHourLabel(hour) }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Main Day Column -->
+      <div class="day-column" [class.is-today]="isCurrentDateToday()">
+        @for (hour of hours(); track hour) {
+          <div class="hour-slot-row" (click)="onSlotClick(hour)">
+            <div class="half-hour-line"></div>
+          </div>
+        }
+
+        <!-- Current Time Line -->
+        @if (currentTimeIndicator() !== null) {
+          <div class="current-time-line" [style.top.%]="currentTimeIndicator()">
+            <div class="time-dot"></div>
+          </div>
+        }
+
+        <!-- Event Cards Layer -->
+        <div class="events-layer">
+          @for (item of timedEvents(); track item.event.id) {
+            <div
+              class="event-item rich-event-card"
+              [class]="getEventColorClass(item.event.color)"
+              [style.top.%]="item.topPercent"
+              [style.height.%]="item.heightPercent"
+              [style.left.%]="item.leftPercent"
+              [style.width.%]="item.widthPercent"
+              (click)="onEventClick(item.event, $event)"
+            >
+              <div class="card-top-row">
+                <span class="card-title">{{ item.event.title }}</span>
+                @if (item.event.category) {
+                  <span class="category-chip">{{ item.event.category }}</span>
+                }
+              </div>
+
+              <div class="card-time-row">
+                <svg lucideClock [size]="12"></svg>
+                <span>{{ formatTime(item.event.start) }} – {{ formatTime(item.event.end) }}</span>
+              </div>
+
+              @if (item.event.location && item.heightPercent > 4) {
+                <div class="card-meta-row">
+                  <svg lucideMapPin [size]="12"></svg>
+                  <span>{{ item.event.location }}</span>
+                </div>
+              }
+
+              @if (item.event.description && item.heightPercent > 7) {
+                <div class="card-desc-row">
+                  <svg lucideAlignLeft [size]="12"></svg>
+                  <span class="desc-text">{{ item.event.description }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

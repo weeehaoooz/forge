@@ -16,232 +16,238 @@
     "module": "preserve",
     "paths": {
       "@daedal-dev/talos-ui": [
-        "./projects/talos/public-api.ts"
+        "./projects/talos-ui/public-api.ts"
       ],
       "@daedal-dev/talos-ui/core": [
-        "./projects/talos/core/index.ts"
+        "./projects/talos-ui/core/index.ts"
       ],
       "@daedal-dev/talos-ui/button": [
-        "./projects/talos/button/button/index.ts"
+        "./projects/talos-ui/button/button/index.ts"
       ],
       "@daedal-dev/talos-ui/button/button": [
-        "./projects/talos/button/button/index.ts"
+        "./projects/talos-ui/button/button/index.ts"
       ],
       "@daedal-dev/talos-ui/button-group": [
-        "./projects/talos/button/button-group/index.ts"
+        "./projects/talos-ui/button/button-group/index.ts"
       ],
       "@daedal-dev/talos-ui/button/button-group": [
-        "./projects/talos/button/button-group/index.ts"
+        "./projects/talos-ui/button/button-group/index.ts"
       ],
       "@daedal-dev/talos-ui/tooltip": [
-        "./projects/talos/feedback/tooltip/index.ts"
+        "./projects/talos-ui/feedback/tooltip/index.ts"
       ],
       "@daedal-dev/talos-ui/feedback/tooltip": [
-        "./projects/talos/feedback/tooltip/index.ts"
+        "./projects/talos-ui/feedback/tooltip/index.ts"
       ],
       "@daedal-dev/talos-ui/dialog": [
-        "./projects/talos/feedback/dialog/index.ts"
+        "./projects/talos-ui/feedback/dialog/index.ts"
       ],
       "@daedal-dev/talos-ui/feedback/dialog": [
-        "./projects/talos/feedback/dialog/index.ts"
+        "./projects/talos-ui/feedback/dialog/index.ts"
       ],
       "@daedal-dev/talos-ui/snackbar": [
-        "./projects/talos/feedback/snackbar/index.ts"
+        "./projects/talos-ui/feedback/snackbar/index.ts"
       ],
       "@daedal-dev/talos-ui/feedback/snackbar": [
-        "./projects/talos/feedback/snackbar/index.ts"
+        "./projects/talos-ui/feedback/snackbar/index.ts"
       ],
       "@daedal-dev/talos-ui/alert": [
-        "./projects/talos/feedback/alert/index.ts"
+        "./projects/talos-ui/feedback/alert/index.ts"
       ],
       "@daedal-dev/talos-ui/feedback/alert": [
-        "./projects/talos/feedback/alert/index.ts"
+        "./projects/talos-ui/feedback/alert/index.ts"
       ],
       "@daedal-dev/talos-ui/form/input": [
-        "./projects/talos/form/input/index.ts"
+        "./projects/talos-ui/form/input/index.ts"
       ],
       "@daedal-dev/talos-ui/form/checkbox": [
-        "./projects/talos/form/checkbox/index.ts"
+        "./projects/talos-ui/form/checkbox/index.ts"
       ],
       "@daedal-dev/talos-ui/form/radio": [
-        "./projects/talos/form/radio/index.ts"
+        "./projects/talos-ui/form/radio/index.ts"
       ],
       "@daedal-dev/talos-ui/form/slide-toggle": [
-        "./projects/talos/form/slide-toggle/index.ts"
+        "./projects/talos-ui/form/slide-toggle/index.ts"
       ],
       "@daedal-dev/talos-ui/form/select-input": [
-        "./projects/talos/form/select-input/index.ts"
+        "./projects/talos-ui/form/select-input/index.ts"
       ],
       "@daedal-dev/talos-ui/form/date-picker": [
-        "./projects/talos/form/date-picker/index.ts"
+        "./projects/talos-ui/form/date-picker/index.ts"
       ],
       "@daedal-dev/talos-ui/form/date-range-picker": [
-        "./projects/talos/form/date-range-picker/index.ts"
+        "./projects/talos-ui/form/date-range-picker/index.ts"
       ],
       "@daedal-dev/talos-ui/form/date-time-picker": [
-        "./projects/talos/form/date-time-picker/index.ts"
+        "./projects/talos-ui/form/date-time-picker/index.ts"
       ],
       "@daedal-dev/talos-ui/form/date-time-range-picker": [
-        "./projects/talos/form/date-time-range-picker/index.ts"
+        "./projects/talos-ui/form/date-time-range-picker/index.ts"
       ],
       "@daedal-dev/talos-ui/form/autocomplete": [
-        "./projects/talos/form/autocomplete/index.ts"
+        "./projects/talos-ui/form/autocomplete/index.ts"
       ],
       "@daedal-dev/talos-ui/form/range-input": [
-        "./projects/talos/form/range-input/index.ts"
+        "./projects/talos-ui/form/range-input/index.ts"
       ],
       "@daedal-dev/talos-ui/form/chips": [
-        "./projects/talos/form/chips/index.ts"
+        "./projects/talos-ui/form/chips/index.ts"
       ],
       "@daedal-dev/talos-ui/form/form-field": [
-        "./projects/talos/form/form-field/index.ts"
+        "./projects/talos-ui/form/form-field/index.ts"
       ],
       "@daedal-dev/talos-ui/form/drop-zone": [
-        "./projects/talos/form/drop-zone/index.ts"
+        "./projects/talos-ui/form/drop-zone/index.ts"
       ],
       "@daedal-dev/talos-ui/category-bar": [
-        "./projects/talos/data-viz/category-bar/index.ts"
+        "./projects/talos-ui/data-viz/category-bar/index.ts"
       ],
       "@daedal-dev/talos-ui/data-viz/category-bar": [
-        "./projects/talos/data-viz/category-bar/index.ts"
+        "./projects/talos-ui/data-viz/category-bar/index.ts"
       ],
       "@daedal-dev/talos-ui/heatmap": [
-        "./projects/talos/data-viz/heatmap/index.ts"
+        "./projects/talos-ui/data-viz/heatmap/index.ts"
       ],
       "@daedal-dev/talos-ui/data-viz/heatmap": [
-        "./projects/talos/data-viz/heatmap/index.ts"
+        "./projects/talos-ui/data-viz/heatmap/index.ts"
       ],
       "@daedal-dev/talos-ui/status-tag": [
-        "./projects/talos/data-display/status-tag/index.ts"
+        "./projects/talos-ui/data-display/status-tag/index.ts"
       ],
       "@daedal-dev/talos-ui/data-display/status-tag": [
-        "./projects/talos/data-display/status-tag/index.ts"
+        "./projects/talos-ui/data-display/status-tag/index.ts"
       ],
       "@daedal-dev/talos-ui/badge": [
-        "./projects/talos/data-display/badge/index.ts"
+        "./projects/talos-ui/data-display/badge/index.ts"
       ],
       "@daedal-dev/talos-ui/data-display/badge": [
-        "./projects/talos/data-display/badge/index.ts"
+        "./projects/talos-ui/data-display/badge/index.ts"
       ],
       "@daedal-dev/talos-ui/layout": [
-        "./projects/talos/layout/index.ts"
+        "./projects/talos-ui/layout/index.ts"
       ],
       "@daedal-dev/talos-ui/nav": [
-        "./projects/talos/nav/index.ts"
+        "./projects/talos-ui/nav/index.ts"
+      ],
+      "@daedal-dev/talos-calendar": [
+        "./projects/talos-calendar/public-api.ts"
+      ],
+      "@talos/calendar": [
+        "./projects/talos-calendar/public-api.ts"
       ],
       "@talos/components": [
-        "./projects/talos/public-api.ts"
+        "./projects/talos-ui/public-api.ts"
       ],
       "@talos/components/core": [
-        "./projects/talos/core/index.ts"
+        "./projects/talos-ui/core/index.ts"
       ],
       "@talos/components/button": [
-        "./projects/talos/button/button/index.ts"
+        "./projects/talos-ui/button/button/index.ts"
       ],
       "@talos/components/button/button": [
-        "./projects/talos/button/button/index.ts"
+        "./projects/talos-ui/button/button/index.ts"
       ],
       "@talos/components/button-group": [
-        "./projects/talos/button/button-group/index.ts"
+        "./projects/talos-ui/button/button-group/index.ts"
       ],
       "@talos/components/button/button-group": [
-        "./projects/talos/button/button-group/index.ts"
+        "./projects/talos-ui/button/button-group/index.ts"
       ],
       "@talos/components/tooltip": [
-        "./projects/talos/feedback/tooltip/index.ts"
+        "./projects/talos-ui/feedback/tooltip/index.ts"
       ],
       "@talos/components/feedback/tooltip": [
-        "./projects/talos/feedback/tooltip/index.ts"
+        "./projects/talos-ui/feedback/tooltip/index.ts"
       ],
       "@talos/components/dialog": [
-        "./projects/talos/feedback/dialog/index.ts"
+        "./projects/talos-ui/feedback/dialog/index.ts"
       ],
       "@talos/components/feedback/dialog": [
-        "./projects/talos/feedback/dialog/index.ts"
+        "./projects/talos-ui/feedback/dialog/index.ts"
       ],
       "@talos/components/snackbar": [
-        "./projects/talos/feedback/snackbar/index.ts"
+        "./projects/talos-ui/feedback/snackbar/index.ts"
       ],
       "@talos/components/feedback/snackbar": [
-        "./projects/talos/feedback/snackbar/index.ts"
+        "./projects/talos-ui/feedback/snackbar/index.ts"
       ],
       "@talos/components/alert": [
-        "./projects/talos/feedback/alert/index.ts"
+        "./projects/talos-ui/feedback/alert/index.ts"
       ],
       "@talos/components/feedback/alert": [
-        "./projects/talos/feedback/alert/index.ts"
+        "./projects/talos-ui/feedback/alert/index.ts"
       ],
       "@talos/components/form/input": [
-        "./projects/talos/form/input/index.ts"
+        "./projects/talos-ui/form/input/index.ts"
       ],
       "@talos/components/form/checkbox": [
-        "./projects/talos/form/checkbox/index.ts"
+        "./projects/talos-ui/form/checkbox/index.ts"
       ],
       "@talos/components/form/radio": [
-        "./projects/talos/form/radio/index.ts"
+        "./projects/talos-ui/form/radio/index.ts"
       ],
       "@talos/components/form/slide-toggle": [
-        "./projects/talos/form/slide-toggle/index.ts"
+        "./projects/talos-ui/form/slide-toggle/index.ts"
       ],
       "@talos/components/form/select-input": [
-        "./projects/talos/form/select-input/index.ts"
+        "./projects/talos-ui/form/select-input/index.ts"
       ],
       "@talos/components/form/date-picker": [
-        "./projects/talos/form/date-picker/index.ts"
+        "./projects/talos-ui/form/date-picker/index.ts"
       ],
       "@talos/components/form/date-range-picker": [
-        "./projects/talos/form/date-range-picker/index.ts"
+        "./projects/talos-ui/form/date-range-picker/index.ts"
       ],
       "@talos/components/form/date-time-picker": [
-        "./projects/talos/form/date-time-picker/index.ts"
+        "./projects/talos-ui/form/date-time-picker/index.ts"
       ],
       "@talos/components/form/date-time-range-picker": [
-        "./projects/talos/form/date-time-range-picker/index.ts"
+        "./projects/talos-ui/form/date-time-range-picker/index.ts"
       ],
       "@talos/components/form/autocomplete": [
-        "./projects/talos/form/autocomplete/index.ts"
+        "./projects/talos-ui/form/autocomplete/index.ts"
       ],
       "@talos/components/form/range-input": [
-        "./projects/talos/form/range-input/index.ts"
+        "./projects/talos-ui/form/range-input/index.ts"
       ],
       "@talos/components/form/chips": [
-        "./projects/talos/form/chips/index.ts"
+        "./projects/talos-ui/form/chips/index.ts"
       ],
       "@talos/components/form/form-field": [
-        "./projects/talos/form/form-field/index.ts"
+        "./projects/talos-ui/form/form-field/index.ts"
       ],
       "@talos/components/form/drop-zone": [
-        "./projects/talos/form/drop-zone/index.ts"
+        "./projects/talos-ui/form/drop-zone/index.ts"
       ],
       "@talos/components/category-bar": [
-        "./projects/talos/data-viz/category-bar/index.ts"
+        "./projects/talos-ui/data-viz/category-bar/index.ts"
       ],
       "@talos/components/data-viz/category-bar": [
-        "./projects/talos/data-viz/category-bar/index.ts"
+        "./projects/talos-ui/data-viz/category-bar/index.ts"
       ],
       "@talos/components/heatmap": [
-        "./projects/talos/data-viz/heatmap/index.ts"
+        "./projects/talos-ui/data-viz/heatmap/index.ts"
       ],
       "@talos/components/data-viz/heatmap": [
-        "./projects/talos/data-viz/heatmap/index.ts"
+        "./projects/talos-ui/data-viz/heatmap/index.ts"
       ],
       "@talos/components/status-tag": [
-        "./projects/talos/data-display/status-tag/index.ts"
+        "./projects/talos-ui/data-display/status-tag/index.ts"
       ],
       "@talos/components/data-display/status-tag": [
-        "./projects/talos/data-display/status-tag/index.ts"
+        "./projects/talos-ui/data-display/status-tag/index.ts"
       ],
       "@talos/components/badge": [
-        "./projects/talos/data-display/badge/index.ts"
+        "./projects/talos-ui/data-display/badge/index.ts"
       ],
       "@talos/components/data-display/badge": [
-        "./projects/talos/data-display/badge/index.ts"
+        "./projects/talos-ui/data-display/badge/index.ts"
       ],
       "@talos/components/layout": [
-        "./projects/talos/layout/index.ts"
+        "./projects/talos-ui/layout/index.ts"
       ],
       "@talos/components/nav": [
-        "./projects/talos/nav/index.ts"
+        "./projects/talos-ui/nav/index.ts"
       ]
     }
   },

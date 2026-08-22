@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/talos-calendar",
+  "lib": {
+    "entryFile": "public-api.ts"
+  },
+  "assets": [
+    "./styles/**/*.scss"
+  ]
+}

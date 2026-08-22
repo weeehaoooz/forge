@@ -9,20 +9,19 @@ import {
   LucideRadio,
   LucideSparkles
 } from '@lucide/angular';
-import { TalosButtonDirective } from '@talos/components/button';
-import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
 import {
   TalosAlertAppearance,
   TalosAlertModule,
   TalosAlertService,
   TalosAlertSeverity,
-  TalosAlertSize,
-  TalosAlertVariant
+  TalosAlertSize
 } from '@talos/components/alert';
-import { TalosSnackbarService } from '@talos/components/snackbar';
+import { TalosButtonDirective } from '@talos/components/button';
+import { TalosButtonGroupComponent, TalosButtonGroupItemDirective } from '@talos/components/button-group';
 import { TalosDialogService } from '@talos/components/dialog';
 import { TalosInputDirective } from '@talos/components/form/input';
 import { TalosSlideToggleComponent } from '@talos/components/form/slide-toggle';
+import { TalosSnackbarService } from '@talos/components/snackbar';
 import { TalosPreviewCodeCardComponent } from '../../demo/preview-code-card/preview-code-card.component';
 
 export type AlertPatternKey =

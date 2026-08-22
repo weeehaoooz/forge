@@ -1,0 +1,152 @@
+.calendar-controls-bar {
+  max-width: 1100px;
+  margin: 0 auto 1.25rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+
+  .filter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--talos-text-muted, #64748b);
+    margin-right: 0.25rem;
+  }
+
+  .cat-filter-btn {
+    border: 1px solid var(--talos-border-color, #e2e8f0);
+    background: var(--talos-card-bg, #ffffff);
+    color: var(--talos-text-muted, #64748b);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      border-color: var(--talos-primary-color, #2563eb);
+      color: var(--talos-text-color, #0f172a);
+    }
+
+    &.is-active {
+      background: var(--talos-primary-color, #2563eb);
+      border-color: var(--talos-primary-color, #2563eb);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+    }
+  }
+}
+
+.stats-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+
+  .stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    background: var(--talos-card-bg, #ffffff);
+    border: 1px solid var(--talos-border-color, #e2e8f0);
+    border-radius: 0.5rem;
+
+    .stat-num {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--talos-text-color, #0f172a);
+    }
+
+    .stat-label {
+      font-size: 0.6875rem;
+      color: var(--talos-text-muted, #64748b);
+      font-weight: 500;
+    }
+
+    &.highlight {
+      border-color: rgba(37, 99, 235, 0.3);
+      background: var(--talos-primary-light, rgba(37, 99, 235, 0.08));
+
+      .stat-num {
+        color: var(--talos-primary-color, #2563eb);
+      }
+    }
+  }
+}
+
+.calendar-demo-card {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.feature-item {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    &.blue {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+    }
+
+    &.purple {
+      background: rgba(147, 51, 234, 0.12);
+      color: #9333ea;
+    }
+
+    &.emerald {
+      background: rgba(5, 150, 105, 0.12);
+      color: #059669;
+    }
+
+    &.amber {
+      background: rgba(217, 119, 6, 0.12);
+      color: #d97706;
+    }
+  }
+
+  .feature-info {
+    h4 {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--talos-text-color, #0f172a);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: var(--talos-text-muted, #64748b);
+      line-height: 1.4;
+    }
+  }
+}

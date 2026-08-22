@@ -10,7 +10,7 @@ import { TalosFormFieldComponent } from '@talos/components/form/form-field';
 import { TalosInputDirective } from '@talos/components/form/input';
 import { SelectInputComponent, OptionComponent } from '@talos/components/form/select-input';
 import { TalosChipsComponent, TalosChipComponent } from '@talos/components/form/chips';
-import { TalosStatusTagComponent } from '../../../../../projects/talos/data-display/status-tag';
+import { TalosStatusTagComponent } from '@talos/components/data-display/status-tag';
 import { LucideSettings } from '@lucide/angular';
 
 @Component({

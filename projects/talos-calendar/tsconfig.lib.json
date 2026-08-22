@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/calendar-lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "paths": {
+      "@daedal-dev/talos-ui": [
+        "../../dist/talos-ui"
+      ],
+      "@daedal-dev/talos-ui/*": [
+        "../../dist/talos-ui/*"
+      ]
+    }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ import {
   LucideTextCursorInput,
   LucideChevronDown,
   LucideSearch,
+  LucideCalendar,
   LucideCalendarDays,
   LucideSquareCheck,
   LucideCircleDot,
@@ -68,6 +69,7 @@ export class App {
   protected readonly LucideTextCursorInput = LucideTextCursorInput;
   protected readonly LucideChevronDown = LucideChevronDown;
   protected readonly LucideSearch = LucideSearch;
+  protected readonly LucideCalendar = LucideCalendar;
   protected readonly LucideCalendarDays = LucideCalendarDays;
   protected readonly LucideSlidersHorizontal = LucideSlidersHorizontal;
   protected readonly LucideFlame = LucideFlame;

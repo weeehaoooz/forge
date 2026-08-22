@@ -1,0 +1,109 @@
+<div class="demo-page-content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <span class="badge">Component Showcase</span>
+    <h1>Talos Calendar & Scheduling</h1>
+    <p class="subtitle">
+      A dedicated suite for scheduling multi-day spanning events, booking hourly appointments,
+      managing recurring schedules, and seamless month, week, day, and agenda views.
+    </p>
+  </div>
+
+  <!-- Metric Counters & Filter Banner -->
+  <div class="calendar-controls-bar">
+    <div class="category-pills">
+      <span class="filter-label">
+        <svg lucideFilter [size]="14"></svg>
+        <span>Category:</span>
+      </span>
+      @for (cat of categories; track cat) {
+        <button
+          type="button"
+          class="cat-filter-btn"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="onCategoryChange(cat)"
+        >
+          {{ cat | titlecase }}
+        </button>
+      }
+    </div>
+
+    <div class="stats-pills">
+      <div class="stat-badge">
+        <span class="stat-num">{{ totalEventsCount() }}</span>
+        <span class="stat-label">Total Events</span>
+      </div>
+      <div class="stat-badge highlight">
+        <span class="stat-num">{{ multiDayEventsCount() }}</span>
+        <span class="stat-label">Multi-day Spanning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Calendar Component Demo -->
+  <div class="calendar-demo-card">
+    <talos-calendar
+      [events]="filteredEvents()"
+      [(view)]="currentView"
+      [(currentDate)]="activeDate"
+      (eventClick)="onEventClick($event)"
+      (dateSelect)="onDateSelect($event)"
+      (eventAdd)="onEventAdded($event)"
+      (eventUpdate)="onEventUpdated($event)"
+      (eventDelete)="onEventDeleted($event)"
+    />
+  </div>
+
+  <!-- Feature Highlights Grid -->
+  <div class="demo-grid" style="margin-top: 2rem;">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Architecture & Features</h2>
+          <span class="card-subtitle">What makes &#64;daedal-dev/talos-calendar powerful</span>
+        </div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon blue">
+            <svg lucideCalendar [size]="20"></svg>
+          </div>
+          <div class="feature-info">
+            <h4>Multi-Day Spanning Bars</h4>
+            <p>Smart layout algorithm that calculates conflict-free horizontal track lanes across weeks without overlapping.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon purple">
+            <svg lucideClock [size]="20"></svg>
+          </div>
+          <div class="feature-info">
+            <h4>24-Hour Time Grid</h4>
+            <p>Precise hourly & half-hour appointment slots with real-time current time indicator and collision detection.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon emerald">
+            <svg lucideSparkles [size]="20"></svg>
+          </div>
+          <div class="feature-info">
+            <h4>Signal-Based Reactivity</h4>
+            <p>Built exclusively on Angular Signals (inputs, models, computed state) for blazing fast zoneless rendering.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon amber">
+            <svg lucideCheckCircle2 [size]="20"></svg>
+          </div>
+          <div class="feature-info">
+            <h4>Interactive Dialogs</h4>
+            <p>Integrated appointment creator & editor with color categories, date/time pickers, and all-day toggles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

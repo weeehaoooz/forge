@@ -1,0 +1,78 @@
+<div class="month-grid-container">
+  <!-- Day of Week Header -->
+  <div class="weekday-header-row">
+    @for (label of weekDayLabels; track label) {
+      <div class="weekday-cell" [class.is-weekend]="label === 'Sun' || label === 'Sat'">
+        <span>{{ label }}</span>
+      </div>
+    }
+  </div>
+
+  <!-- Month Weeks Grid -->
+  <div class="weeks-container">
+    @for (week of weeks(); track $index) {
+      <div class="week-row" [style.min-height.px]="110 + week.maxTrackCount * 24">
+        <!-- 7 Day Background Cells -->
+        <div class="day-cells-layer">
+          @for (cell of week.days; track cell.date.toISOString()) {
+            <div
+              class="day-cell"
+              [class.not-current-month]="!cell.isCurrentMonth"
+              [class.is-today]="cell.isToday"
+              [class.is-selected]="cell.isSelected"
+              [class.is-weekend]="cell.isWeekend"
+              (click)="onDayClick(cell, $event)"
+            >
+              <div class="day-header">
+                <span class="day-number" [class.today-badge]="cell.isToday">
+                  {{ cell.dayNumber }}
+                </span>
+              </div>
+
+              <!-- Container for Single-day timed events -->
+              <div
+                class="single-events-container"
+                [style.margin-top.px]="week.maxTrackCount * 24"
+              >
+                @for (ev of cell.singleDayEvents; track ev.id) {
+                  <div
+                    class="event-item timed-event-chip"
+                    [class]="getEventColorClass(ev.color)"
+                    (click)="onEventClick(ev, $event)"
+                    [title]="ev.title + ' (' + formatTime(ev.start) + ')'"
+                  >
+                    <span class="event-dot"></span>
+                    <span class="event-time">{{ formatTime(ev.start) }}</span>
+                    <span class="event-title">{{ ev.title }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Multi-Day Spanning Events Overlay Layer -->
+        <div class="spanning-events-layer">
+          @for (seg of week.spanningSegments; track seg.event.id + '_' + seg.startCol) {
+            <div
+              class="event-item spanning-bar"
+              [class]="getEventColorClass(seg.event.color)"
+              [class.is-start]="seg.isStart"
+              [class.is-end]="seg.isEnd"
+              [style.left]="'calc(' + (seg.startCol / 7) * 100 + '% + 3px)'"
+              [style.width]="'calc(' + (seg.span / 7) * 100 + '% - 6px)'"
+              [style.top.px]="28 + seg.trackIndex * 24"
+              (click)="onEventClick(seg.event, $event)"
+              [title]="seg.event.title + (seg.event.description ? ' - ' + seg.event.description : '')"
+            >
+              <span class="bar-title">{{ seg.event.title }}</span>
+              @if (seg.event.location) {
+                <span class="bar-location">({{ seg.event.location }})</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
